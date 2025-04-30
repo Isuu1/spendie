@@ -1,0 +1,16 @@
+.tile {
+  padding: 0.7rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+//Variants
+.light {
+  background: #5e5e5e;
+}
+
+.dark {
+  background: #333;
+}

@@ -11,9 +11,17 @@ export enum TransactionType {
 export const transactions = [
   {
     id: 1,
-    date: "2023-10-01",
+    date: "17 Jan 2023",
     description: "Grocery Store",
     amount: -50.75,
+    category: "Groceries",
+    type: TransactionType.EXPENSE,
+  },
+  {
+    id: 1,
+    date: "13 Jan 2023",
+    description: "Prolific",
+    amount: 200,
     category: "Groceries",
     type: TransactionType.EXPENSE,
   },
