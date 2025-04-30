@@ -11,12 +11,10 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ],
     "*.{json,md,css,scss}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "dependencies": {
