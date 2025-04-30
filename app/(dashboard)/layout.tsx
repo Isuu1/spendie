@@ -1,3 +1,10 @@
+import DashboardHeader from "@/features/dashboard/components/DashboardHeader";
+
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <div>{children}</div>;
+  return (
+    <div>
+      <DashboardHeader />
+      {children}
+    </div>
+  );
 }
