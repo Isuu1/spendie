@@ -7,13 +7,18 @@ import { motion } from "motion/react";
 
 interface TileWrapperProps {
   name: string;
+  icon: React.ReactNode;
   children: React.ReactNode;
 }
 
-const TileWrapper: React.FC<TileWrapperProps> = ({ name, children }) => {
+const TileWrapper: React.FC<TileWrapperProps> = ({ name, icon, children }) => {
   return (
     <motion.div className={styles.tile}>
-      <h3>{name}</h3>
+      <div className={styles.title}>
+        <span className={styles.icon}>{icon}</span>
+        <p>{name}</p>
+      </div>
+
       <div>{children}</div>
     </motion.div>
   );
