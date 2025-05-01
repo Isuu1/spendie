@@ -1,0 +1,71 @@
+"use client";
+
+import { createClient } from "@/supabase/client";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { UserProfile } from "../types/user";
+
+interface UserContextType {
+  user: {
+    email: string;
+    username: string;
+    avatar: string;
+  };
+}
+
+export const UserContext = createContext<UserContextType | null>(null);
+
+export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<UserProfile>({
+    email: "",
+    username: "",
+    avatar: "",
+  });
+
+  const supabase = createClient();
+
+  const fetchUser = useCallback(async () => {
+    const { data: authData, error: authError } = await supabase.auth.getUser();
+    if (authError) {
+      console.error("Error fetching user:", authError);
+      return null;
+    }
+    const { data: profileData, error: profileError } = await supabase
+      .from("profiles")
+      .select("email, username, avatar")
+      .eq("id", authData.user.id)
+      .single();
+
+    if (profileError) {
+      console.error("Error fetching profile data:", profileError);
+      return null;
+    }
+
+    setUser({
+      email: profileData.email,
+      username: profileData.username,
+      avatar: profileData.avatar,
+    });
+  }, [supabase]);
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
+  return (
+    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+  );
+};
+
+export const useUser = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("useUser must be used within a UserProvider");
+  }
+  return context;
+};
