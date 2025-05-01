@@ -1,15 +1,18 @@
 import React from "react";
 import TileWrapper from "./TileWrapper";
-import { transactions } from "@/data/transactions";
+//import { transactions } from "@/data/transactions";
 
 //Styles
 import styles from "./TransactionsTile.module.scss";
+import { useTransactions } from "@/shared/providers/TransactionsProvider";
 
 interface TransactionsTileProps {
   variant: "light" | "dark";
 }
 
 const TransactionsTile: React.FC<TransactionsTileProps> = ({ variant }) => {
+  const { transactions } = useTransactions();
+
   const displayTransactionAmount = (amount: number) => {
     return amount > 0
       ? amount.toLocaleString("en-US", {
@@ -22,6 +25,10 @@ const TransactionsTile: React.FC<TransactionsTileProps> = ({ variant }) => {
         })}`;
   };
 
+  if (!transactions) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <TileWrapper name="Transactions" variant={variant}>
       <ul className={styles.transactionsHeader}>
@@ -32,7 +39,7 @@ const TransactionsTile: React.FC<TransactionsTileProps> = ({ variant }) => {
       {transactions.map((transaction) => (
         <div key={transaction.id} className={styles.transactionItem}>
           <p>{transaction.date}</p>
-          <p>{transaction.description}</p>
+          <p>{transaction.category}</p>
           <p
             className={transaction.amount > 0 ? styles.income : styles.expense}
           >
