@@ -5,3 +5,17 @@
   min-height: 100vh;
   padding: 1rem;
 }
+
+@media (min-width: 768px) {
+  .dashboardLayout {
+    display: block;
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboardLayout {
+    display: block;
+    column-count: 3;
+  }
+}
