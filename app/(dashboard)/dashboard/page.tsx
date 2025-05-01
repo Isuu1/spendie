@@ -10,11 +10,11 @@ export default function Page() {
   const { user } = useUser();
   console.log("User in dashboard page:", user);
   return (
-    <div>
+    <>
       <h1>Dashboard page</h1>
       <AccountsTile />
       <TotalBalanceTile />
-      <TransactionsTile variant="light" />
-    </div>
+      <TransactionsTile />
+    </>
   );
 }

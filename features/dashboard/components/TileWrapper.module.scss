@@ -4,13 +4,27 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  //background-color: rgba(37, 37, 37, 0.205);
+  background: linear-gradient(
+    55deg,
+    rgba(18, 18, 18, 1) 20%,
+    rgba(26, 26, 26, 1) 100%
+  );
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(109, 109, 109, 0.2);
+  border-radius: 14px;
+  &:hover {
+    //transform: scale(1.04); /* Slightly scale up on hover */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4); /* Increase shadow on hover */
+  }
 }
 
 //Variants
-.light {
-  background: #5e5e5e;
-}
+// .light {
+//   background: #5e5e5e;
+// }
 
-.dark {
-  background: #333;
-}
+// .dark {
+//   background: #333;
+// }

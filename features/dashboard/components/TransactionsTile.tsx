@@ -6,11 +6,7 @@ import TileWrapper from "./TileWrapper";
 import styles from "./TransactionsTile.module.scss";
 import { useTransactions } from "@/shared/providers/TransactionsProvider";
 
-interface TransactionsTileProps {
-  variant: "light" | "dark";
-}
-
-const TransactionsTile: React.FC<TransactionsTileProps> = ({ variant }) => {
+const TransactionsTile: React.FC = () => {
   const { transactions } = useTransactions();
 
   const displayTransactionAmount = (amount: number) => {
@@ -30,7 +26,7 @@ const TransactionsTile: React.FC<TransactionsTileProps> = ({ variant }) => {
   }
 
   return (
-    <TileWrapper name="Transactions" variant={variant}>
+    <TileWrapper name="Transactions">
       <ul className={styles.transactionsHeader}>
         <li className={styles.transactionHeaderItem}>Date</li>
         <li className={styles.transactionHeaderItem}>Description</li>
