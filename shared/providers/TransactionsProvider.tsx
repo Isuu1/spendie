@@ -50,8 +50,6 @@ export const TransactionsProvider = ({
     fetchTransactions();
   }, [fetchTransactions]);
 
-  console.log("Transactions in provider:", transactions);
-
   return (
     <TransactionsContext.Provider value={{ transactions }}>
       {children}
