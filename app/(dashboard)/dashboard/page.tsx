@@ -1,7 +1,7 @@
 "use client";
 
 //Components
-import AccountsTile from "@/features/dashboard/components/AccountsTile";
+//import AccountsTile from "@/features/dashboard/components/AccountsTile";
 import TileWrapper from "@/features/dashboard/components/TileWrapper";
 import TotalBalanceTile from "@/features/dashboard/components/TotalBalanceTile";
 import TransactionsTile from "@/features/dashboard/components/TransactionsTile";
@@ -13,13 +13,21 @@ export default function Page() {
   const { user } = useUser();
 
   const tilesInUse = [
+    // {
+    //   name: "Accounts",
+    //   component: <AccountsTile />,
+    //   icon: <MdAccountBalance />,
+    // },
     {
-      name: "Accounts",
-      component: <AccountsTile />,
+      name: "Total Balance",
+      component: <TotalBalanceTile />,
       icon: <MdAccountBalance />,
     },
-    { name: "Total Balance", component: <TotalBalanceTile /> },
-    { name: "Transactions", component: <TransactionsTile /> },
+    {
+      name: "Transactions",
+      component: <TransactionsTile />,
+      icon: <MdAccountBalance />,
+    },
   ];
 
   console.log("User in dashboard page:", user);
