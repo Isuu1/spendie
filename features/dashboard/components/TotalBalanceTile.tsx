@@ -1,5 +1,4 @@
 import React from "react";
-import TileWrapper from "./TileWrapper";
 import { accounts } from "@/data/accounts";
 
 const TotalBalanceTile = () => {
@@ -21,7 +20,7 @@ const TotalBalanceTile = () => {
   }, 0); // Initialize the sum to 0
 
   return (
-    <TileWrapper name="Total balance" variant="light">
+    <>
       <p>Total balance: {formatGBP(totalBalance)}</p>
       {accounts.map((account) => (
         <div key={account.id}>
@@ -29,7 +28,7 @@ const TotalBalanceTile = () => {
           <p>Balance: {formatGBP(account.totalBalance)}</p>
         </div>
       ))}
-    </TileWrapper>
+    </>
   );
 };
 

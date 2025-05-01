@@ -2,6 +2,8 @@ import React from "react";
 
 //Styles
 import styles from "./TileWrapper.module.scss";
+//Animations
+import { motion } from "motion/react";
 
 interface TileWrapperProps {
   name: string;
@@ -10,10 +12,10 @@ interface TileWrapperProps {
 
 const TileWrapper: React.FC<TileWrapperProps> = ({ name, children }) => {
   return (
-    <div className={styles.tile}>
+    <motion.div className={styles.tile}>
       <h3>{name}</h3>
       <div>{children}</div>
-    </div>
+    </motion.div>
   );
 };
 

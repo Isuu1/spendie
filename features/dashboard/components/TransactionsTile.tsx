@@ -1,6 +1,4 @@
 import React from "react";
-import TileWrapper from "./TileWrapper";
-//import { transactions } from "@/data/transactions";
 
 //Styles
 import styles from "./TransactionsTile.module.scss";
@@ -26,7 +24,7 @@ const TransactionsTile: React.FC = () => {
   }
 
   return (
-    <TileWrapper name="Transactions">
+    <>
       <ul className={styles.transactionsHeader}>
         <li className={styles.transactionHeaderItem}>Date</li>
         <li className={styles.transactionHeaderItem}>Description</li>
@@ -43,7 +41,7 @@ const TransactionsTile: React.FC = () => {
           </p>
         </div>
       ))}
-    </TileWrapper>
+    </>
   );
 };
 
