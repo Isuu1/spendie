@@ -1,5 +1,4 @@
 import React from "react";
-import TileWrapper from "./TileWrapper";
 import { accounts } from "@/data/accounts";
 
 //Styles
@@ -7,7 +6,7 @@ import styles from "./AccountsTile.module.scss";
 
 const AccountsTile = () => {
   return (
-    <TileWrapper name="Accounts" variant="light">
+    <>
       {accounts.map((account) => (
         <div key={account.id} className={styles.account}>
           <h4>{account.name}</h4>
@@ -24,7 +23,7 @@ const AccountsTile = () => {
           </div>
         </div>
       ))}
-    </TileWrapper>
+    </>
   );
 };
 
