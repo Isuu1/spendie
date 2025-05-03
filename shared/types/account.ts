@@ -17,9 +17,13 @@ export type Card = {
 };
 
 export type Account = {
-  id: string;
+  account_id: string;
   name: string;
-  total_balance: number;
-  type: AccountType;
-  cards: Card[];
+  balances: {
+    current: number | null;
+    available: number | null;
+    limit?: number | null; // Optional for credit cards
+    iso_currency_code: string | null;
+  };
+  type: string;
 };

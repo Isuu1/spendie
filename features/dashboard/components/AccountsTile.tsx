@@ -18,13 +18,13 @@ const AccountsTile = () => {
   return (
     <>
       {accounts.map((account) => (
-        <div key={account.id} className={styles.account}>
+        <div key={account.account_id} className={styles.account}>
           <h4>{account.name}</h4>
-          <p>Balance: {account.total_balance}</p>
+          <p>Balance: {account.balances.current}</p>
           <p>{account.type}</p>
-          {/* <p>Cards</p>
+          {/* <p>Cards</p> */}
           <div className={styles.cards}>
-            {account.cards.map((card) => (
+            {/* {account.cards.map((card) => (
               <div key={card.id} className={styles.cardWrapper}>
                 <div className={styles.cardOverlay}></div>
                 <div className={styles.card}>
@@ -41,8 +41,8 @@ const AccountsTile = () => {
                   <IoTrashBin />
                 </div>
               </div>
-            ))}
-          </div> */}
+            ))} */}
+          </div>
         </div>
       ))}
     </>

@@ -31,14 +31,31 @@ export const AccountsProvider = ({
       console.error("Error fetching user:", authError);
       return null;
     }
-    const { data: accountsData, error: profileError } = await supabase
-      .from("accounts")
-      .select("id, name, total_balance, type, cards")
-      .eq("user_id", authData.user.id)
-      .limit(10);
+    // const { data: accountsData, error: profileError } = await supabase
+    //   .from("accounts")
+    //   .select("id, name, total_balance, type, cards")
+    //   .eq("user_id", authData.user.id)
+    //   .limit(10);
 
-    if (profileError) {
-      console.error("Error fetching profile data:", profileError);
+    // if (profileError) {
+    //   console.error("Error fetching profile data:", profileError);
+    //   return null;
+    // }
+
+    const response = await fetch("/api/plaid/accounts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: authData.user.id }),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Failed to fetch accounts");
+    }
+    const accountsData: Account[] = await response.json();
+    if (!accountsData) {
+      console.error("Error fetching accounts data");
       return null;
     }
 

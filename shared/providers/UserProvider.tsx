@@ -12,6 +12,7 @@ import { UserProfile } from "../types/user";
 
 interface UserContextType {
   user: {
+    id: string;
     email: string;
     username: string;
     avatar: string;
@@ -22,6 +23,7 @@ export const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserProfile>({
+    id: "",
     email: "",
     username: "",
     avatar: "",
@@ -37,7 +39,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
     const { data: profileData, error: profileError } = await supabase
       .from("profiles")
-      .select("email, username, avatar")
+      .select("id, email, username, avatar")
       .eq("id", authData.user.id)
       .single();
 
@@ -47,6 +49,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     setUser({
+      id: profileData.id,
       email: profileData.email,
       username: profileData.username,
       avatar: profileData.avatar,

@@ -27,23 +27,32 @@ export const TransactionsProvider = ({
   const supabase = createClient();
 
   const fetchTransactions = useCallback(async () => {
-    const { data: authData, error: authError } = await supabase.auth.getUser();
-    if (authError) {
-      console.error("Error fetching user:", authError);
-      return null;
-    }
-    const { data: transactionsData, error: profileError } = await supabase
-      .from("transactions")
-      .select("id, amount, date, category, type")
-      .eq("user_id", authData.user.id)
-      .limit(10);
+    try {
+      const { data: authData, error: authError } =
+        await supabase.auth.getUser();
+      if (authError) {
+        console.error("Error fetching user:", authError);
+        return null;
+      }
 
-    if (profileError) {
-      console.error("Error fetching profile data:", profileError);
-      return null;
-    }
+      const response = await fetch("/api/plaid/transactions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: authData.user.id }),
+      });
 
-    setTransactions(transactionsData);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to fetch transactions");
+      }
+
+      const data: Transaction[] = await response.json();
+      setTransactions(data);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
   }, [supabase]);
 
   useEffect(() => {
