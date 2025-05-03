@@ -12,6 +12,7 @@ import { MdAccountBalance } from "react-icons/md";
 import { FaCreditCard } from "react-icons/fa";
 import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 import AccountsTile from "@/features/dashboard/components/AccountsTile";
+import { BsCurrencyExchange } from "react-icons/bs";
 
 export default function Page() {
   const { user } = useUser();
@@ -34,9 +35,9 @@ export default function Page() {
       icon: <MdAccountBalance />,
     },
     {
-      name: "Transactions",
+      name: "Recent transactions",
       component: <TransactionsTile />,
-      icon: <MdAccountBalance />,
+      icon: <BsCurrencyExchange />,
     },
   ];
 

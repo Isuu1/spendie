@@ -3,7 +3,7 @@
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1.5rem;
   //background-color: rgba(37, 37, 37, 0.205);
   background: linear-gradient(
     55deg,
@@ -15,18 +15,44 @@
   border: 1px solid rgba(109, 109, 109, 0.2);
   border-radius: 14px;
   width: fit-content;
+  margin-bottom: 1rem;
+  width: 100%;
   &:hover {
     //transform: scale(1.04); /* Slightly scale up on hover */
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4); /* Increase shadow on hover */
   }
   .title {
     display: flex;
-    //align-items: center;
+    align-items: center;
     gap: 0.5rem;
     font-size: 1.1rem;
+    //color: #5be20d;
     .icon {
+      font-size: 1.4rem;
       & svg {
         display: block;
+      }
+    }
+    .tileMenu {
+      margin-left: auto;
+      //background: #5be20d;
+      background: #0a0a0a;
+      border-radius: 8px;
+      padding: 0.3rem;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s ease-in-out;
+      .icon {
+        font-size: 1.2rem;
+        color: #ffffff;
+        cursor: pointer;
+
+        & svg {
+          display: block;
+        }
+      }
+      &:hover {
+        background: #5be20d;
       }
     }
   }
