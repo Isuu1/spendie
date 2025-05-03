@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "i.pravatar.cc",
       },
+      {
+        protocol: "https",
+        hostname: "plaid-merchant-logos.plaid.com",
+      },
+      { protocol: "https", hostname: "plaid-category-icons.plaid.com" },
     ],
   },
 };

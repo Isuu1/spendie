@@ -4,6 +4,8 @@ import React from "react";
 import styles from "./TileWrapper.module.scss";
 //Animations
 import { motion } from "motion/react";
+//Icons
+import { TiThMenu } from "react-icons/ti";
 
 interface TileWrapperProps {
   name: string;
@@ -16,7 +18,10 @@ const TileWrapper: React.FC<TileWrapperProps> = ({ name, icon, children }) => {
     <motion.div className={styles.tile}>
       <div className={styles.title}>
         <span className={styles.icon}>{icon}</span>
-        <p>{name}</p>
+        <h3>{name}</h3>
+        <span className={styles.tileMenu}>
+          <TiThMenu className={styles.icon} />
+        </span>
       </div>
 
       <div>{children}</div>
