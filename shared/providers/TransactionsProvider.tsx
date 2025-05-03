@@ -46,6 +46,40 @@ export const TransactionsProvider = ({
     setTransactions(transactionsData);
   }, [supabase]);
 
+  // useEffect(() => {
+  //   const fetchTransactions = async () => {
+  //     if (!user) return;
+
+  //     try {
+  //       //setLoading(true);
+  //       const response = await fetch("/api/plaid/transactions", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ userId: user.id }),
+  //       });
+
+  //       if (!response.ok) {
+  //         const errorData = await response.json();
+  //         throw new Error(errorData.error || "Failed to fetch transactions");
+  //       }
+
+  //       const data: Transaction[] = await response.json();
+  //       setTransactions(data);
+  //     } catch (err: any) {
+  //       //setError(err.message);
+  //       console.error("Error fetching transactions:", err);
+  //     } finally {
+  //       //setLoading(false);
+  //     }
+  //   };
+
+  //   fetchTransactions();
+  // }, [user]); // Refetch if user changes
+
+  // console.log("Transactions:", transactions);
+
   useEffect(() => {
     fetchTransactions();
   }, [fetchTransactions]);

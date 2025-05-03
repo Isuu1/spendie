@@ -9,9 +9,10 @@ export enum TransactionType {
 }
 
 export type Transaction = {
-  id: number;
+  transaction_id: string;
   date: string;
   amount: number;
-  category: string;
-  type: TransactionType;
+  category: string[] | null;
+  transaction_type?: string | undefined;
+  logo_url?: string | null | undefined;
 };

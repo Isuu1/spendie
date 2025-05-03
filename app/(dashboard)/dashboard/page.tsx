@@ -10,9 +10,11 @@ import { useUser } from "@/shared/providers/UserProvider";
 //Icons
 import { MdAccountBalance } from "react-icons/md";
 import { FaCreditCard } from "react-icons/fa";
+import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 
 export default function Page() {
   const { user } = useUser();
+  console.log("User in dashboard page:", user);
 
   const tilesInUse = [
     // {
@@ -40,6 +42,7 @@ export default function Page() {
   console.log("User in dashboard page:", user);
   return (
     <>
+      <PlaidLink userId={user?.id} />
       {tilesInUse.map((tile) => (
         <TileWrapper key={tile.name} name={tile.name} icon={tile.icon}>
           {tile.component}
