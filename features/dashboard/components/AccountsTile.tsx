@@ -16,15 +16,25 @@ const AccountsTile = () => {
   }
 
   return (
-    <>
+    <div className={styles.accountsTile}>
       {accounts.map((account) => (
         <div key={account.account_id} className={styles.account}>
-          <h4>{account.name}</h4>
-          <p>Balance: {account.balances.current}</p>
-          <p>{account.type}</p>
+          {/* <div className={styles.accountOverlay}></div> */}
+          <div className={styles.type}>
+            <h4>{account.name}</h4>
+            <p>{account.type}</p>
+          </div>
+          <em className={styles.number}>****** {account.mask}</em>
+          <div className={styles.balance}>
+            <p>Balance</p>
+            <p>
+              {account.balances.iso_currency_code} {account.balances.current}
+            </p>
+          </div>
+
           {/* <p>Cards</p> */}
-          <div className={styles.cards}>
-            {/* {account.cards.map((card) => (
+          {/* <div className={styles.cards}>
+            {account.cards.map((card) => (
               <div key={card.id} className={styles.cardWrapper}>
                 <div className={styles.cardOverlay}></div>
                 <div className={styles.card}>
@@ -41,11 +51,11 @@ const AccountsTile = () => {
                   <IoTrashBin />
                 </div>
               </div>
-            ))} */}
-          </div>
+            ))}
+          </div> */}
         </div>
       ))}
-    </>
+    </div>
   );
 };
 

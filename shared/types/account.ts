@@ -26,4 +26,5 @@ export type Account = {
     iso_currency_code: string | null;
   };
   type: string;
+  mask: string;
 };

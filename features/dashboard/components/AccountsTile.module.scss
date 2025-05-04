@@ -1,27 +1,73 @@
-.account {
-  //   .cards {
-  //     display: flex;
-  //     .cardWrapper {
-  //       position: relative;
-  //       display: flex;
-  //       //padding: 1rem;
-  //       //   .cardOverlay {
-  //       //     z-index: 3;
-  //       //     position: absolute;
-  //       //     bottom: 0;
-  //       //     left: 0;
-  //       //     right: 0;
-  //       //     height: 50%;
-  //       //     background: linear-gradient(
-  //       //       55deg,
-  //       //       rgba(18, 18, 18, 0.11) 20%,
-  //       //       rgba(26, 26, 26, 0.096) 100%
-  //       //     );
-  //       //     backdrop-filter: blur(7px);
-  //       //   }
-  //     }
-  //   }
+.accountsTile {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  .account {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    //background: #0a0a0a;
+    background: #833ab4;
+    background: linear-gradient(
+      90deg,
+      rgba(131, 58, 180, 1) 0%,
+      rgba(253, 29, 29, 1) 50%,
+      rgba(252, 176, 69, 1) 100%
+    );
+    border-radius: 14px;
+    padding: 1rem;
+    .accountOverlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 40%;
+      width: 100%;
+      background: #0a0a0a7e;
+      backdrop-filter: blur(7px);
+    }
+    .type {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      & p {
+        background: #0a0a0a7e;
+        border-radius: 8px;
+        padding: 0.3rem;
+      }
+    }
+    .balance {
+      display: flex;
+      justify-content: space-between;
+      background: #0a0a0a7e;
+      border-radius: 8px;
+      padding: 0.5rem;
+    }
+  }
 }
+
+//   .cards {
+//     display: flex;
+//     .cardWrapper {
+//       position: relative;
+//       display: flex;
+//       //padding: 1rem;
+//       //   .cardOverlay {
+//       //     z-index: 3;
+//       //     position: absolute;
+//       //     bottom: 0;
+//       //     left: 0;
+//       //     right: 0;
+//       //     height: 50%;
+//       //     background: linear-gradient(
+//       //       55deg,
+//       //       rgba(18, 18, 18, 0.11) 20%,
+//       //       rgba(26, 26, 26, 0.096) 100%
+//       //     );
+//       //     backdrop-filter: blur(7px);
+//       //   }
+//     }
+//   }
 
 .card {
   display: flex;
