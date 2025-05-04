@@ -1,67 +1,38 @@
-.account {
-  //   .cards {
-  //     display: flex;
-  //     .cardWrapper {
-  //       position: relative;
-  //       display: flex;
-  //       //padding: 1rem;
-  //       //   .cardOverlay {
-  //       //     z-index: 3;
-  //       //     position: absolute;
-  //       //     bottom: 0;
-  //       //     left: 0;
-  //       //     right: 0;
-  //       //     height: 50%;
-  //       //     background: linear-gradient(
-  //       //       55deg,
-  //       //       rgba(18, 18, 18, 0.11) 20%,
-  //       //       rgba(26, 26, 26, 0.096) 100%
-  //       //     );
-  //       //     backdrop-filter: blur(7px);
-  //       //   }
-  //     }
-  //   }
-}
-
-.card {
+.accountsTile {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 1rem;
-  border-radius: 15px;
-  background: hsla(279, 95%, 49%, 1);
-
-  background: linear-gradient(
-    225deg,
-    hsla(279, 95%, 49%, 1) 0%,
-    hsla(295, 96%, 50%, 1) 100%
-  );
-
-  background: -moz-linear-gradient(
-    225deg,
-    hsla(279, 95%, 49%, 1) 0%,
-    hsla(295, 96%, 50%, 1) 100%
-  );
-
-  background: -webkit-linear-gradient(
-    225deg,
-    hsla(279, 95%, 49%, 1) 0%,
-    hsla(295, 96%, 50%, 1) 100%
-  );
-  .type {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .icon {
-      font-size: 1.6rem;
-    }
-  }
-  .details {
-    z-index: 4;
+  .account {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 0.5rem;
+    gap: 1rem;
+    //background: #0a0a0a;
+    background: #833ab4;
+    background: linear-gradient(
+      90deg,
+      rgba(131, 58, 180, 1) 0%,
+      rgba(253, 29, 29, 1) 50%,
+      rgba(252, 176, 69, 1) 100%
+    );
+    border-radius: 14px;
+    padding: 1rem;
+    .type {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      & p {
+        background: #0a0a0a7e;
+        border-radius: 8px;
+        padding: 0.3rem;
+      }
+    }
+    .balance {
+      display: flex;
+      justify-content: space-between;
+      background: #0a0a0a7e;
+      border-radius: 8px;
+      padding: 0.5rem;
+    }
   }
 }
