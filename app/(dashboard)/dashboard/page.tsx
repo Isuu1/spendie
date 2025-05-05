@@ -4,7 +4,7 @@ import CardsTile from "@/features/dashboard/components/CardsTile";
 //Components
 //import AccountsTile from "@/features/dashboard/components/AccountsTile";
 import TileWrapper from "@/features/dashboard/components/TileWrapper";
-import TotalBalanceTile from "@/features/dashboard/components/TotalBalanceTile";
+import TotalBalanceTile from "@/features/total-balance/components/TotalBalanceTile";
 import TransactionsTile from "@/features/dashboard/components/TransactionsTile";
 import { useUser } from "@/shared/providers/UserProvider";
 //Icons
