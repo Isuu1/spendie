@@ -15,4 +15,5 @@ export type Transaction = {
   category: string[] | null;
   transaction_type?: string | undefined;
   logo_url?: string | null | undefined;
+  iso_currency_code?: string | null | undefined;
 };
