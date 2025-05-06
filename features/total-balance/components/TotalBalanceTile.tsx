@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAccounts } from "@/shared/providers/AccountsProvider";
 //Styles
 import styles from "./TotalBalanceTile.module.scss";
@@ -7,15 +7,43 @@ import { FaLongArrowAltUp } from "react-icons/fa";
 import { FaLongArrowAltDown } from "react-icons/fa";
 import { useTransactions } from "@/shared/providers/TransactionsProvider";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
-import { transactionsExpense, transactionsIncome } from "../lib/utils";
+import {
+  getExpenseTransactionsFromDate,
+  getIncomeTransactionsFromDate,
+} from "../lib/utils";
 import ChartLabel from "@/shared/components/ChartLabel";
 
 const TotalBalanceTile = () => {
   const { accounts } = useAccounts();
   const { transactions } = useTransactions();
 
-  const incomeValue = transactionsIncome(transactions ?? []);
-  const expenseValue = transactionsExpense(transactions ?? []);
+  const [activeTab, setActiveTab] = useState("summary");
+
+  if (!accounts || !transactions) {
+    return <p>Loading...</p>;
+  }
+
+  const incomeSummary = () => {
+    const summary = getIncomeTransactionsFromDate(transactions).reduce(
+      (sum, currentTransaction) => {
+        const currentAmount = currentTransaction.amount ?? 0;
+        return sum + currentAmount;
+      },
+      0
+    );
+    return parseFloat(summary.toFixed(2));
+  };
+
+  const expenseSummary = () => {
+    const summary = getExpenseTransactionsFromDate(transactions).reduce(
+      (sum, currentTransaction) => {
+        const currentAmount = currentTransaction.amount ?? 0;
+        return sum + currentAmount;
+      },
+      0
+    );
+    return parseFloat(summary.toFixed(2));
+  };
 
   const totalBalance = accounts?.reduce((sum, currentAccount) => {
     const currentBalance = currentAccount.balances.current ?? 0;
@@ -23,20 +51,40 @@ const TotalBalanceTile = () => {
   }, 0);
 
   const summaryChartData = [
-    { name: "Income", value: incomeValue },
-    { name: "Expense", value: Math.abs(expenseValue) },
+    { name: "Income", value: incomeSummary() },
+    { name: "Expense", value: Math.abs(expenseSummary()) },
   ];
 
-  if (!accounts) {
-    return <p>Loading...</p>;
-  }
+  // const incomeChartData = getIncomeTransactionsFromDate(transactions).map(
+  //   (transaction) => {
+  //     return {
+  //       name: transaction.category,
+  //       value: Math.abs(transaction.amount),
+  //     };
+  //   }
+  // );
 
   return (
     <div className={styles.totalBalanceTile}>
       <ul className={styles.menu}>
-        <li className={`${styles.item} ${styles.active}`}>Summary</li>
-        <li className={styles.item}>Income</li>
-        <li className={styles.item}>Expense</li>
+        <li
+          className={`${styles.item} ${activeTab === "summary" ? styles.active : ""}`}
+          onClick={() => setActiveTab("summary")}
+        >
+          Summary
+        </li>
+        <li
+          className={`${styles.item} ${activeTab === "income" ? styles.active : ""}`}
+          onClick={() => setActiveTab("income")}
+        >
+          Income
+        </li>
+        <li
+          className={`${styles.item} ${activeTab === "expense" ? styles.active : ""}`}
+          onClick={() => setActiveTab("expense")}
+        >
+          Expense
+        </li>
       </ul>
       <div className={styles.range}>This month</div>
       <div className={styles.transactionsSummary}>
@@ -67,13 +115,13 @@ const TotalBalanceTile = () => {
             <i className={styles.icon}>
               <FaLongArrowAltUp />
             </i>
-            {incomeValue}
+            {incomeSummary()}
           </strong>
           <strong className={styles.expense}>
             <i className={styles.icon}>
               <FaLongArrowAltDown />
             </i>
-            {expenseValue}
+            {expenseSummary()}
           </strong>
         </div>
       </div>
