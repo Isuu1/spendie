@@ -22,16 +22,8 @@ export const getIncomeTransactionsFromDate = (transactions: Transaction[]) => {
     new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
     new Date(),
     transactions
-  ).filter((transaction) => transaction.amount > 0);
+  ).filter((transaction) => transaction.amount < 0);
   return transactionsByIncome;
-  // const incomeSummary = transactionsByIncome.reduce(
-  //   (sum, currentTransaction) => {
-  //     const currentAmount = currentTransaction.amount ?? 0;
-  //     return sum + currentAmount;
-  //   },
-  //   0
-  // );
-  // return parseFloat(incomeSummary.toFixed(2));
 };
 
 export const getExpenseTransactionsFromDate = (transactions: Transaction[]) => {
@@ -39,14 +31,6 @@ export const getExpenseTransactionsFromDate = (transactions: Transaction[]) => {
     new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
     new Date(),
     transactions
-  ).filter((transaction) => transaction.amount < 0);
+  ).filter((transaction) => transaction.amount > 0);
   return transactionsByExpense;
-  //   const expenseSummary = transactionsByExpense.reduce(
-  //     (sum, currentTransaction) => {
-  //       const currentAmount = currentTransaction.amount ?? 0;
-  //       return sum + currentAmount;
-  //     },
-  //     0
-  //   );
-  //   return parseFloat(expenseSummary.toFixed(2));
 };
