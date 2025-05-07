@@ -8,10 +8,13 @@ import { FaLongArrowAltDown } from "react-icons/fa";
 //Providers
 import { useUser } from "@/shared/providers/UserProvider";
 import { useAccounts } from "@/shared/providers/AccountsProvider";
+import moment from "moment";
 
 const TotalBalanceTile = () => {
   const { accounts } = useAccounts();
   const { user } = useUser();
+
+  //const [displayedBalance, setDisplayedBalance] = useState<number>(0);
 
   if (!accounts) {
     return <p>Loading...</p>;
@@ -41,14 +44,37 @@ const TotalBalanceTile = () => {
   const latestStandingOrderIncome = getLatestStandingOrder("income");
   const latestStandingOrderExpense = getLatestStandingOrder("expense");
 
-  const calculateFutureBalance = (
-    currentBalance: number,
-    standingOrderIncome: number,
-    standingOrderExpense: number
-  ) => {
-    const futureBalance =
-      currentBalance + standingOrderIncome - standingOrderExpense;
-    return futureBalance;
+  const calculateFutureBalance = () => {
+    const currentBalance = totalBalance ?? 0;
+    const currentDate = moment(new Date()).format("D MMM YYYY");
+    console.log("currentDate", currentDate);
+
+    const startOfMonth = moment().startOf("month");
+    const endOfMonth = moment().endOf("month");
+
+    let incomeAmountForCalculation = 0;
+    if (latestStandingOrderIncome?.date) {
+      const incomeDate = moment(new Date(latestStandingOrderIncome.date));
+      console.log("incomeDate", incomeDate);
+
+      if (incomeDate.isBetween(startOfMonth, endOfMonth, null, "[]")) {
+        //'[]' includes start and end dates
+        incomeAmountForCalculation = latestStandingOrderIncome.amount ?? 0;
+      }
+    }
+
+    let expenseAmountForCalculation = 0;
+    if (latestStandingOrderExpense?.date) {
+      const expenseDate = moment(new Date(latestStandingOrderExpense.date));
+      if (expenseDate.isBetween(startOfMonth, endOfMonth, null, "[]")) {
+        //'[]' includes start and end dates
+        expenseAmountForCalculation = latestStandingOrderExpense.amount ?? 0;
+      }
+    }
+
+    return (
+      currentBalance + incomeAmountForCalculation - expenseAmountForCalculation
+    );
   };
 
   return (
@@ -56,15 +82,15 @@ const TotalBalanceTile = () => {
       <h1 className={styles.balance}>£{totalBalance ?? 0}</h1>
 
       <div className={styles.futureBalance}>
-        <div className={styles.range}>End of the month balance</div>
-        <h2 className={styles.value}>
-          £
-          {calculateFutureBalance(
-            totalBalance ?? 0,
-            latestStandingOrderIncome?.amount ?? 0,
-            latestStandingOrderExpense?.amount ?? 0
-          ).toFixed(2)}
-        </h2>
+        <div className={styles.range}>
+          <label htmlFor="range">Time period</label>
+          <select id="range" name="range" className={styles.select}>
+            <option value="1">End of the month</option>
+            <option value="2">Until next payment</option>
+          </select>
+        </div>
+
+        <h2 className={styles.value}>£{calculateFutureBalance().toFixed(2)}</h2>
       </div>
 
       <div className={styles.stats}>

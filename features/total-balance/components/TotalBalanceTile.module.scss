@@ -15,11 +15,41 @@ $secondary-text-color: #808080;
     justify-content: space-between;
     align-items: center;
     .range {
-      background: #0a0a0a;
-      color: $secondary-text-color;
-      padding: 0.5rem;
-      border-radius: 8px;
       font-size: 0.9rem;
+      padding: 0 0.5rem;
+      background: #0a0a0a;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      & label {
+        display: none;
+      }
+      &:hover {
+        background: #494949;
+        .select {
+          color: #ffffff;
+        }
+      }
+      .select {
+        cursor: pointer;
+        background: transparent;
+        border-radius: 8px;
+        border: none;
+        color: $secondary-text-color;
+        font-weight: 600;
+        outline: none;
+        transition: all 0.3s ease;
+        padding: 0.5rem 0;
+        & option {
+          //background: #0a0a0a;
+          background: #494949;
+          color: #fff;
+          padding: 0.5rem;
+          &:hover {
+            background: #0a0a0a;
+          }
+        }
+      }
     }
   }
   .stats {
