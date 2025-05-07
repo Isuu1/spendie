@@ -9,30 +9,32 @@ import { FaLongArrowAltUp } from "react-icons/fa";
 import { FaLongArrowAltDown } from "react-icons/fa";
 import { useTransactions } from "@/shared/providers/TransactionsProvider";
 //import { Cell, Legend, Pie, PieChart, ResponsiveContainer } from "recharts";
-import {
-  //getExpenseTransactionsFromDate,
-  getIncomeTransactionsFromDate,
-} from "../lib/utils";
+import {} from //getExpenseTransactionsFromDate,
+//getIncomeTransactionsFromDate,
+"../lib/utils";
+import { useUser } from "@/shared/providers/UserProvider";
 //import ChartLabel from "@/shared/components/ChartLabel";
 
 const TotalBalanceTile = () => {
   const { accounts } = useAccounts();
   const { transactions } = useTransactions();
+  const { user } = useUser();
+  console.log("user", user);
 
   if (!accounts || !transactions) {
     return <p>Loading...</p>;
   }
 
-  const incomeSummary = () => {
-    const summary = getIncomeTransactionsFromDate(transactions).reduce(
-      (sum, currentTransaction) => {
-        const currentAmount = currentTransaction.amount ?? 0;
-        return sum + currentAmount;
-      },
-      0
-    );
-    return parseFloat(summary.toFixed(2));
-  };
+  // const incomeSummary = () => {
+  //   const summary = getIncomeTransactionsFromDate(transactions).reduce(
+  //     (sum, currentTransaction) => {
+  //       const currentAmount = currentTransaction.amount ?? 0;
+  //       return sum + currentAmount;
+  //     },
+  //     0
+  //   );
+  //   return parseFloat(summary.toFixed(2));
+  // };
 
   // const expenseSummary = () => {
   //   const summary = getExpenseTransactionsFromDate(transactions).reduce(
@@ -105,13 +107,50 @@ const TotalBalanceTile = () => {
   //   return parseFloat(percent.toFixed(2));
   // }
 
+  const getLatestStandingOrder = (type: string) => {
+    const filteredByType = user?.standing_orders?.filter(
+      (standingOrder) => standingOrder.type === type // Filter by type
+    );
+    if (!filteredByType || filteredByType.length === 0) {
+      return null; // No standing orders of this type
+    }
+
+    const sortedStandingOrders = filteredByType.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateA.getTime() - dateB.getTime();
+    });
+    return sortedStandingOrders[0] ?? null;
+  };
+
+  const latestStandingOrderIncome = getLatestStandingOrder("income");
+  console.log("latestStandingOrder", latestStandingOrderIncome);
+  const latestStandingOrderExpense = getLatestStandingOrder("expense");
+
+  const calculateFutureBalance = (
+    currentBalance: number,
+    standingOrderIncome: number,
+    standingOrderExpense: number
+  ) => {
+    const futureBalance =
+      currentBalance + standingOrderIncome - standingOrderExpense;
+    return futureBalance;
+  };
+
   return (
     <div className={styles.totalBalanceTile}>
       <h1 className={styles.balance}>£{totalBalance ?? 0}</h1>
 
       <div className={styles.futureBalance}>
-        <div className={styles.range}>By the end of month</div>
-        <h2 className={styles.value}>£{Math.abs(incomeSummary())}</h2>
+        <div className={styles.range}>End of the month balance</div>
+        <h2 className={styles.value}>
+          £
+          {calculateFutureBalance(
+            totalBalance ?? 0,
+            latestStandingOrderIncome?.amount ?? 0,
+            latestStandingOrderExpense?.amount ?? 0
+          ).toFixed(2)}
+        </h2>
       </div>
 
       <div className={styles.stats}>
@@ -121,24 +160,34 @@ const TotalBalanceTile = () => {
             <FaLongArrowAltUp />
             <p>Income</p>
           </div>
-
-          <div className={styles.incomeDetails}>
-            <span>30 Jun 2024</span>
-            <span>Salary</span>
-            <span>£300</span>
-          </div>
+          {latestStandingOrderIncome ? (
+            <div className={styles.incomeDetails}>
+              <span>{latestStandingOrderIncome.date}</span>
+              <span>{latestStandingOrderIncome.name}</span>
+              <span>{latestStandingOrderIncome.amount}£</span>
+            </div>
+          ) : (
+            <div className={styles.incomeDetails}>
+              <span>No planned income this month</span>
+            </div>
+          )}
         </div>
         <div className={styles.expense}>
           <div className={styles.label}>
             <FaLongArrowAltDown />
             <p>Expense</p>
           </div>
-
-          <div className={styles.incomeDetails}>
-            <span>25 Jun 2024</span>
-            <span>Phone</span>
-            <span>£55</span>
-          </div>
+          {latestStandingOrderExpense ? (
+            <div className={styles.incomeDetails}>
+              <span>{latestStandingOrderExpense.date}</span>
+              <span>{latestStandingOrderExpense.name}</span>
+              <span>{latestStandingOrderExpense.amount}£</span>
+            </div>
+          ) : (
+            <div className={styles.incomeDetails}>
+              <span>No planned expenses this month</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
