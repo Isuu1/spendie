@@ -19,8 +19,6 @@ const TotalBalanceTile = () => {
   const { accounts } = useAccounts();
   const { transactions } = useTransactions();
 
-  //const [activeTab, setActiveTab] = useState("summary");
-
   if (!accounts || !transactions) {
     return <p>Loading...</p>;
   }
@@ -143,93 +141,6 @@ const TotalBalanceTile = () => {
           </div>
         </div>
       </div>
-
-      {/* <ul className={styles.menu}>
-        <li
-          className={`${styles.item} ${activeTab === "summary" ? styles.active : ""}`}
-          onClick={() => setActiveTab("summary")}
-        >
-          Summary
-        </li>
-        <li
-          className={`${styles.item} ${activeTab === "income" ? styles.active : ""}`}
-          onClick={() => setActiveTab("income")}
-        >
-          Income
-        </li>
-        <li
-          className={`${styles.item} ${activeTab === "expense" ? styles.active : ""}`}
-          onClick={() => setActiveTab("expense")}
-        >
-          Expense
-        </li>
-      </ul> */}
-      {/* <div className={styles.range}>This month</div> */}
-      {/* <div className={styles.balanceSummary}>
-        <strong className={styles.income}>
-          <p>Total income</p>
-          <div className={styles.value}>
-            <i className={styles.icon}>
-              <FaLongArrowAltUp />
-            </i>
-            <span>{Math.abs(incomeSummary())}£</span>
-          </div>
-        </strong>
-        <strong className={styles.expense}>
-          <p>Total expense</p>
-          <div className={styles.value}>
-            <i className={styles.icon}>
-              <FaLongArrowAltDown />
-            </i>
-            {expenseSummary()}£
-          </div>
-        </strong>
-      </div> */}
-      {/* <div className={styles.transactionsSummary}>
-        <ResponsiveContainer width={"100%"} height={300}>
-          <PieChart>
-            <Pie
-              data={displayedChart()}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
-              stroke="#fff"
-              labelLine={false}
-              label={(props) => <ChartLabel {...props} />}
-            >
-            </Pie>
-            <Legend verticalAlign="bottom" height={36} />
-          </PieChart>
-        </ResponsiveContainer>
-        <div className={styles.balanceSummary}>
-          <strong className={styles.income}>
-            <h3>Total income</h3>
-            <i className={styles.icon}>
-              <FaLongArrowAltUp />
-            </i>
-            {Math.abs(incomeSummary())}£
-          </strong>
-          <strong className={styles.expense}>
-            <h3>Total expense</h3>
-            <i className={styles.icon}>
-              <FaLongArrowAltDown />
-            </i>
-            {expenseSummary()}£
-          </strong>
-        </div>
-      </div> */}
-
-      {/* <strong className={styles.totalBalance}>
-        <span>Total</span> {totalBalance ?? 0}
-      </strong> */}
-      {/* {accounts.map((account) => (
-        <div key={account.account_id}>
-          <h4>{account.name}</h4>
-          <p>Balance: {formatGBP(account.balances.current)}</p>
-        </div>
-      ))} */}
     </div>
   );
 };

@@ -21,8 +21,6 @@ $secondary-text-color: #808080;
       border-radius: 8px;
       font-size: 0.9rem;
     }
-    .value {
-    }
   }
   .stats {
     font-size: 0.9rem;
@@ -84,26 +82,3 @@ $secondary-text-color: #808080;
     }
   }
 }
-
-// .menu {
-//   list-style: none;
-//   display: flex;
-//   gap: 0.4rem;
-//   background: #0a0a0a;
-//   border-radius: 8px;
-//   padding: 0.5rem;
-//   .item {
-//     cursor: pointer;
-//     //   background: #5be20d;
-//     //   color: #255c05;
-//     padding: 0.5rem;
-//     border-radius: 8px;
-//     //   background: #0a0a0a;
-//     //   border-radius: 8px;
-//     //   padding: 0.3rem;
-//   }
-//   .active {
-//     background: #5be20d;
-//     color: #255c05;
-//   }
-// }
