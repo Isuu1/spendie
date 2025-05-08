@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import moment from "moment";
+import React from "react";
+//import moment from "moment";
 
 //Styles
 import styles from "./TotalBalanceTile.module.scss";
@@ -9,15 +9,14 @@ import { FaLongArrowAltDown } from "react-icons/fa";
 //Providers
 import { useUser } from "@/shared/providers/UserProvider";
 import { useAccounts } from "@/shared/providers/AccountsProvider";
+import { getLatestStandingOrder } from "../lib/utils";
 
 const TotalBalanceTile = () => {
   const { accounts } = useAccounts();
   const { user } = useUser();
 
-  const [displayedBalance, setDisplayedBalance] =
-    useState<string>("end of the month");
-
-  console.log("displayedBalance", displayedBalance);
+  // const [displayedFutureBalance, setDisplayedFutureBalance] =
+  //   useState<string>("end of the month");
 
   if (!accounts) {
     return <p>Loading...</p>;
@@ -28,78 +27,52 @@ const TotalBalanceTile = () => {
     return sum + currentBalance;
   }, 0);
 
-  const getLatestStandingOrder = (type: string) => {
-    const filteredByType = user?.standing_orders?.filter(
-      (standingOrder) => standingOrder.type === type
-    );
-    if (!filteredByType || filteredByType.length === 0) {
-      return null; //No standing orders of this type
-    }
+  const latestStandingOrderIncome = getLatestStandingOrder("income", user);
+  const latestStandingOrderExpense = getLatestStandingOrder("expense", user);
 
-    const sortedStandingOrders = filteredByType.sort((a, b) => {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
-      return dateA.getTime() - dateB.getTime();
-    });
-    return sortedStandingOrders[0] ?? null;
-  };
+  // const startOfMonth = moment().startOf("month");
+  // const endOfMonth = moment().endOf("month");
 
-  const latestStandingOrderIncome = getLatestStandingOrder("income");
-  const latestStandingOrderExpense = getLatestStandingOrder("expense");
+  // const calculateFutureBalance = () => {
+  //   if (!latestStandingOrderIncome && !latestStandingOrderExpense) {
+  //     return; // No income date available
+  //   }
+  //   const incomeDate = moment(new Date(latestStandingOrderIncome.date));
+  //   const expenseDate = moment(new Date(latestStandingOrderExpense.date));
+  //   let incomeAmountForCalculation = 0;
+  //   let expenseAmountForCalculation = 0;
+  //   if (displayedFutureBalance === "end of the month") {
+  //     if (incomeDate.isBetween(startOfMonth, endOfMonth, null, "[]")) {
+  //       //'[]' includes start and end dates
+  //       incomeAmountForCalculation = latestStandingOrderIncome.amount ?? 0;
+  //     }
 
-  const calculateFutureBalance = () => {
-    const currentBalance = totalBalance ?? 0;
+  //     if (expenseDate.isBetween(startOfMonth, endOfMonth, null, "[]")) {
+  //       //'[]' includes start and end dates
+  //       expenseAmountForCalculation = latestStandingOrderExpense.amount ?? 0;
+  //     }
+  //   }
+  //   if (displayedFutureBalance === "after next income") {
+  //     if (incomeDate.isAfter(moment(), "day")) {
+  //       incomeAmountForCalculation = latestStandingOrderIncome.amount ?? 0;
+  //     }
 
-    const startOfMonth = moment().startOf("month");
-    const endOfMonth = moment().endOf("month");
+  //     if (expenseDate.isAfter(moment(), "day")) {
+  //       expenseAmountForCalculation = latestStandingOrderExpense.amount ?? 0;
+  //     }
+  //   }
 
-    let incomeAmountForCalculation = 0;
-    let expenseAmountForCalculation = 0;
-    if (displayedBalance === "end of the month") {
-      if (latestStandingOrderIncome?.date) {
-        const incomeDate = moment(new Date(latestStandingOrderIncome.date));
-        console.log("incomeDate", incomeDate);
-
-        if (incomeDate.isBetween(startOfMonth, endOfMonth, null, "[]")) {
-          //'[]' includes start and end dates
-          incomeAmountForCalculation = latestStandingOrderIncome.amount ?? 0;
-        }
-      }
-      if (latestStandingOrderExpense?.date) {
-        const expenseDate = moment(new Date(latestStandingOrderExpense.date));
-        if (expenseDate.isBetween(startOfMonth, endOfMonth, null, "[]")) {
-          //'[]' includes start and end dates
-          expenseAmountForCalculation = latestStandingOrderExpense.amount ?? 0;
-        }
-      }
-    }
-    if (displayedBalance === "after next income") {
-      if (latestStandingOrderIncome?.date) {
-        const incomeDate = moment(new Date(latestStandingOrderIncome.date));
-        console.log("incomeDate", incomeDate);
-
-        if (incomeDate.isAfter(moment(), "day")) {
-          incomeAmountForCalculation = latestStandingOrderIncome.amount ?? 0;
-        }
-      }
-      if (latestStandingOrderExpense?.date) {
-        const expenseDate = moment(new Date(latestStandingOrderExpense.date));
-        if (expenseDate.isAfter(moment(), "day")) {
-          expenseAmountForCalculation = latestStandingOrderExpense.amount ?? 0;
-        }
-      }
-    }
-
-    return (
-      currentBalance + incomeAmountForCalculation - expenseAmountForCalculation
-    );
-  };
+  //   return (
+  //     totalBalance + incomeAmountForCalculation - expenseAmountForCalculation
+  //   );
+  // };
 
   const handleFutureBalanceChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const selectedValue = e.target.value;
-    setDisplayedBalance(selectedValue);
+    console.log("Selected value:", selectedValue);
+    //setDisplayedFutureBalance(selectedValue);
   };
 
   return (
@@ -119,8 +92,19 @@ const TotalBalanceTile = () => {
             <option value="after next income">After next income</option>
           </select>
         </div>
-
-        <h2 className={styles.value}>£{calculateFutureBalance().toFixed(2)}</h2>
+        {/* {displayedFutureBalance === "end of the month" && (
+          <p className={styles.rangeSubtitle}>
+            {moment().endOf("month").format("DD MMMM YYYY")}
+          </p>
+        )}
+        {displayedFutureBalance === "after next income" && (
+          <p className={styles.rangeSubtitle}>
+            {moment(new Date(latestStandingOrderIncome.date)).format(
+              "DD MMMM YYYY"
+            )}
+          </p>
+        )} */}
+        {/* <h2 className={styles.value}>£{calculateFutureBalance().toFixed(2)}</h2> */}
       </div>
 
       <div className={styles.stats}>
@@ -138,7 +122,7 @@ const TotalBalanceTile = () => {
             </div>
           ) : (
             <div className={styles.incomeDetails}>
-              <span>No planned income this month</span>
+              <span>No standing orders set up</span>
             </div>
           )}
         </div>
@@ -155,7 +139,7 @@ const TotalBalanceTile = () => {
             </div>
           ) : (
             <div className={styles.incomeDetails}>
-              <span>No planned expenses this month</span>
+              <span>No standing orders set up</span>
             </div>
           )}
         </div>

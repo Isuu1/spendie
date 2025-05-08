@@ -51,6 +51,10 @@ $secondary-text-color: #808080;
         }
       }
     }
+    .rangeSubtitle {
+      font-size: 0.8rem;
+      color: $secondary-text-color;
+    }
   }
   .stats {
     font-size: 0.9rem;
@@ -108,6 +112,21 @@ $secondary-text-color: #808080;
         flex: 1;
         display: flex;
         justify-content: space-between;
+      }
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  .totalBalanceTile {
+    .stats {
+      .income {
+        .label {
+          width: 30px;
+          & p {
+            display: none;
+          }
+        }
       }
     }
   }

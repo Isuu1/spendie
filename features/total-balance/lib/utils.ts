@@ -1,4 +1,21 @@
 import { Transaction } from "@/shared/types/transaction";
+import { UserProfile } from "@/shared/types/user";
+
+export const getLatestStandingOrder = (type: string, user: UserProfile) => {
+  const filteredByType = user?.standing_orders?.filter(
+    (standingOrder) => standingOrder.type === type
+  );
+  if (!filteredByType || filteredByType.length === 0) {
+    return null; //No standing orders of this type
+  }
+
+  const sortedStandingOrders = filteredByType.sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateA.getTime() - dateB.getTime();
+  });
+  return sortedStandingOrders[0] ?? null;
+};
 
 export const getTransactionsByDateRange = (
   startDate: Date,
