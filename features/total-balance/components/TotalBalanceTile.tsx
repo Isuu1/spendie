@@ -9,7 +9,9 @@ import { FaLongArrowAltDown } from "react-icons/fa";
 //Providers
 import { useUser } from "@/shared/providers/UserProvider";
 import { useAccounts } from "@/shared/providers/AccountsProvider";
+//Utils
 import { getLatestStandingOrder } from "../lib/utils";
+//Components
 import FutureBalance from "./FutureBalance";
 
 const TotalBalanceTile = () => {
