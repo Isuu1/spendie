@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+import moment from "moment";
 
 //Styles
 import styles from "./FutureBalance.module.scss";
-import moment from "moment";
+//Types
 import { StandingOrder } from "@/shared/types/standing-order";
 
 interface FutureBalanceProps {
