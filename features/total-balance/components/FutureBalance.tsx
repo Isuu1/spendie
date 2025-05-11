@@ -70,33 +70,23 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
   };
 
   return (
-    <div className={styles.futureBalance}>
-      <div className={styles.range}>
-        <label htmlFor="range">Time period</label>
-        <select
-          id="range"
-          name="range"
-          className={styles.select}
-          onChange={handleFutureBalanceChange}
-        >
-          <option value="end of the month">End of the month</option>
-          <option value="after next income">After next income</option>
-        </select>
+    <>
+      <div className={styles.futureBalance}>
+        <div className={styles.range}>
+          <label htmlFor="range">Time period</label>
+          <select
+            id="range"
+            name="range"
+            className={styles.select}
+            onChange={handleFutureBalanceChange}
+          >
+            <option value="end of the month">End of the month</option>
+            <option value="after next income">After next income</option>
+          </select>
+        </div>
+        <h2 className={styles.value}>£{calculateFutureBalance().toFixed(2)}</h2>
       </div>
-      {/* {displayedFutureBalance === "end of the month" && (
-          <p className={styles.rangeSubtitle}>
-            {moment().endOf("month").format("DD MMMM YYYY")}
-          </p>
-        )}
-        {displayedFutureBalance === "after next income" && (
-          <p className={styles.rangeSubtitle}>
-            {moment(new Date(latestStandingOrderIncome.date)).format(
-              "DD MMMM YYYY"
-            )}
-          </p>
-        )} */}
-      <h2 className={styles.value}>£{calculateFutureBalance().toFixed(2)}</h2>
-    </div>
+    </>
   );
 };
 
