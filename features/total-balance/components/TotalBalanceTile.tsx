@@ -1,5 +1,4 @@
 import React from "react";
-//import moment from "moment";
 
 //Styles
 import styles from "./TotalBalanceTile.module.scss";
