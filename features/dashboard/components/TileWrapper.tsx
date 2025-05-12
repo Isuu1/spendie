@@ -13,12 +13,12 @@ interface TileWrapperProps {
   children: React.ReactNode;
 }
 
-const TileWrapper: React.FC<TileWrapperProps> = ({ name, icon, children }) => {
+const TileWrapper: React.FC<TileWrapperProps> = ({ name, children }) => {
   return (
     <motion.div className={styles.tile}>
       <div className={styles.title}>
-        <span className={styles.icon}>{icon}</span>
-        <h3>{name}</h3>
+        {/* <span className={styles.icon}>{icon}</span> */}
+        <p>{name}</p>
         <span className={styles.tileMenu}>
           <TiThMenu className={styles.icon} />
         </span>

@@ -1,0 +1,87 @@
+$primary-text-color: #fff;
+$secondary-text-color: #808080;
+
+.totalBalanceTile {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  .balance {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .stats {
+    font-size: 0.9rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    .title {
+      margin-bottom: 0.5rem;
+    }
+    .income {
+      flex: 1;
+      color: $secondary-text-color;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-radius: 8px;
+      padding: 0.2rem;
+      .label {
+        display: flex;
+        gap: 0.2rem;
+        align-items: center;
+        justify-content: center;
+        color: #41b300;
+        background: #42b30059;
+        border-radius: 8px;
+        padding: 0.3rem 0.5rem 0.3rem 0.4rem;
+        width: 90px;
+      }
+      .incomeDetails {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    .expense {
+      flex: 1;
+      color: $secondary-text-color;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-radius: 8px;
+      padding: 0.2rem;
+      .label {
+        display: flex;
+        gap: 0.2rem;
+        align-items: center;
+        justify-content: center;
+        color: #ff0000;
+        background: #ff000059;
+        border-radius: 8px;
+        padding: 0.3rem 0.5rem 0.3rem 0.4rem;
+        width: 90px;
+      }
+      .incomeDetails {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  .totalBalanceTile {
+    .stats {
+      .income {
+        .label {
+          width: 30px;
+          & p {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
