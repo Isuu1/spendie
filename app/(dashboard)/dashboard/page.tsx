@@ -44,7 +44,10 @@ export default function Page() {
   console.log("User in dashboard page:", user);
   return (
     <>
-      <PlaidLink userId={user?.id} />
+      <div style={{ display: "none" }}>
+        <PlaidLink userId={user?.id} />
+      </div>
+
       {tilesInUse.map((tile) => (
         <TileWrapper key={tile.name} name={tile.name} icon={tile.icon}>
           {tile.component}
