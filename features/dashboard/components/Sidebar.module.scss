@@ -1,4 +1,7 @@
 .sidebar {
+  position: fixed;
+  left: 0;
+  height: 100%;
   .menu {
     display: flex;
     flex-direction: column;
