@@ -5,7 +5,7 @@ $background: #0a0a0a;
   position: fixed;
   left: 0;
   height: 100%;
-  padding: 0 0.5rem;
+  padding: 0 0.8rem;
   background: $background;
   width: auto;
   .menu {
@@ -17,11 +17,12 @@ $background: #0a0a0a;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      cursor: pointer;
       & svg {
         display: block;
       }
       .label {
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
     }
   }

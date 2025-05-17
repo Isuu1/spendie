@@ -6,7 +6,8 @@ import styles from "./Sidebar.module.scss";
 
 //Icons
 import { TbLayoutDashboardFilled } from "react-icons/tb";
-import { BsWalletFill } from "react-icons/bs";
+import { IoWallet } from "react-icons/io5";
+
 import { FaCalculator } from "react-icons/fa6";
 
 export default function Sidebar() {
@@ -26,7 +27,7 @@ export default function Sidebar() {
           {!isCollapsed && <span className={styles.label}>Dashboard</span>}
         </li>
         <li className={styles.sidebarItem}>
-          <BsWalletFill />
+          <IoWallet />
           {!isCollapsed && <span className={styles.label}>Transactions</span>}
         </li>
         <li className={styles.sidebarItem}>
