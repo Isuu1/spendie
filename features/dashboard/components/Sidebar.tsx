@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 
 //Styles
 import styles from "./Sidebar.module.scss";
@@ -6,37 +7,31 @@ import styles from "./Sidebar.module.scss";
 //Icons
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { BsWalletFill } from "react-icons/bs";
-import { IoSettings } from "react-icons/io5";
-import { MdManageAccounts } from "react-icons/md";
-import { useState } from "react";
+import { FaCalculator } from "react-icons/fa6";
 
 export default function Sidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   console.log("isCollapsed", isCollapsed);
 
   return (
     <div
       className={styles.sidebar}
-      onMouseEnter={() => setIsCollapsed(true)}
-      onMouseLeave={() => setIsCollapsed(false)}
+      onMouseEnter={() => setIsCollapsed(false)}
+      onMouseLeave={() => setIsCollapsed(true)}
     >
-      <ul className={styles.menu}>
+      <ul className={`${styles.menu}`}>
         <li className={styles.sidebarItem}>
           <TbLayoutDashboardFilled />
-          {/* <span className={styles.label}>Dashboard</span> */}
+          {!isCollapsed && <span className={styles.label}>Dashboard</span>}
         </li>
         <li className={styles.sidebarItem}>
           <BsWalletFill />
-          {/* <span className={styles.label}>Dashboard</span> */}
+          {!isCollapsed && <span className={styles.label}>Transactions</span>}
         </li>
         <li className={styles.sidebarItem}>
-          <IoSettings />
-          {/* <span className={styles.label}>Dashboard</span> */}
-        </li>
-        <li className={styles.sidebarItem}>
-          <MdManageAccounts />
-          {/* <span className={styles.label}>Dashboard</span> */}
+          <FaCalculator />
+          {!isCollapsed && <span className={styles.label}>Budget planner</span>}
         </li>
       </ul>
     </div>

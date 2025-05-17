@@ -1,11 +1,13 @@
 $background: #0a0a0a;
 
 .sidebar {
+  z-index: 99;
   position: fixed;
   left: 0;
   height: 100%;
   padding: 0 0.5rem;
   background: $background;
+  width: auto;
   .menu {
     display: flex;
     flex-direction: column;
