@@ -8,10 +8,14 @@ import { IoWallet } from "react-icons/io5";
 import { FaCalculator } from "react-icons/fa6";
 
 export default function Sidebar() {
+  const pathname = window.location.pathname;
+
   return (
     <div className={styles.sidebar}>
       <ul className={`${styles.menu}`}>
-        <li className={styles.sidebarItem}>
+        <li
+          className={`${styles.sidebarItem} ${pathname === "/dashboard" ? styles.active : ""}`}
+        >
           <TbLayoutDashboardFilled />
           <span className={styles.label}>Dashboard</span>
         </li>
