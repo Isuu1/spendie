@@ -1,0 +1,50 @@
+$background: #0a0a0a;
+$hover: #5be20d;
+
+.sidebar {
+  z-index: 99;
+  position: fixed;
+  left: 0;
+  height: 100%;
+  padding: 0 0.8rem;
+  background: $background;
+  max-width: 47px;
+  //width: auto;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  &:hover {
+    max-width: 200px;
+  }
+  &:hover .menu .sidebarItem .label {
+    opacity: 1;
+  }
+  .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 1.3rem;
+    .active {
+      color: $hover;
+    }
+    .sidebarItem {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      &:hover {
+        color: $hover;
+      }
+      & svg {
+        flex-shrink: 0;
+        display: block;
+      }
+      .label {
+        font-size: 1rem;
+        white-space: nowrap;
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+    }
+  }
+}

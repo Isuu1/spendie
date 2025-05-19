@@ -1,5 +1,6 @@
 import DashboardHeader from "@/features/dashboard/components/DashboardHeader";
-import DashboardLayoutWrapper from "@/features/dashboard/layouts/DashboardLayoutWrapper";
+import Sidebar from "@/features/dashboard/components/Sidebar";
+//import DashboardLayoutWrapper from "@/features/dashboard/layouts/DashboardLayoutWrapper";
 import { AccountsProvider } from "@/shared/providers/AccountsProvider";
 import { TransactionsProvider } from "@/shared/providers/TransactionsProvider";
 import { UserProvider } from "@/shared/providers/UserProvider";
@@ -10,8 +11,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <UserProvider>
         <TransactionsProvider>
           <AccountsProvider>
-            <DashboardHeader />
-            <DashboardLayoutWrapper>{children}</DashboardLayoutWrapper>
+            <div
+              style={{
+                height: "100vh",
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
+              }}
+            >
+              <DashboardHeader />
+              <div style={{ paddingLeft: "2.9rem" }}>
+                <Sidebar />
+                {children}
+              </div>
+            </div>
+            {/* <DashboardLayoutWrapper>{children}</DashboardLayoutWrapper> */}
           </AccountsProvider>
         </TransactionsProvider>
       </UserProvider>
