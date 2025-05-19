@@ -8,7 +8,16 @@ $hover: #5be20d;
   height: 100%;
   padding: 0 0.8rem;
   background: $background;
-  width: auto;
+  max-width: 47px;
+  //width: auto;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  &:hover {
+    max-width: 200px;
+  }
+  &:hover .menu .sidebarItem .label {
+    opacity: 1;
+  }
   .menu {
     display: flex;
     flex-direction: column;
@@ -24,10 +33,14 @@ $hover: #5be20d;
         color: $hover;
       }
       & svg {
+        flex-shrink: 0;
         display: block;
       }
       .label {
         font-size: 1rem;
+        white-space: nowrap;
+        opacity: 0;
+        transition: all 0.3s ease;
       }
     }
   }
