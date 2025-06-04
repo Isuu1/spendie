@@ -39,6 +39,14 @@ export default function Sidebar() {
             <span className={styles.label}>Budget planner</span>
           </li>
         </Link>
+        <Link href="/standing-orders">
+          <li
+            className={`${styles.sidebarItem} ${pathname === "/standing-orders" ? styles.active : ""}`}
+          >
+            <FaCalculator />
+            <span className={styles.label}>Standing orders</span>
+          </li>
+        </Link>
       </ul>
     </div>
   );
