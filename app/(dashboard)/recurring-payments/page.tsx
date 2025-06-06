@@ -1,4 +1,5 @@
 import RecurringPaymentsGrid from "@/features/recurring-payments/components/RecurringPaymentsGrid";
+import PageWrapper from "@/shared/components/PageWrapper";
 import { createClient } from "@/supabase/server";
 
 export default async function Page() {
@@ -23,8 +24,8 @@ export default async function Page() {
     userRecurringPayments.data[0];
 
   return (
-    <div>
+    <PageWrapper>
       <RecurringPaymentsGrid recurringPayments={recurringPayments} />
-    </div>
+    </PageWrapper>
   );
 }

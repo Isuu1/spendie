@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               }}
             >
               <DashboardHeader />
-              <div style={{ paddingLeft: "3rem" }}>
+              <div style={{ paddingLeft: "3rem", height: "100%" }}>
                 <Sidebar />
                 {children}
               </div>

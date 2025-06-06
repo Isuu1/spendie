@@ -1,19 +1,55 @@
-.gridHeader {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  background: #303030;
-  border-radius: 14px;
-  padding: 0.8rem 0.4rem;
-  list-style: none;
-}
+$dateColor: #b3b3b3;
 
-.gridItem {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  align-items: center;
-  padding: 0.5rem 0.4rem;
-  border-bottom: 1px solid #404040;
-  &:last-child {
-    border-bottom: none;
+.gridContainer {
+  //   margin-right: 1rem;
+  //   flex: 1;
+  //   padding: 0.7rem;
+  //   display: flex;
+  //   flex-direction: column;
+  //   gap: 1.5rem;
+  //   //background-color: rgba(37, 37, 37, 0.205);
+  //   background: linear-gradient(
+  //     55deg,
+  //     rgba(18, 18, 18, 1) 20%,
+  //     rgba(26, 26, 26, 1) 100%
+  //   );
+  //   box-shadow: 0 4px 12px rgba(20, 20, 20, 0.3);
+  //   backdrop-filter: blur(10px);
+  //   border: 1px solid rgba(109, 109, 109, 0.2);
+  //   border-radius: 14px;
+  //   margin-bottom: 1rem;
+  .gridHeader {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    background: #0a0a0a;
+    border-radius: 14px;
+    padding: 0.8rem 0.4rem;
+    list-style: none;
+  }
+
+  .gridItem {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    padding: 0.5rem 0.4rem;
+    border-bottom: 1px solid #404040;
+    &:last-child {
+      border-bottom: none;
+    }
+    .type {
+      display: flex;
+      gap: 0.1rem;
+      border-radius: 6px;
+      padding: 0.2rem 0.3rem 0.1rem 0.1rem;
+      margin-right: auto;
+    }
+    .income {
+      color: #41b300;
+      background: #42b30059;
+    }
+    .expense {
+      color: #ff0000;
+      background: #ff000059;
+    }
   }
 }
