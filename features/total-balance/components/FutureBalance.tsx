@@ -6,7 +6,7 @@ import moment from "moment";
 //Styles
 import styles from "./FutureBalance.module.scss";
 //Types
-import { StandingOrder } from "@/shared/types/standing-order";
+import { StandingOrder } from "@/shared/types/recurring-payment";
 
 interface FutureBalanceProps {
   latestStandingOrderIncome: StandingOrder | null;

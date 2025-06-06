@@ -1,4 +1,4 @@
-import { StandingOrder } from "./standing-order";
+import { StandingOrder } from "./recurring-payment";
 
 export type UserProfile = {
   id: string;

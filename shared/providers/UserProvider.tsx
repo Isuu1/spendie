@@ -9,7 +9,7 @@ import React, {
   useState,
 } from "react";
 import { UserProfile } from "../types/user";
-import { StandingOrder } from "../types/standing-order";
+import { StandingOrder } from "../types/recurring-payment";
 
 interface UserContextType {
   user: {

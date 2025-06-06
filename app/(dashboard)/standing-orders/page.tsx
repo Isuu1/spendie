@@ -1,4 +1,4 @@
-import { StandingOrder } from "@/shared/types/standing-order";
+import { RecurringPayment } from "@/shared/types/recurring-payment";
 import { createClient } from "@/supabase/server";
 
 export default async function Page() {
@@ -10,27 +10,28 @@ export default async function Page() {
     return <div>Error fetching standing orders</div>;
   }
 
-  const userStandingOrders = await supabase
+  const userRecurringPayments = await supabase
     .from("profiles")
-    .select("standing_orders")
+    .select("recurring_payments")
     .eq("id", data.user.id);
 
-  if (userStandingOrders.error) {
-    return <div>You did not set up any standing orders yet.</div>;
+  if (userRecurringPayments.error) {
+    return <div>You did not set up any recurring payments yet.</div>;
   }
 
-  const { standing_orders: standingOrders } = userStandingOrders.data[0];
+  const { recurring_payments: recurringPayments } =
+    userRecurringPayments.data[0];
 
   return (
     <div>
-      {standingOrders.map((order: StandingOrder) => (
-        <div key={order.id}>
-          <h3>{order.name}</h3>
-          <p>{order.date}</p>
+      {recurringPayments.map((payment: RecurringPayment) => (
+        <div key={payment.id}>
+          <h3>{payment.name}</h3>
+          <p>{payment.date}</p>
           {/* <p>Frequency: {order.frequency}</p> */}
-          <p>{order.type}</p>
+          <p>{payment.type}</p>
           {/* <p>Status: {order.status}</p> */}
-          <p>{order.amount}</p>
+          <p>{payment.amount}</p>
         </div>
       ))}
     </div>
