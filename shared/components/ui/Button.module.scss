@@ -1,0 +1,35 @@
+.button {
+  cursor: pointer;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 10px;
+  padding: 0.5rem 0.7rem;
+  border: 0;
+  transition: all 0.2s ease-in-out;
+  font-size: 0.9rem;
+  .icon {
+    font-size: 1.1rem;
+    svg {
+      display: block;
+    }
+  }
+}
+
+.left {
+  flex-direction: row-reverse;
+}
+
+.right {
+  flex-direction: row;
+}
+
+.primary {
+  background: #41b300;
+  color: white;
+  font-weight: 600;
+  &:hover {
+    background: #39850b;
+  }
+}
