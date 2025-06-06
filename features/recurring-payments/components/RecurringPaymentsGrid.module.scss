@@ -1,4 +1,19 @@
 .gridHeader {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  background: #303030;
+  border-radius: 14px;
+  padding: 0.8rem 0.4rem;
+  list-style: none;
+}
+
+.gridItem {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  padding: 0.5rem 0.4rem;
+  border-bottom: 1px solid #404040;
+  &:last-child {
+    border-bottom: none;
+  }
 }
