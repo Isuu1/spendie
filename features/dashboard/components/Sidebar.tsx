@@ -1,13 +1,15 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 //Styles
 import styles from "./Sidebar.module.scss";
 //Icons
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { IoWallet } from "react-icons/io5";
 import { FaCalculator } from "react-icons/fa6";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { FaRepeat } from "react-icons/fa6";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -41,10 +43,10 @@ export default function Sidebar() {
         </Link>
         <Link href="/standing-orders">
           <li
-            className={`${styles.sidebarItem} ${pathname === "/standing-orders" ? styles.active : ""}`}
+            className={`${styles.sidebarItem} ${pathname === "/recurring-payments" ? styles.active : ""}`}
           >
-            <FaCalculator />
-            <span className={styles.label}>Standing orders</span>
+            <FaRepeat />
+            <span className={styles.label}>Recurring payments</span>
           </li>
         </Link>
       </ul>
