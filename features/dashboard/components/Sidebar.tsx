@@ -41,7 +41,7 @@ export default function Sidebar() {
             <span className={styles.label}>Budget planner</span>
           </li>
         </Link>
-        <Link href="/standing-orders">
+        <Link href="/recurring-payments">
           <li
             className={`${styles.sidebarItem} ${pathname === "/recurring-payments" ? styles.active : ""}`}
           >

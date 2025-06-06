@@ -1,4 +1,4 @@
-import { RecurringPayment } from "@/shared/types/recurring-payment";
+import RecurringPaymentsGrid from "@/features/recurring-payments/components/RecurringPaymentsGrid";
 import { createClient } from "@/supabase/server";
 
 export default async function Page() {
@@ -24,16 +24,7 @@ export default async function Page() {
 
   return (
     <div>
-      {recurringPayments.map((payment: RecurringPayment) => (
-        <div key={payment.id}>
-          <h3>{payment.name}</h3>
-          <p>{payment.date}</p>
-          {/* <p>Frequency: {order.frequency}</p> */}
-          <p>{payment.type}</p>
-          {/* <p>Status: {order.status}</p> */}
-          <p>{payment.amount}</p>
-        </div>
-      ))}
+      <RecurringPaymentsGrid recurringPayments={recurringPayments} />
     </div>
   );
 }
