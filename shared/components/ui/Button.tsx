@@ -10,7 +10,7 @@ interface ButtonProps {
   size: "small" | "medium" | "large";
   text?: string;
   icon?: React.ReactNode;
-  iconPosition: "left" | "right";
+  iconPosition?: "left" | "right";
   onClick?: () => void;
 }
 
