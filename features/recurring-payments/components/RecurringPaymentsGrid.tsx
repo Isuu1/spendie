@@ -11,6 +11,7 @@ import { BiSolidMessageSquareAdd } from "react-icons/bi";
 //Types
 import { RecurringPayment } from "@/shared/types/recurring-payment";
 import Button from "@/shared/components/ui/Button";
+import Link from "next/link";
 
 interface RecurringPaymentsGridProps {
   recurringPayments: RecurringPayment[];
@@ -21,13 +22,15 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
 }) => {
   return (
     <div className={styles.gridContainer}>
-      <Button
-        variant="primary"
-        size="medium"
-        text="New"
-        icon={<BiSolidMessageSquareAdd />}
-        iconPosition="left"
-      />
+      <Link href="/recurring-payments/add-payment">
+        <Button
+          variant="primary"
+          size="medium"
+          text="New"
+          icon={<BiSolidMessageSquareAdd />}
+          iconPosition="left"
+        />
+      </Link>
       {/* <ul className={styles.gridHeader}>
         <li className={styles.item}></li>
         <li className={styles.item}>Date</li>
