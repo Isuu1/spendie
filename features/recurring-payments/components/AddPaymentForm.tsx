@@ -5,17 +5,16 @@ import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 import React from "react";
 
+//Styles
+import styles from "./AddPaymentForm.module.scss";
+import { useRouter } from "next/navigation";
+
 const AddPaymentForm: React.FC = () => {
+  const router = useRouter();
+
   return (
     <Form layout="vertical">
       <Input id="name" type="text" label="Payment Name" layout="horizontal" />
-      {/* <label htmlFor="">Repeat</label>
-      <select>
-        <option value="monthly">Monthly</option>
-        <option value="yearly">Yearly</option>
-        <option value="weekly">Weekly</option>
-        <option value="daily">Daily</option>
-      </select> */}
       <Input
         id="repeat"
         type="select"
@@ -24,9 +23,20 @@ const AddPaymentForm: React.FC = () => {
         selectOptions={["Monthly", "Yearly", "Weekly", "Daily"]}
       />
       <Input id="amount" type="number" label="Amount" layout="horizontal" />
-      <div>
-        <Button variant="secondary" size="medium" text="Cancel" />
-        <Button variant="primary" size="medium" text="Add Payment" />
+      <div className={styles.buttons}>
+        <Button
+          variant="secondary"
+          size="medium"
+          type="button"
+          text="Cancel"
+          onClick={() => router.back()}
+        />
+        <Button
+          variant="primary"
+          size="medium"
+          type="submit"
+          text="Add Payment"
+        />
       </div>
     </Form>
   );
