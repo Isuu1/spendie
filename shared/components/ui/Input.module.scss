@@ -1,0 +1,31 @@
+.inputContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  .label {
+    white-space: nowrap;
+  }
+  .inputField {
+    border: 0;
+    padding: 0.5rem;
+    width: 100%;
+    border-radius: 8px;
+  }
+  .selectField {
+    width: 100%;
+    border-radius: 8px;
+    padding: 0.5rem;
+    border: 0;
+    .option {
+      padding: 0.5rem;
+    }
+  }
+}
+
+.horizontal {
+  flex-direction: row;
+}
+.vertical {
+  flex-direction: column;
+}
