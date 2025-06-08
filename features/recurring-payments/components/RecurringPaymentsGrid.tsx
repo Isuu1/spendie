@@ -22,15 +22,19 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
 }) => {
   return (
     <div className={styles.gridContainer}>
-      <Link href="/recurring-payments/add-payment">
-        <Button
-          variant="primary"
-          size="medium"
-          text="New"
-          icon={<BiSolidMessageSquareAdd />}
-          iconPosition="left"
-        />
-      </Link>
+      <div className={styles.newPaymentButton}>
+        <Link href="/recurring-payments/add-payment">
+          <Button
+            variant="primary"
+            size="medium"
+            type="button"
+            text="New"
+            icon={<BiSolidMessageSquareAdd />}
+            iconPosition="left"
+          />
+        </Link>
+      </div>
+
       {/* <ul className={styles.gridHeader}>
         <li className={styles.item}></li>
         <li className={styles.item}>Date</li>
@@ -43,6 +47,7 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
             <Button
               variant="secondary"
               size="small"
+              type="button"
               text="Edit"
               icon={<BiSolidMessageSquareAdd />}
               iconPosition="left"
@@ -50,6 +55,7 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
             <Button
               variant="secondary"
               size="small"
+              type="button"
               text="Delete"
               icon={<IoTrashBin />}
               iconPosition="left"
