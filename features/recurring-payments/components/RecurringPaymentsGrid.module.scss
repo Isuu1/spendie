@@ -8,60 +8,53 @@ $lightFontColor: #b3b3b3;
   .gridHeader {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    //background: #0a0a0a;
     border-radius: 12px;
-    //padding: 0.8rem 0.4rem;
     list-style: none;
   }
-
   .gridItem {
-    // display: grid;
-    // grid-template-columns: 1fr 1fr 1fr 1fr;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 0.5rem;
     padding: 1rem 0.7rem;
     background: #272727;
     border-radius: 12px;
-    // border-bottom: 1px solid #404040;
-    &:last-child {
-      border-bottom: none;
+    .menu {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
     }
-    .details {
-      line-height: 1.4rem;
-      .date {
+    .data {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .details {
+        line-height: 1.4rem;
+        .date {
+          color: $lightFontColor;
+          font-size: 0.9rem;
+        }
+      }
+      .frequency {
         color: $lightFontColor;
         font-size: 0.9rem;
+        text-transform: capitalize;
       }
-    }
-    .frequency {
-      color: $lightFontColor;
-      font-size: 0.9rem;
-      text-transform: capitalize;
-    }
-    .type {
-      display: flex;
-      gap: 0.1rem;
-      border-radius: 6px;
-      padding: 0.2rem 0.3rem 0.1rem 0.1rem;
-      //margin-right: auto;
-      font-size: 0.9rem;
-    }
-    .income {
-      color: #41b300;
-      background: #42b30059;
-    }
-    .expense {
-      color: #ff0000;
-      background: #ff000059;
-    }
-    .remove {
-      cursor: pointer;
-      font-size: 1.3rem;
-      transition: all 0.2s ease-in-out;
-      color: $lightFontColor;
-      :hover {
-        color: #5be20d;
+      .type {
+        display: flex;
+        gap: 0.1rem;
+        border-radius: 6px;
+        padding: 0.2rem 0.3rem 0.1rem 0.1rem;
+        //margin-right: auto;
+        font-size: 0.9rem;
+      }
+      .income {
+        color: #41b300;
+        background: #42b30059;
+      }
+      .expense {
+        color: #ff0000;
+        background: #ff000059;
       }
     }
   }

@@ -35,25 +35,40 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
       </ul> */}
       {recurringPayments.map((payment: RecurringPayment) => (
         <div key={payment.id} className={styles.gridItem}>
-          <div className={styles.details}>
-            <p>{payment.name}</p>
-            <p className={styles.date}>{payment.date}</p>
+          <div className={styles.menu}>
+            <Button
+              variant="secondary"
+              size="small"
+              text="Edit"
+              icon={<BiSolidMessageSquareAdd />}
+              iconPosition="left"
+            />
+            <Button
+              variant="primary"
+              size="small"
+              text="Delete"
+              icon={<IoTrashBin />}
+              iconPosition="left"
+            />
           </div>
-          <p className={styles.frequency}>{payment.frequency}</p>
-          {payment.type === "income" ? (
-            <div className={`${styles.type} ${styles.income}`}>
-              <FaLongArrowAltUp />
-              <span>£{payment.amount}</span>
+          <div className={styles.data}>
+            <div className={styles.details}>
+              <p>{payment.name}</p>
+              <p className={styles.date}>{payment.date}</p>
             </div>
-          ) : (
-            <div className={`${styles.type} ${styles.expense}`}>
-              <FaLongArrowAltDown />
-              <span>£{payment.amount}</span>
-            </div>
-          )}
-          <i className={styles.remove}>
-            <IoTrashBin />
-          </i>
+            <p className={styles.frequency}>{payment.frequency}</p>
+            {payment.type === "income" ? (
+              <div className={`${styles.type} ${styles.income}`}>
+                <FaLongArrowAltUp />
+                <span>£{payment.amount}</span>
+              </div>
+            ) : (
+              <div className={`${styles.type} ${styles.expense}`}>
+                <FaLongArrowAltDown />
+                <span>£{payment.amount}</span>
+              </div>
+            )}
+          </div>
         </div>
       ))}
     </div>

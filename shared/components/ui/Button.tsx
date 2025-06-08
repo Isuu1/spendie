@@ -7,6 +7,7 @@ import styles from "./Button.module.scss";
 
 interface ButtonProps {
   variant: "primary" | "secondary";
+  size: "small" | "medium" | "large";
   text?: string;
   icon?: React.ReactNode;
   iconPosition: "left" | "right";
@@ -17,11 +18,12 @@ const Button: React.FC<ButtonProps> = ({
   text,
   icon,
   variant,
+  size,
   iconPosition,
 }) => {
   return (
     <button
-      className={`${styles.button} ${styles[variant]} ${iconPosition ? styles[iconPosition] : ""}`}
+      className={`${styles.button} ${styles[variant]} ${styles[size]} ${iconPosition ? styles[iconPosition] : ""}`}
       onClick={() => {}}
     >
       {text && text}
