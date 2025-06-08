@@ -5,7 +5,7 @@ import styles from "./Input.module.scss";
 
 interface InputProps {
   id: string;
-  type: "text" | "number" | "email" | "password" | "select";
+  type: "text" | "number" | "email" | "password" | "select" | "date";
   label?: string;
   layout: "horizontal" | "vertical";
   selectOptions?: string[];

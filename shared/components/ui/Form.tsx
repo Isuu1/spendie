@@ -5,7 +5,7 @@ import styles from "./Form.module.scss";
 
 interface FormProps {
   children: React.ReactNode;
-  action?: string | undefined;
+  action?: string | undefined | ((formData: FormData) => Promise<void>);
   layout: "horizontal" | "vertical";
 }
 
