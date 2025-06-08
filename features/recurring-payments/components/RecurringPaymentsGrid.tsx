@@ -23,6 +23,7 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
     <div className={styles.gridContainer}>
       <Button
         variant="primary"
+        size="medium"
         text="New"
         icon={<BiSolidMessageSquareAdd />}
         iconPosition="left"
@@ -44,7 +45,7 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
               iconPosition="left"
             />
             <Button
-              variant="primary"
+              variant="secondary"
               size="small"
               text="Delete"
               icon={<IoTrashBin />}

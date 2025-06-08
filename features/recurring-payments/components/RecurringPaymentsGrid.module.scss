@@ -46,15 +46,16 @@ $lightFontColor: #b3b3b3;
         border-radius: 6px;
         padding: 0.2rem 0.3rem 0.1rem 0.1rem;
         //margin-right: auto;
-        font-size: 0.9rem;
+        font-size: 1rem;
+        font-weight: bold;
       }
       .income {
         color: #41b300;
-        background: #42b30059;
+        //background: #42b30059;
       }
       .expense {
         color: #ff0000;
-        background: #ff000059;
+        //background: #ff000059;
       }
     }
   }
