@@ -20,6 +20,12 @@ interface RecurringPaymentsGridProps {
 const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
   recurringPayments,
 }) => {
+  // if (!recurringPayments || recurringPayments.length === 0) {
+  //   return (
+  //     <div className={styles.noPayments}>No recurring payments found.</div>
+  //   );
+  // }
+
   return (
     <div className={styles.gridContainer}>
       <div className={styles.newPaymentButton}>
@@ -41,46 +47,50 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
         <li className={styles.item}>Repeat</li>
         <li className={styles.item}>Amount</li>
       </ul> */}
-      {recurringPayments.map((payment: RecurringPayment) => (
-        <div key={payment.id} className={styles.gridItem}>
-          <div className={styles.menu}>
-            <Button
-              variant="secondary"
-              size="small"
-              type="button"
-              text="Edit"
-              icon={<BiSolidMessageSquareAdd />}
-              iconPosition="left"
-            />
-            <Button
-              variant="secondary"
-              size="small"
-              type="button"
-              text="Delete"
-              icon={<IoTrashBin />}
-              iconPosition="left"
-            />
-          </div>
-          <div className={styles.data}>
-            <div className={styles.details}>
-              <p>{payment.name}</p>
-              <p className={styles.date}>{payment.date}</p>
+      {!recurringPayments && (
+        <p className={styles.noPayments}>No recurring payments found.</p>
+      )}
+      {recurringPayments &&
+        recurringPayments.map((payment: RecurringPayment) => (
+          <div key={payment.id} className={styles.gridItem}>
+            <div className={styles.menu}>
+              <Button
+                variant="secondary"
+                size="small"
+                type="button"
+                text="Edit"
+                icon={<BiSolidMessageSquareAdd />}
+                iconPosition="left"
+              />
+              <Button
+                variant="secondary"
+                size="small"
+                type="button"
+                text="Delete"
+                icon={<IoTrashBin />}
+                iconPosition="left"
+              />
             </div>
-            <p className={styles.frequency}>{payment.frequency}</p>
-            {payment.type === "income" ? (
-              <div className={`${styles.type} ${styles.income}`}>
-                <FaLongArrowAltUp />
-                <span>£{payment.amount}</span>
+            <div className={styles.data}>
+              <div className={styles.details}>
+                <p>{payment.name}</p>
+                <p className={styles.date}>{payment.date}</p>
               </div>
-            ) : (
-              <div className={`${styles.type} ${styles.expense}`}>
-                <FaLongArrowAltDown />
-                <span>£{payment.amount}</span>
-              </div>
-            )}
+              <p className={styles.frequency}>{payment.repeat}</p>
+              {payment.type === "Income" ? (
+                <div className={`${styles.type} ${styles.income}`}>
+                  <FaLongArrowAltUp />
+                  <span>£{payment.amount}</span>
+                </div>
+              ) : (
+                <div className={`${styles.type} ${styles.expense}`}>
+                  <FaLongArrowAltDown />
+                  <span>£{payment.amount}</span>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };

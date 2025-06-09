@@ -5,5 +5,5 @@ export type RecurringPayment = {
   amount: number;
   date: string;
   type: string;
-  frequency: string;
+  repeat: string;
 };
