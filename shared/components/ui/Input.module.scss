@@ -6,6 +6,9 @@
   .label {
     white-space: nowrap;
   }
+  .inputError {
+    border: 1px solid red !important;
+  }
   .inputField {
     border: 0;
     padding: 0.5rem;
@@ -28,4 +31,9 @@
 }
 .vertical {
   flex-direction: column;
+}
+
+.errorContainer {
+  color: red;
+  font-size: 0.875rem;
 }

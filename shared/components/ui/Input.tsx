@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 //Styles
@@ -9,6 +11,11 @@ interface InputProps {
   label?: string;
   layout: "horizontal" | "vertical";
   selectOptions?: string[];
+  errors?: string[] | null;
+  onChange?: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  defaultValue?: string | number;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -17,27 +24,48 @@ const Input: React.FC<InputProps> = ({
   label,
   layout,
   selectOptions,
+  errors,
+  onChange,
+  defaultValue,
 }) => {
   return (
-    <div className={`${styles.inputContainer} ${styles[layout]}`}>
-      {label && (
-        <label className={styles.label} htmlFor={id}>
-          {label}
-        </label>
-      )}
-      {type !== "select" && (
-        <input className={styles.inputField} id={id} name={id} type={type} />
-      )}
-      {type === "select" && (
-        <select className={styles.selectField} id={id} name={id}>
-          {selectOptions?.map((option, index) => (
-            <option className={styles.option} key={index} value={option}>
-              {option}
-            </option>
+    <>
+      <div className={`${styles.inputContainer} ${styles[layout]}`}>
+        {label && (
+          <label className={styles.label} htmlFor={id}>
+            {label}
+          </label>
+        )}
+        {type !== "select" && (
+          <input
+            className={`${styles.inputField} ${errors ? styles.inputError : ""}`}
+            id={id}
+            name={id}
+            type={type}
+            onChange={onChange}
+            defaultValue={defaultValue}
+          />
+        )}
+        {type === "select" && (
+          <select className={styles.selectField} id={id} name={id}>
+            {selectOptions?.map((option, index) => (
+              <option className={styles.option} key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
+      {errors && (
+        <div className={styles.errorContainer}>
+          {errors.map((err, index) => (
+            <span key={index} className={styles.errorMessage}>
+              {err}
+            </span>
           ))}
-        </select>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

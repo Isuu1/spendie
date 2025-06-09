@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useActionState, useEffect } from "react";
+import React, { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 //Components
 import Button from "@/shared/components/ui/Button";
@@ -16,6 +16,7 @@ import { AddPaymentFormState } from "@/features/recurring-payments/types/forms";
 const initialState: AddPaymentFormState = {
   success: false,
   message: "",
+  error: null,
 };
 
 const AddPaymentForm: React.FC = () => {
@@ -26,18 +27,39 @@ const AddPaymentForm: React.FC = () => {
     initialState
   );
 
+  const [errors, setErrors] = useState<
+    Record<string, { errors: string[] } | null>
+  >({});
+
+  const handleInputChange = (id: string) => {
+    setErrors((prev) => ({ ...prev, [id]: null }));
+  };
+
   useEffect(() => {
     if (state.success) {
       router.push("/recurring-payments");
     }
   }, [state.success, router]);
 
-  console.log("Form state:", state);
-  console.log("Is pending:", isPending);
+  useEffect(() => {
+    if (state.error) {
+      setErrors(state.error);
+      console.log("Error state:", state.error);
+    }
+  }, [state.error]);
+
+  console.log("Errors:", errors);
 
   return (
     <Form layout="vertical" action={formAction}>
-      <Input id="name" type="text" label="Payment Name" layout="horizontal" />
+      <Input
+        id="name"
+        type="text"
+        label="Payment Name"
+        layout="horizontal"
+        errors={errors.name?.errors}
+        onChange={() => handleInputChange("name")}
+      />
       <Input
         id="repeat"
         type="select"
@@ -52,8 +74,22 @@ const AddPaymentForm: React.FC = () => {
         layout="horizontal"
         selectOptions={["Income", "Expense"]}
       />
-      <Input id="amount" type="number" label="Amount" layout="horizontal" />
-      <Input id="date" type="date" label="Date" layout="horizontal" />
+      <Input
+        id="amount"
+        type="number"
+        label="Amount"
+        layout="horizontal"
+        errors={errors.amount?.errors}
+        onChange={() => handleInputChange("amount")}
+      />
+      <Input
+        id="date"
+        type="date"
+        label="Date"
+        layout="horizontal"
+        errors={errors.date?.errors}
+        onChange={() => handleInputChange("date")}
+      />
       <div className={styles.buttons}>
         <Button
           variant="secondary"
