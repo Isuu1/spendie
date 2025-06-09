@@ -1,14 +1,16 @@
 "use client";
 
+import React, { useActionState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+//Components
 import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
-import React, { useActionState } from "react";
-
 //Styles
 import styles from "./AddPaymentForm.module.scss";
-import { useRouter } from "next/navigation";
-import { addRecurringPayment } from "../lib/actions/add-recurring-payment";
+//Actions
+import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/add-recurring-payment";
+//Types
 import { AddPaymentFormState } from "@/features/recurring-payments/types/forms";
 
 const initialState: AddPaymentFormState = {
@@ -24,9 +26,11 @@ const AddPaymentForm: React.FC = () => {
     initialState
   );
 
-  if (state.success) {
-    router.push("/recurring-payments");
-  }
+  useEffect(() => {
+    if (state.success) {
+      router.push("/recurring-payments");
+    }
+  }, [state.success, router]);
 
   console.log("Form state:", state);
   console.log("Is pending:", isPending);
