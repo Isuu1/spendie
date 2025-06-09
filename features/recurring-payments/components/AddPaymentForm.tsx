@@ -3,18 +3,36 @@
 import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
-import React from "react";
+import React, { useActionState } from "react";
 
 //Styles
 import styles from "./AddPaymentForm.module.scss";
 import { useRouter } from "next/navigation";
 import { addRecurringPayment } from "../lib/actions/add-recurring-payment";
+import { AddPaymentFormState } from "@/features/recurring-payments/types/forms";
+
+const initialState: AddPaymentFormState = {
+  success: false,
+  message: "",
+};
 
 const AddPaymentForm: React.FC = () => {
   const router = useRouter();
 
+  const [state, formAction, isPending] = useActionState(
+    addRecurringPayment,
+    initialState
+  );
+
+  if (state.success) {
+    router.push("/recurring-payments");
+  }
+
+  console.log("Form state:", state);
+  console.log("Is pending:", isPending);
+
   return (
-    <Form layout="vertical" action={addRecurringPayment}>
+    <Form layout="vertical" action={formAction}>
       <Input id="name" type="text" label="Payment Name" layout="horizontal" />
       <Input
         id="repeat"

@@ -1,11 +1,14 @@
 "use server";
 
 import { createClient } from "@/supabase/server";
-import { redirect } from "next/navigation";
 
 import { v4 as uuidv4 } from "uuid";
+import { AddPaymentFormState } from "../../types/forms";
 
-export async function addRecurringPayment(formData: FormData): Promise<void> {
+export async function addRecurringPayment(
+  prevState: AddPaymentFormState,
+  formData: FormData
+) {
   const supabase = await createClient();
 
   const data = {
@@ -49,5 +52,8 @@ export async function addRecurringPayment(formData: FormData): Promise<void> {
     throw new Error("Failed to add recurring payment");
   }
 
-  redirect("/recurring-payments");
+  return {
+    success: true,
+    message: "Recurring payment added successfully",
+  };
 }
