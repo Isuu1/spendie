@@ -13,6 +13,7 @@ interface ButtonProps {
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
   onClick?: () => void | ((e: React.MouseEvent<HTMLButtonElement>) => void);
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -23,12 +24,14 @@ const Button: React.FC<ButtonProps> = ({
   type,
   iconPosition,
   onClick,
+  disabled,
 }) => {
   return (
     <button
-      className={`${styles.button} ${styles[variant]} ${styles[size]} ${iconPosition ? styles[iconPosition] : ""}`}
+      className={`${styles.button} ${styles[variant]} ${styles[size]} ${iconPosition ? styles[iconPosition] : ""} ${disabled ? styles.disabled : ""}`}
       onClick={onClick}
       type={type}
+      disabled={disabled}
     >
       {text && text}
       {icon && <i className={styles.icon}>{icon}</i>}

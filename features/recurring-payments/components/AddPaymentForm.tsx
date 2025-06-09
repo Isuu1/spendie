@@ -63,6 +63,7 @@ const AddPaymentForm: React.FC = () => {
           size="medium"
           type="submit"
           text="Add Payment"
+          disabled={isPending}
         />
       </div>
     </Form>
