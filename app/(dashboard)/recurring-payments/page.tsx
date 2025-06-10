@@ -8,25 +8,23 @@ export default async function Page() {
   const { data, error } = await supabase.auth.getUser();
 
   if (error) {
-    return <div>Error fetching standing orders</div>;
+    return <div>Error fetching user from database</div>;
   }
 
-  const userRecurringPayments = await supabase
-    .from("profiles")
-    .select("recurring_payments")
-    .eq("id", data.user.id);
+  const { data: userRecurringPayments, error: userRecurringPaymentsError } =
+    await supabase
+      .from("recurring_payments")
+      .select("*")
+      .eq("user_id", data.user.id);
 
-  if (userRecurringPayments.error) {
+  if (userRecurringPaymentsError) {
     return <div>You did not set up any recurring payments yet.</div>;
   }
 
-  const { recurring_payments: recurringPayments } =
-    userRecurringPayments.data[0];
-
   return (
     <PageWrapper>
-      <h2>Recurring transactions</h2>
-      <RecurringPaymentsGrid recurringPayments={recurringPayments} />
+      <h2>Recurring payments</h2>
+      <RecurringPaymentsGrid recurringPayments={userRecurringPayments} />
     </PageWrapper>
   );
 }

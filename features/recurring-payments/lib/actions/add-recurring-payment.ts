@@ -1,10 +1,7 @@
 "use server";
 
 import { createClient } from "@/supabase/server";
-
-import { v4 as uuidv4 } from "uuid";
 import { AddPaymentFormState } from "../../types/forms";
-
 import { z } from "zod/v4";
 
 export async function addRecurringPayment(
@@ -16,7 +13,6 @@ export async function addRecurringPayment(
   const amountValue = formData.get("amount");
 
   const data = {
-    id: uuidv4(),
     name: formData.get("name")?.toString() || "",
     repeat: formData.get("repeat")?.toString() || "",
     amount: (amountValue && parseFloat(amountValue as string)) || 0,
@@ -24,11 +20,8 @@ export async function addRecurringPayment(
     date: formData.get("date")?.toString() || "",
   };
 
-  console.log("Form data received:", data);
-
   //Validate the form data
   const schema = z.object({
-    id: z.uuid(),
     name: z.string().min(1, "Name is required"),
     repeat: z.enum(["Monthly", "Yearly", "Weekly", "Daily"], {
       message: "Invalid repeat value",
@@ -43,9 +36,9 @@ export async function addRecurringPayment(
   });
 
   const validateData = schema.safeParse(data);
+
   if (!validateData.success) {
     const tree = z.treeifyError(validateData.error);
-
     return {
       data,
       success: false,
@@ -61,25 +54,12 @@ export async function addRecurringPayment(
     throw new Error("Failed to fetch user");
   }
 
-  //Get existing recurring payments from the user's profile
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("recurring_payments")
-    .eq("id", user.user.id)
-    .single();
+  // Create the new payment object with user_id
+  const newPayment = { user_id: user.user.id, ...data };
 
-  if (profileError) {
-    console.error("Error fetching user profile:", profileError);
-    throw new Error("Failed to fetch user profile");
-  }
-
-  //Update the user's profile with the new recurring payment
   const { error: updateError } = await supabase
-    .from("profiles")
-    .update({
-      recurring_payments: [...profile?.recurring_payments, data],
-    })
-    .eq("id", user.user.id);
+    .from("recurring_payments")
+    .insert(newPayment);
 
   if (updateError) {
     console.error("Error adding recurring payment:", updateError);

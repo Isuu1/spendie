@@ -1,6 +1,5 @@
 export type AddPaymentFormState = {
   data: {
-    id: string;
     name: string;
     repeat: string;
     amount: number;

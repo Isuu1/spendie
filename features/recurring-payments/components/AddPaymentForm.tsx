@@ -15,7 +15,6 @@ import { AddPaymentFormState } from "@/features/recurring-payments/types/forms";
 
 const initialState: AddPaymentFormState = {
   data: {
-    id: "",
     name: "",
     repeat: "",
     type: "",
