@@ -5,6 +5,9 @@ import React from "react";
 //Styles
 import styles from "./Input.module.scss";
 
+//Icons
+import { MdOutlineError } from "react-icons/md";
+
 interface InputProps {
   id: string;
   type: "text" | "number" | "email" | "password" | "select" | "date";
@@ -60,6 +63,7 @@ const Input: React.FC<InputProps> = ({
         <div className={styles.errorContainer}>
           {errors.map((err, index) => (
             <span key={index} className={styles.errorMessage}>
+              <MdOutlineError className={styles.icon} />
               {err}
             </span>
           ))}

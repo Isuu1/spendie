@@ -34,6 +34,18 @@
 }
 
 .errorContainer {
-  color: red;
+  margin-left: auto;
+  color: rgb(255, 255, 255);
+  background: rgb(252, 11, 11);
   font-size: 0.875rem;
+  padding: 0.2rem;
+  border-radius: 6px;
+  .errorMessage {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    .icon {
+      font-size: 1rem;
+    }
+  }
 }
