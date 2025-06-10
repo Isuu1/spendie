@@ -33,7 +33,7 @@ export async function addRecurringPayment(
     repeat: z.enum(["Monthly", "Yearly", "Weekly", "Daily"], {
       message: "Invalid repeat value",
     }),
-    amount: z.number().min(0, "Amount must be a positive number"),
+    amount: z.number().min(1, "Amount must be a positive number"),
     type: z.enum(["Income", "Expense"], {
       message: "Invalid type value",
     }),
@@ -42,20 +42,9 @@ export async function addRecurringPayment(
     }),
   });
 
-  // if (!data.name || !data.repeat || !data.amount || !data.type || !data.date) {
-  //   return {
-  //     success: false,
-  //     message: "All fields are required",
-  //     error: "All fields are required",
-  //   };
-  // }
   const validateData = schema.safeParse(data);
   if (!validateData.success) {
-    console.error("Validation error:", validateData.error);
-
     const tree = z.treeifyError(validateData.error);
-
-    console.log("Treeified error:", tree);
 
     return {
       data,

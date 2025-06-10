@@ -20,7 +20,7 @@ const initialState: AddPaymentFormState = {
     repeat: "",
     type: "",
     amount: 0,
-    date: new Date().toISOString().split("T")[0], // Default to today's date
+    date: new Date().toISOString().split("T")[0], //Today's date
   },
   success: false,
   message: "",
@@ -39,6 +39,7 @@ const AddPaymentForm: React.FC = () => {
     Record<string, { errors: string[] } | null>
   >({});
 
+  //Remove input error when user starts typing
   const handleInputChange = (id: string) => {
     setErrors((prev) => ({ ...prev, [id]: null }));
   };
@@ -52,12 +53,8 @@ const AddPaymentForm: React.FC = () => {
   useEffect(() => {
     if (state.error) {
       setErrors(state.error);
-      console.log("Error state:", state.error);
     }
   }, [state.error]);
-
-  console.log("Errors:", errors);
-  console.log("State data:", state.data);
 
   return (
     <Form layout="vertical" action={formAction}>
@@ -91,6 +88,7 @@ const AddPaymentForm: React.FC = () => {
         layout="horizontal"
         errors={errors.amount?.errors}
         onChange={() => handleInputChange("amount")}
+        defaultValue={state.data.amount}
       />
       <Input
         id="date"
@@ -99,6 +97,7 @@ const AddPaymentForm: React.FC = () => {
         layout="horizontal"
         errors={errors.date?.errors}
         onChange={() => handleInputChange("date")}
+        defaultValue={state.data.date}
       />
       <div className={styles.buttons}>
         <Button
@@ -106,7 +105,7 @@ const AddPaymentForm: React.FC = () => {
           size="medium"
           type="button"
           text="Cancel"
-          onClick={() => router.back()}
+          onClick={() => router.push("/recurring-payments")}
         />
         <Button
           variant="primary"
