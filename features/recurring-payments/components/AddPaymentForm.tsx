@@ -14,6 +14,14 @@ import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/a
 import { AddPaymentFormState } from "@/features/recurring-payments/types/forms";
 
 const initialState: AddPaymentFormState = {
+  data: {
+    id: "",
+    name: "",
+    repeat: "",
+    type: "",
+    amount: 0,
+    date: new Date().toISOString().split("T")[0], // Default to today's date
+  },
   success: false,
   message: "",
   error: null,
@@ -49,6 +57,7 @@ const AddPaymentForm: React.FC = () => {
   }, [state.error]);
 
   console.log("Errors:", errors);
+  console.log("State data:", state.data);
 
   return (
     <Form layout="vertical" action={formAction}>
@@ -59,6 +68,7 @@ const AddPaymentForm: React.FC = () => {
         layout="horizontal"
         errors={errors.name?.errors}
         onChange={() => handleInputChange("name")}
+        defaultValue={state.data.name}
       />
       <Input
         id="repeat"

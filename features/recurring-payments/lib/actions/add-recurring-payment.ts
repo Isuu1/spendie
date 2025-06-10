@@ -17,12 +17,14 @@ export async function addRecurringPayment(
 
   const data = {
     id: uuidv4(),
-    name: formData.get("name"),
-    repeat: formData.get("repeat"),
-    amount: amountValue && parseFloat(amountValue as string),
-    type: formData.get("type"),
-    date: formData.get("date"),
+    name: formData.get("name")?.toString() || "",
+    repeat: formData.get("repeat")?.toString() || "",
+    amount: (amountValue && parseFloat(amountValue as string)) || 0,
+    type: formData.get("type")?.toString() || "",
+    date: formData.get("date")?.toString() || "",
   };
+
+  console.log("Form data received:", data);
 
   //Validate the form data
   const schema = z.object({
@@ -56,6 +58,7 @@ export async function addRecurringPayment(
     console.log("Treeified error:", tree);
 
     return {
+      data,
       success: false,
       message: "Validation error",
       error: tree.properties,
@@ -95,6 +98,7 @@ export async function addRecurringPayment(
   }
 
   return {
+    data,
     success: true,
     message: "Recurring payment added successfully",
     error: null,

@@ -1,6 +1,13 @@
 export type AddPaymentFormState = {
+  data: {
+    id: string;
+    name: string;
+    repeat: string;
+    amount: number;
+    type: string;
+    date: string;
+  };
   success: boolean;
   message: string;
-  //error: Record<string, { errors: string[] } | null> | null;
   error: Record<string, { errors: string[] }> | undefined | null;
 };
