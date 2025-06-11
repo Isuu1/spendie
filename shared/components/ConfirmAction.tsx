@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+//Components
 import Button from "./ui/Button";
-
 //Styles
 import styles from "./ConfirmAction.module.scss";
-import { createPortal } from "react-dom";
 
 interface ConfirmActionProps {
   message: string;
