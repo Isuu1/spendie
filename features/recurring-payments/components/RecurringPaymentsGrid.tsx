@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 //Styles
@@ -12,6 +14,8 @@ import { BiSolidMessageSquareAdd } from "react-icons/bi";
 import { RecurringPayment } from "@/shared/types/recurring-payment";
 import Button from "@/shared/components/ui/Button";
 import Link from "next/link";
+import { deleteRecurringPayment } from "../lib/actions/delete-recurring-payment";
+import toast from "react-hot-toast";
 
 interface RecurringPaymentsGridProps {
   recurringPayments: RecurringPayment[];
@@ -20,11 +24,15 @@ interface RecurringPaymentsGridProps {
 const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
   recurringPayments,
 }) => {
-  // if (!recurringPayments || recurringPayments.length === 0) {
-  //   return (
-  //     <div className={styles.noPayments}>No recurring payments found.</div>
-  //   );
-  // }
+  const handleDeletePayment = async (paymentId: string) => {
+    const result = await deleteRecurringPayment(paymentId);
+    if (result.success) {
+      toast.success("Recurring payment deleted successfully!");
+    }
+    if (result.error) {
+      toast.error(`Failed to delete recurring payment: ${result.error}`);
+    }
+  };
 
   return (
     <div className={styles.gridContainer}>
@@ -47,9 +55,10 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
         <li className={styles.item}>Repeat</li>
         <li className={styles.item}>Amount</li>
       </ul> */}
-      {!recurringPayments && (
-        <p className={styles.noPayments}>No recurring payments found.</p>
-      )}
+      {!recurringPayments ||
+        (recurringPayments.length === 0 && (
+          <p className={styles.noPayments}>No recurring payments found.</p>
+        ))}
       {recurringPayments &&
         recurringPayments.map((payment: RecurringPayment) => (
           <div key={payment.id} className={styles.gridItem}>
@@ -69,6 +78,7 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
                 text="Delete"
                 icon={<IoTrashBin />}
                 iconPosition="left"
+                onClick={() => handleDeletePayment(payment.id)}
               />
             </div>
             <div className={styles.data}>

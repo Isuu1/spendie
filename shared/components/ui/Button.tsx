@@ -12,7 +12,10 @@ interface ButtonProps {
   text?: string;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
-  onClick?: () => void | ((e: React.MouseEvent<HTMLButtonElement>) => void);
+  onClick?: () =>
+    | void
+    | ((e: React.MouseEvent<HTMLButtonElement>) => void)
+    | Promise<void>;
   disabled?: boolean;
 }
 
