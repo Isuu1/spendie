@@ -8,12 +8,6 @@ $lightFontColor: #b3b3b3;
   .newPaymentButton {
     margin-right: auto;
   }
-  .gridHeader {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    border-radius: 12px;
-    list-style: none;
-  }
   .gridItem {
     display: flex;
     flex-direction: column;

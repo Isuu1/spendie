@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import Link from "next/link";
 
 //Styles
 import styles from "./RecurringPaymentsGrid.module.scss";
@@ -9,14 +11,13 @@ import { FaLongArrowAltUp } from "react-icons/fa";
 import { FaLongArrowAltDown } from "react-icons/fa";
 import { IoTrashBin } from "react-icons/io5";
 import { BiSolidMessageSquareAdd } from "react-icons/bi";
-
 //Types
 import { RecurringPayment } from "@/shared/types/recurring-payment";
+//Components
 import Button from "@/shared/components/ui/Button";
-import Link from "next/link";
-import { deleteRecurringPayment } from "../lib/actions/delete-recurring-payment";
-import toast from "react-hot-toast";
 import ConfirmAction from "@/shared/components/ConfirmAction";
+//Actions
+import { deleteRecurringPayment } from "../lib/actions/delete-recurring-payment";
 
 interface RecurringPaymentsGridProps {
   recurringPayments: RecurringPayment[];
@@ -55,16 +56,11 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
         </Link>
       </div>
 
-      {/* <ul className={styles.gridHeader}>
-        <li className={styles.item}></li>
-        <li className={styles.item}>Date</li>
-        <li className={styles.item}>Repeat</li>
-        <li className={styles.item}>Amount</li>
-      </ul> */}
       {!recurringPayments ||
         (recurringPayments.length === 0 && (
           <p className={styles.noPayments}>No recurring payments found.</p>
         ))}
+
       {recurringPayments &&
         recurringPayments.map((payment: RecurringPayment) => (
           <div key={payment.id} className={styles.gridItem}>
