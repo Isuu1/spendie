@@ -13,8 +13,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <UserProvider>
         <TransactionsProvider>
           <AccountsProvider>
+            <div id="confirm-action-root"></div>
             <div
               style={{
+                zIndex: 98,
+                position: "relative",
                 height: "100vh",
                 display: "flex",
                 flexDirection: "column",

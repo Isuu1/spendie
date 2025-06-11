@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 //Styles
 import styles from "./RecurringPaymentsGrid.module.scss";
@@ -16,6 +16,7 @@ import Button from "@/shared/components/ui/Button";
 import Link from "next/link";
 import { deleteRecurringPayment } from "../lib/actions/delete-recurring-payment";
 import toast from "react-hot-toast";
+import ConfirmAction from "@/shared/components/ConfirmAction";
 
 interface RecurringPaymentsGridProps {
   recurringPayments: RecurringPayment[];
@@ -24,6 +25,10 @@ interface RecurringPaymentsGridProps {
 const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
   recurringPayments,
 }) => {
+  const [confirmDeletePayment, setConfirmDeletePayment] = useState<
+    string | null
+  >(null);
+
   const handleDeletePayment = async (paymentId: string) => {
     const result = await deleteRecurringPayment(paymentId);
     if (result.success) {
@@ -32,6 +37,7 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
     if (result.error) {
       toast.error(`Failed to delete recurring payment: ${result.error}`);
     }
+    setConfirmDeletePayment(null);
   };
 
   return (
@@ -78,8 +84,15 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
                 text="Delete"
                 icon={<IoTrashBin />}
                 iconPosition="left"
-                onClick={() => handleDeletePayment(payment.id)}
+                onClick={() => setConfirmDeletePayment(payment.id)}
               />
+              {confirmDeletePayment && (
+                <ConfirmAction
+                  message="Delete payment?"
+                  onCancel={() => setConfirmDeletePayment(null)}
+                  onConfirm={() => handleDeletePayment(payment.id)}
+                />
+              )}
             </div>
             <div className={styles.data}>
               <div className={styles.details}>

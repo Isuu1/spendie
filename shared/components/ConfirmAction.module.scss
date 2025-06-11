@@ -1,0 +1,26 @@
+.confirmActionContainer {
+  z-index: 99;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #1d1d1d44;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .innerContainer {
+    background: #333;
+    line-height: 2rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    align-items: center;
+    .buttonsContainer {
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
+}
