@@ -5,15 +5,22 @@
   left: 0;
   bottom: 0;
   right: 0;
-  background: #1d1d1d44;
+  background: #5c5c5c65;
   display: flex;
   justify-content: center;
   align-items: center;
   .innerContainer {
-    background: #333;
+    background: linear-gradient(
+      55deg,
+      rgba(18, 18, 18, 1) 20%,
+      rgba(26, 26, 26, 1) 100%
+    );
+    box-shadow: 0 4px 12px rgba(20, 20, 20, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(109, 109, 109, 0.2);
     line-height: 2rem;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 14px;
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
