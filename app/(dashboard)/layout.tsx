@@ -1,11 +1,14 @@
-import DashboardHeader from "@/features/dashboard/components/DashboardHeader";
-import Sidebar from "@/features/dashboard/components/Sidebar";
-//import DashboardLayoutWrapper from "@/features/dashboard/layouts/DashboardLayoutWrapper";
+import { Toaster } from "react-hot-toast";
+
+//Providers
 import { AccountsProvider } from "@/shared/providers/AccountsProvider";
 import { TransactionsProvider } from "@/shared/providers/TransactionsProvider";
 import { UserProvider } from "@/shared/providers/UserProvider";
+//Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
-import { Toaster } from "react-hot-toast";
+//Components
+import DashboardHeader from "@/features/dashboard/components/DashboardHeader";
+import Sidebar from "@/features/dashboard/components/Sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -34,7 +37,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {children}
               </div>
             </div>
-            {/* <DashboardLayoutWrapper>{children}</DashboardLayoutWrapper> */}
           </AccountsProvider>
         </TransactionsProvider>
       </UserProvider>
