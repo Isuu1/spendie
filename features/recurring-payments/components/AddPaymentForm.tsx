@@ -13,6 +13,7 @@ import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/a
 //Types
 import { AddPaymentFormState } from "@/features/recurring-payments/types/forms";
 import toast from "react-hot-toast";
+import { toastStyle } from "@/shared/styles/toastStyle";
 
 const initialState: AddPaymentFormState = {
   data: {
@@ -46,7 +47,7 @@ const AddPaymentForm: React.FC = () => {
 
   useEffect(() => {
     if (state.success) {
-      toast.success("Recurring payment added successfully!");
+      toast.success("Recurring payment added successfully!", toastStyle);
       router.push("/recurring-payments");
     }
   }, [state.success, router]);
