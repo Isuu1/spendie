@@ -4,6 +4,7 @@ import Sidebar from "@/features/dashboard/components/Sidebar";
 import { AccountsProvider } from "@/shared/providers/AccountsProvider";
 import { TransactionsProvider } from "@/shared/providers/TransactionsProvider";
 import { UserProvider } from "@/shared/providers/UserProvider";
+import { Toaster } from "react-hot-toast";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -19,6 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 gap: "1rem",
               }}
             >
+              <Toaster />
               <DashboardHeader />
               <div style={{ paddingLeft: "3rem", height: "100%" }}>
                 <Sidebar />
