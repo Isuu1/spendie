@@ -2,6 +2,7 @@
 
 import React, { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 //Components
 import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
@@ -10,7 +11,7 @@ import Input from "@/shared/components/ui/Input";
 import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/add-recurring-payment";
 //Types
 import { AddPaymentFormState } from "@/features/recurring-payments/types/forms";
-import toast from "react-hot-toast";
+//Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
 
 const initialState: AddPaymentFormState = {
@@ -58,8 +59,6 @@ const AddPaymentForm: React.FC = () => {
       toast.error(state.error.general.errors[0], toastStyle);
     }
   }, [state.error]);
-
-  console.log("AddPaymentForm state:", state);
 
   return (
     <Form layout="vertical" action={formAction}>
