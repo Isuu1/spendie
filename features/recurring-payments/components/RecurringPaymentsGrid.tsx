@@ -33,10 +33,10 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
   const handleDeletePayment = async (paymentId: string) => {
     const result = await deleteRecurringPayment(paymentId);
     if (result.success) {
-      toast.success("Recurring payment deleted successfully!");
+      toast.success("Payment deleted successfully!");
     }
     if (result.error) {
-      toast.error(`Failed to delete recurring payment: ${result.error}`);
+      toast.error(`Failed to delete payment: ${result.error}`);
     }
     setConfirmDeletePayment(null);
   };
@@ -61,57 +61,56 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
           <p className={styles.noPayments}>No recurring payments found.</p>
         ))}
 
-      {recurringPayments &&
-        recurringPayments.map((payment: RecurringPayment) => (
-          <div key={payment.id} className={styles.gridItem}>
-            <div className={styles.menu}>
-              <Link href={`/recurring-payments/edit-payment/${payment.id}`}>
-                <Button
-                  variant="secondary"
-                  size="small"
-                  type="button"
-                  text="Edit"
-                  icon={<BiSolidMessageSquareAdd />}
-                  iconPosition="left"
-                />
-              </Link>
+      {recurringPayments.map((payment: RecurringPayment) => (
+        <div key={payment.id} className={styles.gridItem}>
+          <div className={styles.menu}>
+            <Link href={`/recurring-payments/edit-payment/${payment.id}`}>
               <Button
                 variant="secondary"
                 size="small"
                 type="button"
-                text="Delete"
-                icon={<IoTrashBin />}
+                text="Edit"
+                icon={<BiSolidMessageSquareAdd />}
                 iconPosition="left"
-                onClick={() => setConfirmDeletePayment(payment.id)}
               />
-              {confirmDeletePayment && (
-                <ConfirmAction
-                  message="Delete payment?"
-                  onCancel={() => setConfirmDeletePayment(null)}
-                  onConfirm={() => handleDeletePayment(payment.id)}
-                />
-              )}
-            </div>
-            <div className={styles.data}>
-              <div className={styles.details}>
-                <p>{payment.name}</p>
-                <p className={styles.date}>{payment.date}</p>
-              </div>
-              <p className={styles.frequency}>{payment.repeat}</p>
-              {payment.type === "Income" ? (
-                <div className={`${styles.type} ${styles.income}`}>
-                  <FaLongArrowAltUp />
-                  <span>£{payment.amount}</span>
-                </div>
-              ) : (
-                <div className={`${styles.type} ${styles.expense}`}>
-                  <FaLongArrowAltDown />
-                  <span>£{payment.amount}</span>
-                </div>
-              )}
-            </div>
+            </Link>
+            <Button
+              variant="secondary"
+              size="small"
+              type="button"
+              text="Delete"
+              icon={<IoTrashBin />}
+              iconPosition="left"
+              onClick={() => setConfirmDeletePayment(payment.id)}
+            />
+            {confirmDeletePayment && (
+              <ConfirmAction
+                message="Delete payment?"
+                onCancel={() => setConfirmDeletePayment(null)}
+                onConfirm={() => handleDeletePayment(payment.id)}
+              />
+            )}
           </div>
-        ))}
+          <div className={styles.data}>
+            <div className={styles.details}>
+              <p>{payment.name}</p>
+              <p className={styles.date}>{payment.date}</p>
+            </div>
+            <p className={styles.frequency}>{payment.repeat}</p>
+            {payment.type === "Income" ? (
+              <div className={`${styles.type} ${styles.income}`}>
+                <FaLongArrowAltUp />
+                <span>£{payment.amount}</span>
+              </div>
+            ) : (
+              <div className={`${styles.type} ${styles.expense}`}>
+                <FaLongArrowAltDown />
+                <span>£{payment.amount}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

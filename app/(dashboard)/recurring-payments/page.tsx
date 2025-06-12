@@ -15,7 +15,8 @@ export default async function Page() {
     await supabase
       .from("recurring_payments")
       .select("*")
-      .eq("user_id", data.user.id);
+      .eq("user_id", data.user.id)
+      .order("date", { ascending: true });
 
   if (userRecurringPaymentsError) {
     return <div>Error fetching your payments. Try to refresh the page.</div>;
