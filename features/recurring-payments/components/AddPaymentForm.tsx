@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
-//Styles
-import styles from "./AddPaymentForm.module.scss";
 //Actions
 import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/add-recurring-payment";
 //Types
@@ -106,7 +104,7 @@ const AddPaymentForm: React.FC = () => {
         onChange={() => handleInputChange("date")}
         defaultValue={state.data.date}
       />
-      <div className={styles.buttons}>
+      <div className="flex-row-space-between">
         <Button
           variant="secondary"
           size="medium"
