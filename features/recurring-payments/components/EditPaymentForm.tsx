@@ -8,7 +8,7 @@ import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 //Actions
-import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/add-recurring-payment";
+import { editRecurringPayment } from "../lib/actions/edit-recurring-payment";
 //Types
 import { AddPaymentFormState } from "@/features/recurring-payments/types/forms";
 //Styles
@@ -36,7 +36,8 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
   const router = useRouter();
 
   const [state, formAction, isPending] = useActionState(
-    addRecurringPayment,
+    //Attach payment ID to the action
+    editRecurringPayment.bind(null, payment.id),
     initialState
   );
 
