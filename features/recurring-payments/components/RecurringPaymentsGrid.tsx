@@ -65,14 +65,16 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
         recurringPayments.map((payment: RecurringPayment) => (
           <div key={payment.id} className={styles.gridItem}>
             <div className={styles.menu}>
-              <Button
-                variant="secondary"
-                size="small"
-                type="button"
-                text="Edit"
-                icon={<BiSolidMessageSquareAdd />}
-                iconPosition="left"
-              />
+              <Link href={`/recurring-payments/edit-payment/${payment.id}`}>
+                <Button
+                  variant="secondary"
+                  size="small"
+                  type="button"
+                  text="Edit"
+                  icon={<BiSolidMessageSquareAdd />}
+                  iconPosition="left"
+                />
+              </Link>
               <Button
                 variant="secondary"
                 size="small"
