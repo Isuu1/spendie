@@ -63,7 +63,12 @@ export async function addRecurringPayment(
 
   if (updateError) {
     console.error("Error adding recurring payment:", updateError);
-    throw new Error("Failed to add recurring payment");
+    return {
+      data,
+      success: false,
+      message: "Failed to save payment. Please try again.",
+      error: { general: { errors: ["Unable to save recurring payment"] } },
+    };
   }
 
   return {

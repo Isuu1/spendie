@@ -56,7 +56,12 @@ const AddPaymentForm: React.FC = () => {
     if (state.error) {
       setErrors(state.error);
     }
+    if (state.error?.general) {
+      toast.error(state.error.general.errors[0], toastStyle);
+    }
   }, [state.error]);
+
+  console.log("AddPaymentForm state:", state);
 
   return (
     <Form layout="vertical" action={formAction}>

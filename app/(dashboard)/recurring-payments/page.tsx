@@ -18,7 +18,7 @@ export default async function Page() {
       .eq("user_id", data.user.id);
 
   if (userRecurringPaymentsError) {
-    return <div>You did not set up any recurring payments yet.</div>;
+    return <div>Error fetching your payments. Try to refresh the page.</div>;
   }
 
   return (

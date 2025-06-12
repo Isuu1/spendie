@@ -15,7 +15,7 @@ export const toastStyle = {
   },
   error: {
     iconTheme: {
-      primary: "#13d95b",
+      primary: "red",
       secondary: "#fff",
     },
   },
