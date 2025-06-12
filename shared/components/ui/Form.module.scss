@@ -1,0 +1,10 @@
+.formContainer {
+  display: flex;
+  gap: 1rem;
+}
+.horizontal {
+  flex-direction: row;
+}
+.vertical {
+  flex-direction: column;
+}

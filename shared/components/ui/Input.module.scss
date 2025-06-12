@@ -1,0 +1,52 @@
+.inputContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  .label {
+    white-space: nowrap;
+  }
+  .inputError {
+    border: 1px solid red !important;
+  }
+  .inputField {
+    border: 0;
+    padding: 0.5rem;
+    width: 100%;
+    border-radius: 8px;
+    font-family: inherit;
+  }
+  .selectField {
+    width: 100%;
+    border-radius: 8px;
+    padding: 0.5rem;
+    border: 0;
+    .option {
+      padding: 0.5rem;
+    }
+  }
+}
+
+.horizontal {
+  flex-direction: row;
+}
+.vertical {
+  flex-direction: column;
+}
+
+.errorContainer {
+  margin-left: auto;
+  color: rgb(255, 255, 255);
+  background: rgb(252, 11, 11);
+  font-size: 0.875rem;
+  padding: 0.2rem;
+  border-radius: 6px;
+  .errorMessage {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    .icon {
+      font-size: 1rem;
+    }
+  }
+}

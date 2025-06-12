@@ -9,7 +9,7 @@ import React, {
   useState,
 } from "react";
 import { UserProfile } from "../types/user";
-import { StandingOrder } from "../types/standing-order";
+import { RecurringPayment } from "../types/recurring-payment";
 
 interface UserContextType {
   user: {
@@ -17,7 +17,7 @@ interface UserContextType {
     email: string;
     username: string;
     avatar: string;
-    standing_orders: StandingOrder[];
+    standing_orders: RecurringPayment[];
   };
 }
 
@@ -42,7 +42,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
     const { data: profileData, error: profileError } = await supabase
       .from("profiles")
-      .select("id, email, username, avatar, standing_orders")
+      .select("id, email, username, avatar, recurring_payments")
       .eq("id", authData.user.id)
       .single();
 
@@ -56,7 +56,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       email: profileData.email,
       username: profileData.username,
       avatar: profileData.avatar,
-      standing_orders: profileData.standing_orders,
+      standing_orders: profileData.recurring_payments,
     });
   }, [supabase]);
 

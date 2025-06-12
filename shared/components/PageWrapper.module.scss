@@ -1,0 +1,19 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 100%;
+  margin-right: 1rem;
+  padding: 0.7rem;
+  background: linear-gradient(
+    55deg,
+    rgba(18, 18, 18, 1) 20%,
+    rgba(26, 26, 26, 1) 100%
+  );
+  box-shadow: 0 4px 12px rgba(20, 20, 20, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(109, 109, 109, 0.2);
+  border-radius: 14px;
+  margin-bottom: 4rem;
+  box-sizing: border-box;
+}

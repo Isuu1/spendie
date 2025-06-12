@@ -1,13 +1,15 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 //Styles
 import styles from "./Sidebar.module.scss";
 //Icons
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { IoWallet } from "react-icons/io5";
 import { FaCalculator } from "react-icons/fa6";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { FaRepeat } from "react-icons/fa6";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -37,6 +39,14 @@ export default function Sidebar() {
           >
             <FaCalculator />
             <span className={styles.label}>Budget planner</span>
+          </li>
+        </Link>
+        <Link href="/recurring-payments">
+          <li
+            className={`${styles.sidebarItem} ${pathname === "/recurring-payments" ? styles.active : ""}`}
+          >
+            <FaRepeat />
+            <span className={styles.label}>Recurring payments</span>
           </li>
         </Link>
       </ul>

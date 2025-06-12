@@ -41,3 +41,9 @@ a {
     color-scheme: dark;
   }
 }
+
+.flex-row-space-between {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
