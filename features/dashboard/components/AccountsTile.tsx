@@ -1,18 +1,25 @@
 import React from "react";
-//import { accounts } from "@/data/accounts";
 
 //Styles
 import styles from "./AccountsTile.module.scss";
-import { useAccounts } from "@/shared/providers/AccountsProvider";
+//Api
+import { getAccounts } from "@/shared/lib/api/accounts";
+import { Account } from "@/shared/types/account";
 //Icons
-// import { PiContactlessPaymentFill } from "react-icons/pi";
-// import { IoTrashBin } from "react-icons/io5";
 
-const AccountsTile = () => {
-  const { accounts } = useAccounts();
+const AccountsTile = async () => {
+  const accounts: Account[] = (await getAccounts()) ?? [];
 
-  if (!accounts) {
-    return <div>Loading...</div>;
+  if (accounts.length === 0) {
+    return (
+      <div className={styles.accountsTile}>
+        <p>No accounts found. Please link your bank account.</p>
+        <p>
+          You can link your bank account by going to the settings page and
+          selecting `Link Bank Account`.
+        </p>
+      </div>
+    );
   }
 
   return (
