@@ -1,21 +1,19 @@
-"use client";
-
 import React from "react";
+import Image from "next/image";
 
 //Styles
 import styles from "./TransactionsTile.module.scss";
-import { useTransactions } from "@/shared/providers/TransactionsProvider";
-import Image from "next/image";
 //Icons
 import { FaLongArrowAltUp } from "react-icons/fa";
 import { FaLongArrowAltDown } from "react-icons/fa";
+//Api
+import { getTransactionsServer } from "@/features/transactions/api/server";
 
-const TransactionsTile: React.FC = () => {
-  const { transactions } = useTransactions();
+const TransactionsTile: React.FC = async () => {
+  const transactions = await getTransactionsServer();
 
   console.log("transactions", transactions);
   // Function to format the transaction amount
-
   const displayTransactionAmount = (amount: number) => {
     return amount > 0
       ? amount.toLocaleString("en-US", {
