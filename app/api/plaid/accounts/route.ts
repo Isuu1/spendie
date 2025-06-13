@@ -3,7 +3,7 @@ import { createClient } from "@/supabase/server";
 import { AccountsGetRequest } from "plaid";
 import plaidClient from "@/shared/lib/plaid";
 
-export async function POST() {
+export async function GET() {
   try {
     const supabase = await createClient();
 

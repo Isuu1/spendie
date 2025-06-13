@@ -3,12 +3,12 @@ import React from "react";
 //Styles
 import styles from "./AccountsTile.module.scss";
 //Api
-import { getAccounts } from "@/shared/lib/api/accounts";
+import { getAccountsServer } from "@/features/accounts/api/server";
+//Types
 import { Account } from "@/shared/types/account";
-//Icons
 
 const AccountsTile = async () => {
-  const accounts: Account[] = (await getAccounts()) ?? [];
+  const accounts: Account[] = (await getAccountsServer()) ?? [];
 
   if (accounts.length === 0) {
     return (
