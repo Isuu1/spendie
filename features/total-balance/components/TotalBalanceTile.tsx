@@ -14,9 +14,10 @@ import { getLatestStandingOrder } from "../lib/utils";
 //Components
 import FutureBalance from "./FutureBalance";
 import { Account } from "@/shared/types/account";
+import { useAccounts } from "@/features/accounts/hooks/useAccounts";
 
 const TotalBalanceTile = () => {
-  const accounts: Account[] = [];
+  const accounts = useAccounts().data as Account[] | undefined;
   const { user } = useUser();
 
   if (!accounts) {
