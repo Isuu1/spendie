@@ -9,14 +9,14 @@ import { FaLongArrowAltUp } from "react-icons/fa";
 import { FaLongArrowAltDown } from "react-icons/fa";
 //Providers
 import { useUser } from "@/shared/providers/UserProvider";
-import { useAccounts } from "@/shared/providers/AccountsProvider";
 //Utils
 import { getLatestStandingOrder } from "../lib/utils";
 //Components
 import FutureBalance from "./FutureBalance";
+import { Account } from "@/shared/types/account";
 
 const TotalBalanceTile = () => {
-  const { accounts } = useAccounts();
+  const accounts: Account[] = [];
   const { user } = useUser();
 
   if (!accounts) {
