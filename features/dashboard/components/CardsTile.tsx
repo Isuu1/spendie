@@ -1,6 +1,5 @@
 "use client";
 
-//import { useAccounts } from "@/shared/providers/AccountsProvider";
 import React from "react";
 
 //Styles
@@ -10,8 +9,6 @@ import styles from "./CardsTile.module.scss";
 //import { IoTrashBin } from "react-icons/io5";
 
 const CardsTile = () => {
-  //const { accounts } = useAccounts();
-
   // const userCards = accounts?.reduce<
   //   {
   //     accountId: string;

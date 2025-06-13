@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 //Styles
@@ -7,14 +9,15 @@ import { FaLongArrowAltUp } from "react-icons/fa";
 import { FaLongArrowAltDown } from "react-icons/fa";
 //Providers
 import { useUser } from "@/shared/providers/UserProvider";
-import { useAccounts } from "@/shared/providers/AccountsProvider";
 //Utils
 import { getLatestStandingOrder } from "../lib/utils";
 //Components
 import FutureBalance from "./FutureBalance";
+import { Account } from "@/shared/types/account";
+import { useAccounts } from "@/features/accounts/hooks/useAccounts";
 
 const TotalBalanceTile = () => {
-  const { accounts } = useAccounts();
+  const accounts = useAccounts().data as Account[] | undefined;
   const { user } = useUser();
 
   if (!accounts) {
