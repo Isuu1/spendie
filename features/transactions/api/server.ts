@@ -1,12 +1,10 @@
-import { NextResponse } from "next/server";
 import { createClient } from "@/supabase/server";
-
 import { TransactionsGetRequest } from "plaid";
-import moment from "moment"; // Or another date handling library
 import plaidClient from "@/shared/lib/plaid";
+import moment from "moment";
 import { Transaction } from "@/shared/types/transaction";
 
-export async function GET() {
+export async function getTransactionsServer() {
   try {
     const supabase = await createClient();
 
@@ -17,28 +15,23 @@ export async function GET() {
       throw new Error("Failed to fetch user data");
     }
 
-    // Fetch the user's Plaid items from your database
+    const userId = authData.user.id;
+
     const { data: plaidItems, error: fetchError } = await supabase
       .from("plaid_items")
       .select("access_token")
-      .eq("user_id", authData.user.id);
+      .eq("user_id", userId);
 
-    if (fetchError) {
-      console.error("Error fetching Plaid items:", fetchError);
-      return NextResponse.json(
-        { error: "Failed to fetch Plaid items" },
-        { status: 500 }
+    if (fetchError || !plaidItems || plaidItems.length === 0) {
+      console.error(
+        "Server-side getAccounts Function: Supabase fetch error for plaid_items:",
+        fetchError
       );
-    }
-
-    if (!plaidItems || plaidItems.length === 0) {
-      return NextResponse.json(
-        { error: "No linked Plaid items found for this user" },
-        { status: 404 }
-      );
+      return;
     }
 
     const accessToken = plaidItems[0].access_token;
+
     const startDate = moment().subtract(30, "days").format("YYYY-MM-DD"); // Example: last 30 days
     const endDate = moment().format("YYYY-MM-DD");
 
@@ -52,13 +45,13 @@ export async function GET() {
     };
 
     const response = await plaidClient.transactionsGet(plaidRequest);
-
-    return NextResponse.json(response.data.transactions as Transaction[]);
-  } catch (error) {
-    console.error("Error fetching transactions:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch transactions" },
-      { status: 500 }
+    console.log(
+      "Server-side getAccounts Function: Plaid accounts response status:",
+      response.status
     );
+    return response.data.transactions as Transaction[];
+  } catch (error) {
+    console.error("Error fetching accounts:", error);
+    throw error;
   }
 }

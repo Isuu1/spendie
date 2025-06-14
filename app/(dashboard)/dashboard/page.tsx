@@ -1,9 +1,9 @@
 import CardsTile from "@/features/dashboard/components/CardsTile";
 //Components
-import AccountsTile from "@/features/dashboard/components/AccountsTile";
+import AccountsTile from "@/features/accounts/components/AccountsTile";
 import TileWrapper from "@/features/dashboard/components/TileWrapper";
 import TotalBalanceTile from "@/features/total-balance/components/TotalBalanceTile";
-import TransactionsTile from "@/features/dashboard/components/TransactionsTile";
+import TransactionsTile from "@/features/transactions/components/TransactionsTile";
 //Icons
 import { MdAccountBalance } from "react-icons/md";
 import { FaCreditCard } from "react-icons/fa";
