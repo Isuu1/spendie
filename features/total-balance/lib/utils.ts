@@ -1,5 +1,5 @@
 import { Transaction } from "@/shared/types/transaction";
-import { UserProfile } from "@/shared/types/user";
+import { UserProfile } from "@/features/user/types/user";
 
 export const getLatestStandingOrder = (type: string, user: UserProfile) => {
   const filteredByType = user?.standing_orders?.filter(

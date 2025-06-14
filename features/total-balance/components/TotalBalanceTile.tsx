@@ -12,10 +12,11 @@ import FutureBalance from "./FutureBalance";
 import { Account } from "@/shared/types/account";
 import { getAccountsServer } from "@/features/accounts/api/server";
 import { getUserServer } from "@/features/user/api/getUserServer";
+import { UserProfile } from "@/features/user/types/user";
 
 const TotalBalanceTile = async () => {
   const accounts = (await getAccountsServer()) as Account[];
-  const user = await getUserServer();
+  const user = (await getUserServer()) as UserProfile;
 
   console.log("TotalBalanceTile user", user);
   console.log("TotalBalanceTile accounts", accounts);
