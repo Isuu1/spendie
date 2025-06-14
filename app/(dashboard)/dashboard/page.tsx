@@ -3,7 +3,7 @@ import CardsTile from "@/features/dashboard/components/CardsTile";
 import AccountsTile from "@/features/accounts/components/AccountsTile";
 import TileWrapper from "@/features/dashboard/components/TileWrapper";
 import TotalBalanceTile from "@/features/total-balance/components/TotalBalanceTile";
-import TransactionsTile from "@/features/dashboard/components/TransactionsTile";
+import TransactionsTile from "@/features/transactions/components/TransactionsTile";
 //Icons
 import { MdAccountBalance } from "react-icons/md";
 import { FaCreditCard } from "react-icons/fa";
