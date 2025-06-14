@@ -18,4 +18,7 @@ export type Transaction = {
   logo_url?: string | null | undefined;
   personal_finance_category_icon_url?: string | null | undefined;
   iso_currency_code?: string | null | undefined;
+  personal_finance_category: {
+    primary: string | null;
+  };
 };

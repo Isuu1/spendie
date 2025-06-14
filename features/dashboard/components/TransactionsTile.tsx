@@ -3,9 +3,6 @@ import Image from "next/image";
 
 //Styles
 import styles from "./TransactionsTile.module.scss";
-//Icons
-import { FaLongArrowAltUp } from "react-icons/fa";
-import { FaLongArrowAltDown } from "react-icons/fa";
 //Api
 import { getTransactionsServer } from "@/features/transactions/api/server";
 
@@ -16,14 +13,22 @@ const TransactionsTile: React.FC = async () => {
   // Function to format the transaction amount
   const displayTransactionAmount = (amount: number) => {
     return amount > 0
-      ? amount.toLocaleString("en-US", {
+      ? `+${amount.toLocaleString("en-US", {
           style: "currency",
           currency: "GBP",
-        })
-      : `${Math.abs(amount).toLocaleString("en-US", {
+        })}`
+      : `-${Math.abs(amount).toLocaleString("en-US", {
           style: "currency",
           currency: "GBP",
         })}`;
+  };
+
+  const displayCategory = (category: string | null) => {
+    if (!category || category.length === 0) {
+      return "Uncategorized";
+    }
+    const newCategory = category.replace(/_/g, " ").toLowerCase();
+    return newCategory;
   };
 
   if (!transactions) {
@@ -32,46 +37,41 @@ const TransactionsTile: React.FC = async () => {
 
   return (
     <div className={styles.transactionsTile}>
-      <ul className={styles.transactionsHeader}>
-        <li className={styles.transactionHeaderItem}>Name</li>
-        <li className={styles.transactionHeaderItem}>Date</li>
-        <li className={styles.transactionHeaderItem}>Amount</li>
-      </ul>
-      {transactions.slice(0, 10).map((transaction) => (
+      {transactions.slice(0, 6).map((transaction) => (
         <div
           key={transaction.transaction_id}
           className={styles.transactionItem}
         >
+          <Image
+            src={
+              transaction?.personal_finance_category_icon_url ||
+              "/images/transaction-icon.svg"
+            }
+            alt="transaction-image"
+            width={45}
+            height={45}
+            className={styles.transactionImage}
+          />
+
           <div className={styles.transactionDescription}>
-            <Image
-              src={
-                transaction?.personal_finance_category_icon_url ||
-                "/images/transaction-icon.svg"
-              }
-              alt="transaction-image"
-              width={40}
-              height={40}
-              className={styles.transactionImage}
-            />
             <p className={styles.name}>{transaction.name ?? "Unknown"}</p>
+            <p className={styles.category}>
+              {displayCategory(transaction?.personal_finance_category.primary)}
+            </p>
           </div>
-          <p className={styles.date}>
-            {new Date(transaction.date).toLocaleDateString("en-GB", {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            })}
-          </p>
-          <div className={styles.transactionAmount}>
-            <i className={styles.icon}>
-              {transaction.amount < 0 ? (
-                <FaLongArrowAltUp className={styles.income} />
-              ) : (
-                <FaLongArrowAltDown className={styles.expense} />
-              )}
-            </i>
-            <p className={styles.amount}>
+
+          <div className={styles.transactionDetails}>
+            <p
+              className={`${styles.transactionAmount} ${transaction.amount < 0 ? styles.expense : styles.income}`}
+            >
               {displayTransactionAmount(transaction.amount)}
+            </p>
+            <p className={styles.date}>
+              {new Date(transaction.date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })}
             </p>
           </div>
         </div>

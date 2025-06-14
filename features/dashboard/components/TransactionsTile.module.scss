@@ -1,74 +1,54 @@
+$secondayTextColor: #b3b3b3;
+
 .transactionsTile {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   width: 100%;
-}
-
-.transactionsHeader {
-  display: grid;
-  grid-template-columns: 1.5fr 1.5fr 1fr;
-  justify-items: center;
-  list-style: none;
-  background: #0a0a0a;
-  border-radius: 14px;
-  padding: 1rem 0;
-}
-
-.transactionItem {
-  //background: #0a0a0a;
-  //border-radius: 14px !important;
-  border-radius: 0 !important;
-  border-bottom: 1px solid #303030;
-  display: grid;
-  grid-template-columns: 1.5fr 1.5fr 1fr;
-  justify-items: center;
-  align-items: center;
-  padding: 0 0.5rem 1rem 0.5rem;
-  border-radius: 5px;
-  &:last-child {
-    border-bottom: none;
-  }
-  .transactionDescription {
-    display: flex;
+  .transactionItem {
+    display: grid;
+    grid-template-columns: auto 1fr 0.7fr;
     align-items: center;
-    flex-direction: column;
-    gap: 0.3rem;
+    padding: 0.5rem 0;
+    border-radius: 14px;
     .transactionImage {
-      border-radius: 14px;
-      background: #5be20d;
+      margin-right: 0.5rem;
     }
-    .name {
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-  }
-  .date {
-    font-size: 0.9rem;
-    color: #b3b3b3;
-  }
-  .transactionAmount {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    .icon {
-      font-size: 1.2rem;
-      & svg {
-        display: block;
+    .transactionDescription {
+      margin-right: auto;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.3rem;
+      .name {
+        font-size: 0.9rem;
+        font-weight: bold;
+      }
+      .category {
+        font-size: 0.9rem;
+        color: $secondayTextColor;
       }
     }
-    .amount {
+    .transactionDetails {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.2rem;
+    }
+    .date {
       font-size: 0.9rem;
-      //color: #b3b3b3;
+      color: $secondayTextColor;
+    }
+    .transactionAmount {
+      font-size: 0.9rem;
+      font-weight: 600;
     }
     .income {
       color: #41a706;
-      //font-weight: bold;
       justify-self: flex-end;
     }
     .expense {
       color: #ff0000;
-      //font-weight: bold;
       justify-self: flex-end;
     }
   }
