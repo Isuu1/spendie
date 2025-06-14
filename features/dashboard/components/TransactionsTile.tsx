@@ -27,7 +27,7 @@ const TransactionsTile: React.FC = async () => {
   };
 
   if (!transactions) {
-    return <div>Loading...</div>;
+    return <div>No transactions found.</div>;
   }
 
   return (
@@ -44,15 +44,16 @@ const TransactionsTile: React.FC = async () => {
         >
           <div className={styles.transactionDescription}>
             <Image
-              src={transaction?.logo_url || "/images/transaction-icon.svg"}
+              src={
+                transaction?.personal_finance_category_icon_url ||
+                "/images/transaction-icon.svg"
+              }
               alt="transaction-image"
               width={40}
               height={40}
               className={styles.transactionImage}
             />
-            <p className={styles.name}>
-              {transaction.category?.[0] ?? "Unknown"}
-            </p>
+            <p className={styles.name}>{transaction.name ?? "Unknown"}</p>
           </div>
           <p className={styles.date}>
             {new Date(transaction.date).toLocaleDateString("en-GB", {
