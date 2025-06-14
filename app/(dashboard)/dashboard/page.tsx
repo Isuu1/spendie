@@ -1,4 +1,3 @@
-import CardsTile from "@/features/dashboard/components/CardsTile";
 //Components
 import AccountsTile from "@/features/accounts/components/AccountsTile";
 import TileWrapper from "@/features/dashboard/components/TileWrapper";
@@ -6,7 +5,6 @@ import TotalBalanceTile from "@/features/total-balance/components/TotalBalanceTi
 import TransactionsTile from "@/features/transactions/components/TransactionsTile";
 //Icons
 import { MdAccountBalance } from "react-icons/md";
-import { FaCreditCard } from "react-icons/fa";
 //import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 
 import { BsCurrencyExchange } from "react-icons/bs";
@@ -14,18 +12,13 @@ import { BsCurrencyExchange } from "react-icons/bs";
 export default async function Page() {
   const tilesInUse = [
     {
-      name: "Accounts",
-      component: <AccountsTile />,
+      name: "Total Balance",
+      component: <TotalBalanceTile />,
       icon: <MdAccountBalance />,
     },
     {
-      name: "Cards",
-      component: <CardsTile />,
-      icon: <FaCreditCard />,
-    },
-    {
-      name: "Total Balance",
-      component: <TotalBalanceTile />,
+      name: "Accounts",
+      component: <AccountsTile />,
       icon: <MdAccountBalance />,
     },
     {
