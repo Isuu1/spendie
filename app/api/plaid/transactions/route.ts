@@ -38,29 +38,22 @@ export async function GET() {
       );
     }
 
-    const transactions: Transaction[] = [];
+    const accessToken = plaidItems[0].access_token;
+    const startDate = moment().subtract(30, "days").format("YYYY-MM-DD"); // Example: last 30 days
+    const endDate = moment().format("YYYY-MM-DD");
 
-    // Iterate over each linked item and fetch transactions
-    for (const item of plaidItems) {
-      const accessToken = item.access_token;
+    const plaidRequest: TransactionsGetRequest = {
+      access_token: accessToken,
+      start_date: startDate,
+      end_date: endDate,
+      options: {
+        // Optional: specify options like count, offset, etc.
+      },
+    };
 
-      const startDate = moment().subtract(30, "days").format("YYYY-MM-DD"); // Example: last 30 days
-      const endDate = moment().format("YYYY-MM-DD");
+    const response = await plaidClient.transactionsGet(plaidRequest);
 
-      const plaidRequest: TransactionsGetRequest = {
-        access_token: accessToken,
-        start_date: startDate,
-        end_date: endDate,
-        options: {
-          // Optional: specify options like count, offset, etc.
-        },
-      };
-
-      const response = await plaidClient.transactionsGet(plaidRequest);
-      transactions.push(...response.data.transactions);
-    }
-
-    return NextResponse.json(transactions);
+    return NextResponse.json(response.data.transactions as Transaction[]);
   } catch (error) {
     console.error("Error fetching transactions:", error);
     return NextResponse.json(
