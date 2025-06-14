@@ -6,25 +6,32 @@ import moment from "moment"; // Or another date handling library
 import plaidClient from "@/shared/lib/plaid";
 import { Transaction } from "@/shared/types/transaction";
 
-export async function POST(request: Request) {
+export async function GET() {
   try {
-    const { userId } = await request.json();
-
-    console.log("User ID:", userId);
-
-    if (!userId) {
-      return NextResponse.json({ error: "Missing user ID" }, { status: 400 });
-    }
-
     const supabase = await createClient();
+
+    const { data: authData, error: authError } = await supabase.auth.getUser();
+
+    if (authError) {
+      console.error("Error fetching user:", authError);
+      throw new Error("Failed to fetch user data");
+    }
 
     // Fetch the user's Plaid items from your database
     const { data: plaidItems, error: fetchError } = await supabase
       .from("plaid_items")
       .select("access_token")
-      .eq("user_id", userId);
+      .eq("user_id", authData.user.id);
 
-    if (fetchError || !plaidItems || plaidItems.length === 0) {
+    if (fetchError) {
+      console.error("Error fetching Plaid items:", fetchError);
+      return NextResponse.json(
+        { error: "Failed to fetch Plaid items" },
+        { status: 500 }
+      );
+    }
+
+    if (!plaidItems || plaidItems.length === 0) {
       return NextResponse.json(
         { error: "No linked Plaid items found for this user" },
         { status: 404 }
