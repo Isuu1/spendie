@@ -5,31 +5,13 @@ import Image from "next/image";
 import styles from "./TransactionsTile.module.scss";
 //Api
 import { getTransactionsServer } from "@/features/transactions/api/server";
+import {
+  displayTransactionAmount,
+  displayTransactionCategory,
+} from "../lib/utils";
 
 const TransactionsTile: React.FC = async () => {
   const transactions = await getTransactionsServer();
-
-  console.log("transactions", transactions);
-  // Function to format the transaction amount
-  const displayTransactionAmount = (amount: number) => {
-    return amount > 0
-      ? `+${amount.toLocaleString("en-US", {
-          style: "currency",
-          currency: "GBP",
-        })}`
-      : `-${Math.abs(amount).toLocaleString("en-US", {
-          style: "currency",
-          currency: "GBP",
-        })}`;
-  };
-
-  const displayCategory = (category: string | null) => {
-    if (!category || category.length === 0) {
-      return "Uncategorized";
-    }
-    const newCategory = category.replace(/_/g, " ").toLowerCase();
-    return newCategory;
-  };
 
   if (!transactions) {
     return <div>No transactions found.</div>;
@@ -56,7 +38,10 @@ const TransactionsTile: React.FC = async () => {
           <div className={styles.transactionDescription}>
             <p className={styles.name}>{transaction.name ?? "Unknown"}</p>
             <p className={styles.category}>
-              {displayCategory(transaction?.personal_finance_category.primary)}
+              {displayTransactionCategory(
+                transaction?.personal_finance_category.primary ??
+                  "Uncategorized"
+              )}
             </p>
           </div>
 
