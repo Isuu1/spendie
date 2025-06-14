@@ -48,7 +48,7 @@ const TransactionsTile: React.FC = async () => {
 
           <div className={styles.transactionDetails}>
             <p
-              className={`${styles.transactionAmount} ${transaction.amount < 0 ? styles.expense : styles.income}`}
+              className={`${styles.transactionAmount} ${transaction.amount > 0 ? styles.expense : styles.income}`}
             >
               {displayTransactionAmount(transaction.amount)}
             </p>

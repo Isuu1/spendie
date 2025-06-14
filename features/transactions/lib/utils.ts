@@ -1,10 +1,10 @@
 export const displayTransactionAmount = (amount: number) => {
   return amount > 0
-    ? `+${amount.toLocaleString("en-US", {
+    ? `-${amount.toLocaleString("en-US", {
         style: "currency",
         currency: "GBP",
       })}`
-    : `-${Math.abs(amount).toLocaleString("en-US", {
+    : `+${Math.abs(amount).toLocaleString("en-US", {
         style: "currency",
         currency: "GBP",
       })}`;
