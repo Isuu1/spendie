@@ -2,24 +2,16 @@ import React from "react";
 
 //Styles
 import styles from "./TotalBalanceTile.module.scss";
-//Icons
-import { FaLongArrowAltUp } from "react-icons/fa";
-import { FaLongArrowAltDown } from "react-icons/fa";
 //Utils
-import { getLatestStandingOrder } from "../lib/utils";
+import { getSoonestRecurringPayment } from "../lib/utils";
 //Components
 import FutureBalance from "./FutureBalance";
 import { Account } from "@/shared/types/account";
 import { getAccountsServer } from "@/features/accounts/api/server";
-import { getUserServer } from "@/features/user/api/getUserServer";
-import { UserProfile } from "@/features/user/types/user";
+import UpcomingChange from "./UpcomingChange";
 
 const TotalBalanceTile = async () => {
   const accounts = (await getAccountsServer()) as Account[];
-  const user = (await getUserServer()) as UserProfile;
-
-  console.log("TotalBalanceTile user", user);
-  console.log("TotalBalanceTile accounts", accounts);
 
   if (!accounts) {
     return <p>Loading...</p>;
@@ -30,53 +22,22 @@ const TotalBalanceTile = async () => {
     return sum + currentBalance;
   }, 0);
 
-  const latestStandingOrderIncome = getLatestStandingOrder("income", user);
-  const latestStandingOrderExpense = getLatestStandingOrder("expense", user);
+  const soonestRecurringIncome = await getSoonestRecurringPayment("income");
+
+  const soonestRecurringExpense = await getSoonestRecurringPayment("expense");
 
   return (
     <div className={styles.totalBalanceTile}>
       <h1 className={styles.balance}>£{totalBalance ?? 0}</h1>
       <FutureBalance
-        latestStandingOrderIncome={latestStandingOrderIncome}
-        latestStandingOrderExpense={latestStandingOrderExpense}
+        latestStandingOrderIncome={soonestRecurringIncome}
+        latestStandingOrderExpense={soonestRecurringExpense}
         totalBalance={totalBalance}
       />
-      <div className={styles.stats}>
-        <h3 className={styles.title}>Incoming changes</h3>
-        <div className={styles.income}>
-          <div className={styles.label}>
-            <FaLongArrowAltUp />
-            <p>Income</p>
-          </div>
-          {latestStandingOrderIncome ? (
-            <div className={styles.incomeDetails}>
-              <span>{latestStandingOrderIncome.date}</span>
-              <span>{latestStandingOrderIncome.name}</span>
-              <span>{latestStandingOrderIncome.amount}£</span>
-            </div>
-          ) : (
-            <div className={styles.incomeDetails}>
-              <span>No standing orders set up</span>
-            </div>
-          )}
-        </div>
-        <div className={styles.expense}>
-          <div className={styles.label}>
-            <FaLongArrowAltDown />
-            <p>Expense</p>
-          </div>
-          {latestStandingOrderExpense ? (
-            <div className={styles.incomeDetails}>
-              <span>{latestStandingOrderExpense.date}</span>
-              <span>{latestStandingOrderExpense.name}</span>
-              <span>{latestStandingOrderExpense.amount}£</span>
-            </div>
-          ) : (
-            <div className={styles.incomeDetails}>
-              <span>No standing orders set up</span>
-            </div>
-          )}
-        </div>
+      <div className={styles.upcomingChanges}>
+        <h3 className={styles.title}>Upcoming changes</h3>
+        <UpcomingChange type="income" data={soonestRecurringIncome} />
+        <UpcomingChange type="expense" data={soonestRecurringExpense} />
       </div>
     </div>
   );

@@ -1,0 +1,78 @@
+$secondayTextColor: #b3b3b3;
+
+.incomeBackground {
+  background: rgba(65, 179, 0, 0.1);
+  border: 1px solid #a7a7a721;
+}
+.expenseBackground {
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid #a7a7a721;
+}
+
+.item {
+  //background: rgba(255, 255, 255, 0.07);
+  //border: 1px solid #a7a7a721;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  border-radius: 0.6rem;
+  padding: 0.5rem 0.3rem;
+  .label {
+    display: flex;
+    gap: 0.2rem;
+    align-items: center;
+    justify-content: center;
+    // color: #41b300;
+    // background: #42b30059;
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    margin-right: 0.5rem;
+    .icon {
+      font-size: 1.2rem;
+      svg {
+        display: block;
+      }
+    }
+  }
+  .expenseLabel {
+    color: #ff0000;
+    background: #ff000059;
+  }
+  .incomeLabel {
+    color: #41b300;
+    background: #42b30059;
+  }
+  .data {
+    flex: 1;
+    // display: grid;
+    // grid-template-columns: 2fr 1fr 0.8fr;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    .details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      .name {
+        font-weight: 600;
+      }
+      .date {
+        font-size: 0.9rem;
+        color: $secondayTextColor;
+      }
+    }
+    .amount {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1rem;
+      .income {
+        color: #41b300;
+      }
+      .expense {
+        color: #ff0000;
+      }
+    }
+  }
+}
