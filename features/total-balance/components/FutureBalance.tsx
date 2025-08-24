@@ -6,87 +6,108 @@ import moment from "moment";
 //Styles
 import styles from "./FutureBalance.module.scss";
 //Types
-import { StandingOrder } from "@/shared/types/recurring-payment";
+import { RecurringPayment } from "@/shared/types/recurring-payment";
+//Utils
+import { populatePaymentsTillDate } from "@/features/recurring-payments/lib/utils/populatePaymentsTillDate";
 
 interface FutureBalanceProps {
-  latestStandingOrderIncome: StandingOrder | null;
-  latestStandingOrderExpense: StandingOrder | null;
+  recurringPayments: RecurringPayment[];
   totalBalance: number;
 }
 
 const FutureBalance: React.FC<FutureBalanceProps> = ({
-  latestStandingOrderIncome,
-  latestStandingOrderExpense,
   totalBalance,
+  recurringPayments,
 }) => {
-  const [displayedFutureBalance, setDisplayedFutureBalance] =
-    useState<string>("end of the month");
-
-  const startOfMonth = moment().startOf("month");
   const endOfMonth = moment().endOf("month");
 
+  const todaysDate = moment();
+
+  const [selectedRange, setSelectedRange] = useState(endOfMonth);
+
+  const incomePaymentsTillDate = populatePaymentsTillDate(
+    moment(selectedRange),
+    recurringPayments
+  ).filter((payment) => payment.type.toLowerCase() === "income");
+
+  const incomePaymentsTillDateAmount = incomePaymentsTillDate.reduce(
+    (sum, payment) => sum + payment.amount,
+    0
+  );
+
+  const expensePaymentsTillDate = populatePaymentsTillDate(
+    moment(selectedRange),
+    recurringPayments
+  ).filter((payment) => payment.type.toLowerCase() === "expense");
+
+  const expensePaymentsTillDateAmount = expensePaymentsTillDate.reduce(
+    (sum, payment) => sum + payment.amount,
+    0
+  );
+
+  const handleRangeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (event.target.value === "end of the month") {
+      setSelectedRange(endOfMonth);
+    }
+    if (event.target.value === "by date") {
+      const selectedDate = prompt("Please enter a date (YYYY-MM-DD):");
+      if (selectedDate) {
+        const parsedDate = moment(selectedDate, "YYYY-MM-DD");
+        if (parsedDate.isValid()) {
+          setSelectedRange(parsedDate);
+        } else {
+          alert("Invalid date format. Please use YYYY-MM-DD.");
+        }
+      }
+    }
+  };
+
   const calculateFutureBalance = () => {
-    if (!latestStandingOrderIncome && !latestStandingOrderExpense) {
-      return totalBalance; // No income date available
-    }
-
-    let incomeAmountForCalculation = 0;
-    let expenseAmountForCalculation = 0;
-    if (latestStandingOrderIncome && latestStandingOrderExpense) {
-      const incomeDate = moment(new Date(latestStandingOrderIncome.date));
-      const expenseDate = moment(new Date(latestStandingOrderExpense.date));
-      if (displayedFutureBalance === "end of the month") {
-        if (incomeDate.isBetween(startOfMonth, endOfMonth, null, "[]")) {
-          //'[]' includes start and end dates
-          incomeAmountForCalculation = latestStandingOrderIncome?.amount ?? 0;
-        }
-
-        if (expenseDate.isBetween(startOfMonth, endOfMonth, null, "[]")) {
-          //'[]' includes start and end dates
-          expenseAmountForCalculation = latestStandingOrderExpense?.amount ?? 0;
-        }
-      }
-      if (displayedFutureBalance === "after next income") {
-        if (incomeDate.isAfter(moment(), "day")) {
-          incomeAmountForCalculation = latestStandingOrderIncome?.amount ?? 0;
-        }
-
-        if (expenseDate.isAfter(moment(), "day")) {
-          expenseAmountForCalculation = latestStandingOrderExpense?.amount ?? 0;
-        }
-      }
-    }
-
     return (
-      totalBalance + incomeAmountForCalculation - expenseAmountForCalculation
+      totalBalance +
+      incomePaymentsTillDate.reduce((sum, payment) => sum + payment.amount, 0) -
+      expensePaymentsTillDate.reduce((sum, payment) => sum + payment.amount, 0)
     );
   };
 
-  const handleFutureBalanceChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const selectedValue = e.target.value;
-    setDisplayedFutureBalance(selectedValue);
-  };
-
   return (
-    <>
-      <div className={styles.futureBalance}>
+    <div className={styles.futureBalance}>
+      <div className={styles.menu}>
+        <p>Upcoming changes by</p>
         <div className={styles.range}>
           <label htmlFor="range">Time period</label>
           <select
             id="range"
             name="range"
             className={styles.select}
-            onChange={handleFutureBalanceChange}
+            onChange={handleRangeChange}
           >
-            <option value="end of the month">End of the month</option>
-            <option value="after next income">After next income</option>
+            <option value="end of the month">
+              End of {todaysDate.format("MMMM")}
+            </option>
+            <option value="by date">Select date</option>
           </select>
         </div>
+      </div>
+      <div className={styles.upcomingChanges}>
+        {incomePaymentsTillDate.length > 0 && (
+          <div className={styles.upcomingIncomes}>
+            {incomePaymentsTillDate.length} income - £
+            {incomePaymentsTillDateAmount.toFixed(2)}{" "}
+          </div>
+        )}
+        {expensePaymentsTillDate.length > 0 && (
+          <div className={styles.upcomingExpenses}>
+            {expensePaymentsTillDate.length} expense - £
+            {expensePaymentsTillDateAmount.toFixed(2)}{" "}
+          </div>
+        )}
+      </div>
+      <div className={styles.balance}>
+        <strong>Balance after</strong>
         <h2 className={styles.value}>£{calculateFutureBalance().toFixed(2)}</h2>
       </div>
-    </>
+    </div>
   );
 };
 

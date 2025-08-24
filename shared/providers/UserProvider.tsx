@@ -8,7 +8,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { UserProfile } from "../types/user";
+import { UserProfile } from "../../features/user/types/user";
 import { RecurringPayment } from "../types/recurring-payment";
 
 interface UserContextType {

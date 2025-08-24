@@ -5,6 +5,32 @@ $secondary-text-color: #808080;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  .menu {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    align-items: center;
+    width: 100%;
+    //margin-bottom: 0.5rem;
+    //padding: 0.3rem;
+    //background: #0a0a0a;
+  }
+  .upcomingChanges {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+  .balance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
   .range {
     font-size: 0.9rem;
     padding: 0 0.5rem;
@@ -46,4 +72,19 @@ $secondary-text-color: #808080;
     font-size: 0.8rem;
     color: $secondary-text-color;
   }
+}
+.upcomingIncomes {
+  padding: 0.3rem 0.4rem;
+  border-radius: 6px;
+  width: fit-content;
+  color: #00ff00;
+  background: #00ff0025;
+}
+
+.upcomingExpenses {
+  padding: 0.3rem;
+  border-radius: 6px;
+  width: fit-content;
+  color: #ff0000;
+  background: #ff000025;
 }
