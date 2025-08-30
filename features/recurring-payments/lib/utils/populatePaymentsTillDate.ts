@@ -8,12 +8,12 @@ export const populatePaymentsTillDate = (
   //This function populates all recurring payments that occur till selected date
   //It includes monthly and weekly payments i.e if you add a payment occurs every week, it will add all occurrences till the target date
   const todaysDate = moment();
-  console.log("Target date:", targetDate);
+  // console.log("Target date:", targetDate);
   const populatedPayments: RecurringPayment[] = [];
   const paymentsByDate = recurringPayments.filter((payment) =>
     moment(payment.date).isBetween(todaysDate, targetDate, null, "[]")
   );
-  console.log("All payments this month:", paymentsByDate);
+  // console.log("All payments this month:", paymentsByDate);
   paymentsByDate.forEach((payment) => {
     if (targetDate < todaysDate) {
       return;
@@ -48,6 +48,6 @@ export const populatePaymentsTillDate = (
       }
     }
   });
-  console.log("Upcoming payments:", populatedPayments);
+  // console.log("Upcoming payments:", populatedPayments);
   return populatedPayments;
 };
