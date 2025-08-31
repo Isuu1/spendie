@@ -24,18 +24,20 @@ interface FutureBalanceProps {
   totalBalance: number;
 }
 
+type Mode = "endOfMonth" | "specificDate";
+
 const FutureBalance: React.FC<FutureBalanceProps> = ({
   totalBalance,
   recurringPayments,
 }) => {
   const endOfMonth = moment().endOf("month");
+  const optionsRef = useRef<HTMLDivElement>(null);
 
   //States
+  const [mode, setMode] = useState<Mode>("endOfMonth");
   const [selectedRange, setSelectedRange] = useState(endOfMonth);
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
-
-  const optionsRef = useRef<HTMLDivElement>(null);
 
   //Payments filtering
 
@@ -65,10 +67,12 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
   const selectRange = (range: string) => {
     if (range === "end of the month") {
       setSelectedRange(endOfMonth);
+      setMode("endOfMonth");
       //setOpenDatePicker(false);
     }
     if (range === "by date") {
       setOpenDatePicker(true);
+      setMode("specificDate");
       console.log("Switched to date mode");
     }
   };
@@ -90,16 +94,18 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
   const futureBalance = totalBalance + totalIncome - totalExpense;
 
   const displaySelectedOption = () => {
-    if (selectedRange.isSame(endOfMonth, "day")) {
+    if (mode === "endOfMonth") {
       return "End of the month";
     }
-    if (!selectedRange.isSame(endOfMonth, "day")) {
+    if (mode === "specificDate") {
+      console.log("Specific date mode selected", selectedRange);
       return "Specific date";
     }
-    return selectedRange.format("DD MMM YYYY");
+    //return selectedRange.format("DD MMM YYYY");
   };
 
   console.log("Selected range:", selectedRange);
+  console.log("Mode:", mode);
 
   return (
     <div className={styles.futureBalance}>
@@ -122,7 +128,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
               inline
               withPortal
               onClickOutside={() => setOpenDatePicker(false)}
-              className={styles.datePicker}
+              //className={styles.datePicker}
             />
           )}
           <p
@@ -137,24 +143,20 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
             <div className={styles.options} ref={optionsRef}>
               <p
                 className={`${styles.option} ${
-                  selectedRange.isSame(endOfMonth, "day")
-                    ? styles.activeOption
-                    : undefined
+                  mode === "endOfMonth" ? styles.activeOption : undefined
                 }`}
                 onClick={() => selectRange("end of the month")}
               >
-                End of the month{" "}
-                {selectedRange.isSame(endOfMonth, "day") && <IoMdCheckmark />}
+                End of the month {mode === "endOfMonth" && <IoMdCheckmark />}
               </p>
               <p
                 className={`${styles.option} ${
-                  !selectedRange.isSame(endOfMonth, "day")
-                    ? styles.activeOption
-                    : undefined
+                  mode === "specificDate" ? styles.activeOption : undefined
                 }`}
                 onClick={() => selectRange("by date")}
               >
                 Specific date
+                {mode === "specificDate" && <IoMdCheckmark />}
               </p>
             </div>
           )}
