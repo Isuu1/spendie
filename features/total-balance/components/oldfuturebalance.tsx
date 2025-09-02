@@ -17,7 +17,6 @@ import { IoMdCheckmark } from "react-icons/io";
 //Datepicker
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Button from "@/shared/components/ui/Button";
 //import Modal from "@/shared/components/Modal";
 
 interface FutureBalanceProps {
@@ -25,50 +24,57 @@ interface FutureBalanceProps {
   totalBalance: number;
 }
 
-const calculateTotals = (payments: RecurringPayment[]) => {
-  const income = payments
-    .filter((p) => p.type.toLowerCase() === "income")
-    .reduce((sum, p) => sum + p.amount, 0);
-
-  const expense = payments
-    .filter((p) => p.type.toLowerCase() === "expense")
-    .reduce((sum, p) => sum + p.amount, 0);
-
-  return { income, expense };
-};
-
 type Mode = "endOfMonth" | "specificDate";
 
 const FutureBalance: React.FC<FutureBalanceProps> = ({
   totalBalance,
   recurringPayments,
 }) => {
+  const endOfMonth = moment().endOf("month");
   const optionsRef = useRef<HTMLDivElement>(null);
 
   //States
   const [mode, setMode] = useState<Mode>("endOfMonth");
+  const [selectedRange, setSelectedRange] = useState<Moment | null>(endOfMonth);
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
-  const [dateSelected, setDateSelected] = useState<Moment | null>(null);
+  const [dateSelected, setDateSelected] = useState<boolean>(false);
 
   //Payments filtering
-  const specificDate =
-    mode === "endOfMonth" ? moment().endOf("month") : dateSelected;
 
   const paymentsTillDate = populatePaymentsTillDate(
-    specificDate || moment().endOf("month"),
+    moment(selectedRange),
     recurringPayments
   );
 
-  const { income, expense } = calculateTotals(paymentsTillDate);
+  const incomePaymentsTillDate = paymentsTillDate.filter(
+    (payment) => payment.type.toLowerCase() === "income"
+  );
+  const expensePaymentsTillDate = paymentsTillDate.filter(
+    (payment) => payment.type.toLowerCase() === "expense"
+  );
 
-  const futureBalance = totalBalance + income - expense;
+  const totalIncome = incomePaymentsTillDate.reduce(
+    (sum, payment) => sum + payment.amount,
+    0
+  );
+
+  const totalExpense = expensePaymentsTillDate.reduce(
+    (sum, payment) => sum + payment.amount,
+    0
+  );
 
   //Range selection
-  const handleSelectRange = (range: Mode) => {
-    setMode(range);
-    if (range === "specificDate" && !dateSelected) {
+  const selectRange = (range: string) => {
+    if (range === "end of the month") {
+      setSelectedRange(endOfMonth);
+      setMode("endOfMonth");
+    }
+    if (range === "by date") {
+      setSelectedRange(null);
       setOpenDatePicker(true);
+      setMode("specificDate");
+      console.log("Switched to date mode");
     }
   };
 
@@ -86,14 +92,22 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const selectedOptionLabel =
-    mode === "endOfMonth"
-      ? "End of the month"
-      : dateSelected
-        ? dateSelected.format("DD MMM YYYY")
-        : "Specific date";
+  const futureBalance = totalBalance + totalIncome - totalExpense;
 
-  console.log("payments till date", paymentsTillDate);
+  const displaySelectedOption = () => {
+    if (mode === "endOfMonth") {
+      return "End of the month";
+    }
+    if (mode === "specificDate") {
+      return dateSelected && selectedRange
+        ? selectedRange.format("DD MMM YYYY")
+        : "Specific date";
+    }
+  };
+
+  console.log("Selected range:", selectedRange);
+  console.log("Mode:", mode);
+  console.log("Date selected:", dateSelected);
 
   return (
     <div className={styles.futureBalance}>
@@ -103,13 +117,15 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
         <div className={styles.select}>
           {openDatePicker && (
             <DatePicker
+              //selected={moment(selectedRange).toDate()}
               onSelect={() => {
                 setOpenDatePicker(false);
+                setDateSelected(true);
               }}
               onChange={(date) => {
                 if (date) {
                   console.log("Date in date picker", date);
-                  setDateSelected(moment(date));
+                  setSelectedRange(moment(date));
                 }
               }}
               dateFormat="yyyy-MM-dd"
@@ -124,7 +140,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
             className={styles.selectedOption}
             onClick={() => setShowOptions(!showOptions)}
           >
-            {selectedOptionLabel}
+            {displaySelectedOption()}
 
             <IoMdArrowDropdown />
           </p>
@@ -134,7 +150,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
                 className={`${styles.option} ${
                   mode === "endOfMonth" ? styles.activeOption : undefined
                 }`}
-                onClick={() => handleSelectRange("endOfMonth")}
+                onClick={() => selectRange("end of the month")}
               >
                 End of the month {mode === "endOfMonth" && <IoMdCheckmark />}
               </p>
@@ -142,39 +158,30 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
                 className={`${styles.option} ${
                   mode === "specificDate" ? styles.activeOption : undefined
                 }`}
-                onClick={() => handleSelectRange("specificDate")}
+                onClick={() => selectRange("by date")}
               >
-                {dateSelected
-                  ? dateSelected.format("DD MMM YYYY")
+                {mode === "specificDate" && selectedRange
+                  ? selectedRange.format("DD MMM YYYY")
                   : "Specific date"}
                 {mode === "specificDate" && <IoMdCheckmark />}
-                {dateSelected && (
-                  <Button
-                    text="Edit"
-                    variant="primary"
-                    size="small"
-                    type="button"
-                    onClick={() => setOpenDatePicker(true)}
-                  />
-                )}
               </p>
             </div>
           )}
         </div>
 
-        {/* <Select handleSelectRange={handleSelectRange} /> */}
+        {/* <Select selectRange={selectRange} /> */}
       </div>
       <div className={styles.upcomingChanges}>
-        {income > 0 && (
+        {incomePaymentsTillDate.length > 0 && (
           <div className={styles.upcomingIncomes}>
-            {paymentsTillDate.filter((p) => p.type === "Income").length} income
-            – £{income.toFixed(2)}
+            {incomePaymentsTillDate.length} income - £
+            {totalIncome.toFixed(2)}{" "}
           </div>
         )}
-        {expense > 0 && (
+        {expensePaymentsTillDate.length > 0 && (
           <div className={styles.upcomingExpenses}>
-            {paymentsTillDate.filter((p) => p.type === "Expense").length}{" "}
-            expense - £{expense.toFixed(2)}
+            {expensePaymentsTillDate.length} expense - £
+            {totalExpense.toFixed(2)}{" "}
           </div>
         )}
       </div>

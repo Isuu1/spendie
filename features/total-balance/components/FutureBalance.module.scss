@@ -19,7 +19,7 @@ $secondary-text-color: #808080;
       background: #0a0a0a;
       color: #c2c2c2;
       border-radius: 5px;
-      width: fit-content;
+      //width: fit-content;
       cursor: pointer;
       .datePicker {
         position: fixed;
@@ -38,12 +38,14 @@ $secondary-text-color: #808080;
         left: 0;
         background: #0a0a0a;
         border-radius: 5px;
-        width: 100%;
+        width: fit-content;
         .option {
           padding: 0.4rem;
+          display: flex;
+          gap: 0.2rem;
         }
         .activeOption {
-          cursor: not-allowed;
+          //cursor: not-allowed;
           //background: #5be20d;
           background: #616161;
           border-radius: 5px;
