@@ -70,6 +70,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
     if (range === "specificDate" && !dateSelected) {
       setOpenDatePicker(true);
     }
+    setShowOptions(false);
   };
 
   //Close dropdown when clicking outside
@@ -115,9 +116,9 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
               dateFormat="yyyy-MM-dd"
               minDate={moment().toDate()}
               inline
-              withPortal
+              //portalId="modal-root"
               onClickOutside={() => setOpenDatePicker(false)}
-              //className={styles.datePicker}
+              calendarClassName={styles.datePicker}
             />
           )}
           <p
@@ -128,41 +129,41 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
 
             <IoMdArrowDropdown />
           </p>
-          {showOptions && (
-            <div className={styles.options} ref={optionsRef}>
-              <p
-                className={`${styles.option} ${
-                  mode === "endOfMonth" ? styles.activeOption : undefined
-                }`}
-                onClick={() => handleSelectRange("endOfMonth")}
-              >
-                End of the month {mode === "endOfMonth" && <IoMdCheckmark />}
-              </p>
-              <p
-                className={`${styles.option} ${
-                  mode === "specificDate" ? styles.activeOption : undefined
-                }`}
-                onClick={() => handleSelectRange("specificDate")}
-              >
-                {dateSelected
-                  ? dateSelected.format("DD MMM YYYY")
-                  : "Specific date"}
-                {mode === "specificDate" && <IoMdCheckmark />}
-                {dateSelected && (
-                  <Button
-                    text="Edit"
-                    variant="primary"
-                    size="small"
-                    type="button"
-                    onClick={() => setOpenDatePicker(true)}
-                  />
-                )}
-              </p>
-            </div>
-          )}
         </div>
 
         {/* <Select handleSelectRange={handleSelectRange} /> */}
+        {showOptions && (
+          <div className={styles.options} ref={optionsRef}>
+            <p
+              className={`${styles.option} ${
+                mode === "endOfMonth" ? styles.activeOption : undefined
+              }`}
+              onClick={() => handleSelectRange("endOfMonth")}
+            >
+              End of the month {mode === "endOfMonth" && <IoMdCheckmark />}
+            </p>
+            <p
+              className={`${styles.option} ${
+                mode === "specificDate" ? styles.activeOption : undefined
+              }`}
+              onClick={() => handleSelectRange("specificDate")}
+            >
+              {dateSelected
+                ? dateSelected.format("DD MMM YYYY")
+                : "Specific date"}
+              {mode === "specificDate" && <IoMdCheckmark />}
+              {dateSelected && (
+                <Button
+                  text="Edit"
+                  variant="primary"
+                  size="small"
+                  type="button"
+                  onClick={() => setOpenDatePicker(true)}
+                />
+              )}
+            </p>
+          </div>
+        )}
       </div>
       <div className={styles.upcomingChanges}>
         {income > 0 && (
