@@ -11,6 +11,7 @@ import { RecurringPayment } from "@/shared/types/recurring-payment";
 import { populatePaymentsTillDate } from "@/features/recurring-payments/lib/utils/populatePaymentsTillDate";
 //Components
 import SelectMode from "@/features/total-balance/components/SelectMode";
+import UpcomingPayments from "./UpcomingPayments";
 
 interface FutureBalanceProps {
   recurringPayments: RecurringPayment[];
@@ -60,29 +61,11 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
         onDateSelect={setDateSelected}
         onRangeSelect={setMode}
       />
-      <div className={styles.upcomingChanges}>
-        {income > 0 && (
-          <div className={styles.upcomingIncomes}>
-            {
-              paymentsTillDate.filter((p) => p.type.toLowerCase() === "income")
-                .length
-            }{" "}
-            income – £{income.toFixed(2)}
-          </div>
-        )}
-        {expense > 0 && (
-          <div className={styles.upcomingExpenses}>
-            {
-              paymentsTillDate.filter((p) => p.type.toLowerCase() === "expense")
-                .length
-            }{" "}
-            expense - £{expense.toFixed(2)}
-          </div>
-        )}
-        {income === 0 && expense === 0 && (
-          <p className={styles.noChanges}>No upcoming changes</p>
-        )}
-      </div>
+      <UpcomingPayments
+        paymentsTillDate={paymentsTillDate}
+        income={income}
+        expense={expense}
+      />
       <div className={styles.balance}>
         <strong>Balance</strong>
         <h2 className={styles.value}>£{futureBalance.toFixed(2)}</h2>

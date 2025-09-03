@@ -1,40 +1,9 @@
-$primary-text-color: #fff;
-$secondary-text-color: #808080;
-
 .futureBalance {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
   gap: 0.5rem;
-  .upcomingChanges {
-    display: flex;
-    justify-content: space-between;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    width: 100%;
-    .upcomingIncomes {
-      padding: 0.3rem 0.4rem;
-      border-radius: 6px;
-      width: fit-content;
-      color: #00ff00;
-      background: #00ff0025;
-    }
-    .upcomingExpenses {
-      padding: 0.3rem;
-      border-radius: 6px;
-      width: fit-content;
-      color: #ff0000;
-      background: #ff000025;
-    }
-    .noChanges {
-      padding: 0.3rem 0.4rem;
-      border-radius: 6px;
-      width: fit-content;
-      color: $secondary-text-color;
-      background: #80808025;
-    }
-  }
   .balance {
     display: flex;
     justify-content: space-between;
