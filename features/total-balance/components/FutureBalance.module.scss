@@ -7,65 +7,26 @@ $secondary-text-color: #808080;
   align-items: center;
   flex-direction: column;
   gap: 0.5rem;
-  .menu {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    gap: 0.5rem;
-    align-items: center;
-    width: 100%;
-    .select {
-      font-size: 0.95rem;
-      position: relative;
-      background: #0a0a0a;
-      color: #c2c2c2;
-      border-radius: 5px;
-      //width: fit-content;
-      cursor: pointer;
-      .datePicker {
-        z-index: 99;
-        position: fixed;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #999999;
-        border: 0;
-      }
-      .selectedOption {
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
-        padding: 0.4rem;
-      }
-    }
-    .options {
-      position: absolute;
-      top: 30px;
-      right: 0;
-      font-size: 0.9rem;
-      background: #0a0a0a;
-      border-radius: 5px;
-      width: fit-content;
-      .option {
-        display: flex;
-        align-items: center;
-        padding: 0.3rem 0.6rem;
-        display: flex;
-        gap: 0.3rem;
-        cursor: pointer;
-      }
-      .activeOption {
-        background: #616161;
-        border-radius: 5px;
-      }
-    }
-  }
   .upcomingChanges {
     display: flex;
     justify-content: space-between;
     gap: 0.5rem;
     font-size: 0.9rem;
     width: 100%;
+    .upcomingIncomes {
+      padding: 0.3rem 0.4rem;
+      border-radius: 6px;
+      width: fit-content;
+      color: #00ff00;
+      background: #00ff0025;
+    }
+    .upcomingExpenses {
+      padding: 0.3rem;
+      border-radius: 6px;
+      width: fit-content;
+      color: #ff0000;
+      background: #ff000025;
+    }
   }
   .balance {
     display: flex;
@@ -74,60 +35,4 @@ $secondary-text-color: #808080;
     width: 100%;
     margin-top: 0.5rem;
   }
-  .range {
-    font-size: 0.9rem;
-    padding: 0 0.5rem;
-    background: #0a0a0a;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    & label {
-      display: none;
-    }
-    &:hover {
-      background: #494949;
-      .select {
-        color: #ffffff;
-      }
-    }
-    .select {
-      cursor: pointer;
-      background: transparent;
-      border-radius: 8px;
-      border: none;
-      color: $secondary-text-color;
-      font-weight: 600;
-      outline: none;
-      transition: all 0.3s ease;
-      padding: 0.5rem 0;
-      & option {
-        //background: #0a0a0a;
-        background: #494949;
-        color: #fff;
-        padding: 0.5rem;
-        &:hover {
-          background: #0a0a0a;
-        }
-      }
-    }
-  }
-  .rangeSubtitle {
-    font-size: 0.8rem;
-    color: $secondary-text-color;
-  }
-}
-.upcomingIncomes {
-  padding: 0.3rem 0.4rem;
-  border-radius: 6px;
-  width: fit-content;
-  color: #00ff00;
-  background: #00ff0025;
-}
-
-.upcomingExpenses {
-  padding: 0.3rem;
-  border-radius: 6px;
-  width: fit-content;
-  color: #ff0000;
-  background: #ff000025;
 }

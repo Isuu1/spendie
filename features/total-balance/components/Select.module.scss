@@ -1,0 +1,59 @@
+.selectContainer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+  .select {
+    font-size: 0.9rem;
+    position: relative;
+    background: #0a0a0a;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: auto;
+    .datePicker {
+      z-index: 99;
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #999999;
+      border: 0;
+    }
+    .selectedOption {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.4rem;
+      white-space: nowrap;
+      color: #c2c2c2;
+    }
+  }
+  .options {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    font-size: 0.85rem;
+    background: #0a0a0a;
+    color: #c2c2c2;
+    border-radius: 5px;
+    width: fit-content;
+    line-height: 1.3rem;
+    .option {
+      display: flex;
+      align-items: center;
+      padding: 0.3rem 0.6rem;
+      display: flex;
+      gap: 0.3rem;
+      cursor: pointer;
+    }
+    .activeOption {
+      background: #616161;
+      border-radius: 5px;
+    }
+  }
+  .dateSelected {
+    right: 70px;
+  }
+}

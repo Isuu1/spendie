@@ -8,7 +8,7 @@ import styles from "./Button.module.scss";
 interface ButtonProps {
   variant: "primary" | "secondary";
   size: "small" | "medium" | "large";
-  type: "button" | "submit";
+  type?: "button" | "submit";
   text?: string;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
@@ -17,6 +17,7 @@ interface ButtonProps {
     | ((e: React.MouseEvent<HTMLButtonElement>) => void)
     | Promise<void>;
   disabled?: boolean;
+  className?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -24,14 +25,15 @@ const Button: React.FC<ButtonProps> = ({
   icon,
   variant,
   size,
-  type,
+  type = "button",
   iconPosition,
   onClick,
   disabled,
+  className,
 }) => {
   return (
     <button
-      className={`${styles.button} ${styles[variant]} ${styles[size]} ${iconPosition ? styles[iconPosition] : ""} ${disabled ? styles.disabled : ""}`}
+      className={`${styles.button} ${className} ${styles[variant]} ${styles[size]} ${iconPosition ? styles[iconPosition] : ""} ${disabled ? styles.disabled : ""}`}
       onClick={onClick}
       type={type}
       disabled={disabled}
