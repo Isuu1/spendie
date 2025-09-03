@@ -7,7 +7,6 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Select.module.scss";
 //Icons
 import { IoMdArrowDropdown } from "react-icons/io";
-import { IoMdCheckmark } from "react-icons/io";
 //Components
 import Button from "@/shared/components/ui/Button";
 //Datepicker
@@ -115,7 +114,7 @@ const Select: React.FC<SelectProps> = ({
             }`}
             onClick={() => handleSelectRange("endOfMonth")}
           >
-            End of the month {mode === "endOfMonth" && <IoMdCheckmark />}
+            End of the month
           </p>
           <p
             className={`${styles.option} ${
@@ -123,10 +122,7 @@ const Select: React.FC<SelectProps> = ({
             }`}
             onClick={() => handleSelectRange("specificDate")}
           >
-            {dateSelected
-              ? dateSelected.format("DD MMM YYYY")
-              : "Specific date"}
-            {mode === "specificDate" && <IoMdCheckmark />}
+            {dateSelected ? dateSelected.format("DD MM YYYY") : "Specific date"}
           </p>
         </div>
       )}
