@@ -1,3 +1,6 @@
+$primary-text-color: #808080;
+$primary-bg-color: #0a0a0a;
+
 .selectContainer {
   position: relative;
   display: flex;
@@ -8,7 +11,7 @@
   .select {
     font-size: 0.9rem;
     position: relative;
-    background: #0a0a0a;
+    background: $primary-bg-color;
     border-radius: 5px;
     cursor: pointer;
     margin-left: auto;
@@ -35,7 +38,7 @@
     top: 30px;
     right: 0;
     font-size: 0.85rem;
-    background: #0a0a0a;
+    background: $primary-bg-color;
     color: #c2c2c2;
     border-radius: 5px;
     width: fit-content;
@@ -50,7 +53,7 @@
     }
     .activeOption {
       background: #616161;
-      border-radius: 5px;
+      border-radius: 0 0 5px 5px;
     }
   }
   .dateSelected {

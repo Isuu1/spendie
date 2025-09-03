@@ -79,9 +79,12 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
             expense - £{expense.toFixed(2)}
           </div>
         )}
+        {income === 0 && expense === 0 && (
+          <p className={styles.noChanges}>No upcoming changes</p>
+        )}
       </div>
       <div className={styles.balance}>
-        <strong>Balance after</strong>
+        <strong>Balance</strong>
         <h2 className={styles.value}>£{futureBalance.toFixed(2)}</h2>
       </div>
     </div>

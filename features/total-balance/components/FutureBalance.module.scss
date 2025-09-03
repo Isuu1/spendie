@@ -27,6 +27,13 @@ $secondary-text-color: #808080;
       color: #ff0000;
       background: #ff000025;
     }
+    .noChanges {
+      padding: 0.3rem 0.4rem;
+      border-radius: 6px;
+      width: fit-content;
+      color: $secondary-text-color;
+      background: #80808025;
+    }
   }
   .balance {
     display: flex;
