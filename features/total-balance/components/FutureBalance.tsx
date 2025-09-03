@@ -10,7 +10,7 @@ import { RecurringPayment } from "@/shared/types/recurring-payment";
 //Utils
 import { populatePaymentsTillDate } from "@/features/recurring-payments/lib/utils/populatePaymentsTillDate";
 //Components
-import Select from "@/features/total-balance/components/Select";
+import SelectMode from "@/features/total-balance/components/SelectMode";
 
 interface FutureBalanceProps {
   recurringPayments: RecurringPayment[];
@@ -54,7 +54,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
 
   return (
     <div className={styles.futureBalance}>
-      <Select
+      <SelectMode
         mode={mode}
         dateSelected={dateSelected}
         onDateSelect={setDateSelected}

@@ -4,7 +4,7 @@ import moment from "moment";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 //Styles
-import styles from "./Select.module.scss";
+import styles from "./SelectMode.module.scss";
 //Icons
 import { IoMdArrowDropdown } from "react-icons/io";
 //Components
