@@ -1,5 +1,6 @@
-$primary-text-color: #808080;
+$primary-text-color: #c2c2c2;
 $primary-bg-color: #0a0a0a;
+$secondary-bg-color: #616161;
 
 .selectContainer {
   position: relative;
@@ -21,7 +22,7 @@ $primary-bg-color: #0a0a0a;
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      background: #999999;
+      background: $secondary-bg-color;
       border: 0;
     }
     .selectedOption {
@@ -30,7 +31,7 @@ $primary-bg-color: #0a0a0a;
       gap: 0.3rem;
       padding: 0.4rem;
       white-space: nowrap;
-      color: #c2c2c2;
+      color: $primary-text-color;
     }
   }
   .options {
@@ -39,7 +40,7 @@ $primary-bg-color: #0a0a0a;
     right: 0;
     font-size: 0.85rem;
     background: $primary-bg-color;
-    color: #c2c2c2;
+    color: $primary-text-color;
     border-radius: 5px;
     width: fit-content;
     line-height: 1.3rem;
@@ -49,7 +50,7 @@ $primary-bg-color: #0a0a0a;
       cursor: pointer;
     }
     .activeOption {
-      background: #616161;
+      background: $secondary-bg-color;
       border-radius: 5px;
     }
   }
