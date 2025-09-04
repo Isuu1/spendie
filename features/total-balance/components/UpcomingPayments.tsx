@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 //Styles
 import styles from "./UpcomingPayments.module.scss";
+import moment from "moment";
 
 interface UpcomingPaymentsProps {
   paymentsTillDate: RecurringPayment[];
@@ -19,23 +20,60 @@ const UpcomingPayments: React.FC<UpcomingPaymentsProps> = ({
     string | null
   >(null);
 
+  console.log("paymentsTillDate", paymentsTillDate);
+  console.log("upcoming change details", showUpcomingChangeDetails);
+
+  const handleToggleDetails = (type: string) => {
+    if (showUpcomingChangeDetails === type) {
+      setShowUpcomingChangeDetails(null);
+    } else {
+      setShowUpcomingChangeDetails(type);
+    }
+  };
+
   return (
     <>
-      {showUpcomingChangeDetails && (
-        <div className={styles.detailsModal}>
-          <div className={styles.modalContent}>
-            <h3>
-              Upcoming{" "}
-              {showUpcomingChangeDetails === "income" ? "Incomes" : "Expenses"}
-            </h3>
-          </div>
-        </div>
-      )}
       <div className={styles.upcomingPayments}>
+        {showUpcomingChangeDetails === "income" && (
+          <div className={styles.paymentsList}>
+            {paymentsTillDate
+              .filter((p) => p.type.toLowerCase() === "income")
+              .map((payment, idx) => (
+                <div key={payment.id ?? idx} className={styles.paymentItem}>
+                  <div className={styles.details}>
+                    <span>{payment.name ?? "Income"}</span>
+                    <span>{moment(payment.date).format("DD MMM `YY")}</span>
+                  </div>
+                  <div className={styles.amount}>
+                    £{payment.amount?.toFixed(2) ?? "0.00"}
+                  </div>
+                </div>
+              ))}
+          </div>
+        )}
+        {showUpcomingChangeDetails === "expense" && (
+          <div className={styles.paymentsList}>
+            {paymentsTillDate
+              .filter((p) => p.type.toLowerCase() === "expense")
+              .map((payment, idx) => (
+                <div key={payment.id ?? idx} className={styles.paymentItem}>
+                  <div className={styles.details}>
+                    <span>{payment.name ?? "Expense"}</span>
+                    <span>£{payment.amount?.toFixed(2) ?? "0.00"}</span>
+                  </div>
+                  <div className={styles.amount}>
+                    {moment(payment.date).format("DD MMM `YY")}
+                  </div>
+                </div>
+              ))}
+          </div>
+        )}
         {income > 0 && (
           <div
-            className={styles.upcomingIncomes}
-            onClick={() => setShowUpcomingChangeDetails("income")}
+            className={`${styles.upcomingIncomes} ${
+              showUpcomingChangeDetails === "income" ? styles.active : ""
+            }`}
+            onClick={() => handleToggleDetails("income")}
           >
             {
               paymentsTillDate.filter((p) => p.type.toLowerCase() === "income")
@@ -47,7 +85,7 @@ const UpcomingPayments: React.FC<UpcomingPaymentsProps> = ({
         {expense > 0 && (
           <div
             className={styles.upcomingExpenses}
-            onClick={() => setShowUpcomingChangeDetails("expense")}
+            onClick={() => handleToggleDetails("expense")}
           >
             {
               paymentsTillDate.filter((p) => p.type.toLowerCase() === "expense")
