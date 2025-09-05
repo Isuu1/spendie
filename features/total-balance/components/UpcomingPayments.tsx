@@ -1,5 +1,5 @@
 import { RecurringPayment } from "@/shared/types/recurring-payment";
-import React, { useState } from "react";
+import React from "react";
 
 //Styles
 import styles from "./UpcomingPayments.module.scss";
@@ -9,22 +9,24 @@ import { TbArrowBigUpFilled } from "react-icons/tb";
 
 interface UpcomingPaymentsProps {
   paymentsTillDate: RecurringPayment[];
+  toggleDetails: (type: "income" | "expense" | null) => void;
+  showUpcomingChangeDetails?: "income" | "expense" | null;
 }
 
 const UpcomingPayments: React.FC<UpcomingPaymentsProps> = ({
   paymentsTillDate,
+  toggleDetails,
+  showUpcomingChangeDetails,
 }) => {
-  const [showUpcomingChangeDetails, setShowUpcomingChangeDetails] = useState<
-    string | null
-  >(null);
+  const incomes = paymentsTillDate.filter(
+    (p) => p.type.toLowerCase() === "income"
+  );
+  const expenses = paymentsTillDate.filter(
+    (p) => p.type.toLowerCase() === "expense"
+  );
 
-  const handleToggleDetails = (type: string) => {
-    if (showUpcomingChangeDetails === type) {
-      setShowUpcomingChangeDetails(null);
-    } else {
-      setShowUpcomingChangeDetails(type);
-    }
-  };
+  const incomeTotal = incomes.reduce((sum, p) => sum + p.amount, 0);
+  const expenseTotal = expenses.reduce((sum, p) => sum + p.amount, 0);
 
   return (
     <>
@@ -63,46 +65,59 @@ const UpcomingPayments: React.FC<UpcomingPaymentsProps> = ({
               ))}
           </div>
         )} */}
-        {paymentsTillDate.length > 0 &&
-          paymentsTillDate.map((payment, idx) => {
-            const incomeIconStyle =
-              payment.type.toLowerCase() === "income"
-                ? styles.incomeIconWrapper
-                : styles.expenseIconWrapper;
-            return (
-              <div
-                key={payment.id ?? idx}
-                className={`${styles.item} ${payment.type.toLowerCase() === "income" ? styles.income : styles.expense} ${
-                  showUpcomingChangeDetails === payment.type
-                    ? styles.active
-                    : ""
-                }`}
-                onClick={() => handleToggleDetails(payment.type)}
-              >
-                <div className={`${styles.iconWrapper} ${incomeIconStyle}`}>
-                  <i className={styles.icon}>
-                    {payment.type.toLowerCase() === "income" ? (
-                      <TbArrowBigUpFilled />
-                    ) : (
-                      <TbArrowBigDownFilled />
-                    )}
-                  </i>
-                </div>
-                <div className={styles.details}>
-                  <span>
-                    {paymentsTillDate.length}
-                    {` `}
-                    {payment.type}
-                  </span>
-                  <span
-                    className={`${styles.amount} ${payment.type === "income" ? styles.income : styles.expense}`}
-                  >
-                    +£{payment.amount.toFixed(2)}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
+        {incomes.length > 0 && (
+          <div
+            className={`${styles.item} ${styles.income} ${
+              showUpcomingChangeDetails === "income" ? styles.active : ""
+            }`}
+            onClick={() => toggleDetails("income")}
+          >
+            <div
+              className={`${styles.iconWrapper} ${styles.incomeIconWrapper}`}
+            >
+              <i className={styles.icon}>
+                <TbArrowBigUpFilled />
+              </i>
+            </div>
+            <div className={styles.details}>
+              <span>
+                {incomes.length}
+                {` `}
+                Income
+              </span>
+              <span className={`${styles.amount} ${styles.income}`}>
+                +£{incomeTotal.toFixed(2)}
+              </span>
+            </div>
+          </div>
+        )}
+        {expenses.length > 0 && (
+          <div
+            className={`${styles.item} ${styles.expense} ${
+              showUpcomingChangeDetails === "expense" ? styles.active : ""
+            }`}
+            onClick={() => toggleDetails("expense")}
+          >
+            <div
+              className={`${styles.iconWrapper} ${styles.expenseIconWrapper}`}
+            >
+              <i className={styles.icon}>
+                <TbArrowBigDownFilled />
+              </i>
+            </div>
+            <div className={styles.details}>
+              <span>
+                {expenses.length}
+                {` `}
+                Expense
+              </span>
+              <span className={`${styles.amount} ${styles.expense}`}>
+                -£{expenseTotal.toFixed(2)}
+              </span>
+            </div>
+          </div>
+        )}
+
         {paymentsTillDate.length === 0 && (
           <p className={styles.none}>No upcoming changes</p>
         )}

@@ -12,6 +12,7 @@ import { populatePaymentsTillDate } from "@/features/recurring-payments/lib/util
 //Components
 import SelectMode from "@/features/total-balance/components/SelectMode";
 import UpcomingPayments from "./UpcomingPayments";
+import UpcomingPaymentsDetails from "./UpcomingPaymentsDetails";
 
 interface FutureBalanceProps {
   recurringPayments: RecurringPayment[];
@@ -39,6 +40,9 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
   //States
   const [mode, setMode] = useState<Mode>("endOfMonth");
   const [dateSelected, setDateSelected] = useState<Moment | null>(null);
+  const [showUpcomingChangeDetails, setShowUpcomingChangeDetails] = useState<
+    "income" | "expense" | null
+  >(null);
 
   //Payments filtering
   const specificDate =
@@ -53,6 +57,14 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
 
   const futureBalance = totalBalance + income - expense;
 
+  const handleToggleDetails = (type: "income" | "expense" | null) => {
+    if (showUpcomingChangeDetails === type) {
+      setShowUpcomingChangeDetails(null);
+    } else {
+      setShowUpcomingChangeDetails(type);
+    }
+  };
+
   return (
     <div className={styles.futureBalance}>
       <SelectMode
@@ -61,7 +73,17 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
         onDateSelect={setDateSelected}
         onRangeSelect={setMode}
       />
-      <UpcomingPayments paymentsTillDate={paymentsTillDate} />
+      <UpcomingPayments
+        paymentsTillDate={paymentsTillDate}
+        showUpcomingChangeDetails={showUpcomingChangeDetails}
+        toggleDetails={handleToggleDetails}
+      />
+      {showUpcomingChangeDetails && (
+        <UpcomingPaymentsDetails
+          toggleDetails={handleToggleDetails}
+          paymentsTillDate={paymentsTillDate}
+        />
+      )}
       <div className={styles.balance}>
         <strong>Balance</strong>
         <h2 className={styles.value}>£{futureBalance.toFixed(2)}</h2>
