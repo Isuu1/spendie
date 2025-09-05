@@ -10,8 +10,8 @@ import { Account } from "@/shared/types/account";
 import { getAccountsServer } from "@/features/accounts/api/server";
 //import UpcomingChange from "./UpcomingChange";
 import { getRecurringPayments } from "@/features/recurring-payments/api/getRecurringPayments";
-import { getSoonestRecurringPayment } from "../lib/utils";
-import UpcomingChange from "./UpcomingChange";
+// import { getSoonestRecurringPayment } from "../lib/utils";
+// import UpcomingChange from "./UpcomingChange";
 
 const TotalBalanceTile = async () => {
   const accounts = (await getAccountsServer()) as Account[];
@@ -27,9 +27,9 @@ const TotalBalanceTile = async () => {
     return sum + currentBalance;
   }, 0);
 
-  const soonestRecurringIncome = await getSoonestRecurringPayment("income");
+  // const soonestRecurringIncome = await getSoonestRecurringPayment("income");
 
-  const soonestRecurringExpense = await getSoonestRecurringPayment("expense");
+  // const soonestRecurringExpense = await getSoonestRecurringPayment("expense");
 
   return (
     <div className={styles.totalBalanceTile}>
@@ -38,11 +38,11 @@ const TotalBalanceTile = async () => {
         totalBalance={totalBalance}
         recurringPayments={recurringPayments}
       />
-      <div className={styles.upcomingChanges}>
+      {/* <div className={styles.upcomingChanges}>
         <h3 className={styles.title}>Upcoming changes</h3>
         <UpcomingChange type="income" data={soonestRecurringIncome} />
         <UpcomingChange type="expense" data={soonestRecurringExpense} />
-      </div>
+      </div> */}
     </div>
   );
 };

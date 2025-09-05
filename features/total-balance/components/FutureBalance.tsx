@@ -61,11 +61,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
         onDateSelect={setDateSelected}
         onRangeSelect={setMode}
       />
-      <UpcomingPayments
-        paymentsTillDate={paymentsTillDate}
-        income={income}
-        expense={expense}
-      />
+      <UpcomingPayments paymentsTillDate={paymentsTillDate} />
       <div className={styles.balance}>
         <strong>Balance</strong>
         <h2 className={styles.value}>£{futureBalance.toFixed(2)}</h2>

@@ -3,25 +3,20 @@ import React, { useState } from "react";
 
 //Styles
 import styles from "./UpcomingPayments.module.scss";
-import moment from "moment";
+//Icons
+import { TbArrowBigDownFilled } from "react-icons/tb";
+import { TbArrowBigUpFilled } from "react-icons/tb";
 
 interface UpcomingPaymentsProps {
   paymentsTillDate: RecurringPayment[];
-  income: number;
-  expense: number;
 }
 
 const UpcomingPayments: React.FC<UpcomingPaymentsProps> = ({
   paymentsTillDate,
-  income,
-  expense,
 }) => {
   const [showUpcomingChangeDetails, setShowUpcomingChangeDetails] = useState<
     string | null
   >(null);
-
-  console.log("paymentsTillDate", paymentsTillDate);
-  console.log("upcoming change details", showUpcomingChangeDetails);
 
   const handleToggleDetails = (type: string) => {
     if (showUpcomingChangeDetails === type) {
@@ -33,8 +28,8 @@ const UpcomingPayments: React.FC<UpcomingPaymentsProps> = ({
 
   return (
     <>
-      <div className={styles.upcomingPayments}>
-        {showUpcomingChangeDetails === "income" && (
+      <div className={styles.upcomingPaymentsContainer}>
+        {/* {showUpcomingChangeDetails === "income" && (
           <div className={styles.paymentsList}>
             {paymentsTillDate
               .filter((p) => p.type.toLowerCase() === "income")
@@ -67,35 +62,49 @@ const UpcomingPayments: React.FC<UpcomingPaymentsProps> = ({
                 </div>
               ))}
           </div>
-        )}
-        {income > 0 && (
-          <div
-            className={`${styles.upcomingIncomes} ${
-              showUpcomingChangeDetails === "income" ? styles.active : ""
-            }`}
-            onClick={() => handleToggleDetails("income")}
-          >
-            {
-              paymentsTillDate.filter((p) => p.type.toLowerCase() === "income")
-                .length
-            }{" "}
-            income – £{income.toFixed(2)}
-          </div>
-        )}
-        {expense > 0 && (
-          <div
-            className={styles.upcomingExpenses}
-            onClick={() => handleToggleDetails("expense")}
-          >
-            {
-              paymentsTillDate.filter((p) => p.type.toLowerCase() === "expense")
-                .length
-            }{" "}
-            expense - £{expense.toFixed(2)}
-          </div>
-        )}
-        {income === 0 && expense === 0 && (
-          <p className={styles.noChanges}>No upcoming changes</p>
+        )} */}
+        {paymentsTillDate.length > 0 &&
+          paymentsTillDate.map((payment, idx) => {
+            const incomeIconStyle =
+              payment.type.toLowerCase() === "income"
+                ? styles.incomeIconWrapper
+                : styles.expenseIconWrapper;
+            return (
+              <div
+                key={payment.id ?? idx}
+                className={`${styles.item} ${payment.type.toLowerCase() === "income" ? styles.income : styles.expense} ${
+                  showUpcomingChangeDetails === payment.type
+                    ? styles.active
+                    : ""
+                }`}
+                onClick={() => handleToggleDetails(payment.type)}
+              >
+                <div className={`${styles.iconWrapper} ${incomeIconStyle}`}>
+                  <i className={styles.icon}>
+                    {payment.type.toLowerCase() === "income" ? (
+                      <TbArrowBigUpFilled />
+                    ) : (
+                      <TbArrowBigDownFilled />
+                    )}
+                  </i>
+                </div>
+                <div className={styles.details}>
+                  <span>
+                    {paymentsTillDate.length}
+                    {` `}
+                    {payment.type}
+                  </span>
+                  <span
+                    className={`${styles.amount} ${payment.type === "income" ? styles.income : styles.expense}`}
+                  >
+                    +£{payment.amount.toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        {paymentsTillDate.length === 0 && (
+          <p className={styles.none}>No upcoming changes</p>
         )}
       </div>
     </>

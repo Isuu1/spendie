@@ -64,7 +64,7 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <div className={styles.selectContainer}>
-      <p>Balance by</p>
+      <h4>Balance at date</h4>
 
       <div className={styles.select}>
         {openDatePicker && (
