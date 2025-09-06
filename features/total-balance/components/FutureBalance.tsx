@@ -80,6 +80,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
       />
       {showUpcomingChangeDetails && (
         <UpcomingPaymentsDetails
+          type={showUpcomingChangeDetails}
           toggleDetails={handleToggleDetails}
           paymentsTillDate={paymentsTillDate}
         />
