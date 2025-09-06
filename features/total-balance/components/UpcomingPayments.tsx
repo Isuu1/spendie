@@ -1,6 +1,6 @@
-import { RecurringPayment } from "@/shared/types/recurring-payment";
 import React from "react";
-
+//Types
+import { RecurringPayment } from "@/shared/types/recurring-payment";
 //Styles
 import styles from "./UpcomingPayments.module.scss";
 //Icons
@@ -10,13 +10,13 @@ import { TbArrowBigUpFilled } from "react-icons/tb";
 interface UpcomingPaymentsProps {
   paymentsTillDate: RecurringPayment[];
   toggleDetails: (type: "income" | "expense" | null) => void;
-  showUpcomingChangeDetails?: "income" | "expense" | null;
+  type?: "income" | "expense" | null;
 }
 
 const UpcomingPayments: React.FC<UpcomingPaymentsProps> = ({
   paymentsTillDate,
   toggleDetails,
-  showUpcomingChangeDetails,
+  type,
 }) => {
   const incomes = paymentsTillDate.filter(
     (p) => p.type.toLowerCase() === "income"
@@ -31,44 +31,10 @@ const UpcomingPayments: React.FC<UpcomingPaymentsProps> = ({
   return (
     <>
       <div className={styles.upcomingPaymentsContainer}>
-        {/* {showUpcomingChangeDetails === "income" && (
-          <div className={styles.paymentsList}>
-            {paymentsTillDate
-              .filter((p) => p.type.toLowerCase() === "income")
-              .map((payment, idx) => (
-                <div key={payment.id ?? idx} className={styles.paymentItem}>
-                  <div className={styles.details}>
-                    <span>{payment.name ?? "Income"}</span>
-                    <span>{moment(payment.date).format("DD MMM `YY")}</span>
-                  </div>
-                  <div className={styles.amount}>
-                    £{payment.amount?.toFixed(2) ?? "0.00"}
-                  </div>
-                </div>
-              ))}
-          </div>
-        )}
-        {showUpcomingChangeDetails === "expense" && (
-          <div className={styles.paymentsList}>
-            {paymentsTillDate
-              .filter((p) => p.type.toLowerCase() === "expense")
-              .map((payment, idx) => (
-                <div key={payment.id ?? idx} className={styles.paymentItem}>
-                  <div className={styles.details}>
-                    <span>{payment.name ?? "Expense"}</span>
-                    <span>£{payment.amount?.toFixed(2) ?? "0.00"}</span>
-                  </div>
-                  <div className={styles.amount}>
-                    {moment(payment.date).format("DD MMM `YY")}
-                  </div>
-                </div>
-              ))}
-          </div>
-        )} */}
         {incomes.length > 0 && (
           <div
             className={`${styles.item} ${styles.income} ${
-              showUpcomingChangeDetails === "income" ? styles.active : ""
+              type === "income" ? styles.active : ""
             }`}
             onClick={() => toggleDetails("income")}
           >
@@ -94,7 +60,7 @@ const UpcomingPayments: React.FC<UpcomingPaymentsProps> = ({
         {expenses.length > 0 && (
           <div
             className={`${styles.item} ${styles.expense} ${
-              showUpcomingChangeDetails === "expense" ? styles.active : ""
+              type === "expense" ? styles.active : ""
             }`}
             onClick={() => toggleDetails("expense")}
           >
