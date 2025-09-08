@@ -1,0 +1,96 @@
+$secondary-text-color: #808080;
+
+.income {
+  background: rgba(65, 179, 0, 0.1);
+  border: 1px solid #a7a7a721;
+  .amount {
+    span {
+      &:first-child {
+        color: #41b300;
+      }
+    }
+  }
+}
+
+.expense {
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid #a7a7a721;
+  .amount {
+    span {
+      &:first-child {
+        color: #ff0000;
+      }
+    }
+  }
+}
+
+.paymentsList {
+  min-width: 240px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.4rem;
+  .paymentItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 6px;
+    .details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      span {
+        &:first-child {
+          font-weight: 600;
+        }
+        &:last-child {
+          color: $secondary-text-color;
+        }
+      }
+    }
+    .amount {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      span {
+        &:first-child {
+          font-weight: 600;
+        }
+        &:last-child {
+          color: $secondary-text-color;
+        }
+      }
+    }
+  }
+  .pagination {
+    display: flex;
+    margin: auto;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    .pageButton {
+      background: #5e5e5e;
+      cursor: pointer;
+      padding: 0.4rem 0.7rem;
+      border-radius: 5px;
+      border: 0;
+      transition: all 0.2s ease-in-out;
+      &:disabled {
+        display: none;
+      }
+      &:hover {
+        background: #414141;
+      }
+    }
+    .active {
+      background: #41b300;
+      color: #fff;
+    }
+    .pageNumbers {
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
+}

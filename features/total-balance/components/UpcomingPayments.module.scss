@@ -1,0 +1,75 @@
+$secondary-text-color: #808080;
+$primary-bg-color: #0a0a0a;
+
+.upcomingPaymentsContainer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  width: 100%;
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.3rem 0.4rem;
+    border-radius: 6px;
+    width: fit-content;
+    .iconWrapper {
+      border-radius: 0.3rem;
+      padding: 0.3rem;
+      width: fit-content;
+      .icon {
+        font-size: 1.2rem;
+        svg {
+          display: block;
+        }
+      }
+    }
+    .details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      .amount {
+        font-weight: 600;
+        background: 0;
+        border: 0;
+      }
+    }
+  }
+  .income {
+    background: rgba(65, 179, 0, 0.1);
+    border: 1px solid #a7a7a721;
+    .incomeIconWrapper {
+      color: #41b300;
+      background: #42b30059;
+    }
+    .amount {
+      color: #41b300;
+    }
+  }
+  .expense {
+    background: rgba(255, 0, 0, 0.1);
+    border: 1px solid #a7a7a721;
+    .expenseIconWrapper {
+      color: #ff0000;
+      background: #ff000059;
+    }
+    .amount {
+      color: #ff0000;
+    }
+  }
+  .none {
+    padding: 0.3rem 0.4rem;
+    border-radius: 6px;
+    width: fit-content;
+    color: $secondary-text-color;
+    background: #80808025;
+  }
+  // .active {
+  //   box-shadow: 0 0 5px 2px #ffffff50;
+  //   transition: 500ms height ease;
+  //   height: auto;
+  // }
+}
