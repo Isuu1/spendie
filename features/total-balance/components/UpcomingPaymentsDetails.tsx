@@ -21,7 +21,11 @@ const UpcomingPaymentsDetails: React.FC<UpcomingPaymentsDetailsProps> = ({
   const [page, setPage] = useState(1);
 
   const filteredPayments =
-    paymentsTillDate?.filter((p) => p.type.toLowerCase() === type) || [];
+    paymentsTillDate
+      ?.filter((p) => p.type.toLowerCase() === type)
+      .sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      ) || [];
 
   const totalPages = Math.ceil(
     (filteredPayments?.length ?? 1) / ITEMS_PER_PAGE
