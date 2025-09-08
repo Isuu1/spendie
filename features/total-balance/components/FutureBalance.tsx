@@ -86,7 +86,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
         />
       )}
       <div className={styles.balance}>
-        <strong>Balance</strong>
+        <strong>Balance after changes</strong>
         <h2 className={styles.value}>£{futureBalance.toFixed(2)}</h2>
       </div>
     </div>

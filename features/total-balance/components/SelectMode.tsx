@@ -1,5 +1,3 @@
-"use client";
-
 import moment from "moment";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
@@ -64,7 +62,7 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <div className={styles.selectContainer}>
-      <h4>Balance at date</h4>
+      <p>Changes at date</p>
 
       <div className={styles.select}>
         {openDatePicker && (
