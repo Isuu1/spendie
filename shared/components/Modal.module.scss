@@ -5,15 +5,15 @@
   left: 0;
   bottom: 0;
   right: 0;
-  background: #2e2e2e65;
+  background: #2e2e2ea2;
   display: flex;
   justify-content: center;
   align-items: center;
   .innerContainer {
     background: linear-gradient(
       55deg,
-      rgba(18, 18, 18, 1) 20%,
-      rgba(26, 26, 26, 1) 100%
+      rgb(26, 26, 26) 40%,
+      rgb(36, 36, 36) 100%
     );
     box-shadow: 0 4px 12px rgba(20, 20, 20, 0.3);
     backdrop-filter: blur(10px);

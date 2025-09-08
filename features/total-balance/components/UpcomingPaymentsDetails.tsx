@@ -1,5 +1,5 @@
 import { RecurringPayment } from "@/shared/types/recurring-payment";
-import React from "react";
+import React, { useState } from "react";
 //Styles
 import styles from "./UpcomingPaymentsDetails.module.scss";
 import moment from "moment";
@@ -16,24 +16,29 @@ const UpcomingPaymentsDetails: React.FC<UpcomingPaymentsDetailsProps> = ({
   toggleDetails,
   paymentsTillDate,
 }) => {
-  console.log("paymentsTillDate:", paymentsTillDate);
-  console.log("type:", type);
+  const ITEMS_PER_PAGE = 3;
 
-  const filteredPayments = paymentsTillDate?.filter(
-    (p) => p.type.toLowerCase() === type
+  const [page, setPage] = useState(1);
+
+  const filteredPayments =
+    paymentsTillDate?.filter((p) => p.type.toLowerCase() === type) || [];
+
+  const totalPages = Math.ceil(
+    (filteredPayments?.length ?? 1) / ITEMS_PER_PAGE
   );
 
-  console.log("filteredPayments:", filteredPayments);
+  const startIndex = (page - 1) * ITEMS_PER_PAGE;
+  const currentItems = filteredPayments.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
 
   return (
     <Modal onClose={() => toggleDetails?.(null)}>
       <h4>{type === "income" ? "Upcoming Incomes" : "Upcoming Expenses"}</h4>
       <div className={`${styles.paymentsList} `}>
-        {filteredPayments?.map((payment, idx) => (
-          <div
-            key={payment.id ?? idx}
-            className={`${styles.paymentItem} ${styles[type]}`}
-          >
+        {currentItems?.map((payment, idx) => (
+          <div key={idx} className={`${styles.paymentItem} ${styles[type]}`}>
             <div className={styles.details}>
               <span>{payment.name ?? "Income"}</span>
               <span>{payment.repeat}</span>
@@ -47,6 +52,37 @@ const UpcomingPaymentsDetails: React.FC<UpcomingPaymentsDetailsProps> = ({
             </div>
           </div>
         ))}
+        {totalPages > 1 && (
+          <div className={styles.pagination}>
+            <button
+              className={styles.pageButton}
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+            >
+              Previous
+            </button>
+            <div className={styles.pageNumbers}>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (pageNum) => (
+                  <button
+                    className={`${styles.pageButton} ${page === pageNum ? styles.active : ""}`}
+                    key={pageNum}
+                    onClick={() => setPage(pageNum)}
+                  >
+                    {pageNum}
+                  </button>
+                )
+              )}
+            </div>
+            <button
+              className={styles.pageButton}
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
     </Modal>
   );
