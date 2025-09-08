@@ -7,11 +7,13 @@ import styles from "./Modal.module.scss";
 
 interface Modal {
   children: React.ReactNode;
+  onClose?: () => void;
 }
 
-const Modal: React.FC<Modal> = ({ children }) => {
+const Modal: React.FC<Modal> = ({ children, onClose }) => {
   const [isMounted, setIsMounted] = useState(false);
   const modalRootRef = useRef<HTMLElement | null>(null);
+  const modalInnerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setIsMounted(true);
@@ -24,9 +26,26 @@ const Modal: React.FC<Modal> = ({ children }) => {
     modalRootRef.current = portalNode;
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalInnerRef.current &&
+        !modalInnerRef.current.contains(event.target as Node)
+      ) {
+        onClose?.();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   const modalContent = (
     <div className={styles.confirmActionContainer}>
-      <div className={styles.innerContainer}>{children}</div>
+      <div className={styles.innerContainer} ref={modalInnerRef}>
+        {children}
+      </div>
     </div>
   );
   //Render nothing during SSR or before mount/target is ready
