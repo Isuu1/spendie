@@ -30,7 +30,7 @@ const AccountsTile = async () => {
             <h4>{account.name}</h4>
             <p>{account.type}</p>
           </div>
-          <em className={styles.number}>****** {account.mask}</em>
+          {/* <em className={styles.number}>****** {account.mask}</em> */}
           <div className={styles.balance}>
             <p>Balance</p>
             <p>
