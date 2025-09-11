@@ -72,6 +72,7 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts }) => {
 
   return (
     <div ref={emblaRef} className={styles.outerWrapper}>
+      {/* <h4>Sort by</h4> */}
       <div className={styles.accounts}>
         {accounts.map((account) => (
           <div key={account.account_id} className={styles.accountWrapper}>
