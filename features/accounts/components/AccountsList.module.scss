@@ -1,0 +1,157 @@
+.outerWrapper {
+  position: relative;
+  overflow: hidden;
+  .accounts {
+    display: flex;
+    gap: 0.8rem;
+    touch-action: pan-y pinch-zoom;
+    .accountWrapper {
+      position: relative;
+      flex: 0 0 70%;
+      overflow: hidden;
+      .account {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background: rgba(255, 255, 255, 0.2);
+        //backdrop-filter: blur(10px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        border-radius: 1rem;
+        padding: 0.8rem;
+        .details {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.6rem;
+          border-radius: 5px;
+          .type {
+            text-transform: capitalize;
+            font-size: 0.85rem;
+            color: #a3a3a3;
+          }
+        }
+        .balance {
+          display: flex;
+          flex-direction: column;
+          // justify-content: flex-end;
+          //margin-left: auto;
+          font-weight: 600;
+          width: fit-content;
+          gap: 0.5rem;
+          //background: #0a0a0a31;
+          border-radius: 7px;
+          //padding: 0.5rem;
+          margin-top: 0.6rem;
+          span {
+            &:last-child {
+              font-size: 1.2rem;
+            }
+          }
+        }
+      }
+      .shape {
+        position: absolute;
+        top: 0;
+        left: 100px;
+        height: 500px;
+        width: 500px;
+        border-radius: 50%;
+        background: transparent;
+        border: 40px solid rgba(255, 255, 255, 0.1);
+        bottom: -250px;
+        right: -250px;
+        box-sizing: border-box;
+        &::after {
+          content: "";
+          position: absolute;
+          height: 600px;
+          width: 600px;
+          border-radius: 50%;
+          background: transparent;
+          border: 20px solid rgba(255, 255, 255, 0.1);
+          bottom: -80px;
+          right: -110px;
+          box-sizing: border-box;
+        }
+      }
+      .bgcover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        .circle {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background: royalblue;
+        }
+      }
+    }
+  }
+  .buttons {
+    position: absolute;
+    bottom: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    height: 100%;
+    .button {
+      z-index: 10;
+      position: relative;
+      background: rgb(94, 94, 94);
+      border: 0;
+      font-size: 1.2rem;
+      border-radius: 50%;
+      padding: 0.5rem;
+      svg {
+        display: block;
+      }
+    }
+    .disabled {
+      opacity: 0;
+    }
+  }
+  .blurLeft {
+    &::before {
+      content: "";
+      position: absolute;
+      top: -30px;
+      bottom: -30px;
+      left: 0;
+      width: 100px;
+      background: linear-gradient(
+        to right,
+        rgb(19, 19, 19),
+        rgba(255, 255, 255, 0)
+      );
+      pointer-events: none;
+    }
+  }
+  .blurRight {
+    &::after {
+      content: "";
+      position: absolute;
+      top: -30px;
+      bottom: -30px;
+      right: 0;
+      width: 100px;
+      background: linear-gradient(
+        to left,
+        rgb(19, 19, 19),
+        rgba(255, 255, 255, 0)
+      );
+      pointer-events: none;
+    }
+  }
+}
