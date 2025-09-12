@@ -43,7 +43,6 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts }) => {
 
   return (
     <div ref={emblaRef} className={styles.outerWrapper}>
-      {/* <h4>Sort by</h4> */}
       <div className={styles.accounts}>
         {accounts.map((account) => (
           <div key={account.account_id} className={styles.accountWrapper}>
@@ -56,16 +55,12 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts }) => {
                 <p className={styles.type}>{account.subtype}</p>
                 <p>**** **** **** {account.mask}</p>
               </div>
-              {/* <em className={styles.number}>****** {account.mask}</em> */}
               <p className={styles.balance}>
                 <span>Current balance</span>
                 <span>£{account.balances.current}</span>
               </p>
             </div>
             <div className={styles.shape}></div>
-            {/* <div className={styles.bgcover}>
-              <div className={styles.circle}></div>
-            </div> */}
           </div>
         ))}
       </div>
