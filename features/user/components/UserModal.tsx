@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 
@@ -10,9 +10,11 @@ import styles from "./UserModal.module.scss";
 import { FaUser } from "react-icons/fa";
 import { FaSignOutAlt } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 interface UserModalProps {
   onClose: () => void;
+  isOpen?: boolean;
 }
 
 const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
@@ -30,11 +32,21 @@ const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
     };
   }, [onClose]);
 
+  const router = useRouter();
+
   const userModalVariants = {
     hidden: { x: -200 },
     visible: { x: 0, transition: { duration: 0.2 } },
     exit: { x: -200, transition: { duration: 0.2 } },
   };
+
+  const handleMenuItemClick = useCallback(
+    (path: string) => {
+      router.push(path);
+      onClose();
+    },
+    [router, onClose]
+  );
 
   return (
     <motion.ul
@@ -57,7 +69,10 @@ const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
         <span>Isuususu</span>
         <span className={styles.email}>test@email.com</span>
       </li>
-      <li className={styles.item}>
+      <li
+        className={styles.item}
+        onClick={() => handleMenuItemClick("/user/account-details")}
+      >
         <FaUser />
         <span>Account details</span>
       </li>

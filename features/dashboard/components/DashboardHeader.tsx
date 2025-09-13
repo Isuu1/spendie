@@ -31,7 +31,12 @@ const DashboardHeader = () => {
   return (
     <>
       <AnimatePresence>
-        {isModalOpen && <UserModal onClose={() => setIsModalOpen(false)} />}
+        {isModalOpen && (
+          <UserModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
+        )}
       </AnimatePresence>
       <div className={styles.header}>
         <div className={styles.welcome}>
