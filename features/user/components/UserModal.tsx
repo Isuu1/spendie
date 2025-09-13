@@ -76,7 +76,10 @@ const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
         <FaUser />
         <span>Account details</span>
       </li>
-      <li className={styles.item}>
+      <li
+        className={styles.item}
+        onClick={() => handleMenuItemClick("/user/account-settings")}
+      >
         <IoSettings />
         <span>Settings</span>
       </li>
