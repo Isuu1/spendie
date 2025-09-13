@@ -36,6 +36,11 @@ a {
   text-decoration: none;
 }
 
+/* Ensure SVGs don't have weird gaps below them */
+svg {
+  display: block;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

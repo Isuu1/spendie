@@ -35,7 +35,9 @@ export default async function Page() {
 
   return (
     <>
-      <div>{user?.data.user && <PlaidLink userId={user.data.user.id} />}</div>
+      <div style={{ display: "none" }}>
+        {user?.data.user && <PlaidLink userId={user.data.user.id} />}
+      </div>
 
       {tilesInUse.map((tile) => (
         <TileWrapper key={tile.name} name={tile.name} icon={tile.icon}>
