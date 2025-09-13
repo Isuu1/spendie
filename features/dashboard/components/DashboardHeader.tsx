@@ -8,33 +8,24 @@ import React, { useEffect } from "react";
 import { IoNotifications } from "react-icons/io5";
 //Styles
 import styles from "./DashboardHeader.module.scss";
-import { createClient } from "@/supabase/client";
+//Types
 import { UserProfile } from "@/features/user/types/user";
+//Utils
+import { getUserClient } from "@/features/user/api/getUserClient";
 
 const DashboardHeader = () => {
   const [user, setUser] = React.useState<UserProfile | null>(null);
 
-  const supabase = createClient();
-
   useEffect(() => {
+    console.log("Fetching user profile...");
     const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (error) {
-        console.error("Error fetching user:", error);
-      } else {
-        console.log("User data:", data);
-      }
-      const user = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", data.user?.id)
-        .single();
-      console.log("Profile data:", user);
-      setUser(user.data);
+      const user = await getUserClient();
+      setUser(user);
+      console.log("Fetched user profile:", user);
     };
 
     fetchUser();
-  }, [supabase]);
+  }, []);
 
   return (
     <div className={styles.header}>
