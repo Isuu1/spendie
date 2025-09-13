@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Image from "next/image";
 
 //Styles
 import styles from "./UserModal.module.scss";
@@ -6,7 +7,6 @@ import styles from "./UserModal.module.scss";
 import { FaUser } from "react-icons/fa";
 import { FaSignOutAlt } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
-import Image from "next/image";
 
 interface UserModalProps {
   onClose: () => void;
@@ -34,9 +34,8 @@ const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
           className={styles.avatar}
           src="https://i.pravatar.cc/150?img=3"
           alt=""
-          width={27}
-          height={27}
-          //   onClick={() => setIsModalOpen(!isModalOpen)}
+          width={50}
+          height={50}
         />
       </li>
       <li className={styles.details}>
