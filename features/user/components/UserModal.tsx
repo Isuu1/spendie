@@ -1,5 +1,8 @@
+"use client";
+
 import React, { useEffect } from "react";
 import Image from "next/image";
+import { motion } from "motion/react";
 
 //Styles
 import styles from "./UserModal.module.scss";
@@ -27,8 +30,20 @@ const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
     };
   }, [onClose]);
 
+  const userModalVariants = {
+    hidden: { x: -200 },
+    visible: { x: 0, transition: { duration: 0.2 } },
+    exit: { x: -200, transition: { duration: 0.2 } },
+  };
+
   return (
-    <ul className={styles.userModal}>
+    <motion.ul
+      className={styles.userModal}
+      variants={userModalVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <li>
         <Image
           className={styles.avatar}
@@ -54,7 +69,7 @@ const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
         <FaSignOutAlt />
         <span>Logout</span>
       </li>
-    </ul>
+    </motion.ul>
   );
 };
 

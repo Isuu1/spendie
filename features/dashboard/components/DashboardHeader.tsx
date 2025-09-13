@@ -14,6 +14,7 @@ import { UserProfile } from "@/features/user/types/user";
 import { getUserClient } from "@/features/user/api/getUserClient";
 //Components
 import UserModal from "@/features/user/components/UserModal";
+import { AnimatePresence } from "motion/react";
 
 const DashboardHeader = () => {
   const [user, setUser] = React.useState<UserProfile | null>(null);
@@ -29,7 +30,9 @@ const DashboardHeader = () => {
 
   return (
     <>
-      {isModalOpen && <UserModal onClose={() => setIsModalOpen(false)} />}
+      <AnimatePresence>
+        {isModalOpen && <UserModal onClose={() => setIsModalOpen(false)} />}
+      </AnimatePresence>
       <div className={styles.header}>
         <div className={styles.welcome}>
           <Image
