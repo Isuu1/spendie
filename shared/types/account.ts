@@ -25,6 +25,8 @@ export type Account = {
     limit?: number | null; // Optional for credit cards
     iso_currency_code: string | null;
   };
+  official_name: string;
+  subtype: string;
   type: string;
   mask: string;
 };
