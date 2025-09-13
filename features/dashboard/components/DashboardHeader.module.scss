@@ -22,6 +22,13 @@
   .welcomeMessage {
     margin-right: auto;
   }
+  .userImage {
+    position: relative;
+    .avatar {
+      cursor: pointer;
+      border-radius: 50%;
+    }
+  }
   .notificationsIcon {
     position: relative;
     font-size: 1.7rem;
@@ -37,8 +44,5 @@
       width: 14px;
       aspect-ratio: 1/1;
     }
-  }
-  .avatar {
-    border-radius: 50%;
   }
 }
