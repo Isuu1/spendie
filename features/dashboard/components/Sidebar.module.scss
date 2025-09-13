@@ -1,4 +1,8 @@
-$background: #0a0a0a;
+$background: linear-gradient(
+  55deg,
+  rgba(18, 18, 18, 1) 20%,
+  rgba(26, 26, 26, 1) 100%
+);
 $hover: #5be20d;
 
 .sidebar {
@@ -8,11 +12,7 @@ $hover: #5be20d;
   left: 0.5rem;
   height: 100%;
   padding: 0.5rem;
-  background: linear-gradient(
-    55deg,
-    rgba(18, 18, 18, 1) 20%,
-    rgba(26, 26, 26, 1) 100%
-  );
+  background: $background;
   box-shadow: 0 4px 12px rgba(20, 20, 20, 0.3);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(109, 109, 109, 0.2);
