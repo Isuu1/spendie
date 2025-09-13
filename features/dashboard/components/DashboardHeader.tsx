@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+import { AnimatePresence } from "motion/react";
 
 //Icons
 import { IoNotifications } from "react-icons/io5";
@@ -14,7 +15,6 @@ import { UserProfile } from "@/features/user/types/user";
 import { getUserClient } from "@/features/user/api/getUserClient";
 //Components
 import UserModal from "@/features/user/components/UserModal";
-import { AnimatePresence } from "motion/react";
 
 const DashboardHeader = () => {
   const [user, setUser] = React.useState<UserProfile | null>(null);
