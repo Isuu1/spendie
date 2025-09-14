@@ -1,9 +1,14 @@
+import { getUserServer } from "@/features/user/api/getUserServer";
+import AccountDetails from "@/features/user/components/AccountDetails";
 import PageWrapper from "@/shared/components/PageWrapper";
 
-export default function Page() {
+export default async function Page() {
+  const user = await getUserServer();
+
   return (
     <PageWrapper>
-      <h1>Account Details</h1>
+      <h3>Account</h3>
+      <AccountDetails user={user} />
     </PageWrapper>
   );
 }

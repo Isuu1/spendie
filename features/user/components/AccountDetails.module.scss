@@ -1,0 +1,85 @@
+.accountDetails {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: linear-gradient(
+    55deg,
+    rgba(18, 18, 18, 1) 20%,
+    rgba(26, 26, 26, 1) 100%
+  );
+  box-shadow: 0 4px 12px rgba(20, 20, 20, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(109, 109, 109, 0.2);
+  border-radius: 14px;
+  padding: 1rem;
+  gap: 1rem;
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .avatarContainer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    .editButton {
+      position: absolute;
+      top: 80px;
+      left: 50px;
+    }
+    .avatar {
+      border-radius: 50%;
+    }
+    .separator {
+      position: absolute;
+      right: -2rem;
+      height: 100%;
+      width: 1px;
+      background-color: rgba(109, 109, 109, 0.2);
+    }
+  }
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    //justify-content: space-between;
+    //gap: 1rem;
+    //flex: 1;
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      .label {
+        min-width: 120px;
+        text-align: left;
+      }
+    }
+    //width: 100%;
+    // .field {
+    //   display: flex;
+    // }
+    // .labels {
+    //   display: flex;
+    //   flex-direction: column;
+    //   align-items: center;
+    //   gap: 1rem;
+    //   p {
+    //     padding: 0.5rem;
+    //   }
+    // }
+    // .inputs {
+    //   flex: 0 0 80%;
+    //   display: flex;
+    //   flex-direction: column;
+    //   align-items: center;
+    //   gap: 1rem;
+    // }
+  }
+}
+
+@media (min-width: 768px) {
+  .accountDetails {
+    flex-direction: row;
+  }
+}
