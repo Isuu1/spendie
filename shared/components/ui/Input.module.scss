@@ -32,6 +32,9 @@
 }
 .vertical {
   flex-direction: column;
+  .label {
+    margin-right: auto;
+  }
 }
 
 .errorContainer {
