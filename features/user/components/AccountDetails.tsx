@@ -7,7 +7,7 @@ import styles from "./AccountDetails.module.scss";
 import { UserProfile } from "../types/user";
 //Components
 import Button from "@/shared/components/ui/Button";
-import Input from "@/shared/components/ui/Input";
+import ChangeDetailsForm from "./ChangeDetailsForm";
 
 interface AccountDetailsProps {
   user: UserProfile;
@@ -34,7 +34,8 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ user }) => {
       </section>
       <section>
         <h4>Details</h4>
-        <div className={styles.details}>
+        <ChangeDetailsForm user={user} />
+        {/* <div className={styles.details}>
           <Input
             layout="vertical"
             id="username"
@@ -55,7 +56,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ user }) => {
             type="password"
             label="Password"
           />
-        </div>
+        </div> */}
       </section>
     </div>
   );
