@@ -35,28 +35,6 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ user }) => {
       <section>
         <h4>Details</h4>
         <ChangeDetailsForm user={user} />
-        {/* <div className={styles.details}>
-          <Input
-            layout="vertical"
-            id="username"
-            type="text"
-            label="Username"
-            defaultValue={user.username}
-          />
-          <Input
-            layout="vertical"
-            id="email"
-            type="email"
-            label="Email"
-            defaultValue={user.email}
-          />
-          <Input
-            layout="vertical"
-            id="password"
-            type="password"
-            label="Password"
-          />
-        </div> */}
       </section>
     </div>
   );
