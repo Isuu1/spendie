@@ -15,9 +15,7 @@ interface InputProps {
   layout: "horizontal" | "vertical";
   selectOptions?: string[];
   errors?: string[] | null;
-  onChange?: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | void;
   defaultValue?: string | number;
 }
 
