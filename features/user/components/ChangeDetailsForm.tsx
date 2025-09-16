@@ -9,11 +9,22 @@ import Button from "@/shared/components/ui/Button";
 import { UserProfile } from "@/features/user/types/user";
 
 import { z } from "zod";
+import { useForm } from "@/shared/hooks/useForm";
 
 const userSchema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters long"),
+  username: z
+    .string()
+    .min(3, "Username must be at least 3 characters long")
+    .startsWith("aaa"),
   email: z.string().email(),
 });
+
+// Build a type where each schema field has string[]
+// type SchemaErrors<T extends z.ZodTypeAny> = {
+//   [K in keyof z.infer<T>]: string[];
+// };
+
+//type UserFormErrors = SchemaErrors<typeof userSchema>;
 
 interface ChangeDetailsFormProps {
   user: UserProfile;
@@ -21,17 +32,22 @@ interface ChangeDetailsFormProps {
 
 const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
   const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState({
+  // const [formData, setFormData] = useState({
+  //   username: user.username,
+  //   email: user.email,
+  // });
+  // const [errors, setErrors] = useState<UserFormErrors>(() => {
+  //   // initialize with empty arrays for each field
+  //   const fields = Object.keys(userSchema.shape) as (keyof UserFormErrors)[];
+  //   return fields.reduce((acc, key) => {
+  //     acc[key] = [];
+  //     return acc;
+  //   }, {} as UserFormErrors);
+  // });
+
+  const { formData, errors, handleChange, resetForm } = useForm(userSchema, {
     username: user.username,
     email: user.email,
-  });
-  // const [error, setError] = useState<null | Record<string, string>>(null);
-  const [error, setError] = useState<{
-    username: string | null;
-    email: string | null;
-  }>({
-    username: null,
-    email: null,
   });
 
   console.log(formData);
@@ -40,35 +56,51 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
 
   const handleCloseForm = () => {
     setEditMode(false);
-    setError({ username: null, email: null });
-    if (formRef.current) {
-      formRef.current.reset();
-    }
+    resetForm();
+    //setErrors({ username: null, email: null });
+    // setErrors(
+    //   Object.keys(userSchema.shape).reduce(
+    //     (acc, key) => ({ ...acc, [key]: [] as string[] }),
+    //     {} as UserFormErrors
+    //   )
+    // );
+    // if (formRef.current) {
+    //   formRef.current.reset();
+    // }
   };
 
-  const handleEditFields = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    const updatedFormData = { ...formData, [id]: value };
-    setFormData(updatedFormData);
-    const result = userSchema.safeParse(updatedFormData);
-    if (!result.success) {
-      const fieldErrors: { username: string | null; email: string | null } = {
-        username: null,
-        email: null,
-      };
-      result.error.errors.forEach((err) => {
-        if (err.path[0] === "username" || err.path[0] === "email") {
-          fieldErrors[err.path[0]] = err.message;
-        }
-      });
-      setError(fieldErrors);
-    } else {
-      setError({ username: null, email: null });
-    }
-    setEditMode(true);
-  };
+  // const handleEditFields = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { id, value } = e.target;
+  //   const updatedFormData = { ...formData, [id]: value };
+  //   setFormData(updatedFormData);
+  //   const result = userSchema.safeParse(updatedFormData);
+  //   console.log(result);
+  //   if (!result.success) {
+  //     const fieldErrors = Object.keys(userSchema.shape).reduce(
+  //       (acc, key) => ({ ...acc, [key]: [] as string[] }),
+  //       {} as UserFormErrors
+  //     );
 
-  console.log("Error:", error);
+  //     result.error.errors.forEach((err) => {
+  //       const field = err.path[0] as keyof UserFormErrors;
+  //       if (field in fieldErrors) {
+  //         fieldErrors[field].push(err.message);
+  //       }
+  //     });
+
+  //     setErrors(fieldErrors);
+  //   } else {
+  //     setErrors(
+  //       Object.keys(userSchema.shape).reduce(
+  //         (acc, key) => ({ ...acc, [key]: [] as string[] }),
+  //         {} as UserFormErrors
+  //       )
+  //     );
+  //   }
+  //   setEditMode(true);
+  // };
+
+  console.log("Errors:", errors);
 
   return (
     <Form layout="vertical" ref={formRef}>
@@ -78,31 +110,31 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
         type="text"
         label="Username"
         defaultValue={user.username}
-        onChange={handleEditFields}
+        onChange={() => handleChange("username", formData.username)}
       />
-      {error?.username && (
+      {/* {error?.username && (
         <p style={{ color: "red", fontSize: "0.8rem" }}>{error.username}</p>
-      )}
+      )} */}
       <Input
         layout="vertical"
         id="email"
         type="email"
         label="Email"
         defaultValue={user.email}
-        onChange={handleEditFields}
+        onChange={() => handleChange("email", formData.email)}
       />
-      {error?.email && (
+      {/* {error?.email && (
         <p style={{ color: "red", fontSize: "0.8rem" }}>{error.email}</p>
-      )}
+      )} */}
       <div style={{ display: "flex", gap: "1rem", marginLeft: "auto" }}>
         <Button
           text="Save changes"
           variant="primary"
           type="submit"
           size="medium"
-          disabled={
-            !editMode || error?.email !== null || error?.username !== null
-          }
+          // disabled={
+          //   !editMode || error?.email !== null || error?.username !== null
+          // }
         />
         {editMode && (
           <Button
