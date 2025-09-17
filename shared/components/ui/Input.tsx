@@ -41,7 +41,7 @@ const Input: React.FC<InputProps> = ({
         )}
         {type !== "select" && (
           <input
-            className={`${styles.inputField} ${errors ? styles.inputError : ""}`}
+            className={styles.inputField}
             id={id}
             name={id}
             type={type}
