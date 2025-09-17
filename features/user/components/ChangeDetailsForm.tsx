@@ -134,7 +134,10 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
           variant="primary"
           type="submit"
           size="medium"
-          disabled={!editMode}
+          disabled={
+            !editMode ||
+            Object.values(errors).some((errArr) => errArr.length > 0)
+          }
         />
         {editMode && (
           <Button
