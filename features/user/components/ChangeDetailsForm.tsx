@@ -11,7 +11,7 @@ import { UserProfile } from "@/features/user/types/user";
 //Hooks
 import { useForm } from "@/shared/hooks/useForm";
 
-const userSchema = z.object({
+const accountDetailsSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters long"),
   email: z.string().email(),
 });
@@ -23,10 +23,13 @@ interface ChangeDetailsFormProps {
 const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
   const [editMode, setEditMode] = useState(false);
 
-  const { formData, errors, handleChange, resetForm } = useForm(userSchema, {
-    username: user.username,
-    email: user.email,
-  });
+  const { formData, errors, handleChange, resetForm } = useForm(
+    accountDetailsSchema,
+    {
+      username: user.username,
+      email: user.email,
+    }
+  );
 
   const formRef = useRef<HTMLFormElement>(null);
 
