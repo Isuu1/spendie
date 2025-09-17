@@ -21,6 +21,7 @@ export function useForm<T extends z.ZodObject<ZodRawShape>>(
 
   const validate = (updated: z.infer<T>) => {
     const result = schema.safeParse(updated);
+    console.log(result);
 
     if (!result.success) {
       const fieldErrors = Object.keys(schema.shape).reduce(
@@ -47,6 +48,7 @@ export function useForm<T extends z.ZodObject<ZodRawShape>>(
 
   const handleChange = (id: keyof z.infer<T>, value: string) => {
     const updated = { ...formData, [id]: value };
+    console.log("Form data in handle change:", updated);
     setFormData(updated);
     validate(updated);
   };

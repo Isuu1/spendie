@@ -12,10 +12,8 @@ import { z } from "zod";
 import { useForm } from "@/shared/hooks/useForm";
 
 const userSchema = z.object({
-  username: z
-    .string()
-    .min(3, "Username must be at least 3 characters long")
-    .startsWith("aaa"),
+  username: z.string().min(3, "Username must be at least 3 characters long"),
+  //.startsWith("aaa"),
   email: z.string().email(),
 });
 
@@ -110,31 +108,33 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
         type="text"
         label="Username"
         defaultValue={user.username}
-        onChange={() => handleChange("username", formData.username)}
+        value={formData.username}
+        onChange={(e) => {
+          handleChange("username", e.target.value);
+          setEditMode(true);
+        }}
+        errors={errors.username}
       />
-      {/* {error?.username && (
-        <p style={{ color: "red", fontSize: "0.8rem" }}>{error.username}</p>
-      )} */}
       <Input
         layout="vertical"
         id="email"
         type="email"
         label="Email"
         defaultValue={user.email}
-        onChange={() => handleChange("email", formData.email)}
+        value={formData.email}
+        onChange={(e) => {
+          handleChange("email", e.target.value);
+          setEditMode(true);
+        }}
+        errors={errors.email}
       />
-      {/* {error?.email && (
-        <p style={{ color: "red", fontSize: "0.8rem" }}>{error.email}</p>
-      )} */}
       <div style={{ display: "flex", gap: "1rem", marginLeft: "auto" }}>
         <Button
           text="Save changes"
           variant="primary"
           type="submit"
           size="medium"
-          // disabled={
-          //   !editMode || error?.email !== null || error?.username !== null
-          // }
+          disabled={!editMode}
         />
         {editMode && (
           <Button

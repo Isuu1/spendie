@@ -14,9 +14,10 @@ interface InputProps {
   label?: string;
   layout: "horizontal" | "vertical";
   selectOptions?: string[];
-  errors?: string[] | null;
+  errors?: string[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | void;
   defaultValue?: string | number;
+  value?: string | number;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -28,6 +29,7 @@ const Input: React.FC<InputProps> = ({
   errors,
   onChange,
   defaultValue,
+  value,
 }) => {
   return (
     <>
@@ -45,6 +47,7 @@ const Input: React.FC<InputProps> = ({
             type={type}
             onChange={onChange}
             defaultValue={defaultValue}
+            value={value}
           />
         )}
         {type === "select" && (
@@ -57,7 +60,7 @@ const Input: React.FC<InputProps> = ({
           </select>
         )}
       </div>
-      {errors && (
+      {errors && errors.length > 0 && (
         <div className={styles.errorContainer}>
           {errors.map((err, index) => (
             <span key={index} className={styles.errorMessage}>
