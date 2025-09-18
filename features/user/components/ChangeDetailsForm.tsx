@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 //Components
 import Form from "@/shared/components/ui/Form";
@@ -31,21 +31,18 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
     }
   );
 
-  const formRef = useRef<HTMLFormElement>(null);
-
   const handleCloseForm = () => {
     setEditMode(false);
     resetForm();
   };
 
   return (
-    <Form layout="vertical" ref={formRef}>
+    <Form layout="vertical">
       <Input
         layout="vertical"
         id="username"
         type="text"
         label="Username"
-        defaultValue={user.username}
         value={formData.username}
         onChange={(e) => {
           handleChange("username", e.target.value);
@@ -58,7 +55,6 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
         id="email"
         type="email"
         label="Email"
-        defaultValue={user.email}
         value={formData.email}
         onChange={(e) => {
           handleChange("email", e.target.value);
