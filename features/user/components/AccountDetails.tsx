@@ -8,6 +8,7 @@ import { UserProfile } from "../types/user";
 //Components
 import Button from "@/shared/components/ui/Button";
 import ChangeDetailsForm from "./ChangeDetailsForm";
+import ChangePasswordForm from "./ChangePasswordForm";
 
 interface AccountDetailsProps {
   user: UserProfile;
@@ -35,6 +36,10 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ user }) => {
       <section>
         <h4>Details</h4>
         <ChangeDetailsForm user={user} />
+      </section>
+      <section>
+        <h4>Password</h4>
+        <ChangePasswordForm user={user} />
       </section>
     </div>
   );
