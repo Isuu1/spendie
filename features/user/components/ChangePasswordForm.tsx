@@ -11,10 +11,17 @@ import { UserProfile } from "@/features/user/types/user";
 //Hooks
 import { useForm } from "@/shared/hooks/useForm";
 
-const passwordSchema = z.object({
-  newPassword: z.string().min(6, "Password must be at least 6 characters long"),
-  confirmPassword: z.string().min(6, "Please confirm your password"),
-});
+const passwordSchema = z
+  .object({
+    newPassword: z
+      .string()
+      .min(8, "Password must be at least 8 characters long"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"], // attach error specifically to confirmPassword
+  });
 
 interface ChangePasswordFormProps {
   user: UserProfile;

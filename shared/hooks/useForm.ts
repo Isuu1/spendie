@@ -6,14 +6,19 @@ type SchemaErrors<T extends z.ZodTypeAny> = {
   [K in keyof z.infer<T>]: string[];
 };
 
-export function useForm<T extends z.ZodObject<ZodRawShape>>(
+export function useForm<T extends z.ZodTypeAny>(
   schema: T,
   defaultValues: z.infer<T>
 ) {
+  // Unwrap schema if it's a ZodEffects
+  const objectSchema = (
+    schema instanceof z.ZodEffects ? schema._def.schema : schema
+  ) as z.ZodObject<ZodRawShape>;
+
   const [formData, setFormData] = useState(defaultValues);
 
   const [errors, setErrors] = useState<SchemaErrors<T>>(() =>
-    Object.keys(schema.shape).reduce(
+    Object.keys(objectSchema.shape).reduce(
       (acc, key) => ({ ...acc, [key]: [] }),
       {} as SchemaErrors<T>
     )
@@ -21,10 +26,9 @@ export function useForm<T extends z.ZodObject<ZodRawShape>>(
 
   const validate = (updated: z.infer<T>) => {
     const result = schema.safeParse(updated);
-    console.log(result);
 
     if (!result.success) {
-      const fieldErrors = Object.keys(schema.shape).reduce(
+      const fieldErrors = Object.keys(objectSchema.shape).reduce(
         (acc, key) => ({ ...acc, [key]: [] }),
         {} as SchemaErrors<T>
       );
@@ -38,7 +42,7 @@ export function useForm<T extends z.ZodObject<ZodRawShape>>(
     } else {
       // Clear all errors if valid
       setErrors(
-        Object.keys(schema.shape).reduce(
+        Object.keys(objectSchema.shape).reduce(
           (acc, key) => ({ ...acc, [key]: [] }),
           {} as SchemaErrors<T>
         )
@@ -48,7 +52,6 @@ export function useForm<T extends z.ZodObject<ZodRawShape>>(
 
   const handleChange = (id: keyof z.infer<T>, value: string) => {
     const updated = { ...formData, [id]: value };
-    console.log("Form data in handle change:", updated);
     setFormData(updated);
     validate(updated);
   };
@@ -56,7 +59,7 @@ export function useForm<T extends z.ZodObject<ZodRawShape>>(
   const resetForm = () => {
     setFormData(defaultValues);
     setErrors(
-      Object.keys(schema.shape).reduce(
+      Object.keys(objectSchema.shape).reduce(
         (acc, key) => ({ ...acc, [key]: [] }),
         {} as SchemaErrors<T>
       )
