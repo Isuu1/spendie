@@ -18,6 +18,7 @@ const passwordSchema = z
       .min(8, "Password must be at least 8 characters long"),
     confirmPassword: z.string(),
   })
+  //Compare passwords
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"], // attach error specifically to confirmPassword
