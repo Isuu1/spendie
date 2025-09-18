@@ -10,6 +10,7 @@ import Button from "@/shared/components/ui/Button";
 import { UserProfile } from "@/features/user/types/user";
 //Hooks
 import { useForm } from "@/shared/hooks/useForm";
+import { changeUserDetails } from "../actions/changeUserDetails";
 
 const accountDetailsSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters long"),
@@ -37,7 +38,7 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
   };
 
   return (
-    <Form layout="vertical">
+    <Form layout="vertical" action={changeUserDetails}>
       <Input
         layout="vertical"
         id="username"
