@@ -17,7 +17,7 @@ interface InputProps {
   errors?: string[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | void;
   defaultValue?: string | number;
-  value?: string | number;
+  value?: string | number | Date;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -47,7 +47,9 @@ const Input: React.FC<InputProps> = ({
             type={type}
             onChange={onChange}
             defaultValue={defaultValue}
-            value={value}
+            value={
+              value instanceof Date ? value.toISOString().slice(0, 10) : value
+            }
           />
         )}
         {type === "select" && (

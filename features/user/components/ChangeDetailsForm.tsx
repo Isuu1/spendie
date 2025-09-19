@@ -14,6 +14,9 @@ import { changeUserDetails } from "../actions/changeUserDetails";
 
 const accountDetailsSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters long"),
+  name: z.string().min(2, "Name must be at least 2 characters long"),
+  surname: z.string().min(2, "Surname must be at least 2 characters long"),
+  dob: z.date().min(new Date(1900, 0, 1), "Invalid date of birth"),
   email: z.string().email(),
 });
 
@@ -28,6 +31,9 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
     accountDetailsSchema,
     {
       username: user.username,
+      name: user.name,
+      surname: user.surname,
+      dob: user.dob,
       email: user.email,
     }
   );
@@ -50,6 +56,43 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
           setEditMode(true);
         }}
         errors={errors.username}
+      />
+
+      <Input
+        layout="vertical"
+        id="name"
+        type="text"
+        label="Name"
+        value={formData.name}
+        onChange={(e) => {
+          handleChange("name", e.target.value);
+          setEditMode(true);
+        }}
+        errors={errors.name}
+      />
+      <Input
+        layout="vertical"
+        id="surname"
+        type="text"
+        label="Surname"
+        value={formData.surname}
+        onChange={(e) => {
+          handleChange("surname", e.target.value);
+          setEditMode(true);
+        }}
+        errors={errors.surname}
+      />
+      <Input
+        layout="vertical"
+        id="dob"
+        type="date"
+        label="Date of Birth"
+        value={formData.dob}
+        onChange={(e) => {
+          handleChange("dob", new Date(e.target.value));
+          setEditMode(true);
+        }}
+        errors={errors.dob}
       />
       <Input
         layout="vertical"
