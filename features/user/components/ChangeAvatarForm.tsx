@@ -17,7 +17,6 @@ const ChangeAvatarForm = () => {
       <div className={styles.editButton}>
         <Button text="Change" variant="primary" size="medium" />
       </div>
-      <div className={styles.separator}></div>
     </div>
   );
 };

@@ -19,19 +19,6 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ user }) => {
       <section>
         <h4>Profile picture</h4>
         <ChangeAvatarForm />
-        {/* <div className={styles.avatarContainer}>
-          <Image
-            className={styles.avatar}
-            src="https://i.pravatar.cc/150?img=3"
-            alt=""
-            width={100}
-            height={100}
-          />
-          <div className={styles.editButton}>
-            <Button text="Change" variant="primary" size="small" />
-          </div>
-          <div className={styles.separator}></div>
-        </div> */}
       </section>
       <section>
         <h4>Details</h4>
