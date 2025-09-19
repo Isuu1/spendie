@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/supabase/server";
+import { getUserServer } from "../api/getUserServer";
 
 export async function changeUserDetails(formData: FormData) {
   const name = formData.get("name") as string;
@@ -9,28 +9,18 @@ export async function changeUserDetails(formData: FormData) {
   const email = formData.get("email") as string;
 
   try {
-    const supabase = await createClient();
-    const { data: user, error } = await supabase.auth.getUser();
-    if (error) {
+    const { user, error } = await getUserServer();
+
+    if (error || !user) {
       console.error("Error fetching user:", error);
       return;
     }
-    console.log("Current user:", user);
-    const { data: userProfile, error: profileError } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", user?.user?.id)
-      .single();
-    if (profileError) {
-      console.error("Error fetching user profile:", profileError);
-      return;
-    }
 
-    console.log("User profile:", userProfile);
+    console.log("User profile:", user);
+
+    // Perform server-side logic to change user details
+    console.log("Changing user details to:", { name, surname, dob, email });
   } catch (error) {
-    console.error("Error fetching user:", error);
+    console.error("Error changing user details:", error);
   }
-
-  // Perform server-side logic to change user details
-  console.log("Changing user details to:", { name, surname, dob, email });
 }
