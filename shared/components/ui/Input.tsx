@@ -18,6 +18,7 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | void;
   defaultValue?: string | number;
   value?: string | number | Date;
+  icon?: React.ReactNode;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -30,6 +31,7 @@ const Input: React.FC<InputProps> = ({
   onChange,
   defaultValue,
   value,
+  icon,
 }) => {
   return (
     <>
@@ -40,17 +42,20 @@ const Input: React.FC<InputProps> = ({
           </label>
         )}
         {type !== "select" && (
-          <input
-            className={styles.inputField}
-            id={id}
-            name={id}
-            type={type}
-            onChange={onChange}
-            defaultValue={defaultValue}
-            value={
-              value instanceof Date ? value.toISOString().slice(0, 10) : value
-            }
-          />
+          <div className={styles.inputFieldWrapper}>
+            <input
+              className={`${styles.inputField} ${icon ? styles.withIcon : ""}`}
+              id={id}
+              name={id}
+              type={type}
+              onChange={onChange}
+              defaultValue={defaultValue}
+              value={
+                value instanceof Date ? value.toISOString().slice(0, 10) : value
+              }
+            />
+            {icon && <span className={styles.icon}>{icon}</span>}
+          </div>
         )}
         {type === "select" && (
           <select className={styles.selectField} id={id} name={id}>

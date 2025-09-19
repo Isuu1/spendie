@@ -11,9 +11,12 @@ import { UserProfile } from "@/features/user/types/user";
 //Hooks
 import { useForm } from "@/shared/hooks/useForm";
 import { changeUserDetails } from "../actions/changeUserDetails";
+//Icons
+import { FaUser } from "react-icons/fa";
+import { BsCalendarDateFill } from "react-icons/bs";
+import { MdEmail } from "react-icons/md";
 
 const accountDetailsSchema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters long"),
   name: z.string().min(2, "Name must be at least 2 characters long"),
   surname: z.string().min(2, "Surname must be at least 2 characters long"),
   dob: z.date().min(new Date(1900, 0, 1), "Invalid date of birth"),
@@ -30,7 +33,6 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
   const { formData, errors, handleChange, resetForm } = useForm(
     accountDetailsSchema,
     {
-      username: user.username,
       name: user.name,
       surname: user.surname,
       dob: user.dob,
@@ -47,19 +49,6 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
     <Form layout="vertical" action={changeUserDetails}>
       <Input
         layout="vertical"
-        id="username"
-        type="text"
-        label="Username"
-        value={formData.username}
-        onChange={(e) => {
-          handleChange("username", e.target.value);
-          setEditMode(true);
-        }}
-        errors={errors.username}
-      />
-
-      <Input
-        layout="vertical"
         id="name"
         type="text"
         label="Name"
@@ -69,6 +58,7 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
           setEditMode(true);
         }}
         errors={errors.name}
+        icon={<FaUser />}
       />
       <Input
         layout="vertical"
@@ -81,6 +71,7 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
           setEditMode(true);
         }}
         errors={errors.surname}
+        icon={<FaUser />}
       />
       <Input
         layout="vertical"
@@ -93,6 +84,7 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
           setEditMode(true);
         }}
         errors={errors.dob}
+        icon={<BsCalendarDateFill />}
       />
       <Input
         layout="vertical"
@@ -105,6 +97,7 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
           setEditMode(true);
         }}
         errors={errors.email}
+        icon={<MdEmail />}
       />
       <div style={{ display: "flex", gap: "1rem", marginLeft: "auto" }}>
         <Button

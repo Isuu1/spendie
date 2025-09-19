@@ -1,19 +1,33 @@
 .inputContainer {
   display: flex;
-  align-items: center;
   gap: 0.5rem;
   width: 100%;
   .label {
     white-space: nowrap;
     font-size: 0.9rem;
   }
-  .inputField {
-    border: 0;
-    padding: 0.5rem;
-    width: 100%;
-    border-radius: 8px;
-    font-family: inherit;
+  .inputFieldWrapper {
+    display: flex;
+    position: relative;
+    .inputField {
+      font-size: 0.95rem;
+      border: 0;
+      padding: 0.5rem;
+      width: 100%;
+      border-radius: 8px;
+      font-family: inherit;
+    }
+    .withIcon {
+      padding-left: 2rem;
+    }
+    .icon {
+      position: absolute;
+      top: 50%;
+      left: 0.5rem;
+      transform: translate(0, -50%);
+    }
   }
+
   .selectField {
     width: 100%;
     border-radius: 8px;
