@@ -1,14 +1,13 @@
 import React from "react";
-import Image from "next/image";
 
 //Styles
 import styles from "./AccountDetails.module.scss";
 //Types
 import { UserProfile } from "../types/user";
 //Components
-import Button from "@/shared/components/ui/Button";
 import ChangeDetailsForm from "./ChangeDetailsForm";
 import ChangePasswordForm from "./ChangePasswordForm";
+import ChangeAvatarForm from "./ChangeAvatarForm";
 
 interface AccountDetailsProps {
   user: UserProfile;
@@ -19,7 +18,8 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ user }) => {
     <div className={styles.accountDetails}>
       <section>
         <h4>Profile picture</h4>
-        <div className={styles.avatarContainer}>
+        <ChangeAvatarForm />
+        {/* <div className={styles.avatarContainer}>
           <Image
             className={styles.avatar}
             src="https://i.pravatar.cc/150?img=3"
@@ -31,7 +31,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ user }) => {
             <Button text="Change" variant="primary" size="small" />
           </div>
           <div className={styles.separator}></div>
-        </div>
+        </div> */}
       </section>
       <section>
         <h4>Details</h4>
