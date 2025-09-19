@@ -1,8 +1,13 @@
 "use server";
 
 import { getUserServer } from "../api/getUserServer";
+import { accountDetailsSchema } from "../schemas/forms";
+import { ChangeDetailsFormState } from "../types/forms";
 
-export async function changeUserDetails(formData: FormData) {
+export async function changeUserDetails(
+  prevState: ChangeDetailsFormState,
+  formData: FormData
+): Promise<ChangeDetailsFormState> {
   const name = formData.get("name") as string;
   const surname = formData.get("surname") as string;
   const dob = formData.get("dob") as string;
@@ -13,14 +18,32 @@ export async function changeUserDetails(formData: FormData) {
 
     if (error || !user) {
       console.error("Error fetching user:", error);
-      return;
+      return { success: false, user: null, error: "Failed to fetch user" };
     }
 
-    console.log("User profile:", user);
+    const result = accountDetailsSchema.safeParse({
+      name,
+      surname,
+      dob,
+      email,
+    });
 
-    // Perform server-side logic to change user details
-    console.log("Changing user details to:", { name, surname, dob, email });
+    console.log("Validation result:", result);
+
+    if (!result.success) {
+      // Map Zod errors into field -> string[] format
+      const fieldErrors: Record<string, string[]> = {};
+      result.error.errors.forEach((err) => {
+        const key = err.path[0] as string;
+        if (!fieldErrors[key]) fieldErrors[key] = [];
+        fieldErrors[key].push(err.message);
+      });
+      return { success: false, user: null, error: "Invalid data", fieldErrors };
+    }
+
+    return { success: true, user: user, error: null };
   } catch (error) {
     console.error("Error changing user details:", error);
+    return { success: false, user: null, error: "An error occurred" };
   }
 }

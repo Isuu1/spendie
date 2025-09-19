@@ -17,10 +17,10 @@ export function useForm<T extends z.ZodTypeAny>(
 
   const [formData, setFormData] = useState(defaultValues);
 
-  const [errors, setErrors] = useState<SchemaErrors<T>>(() =>
+  const [errors, setErrors] = useState<Partial<SchemaErrors<T>>>(
     Object.keys(objectSchema.shape).reduce(
       (acc, key) => ({ ...acc, [key]: [] }),
-      {} as SchemaErrors<T>
+      {} as Partial<SchemaErrors<T>>
     )
   );
 
@@ -66,5 +66,5 @@ export function useForm<T extends z.ZodTypeAny>(
     );
   };
 
-  return { formData, errors, handleChange, resetForm };
+  return { formData, errors, handleChange, resetForm, setErrors };
 }

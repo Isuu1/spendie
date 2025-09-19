@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { z } from "zod";
+import React, { useActionState, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 //Components
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
@@ -10,27 +10,37 @@ import Button from "@/shared/components/ui/Button";
 import { UserProfile } from "@/features/user/types/user";
 //Hooks
 import { useForm } from "@/shared/hooks/useForm";
-import { changeUserDetails } from "../actions/changeUserDetails";
+import { changeUserDetails } from "@/features/user/actions/changeUserDetails";
 //Icons
 import { FaUser } from "react-icons/fa";
 import { BsCalendarDateFill } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
-
-const accountDetailsSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters long"),
-  surname: z.string().min(2, "Surname must be at least 2 characters long"),
-  dob: z.date().min(new Date(1900, 0, 1), "Invalid date of birth"),
-  email: z.string().email(),
-});
+//Types
+import { ChangeDetailsFormState } from "@/features/user/types/forms";
+import { accountDetailsSchema } from "@/features/user/schemas/forms";
+//Styles
+import { toastStyle } from "@/shared/styles/toastStyle";
 
 interface ChangeDetailsFormProps {
   user: UserProfile;
 }
 
+const initialFormState: ChangeDetailsFormState = {
+  success: false,
+  error: "",
+  user: null,
+  fieldErrors: {},
+};
+
 const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
   const [editMode, setEditMode] = useState(false);
 
-  const { formData, errors, handleChange, resetForm } = useForm(
+  const [state, formAction, isPending] = useActionState(
+    changeUserDetails,
+    initialFormState
+  );
+
+  const { formData, errors, handleChange, resetForm, setErrors } = useForm(
     accountDetailsSchema,
     {
       name: user.name,
@@ -45,8 +55,21 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
     resetForm();
   };
 
+  useEffect(() => {
+    if (state && state.success) {
+      setEditMode(false);
+      toast.success("Details updated successfully!", toastStyle);
+    }
+    if (state && state.error && !state.fieldErrors) {
+      toast.error(`Error: ${state.error}`, toastStyle);
+    }
+    if (state && state.fieldErrors) {
+      setErrors(state.fieldErrors);
+    }
+  }, [state, setErrors]);
+
   return (
-    <Form layout="vertical" action={changeUserDetails}>
+    <Form layout="vertical" action={formAction}>
       <Input
         layout="vertical"
         id="name"
@@ -80,7 +103,7 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
         label="Date of Birth"
         value={formData.dob}
         onChange={(e) => {
-          handleChange("dob", new Date(e.target.value));
+          handleChange("dob", e.target.value);
           setEditMode(true);
         }}
         errors={errors.dob}
@@ -100,16 +123,6 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
         icon={<MdEmail />}
       />
       <div style={{ display: "flex", gap: "1rem", marginLeft: "auto" }}>
-        <Button
-          text="Save changes"
-          variant="primary"
-          type="submit"
-          size="medium"
-          disabled={
-            !editMode ||
-            Object.values(errors).some((errArr) => errArr.length > 0)
-          }
-        />
         {editMode && (
           <Button
             text="Cancel"
@@ -119,6 +132,17 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
             onClick={() => handleCloseForm()}
           />
         )}
+        <Button
+          text={isPending ? "Saving..." : "Save Changes"}
+          variant="primary"
+          type="submit"
+          size="medium"
+          disabled={
+            !editMode ||
+            Object.values(errors).some((errArr) => errArr.length > 0) ||
+            isPending
+          }
+        />
       </div>
     </Form>
   );

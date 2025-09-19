@@ -12,7 +12,7 @@ export async function getUserServer() {
   const { data: userProfile, error: profileError } = await supabase
     .from("profiles")
     .select("*")
-    .eq("idd", authUser?.user?.id)
+    .eq("id", authUser?.user?.id)
     .single();
   if (profileError) {
     console.error("Error fetching user profile:", profileError);
