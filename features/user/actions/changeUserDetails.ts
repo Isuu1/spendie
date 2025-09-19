@@ -1,5 +1,6 @@
 "use server";
 
+import { createClient } from "@/supabase/server";
 import { getUserServer } from "../api/getUserServer";
 import { accountDetailsSchema } from "../schemas/forms";
 import { ChangeDetailsFormState } from "../types/forms";
@@ -16,6 +17,8 @@ export async function changeUserDetails(
   try {
     const { user, error } = await getUserServer();
 
+    const supabase = await createClient();
+
     if (error || !user) {
       console.error("Error fetching user:", error);
       return { success: false, user: null, error: "Failed to fetch user" };
@@ -28,8 +31,6 @@ export async function changeUserDetails(
       email,
     });
 
-    console.log("Validation result:", result);
-
     if (!result.success) {
       // Map Zod errors into field -> string[] format
       const fieldErrors: Record<string, string[]> = {};
@@ -39,6 +40,23 @@ export async function changeUserDetails(
         fieldErrors[key].push(err.message);
       });
       return { success: false, user: null, error: "Invalid data", fieldErrors };
+    }
+
+    const { data: updatedProfile, error: updateError } = await supabase
+      .from("profiles")
+      .update({
+        name: result.data.name,
+        surname: result.data.surname,
+        dob: result.data.dob,
+        email: result.data.email,
+      })
+      .eq("id", user.id)
+      .select()
+      .single();
+
+    if (updateError || !updatedProfile) {
+      console.error("Error updating profile:", updateError);
+      return { success: false, user: null, error: "Failed to update profile" };
     }
 
     return { success: true, user: user, error: null };
