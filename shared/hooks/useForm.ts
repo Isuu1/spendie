@@ -17,15 +17,16 @@ export function useForm<T extends z.ZodTypeAny>(
 
   const [formData, setFormData] = useState(defaultValues);
 
-  const [errors, setErrors] = useState<Partial<SchemaErrors<T>>>(
+  const [errors, setErrors] = useState<SchemaErrors<T>>(
     Object.keys(objectSchema.shape).reduce(
       (acc, key) => ({ ...acc, [key]: [] }),
-      {} as Partial<SchemaErrors<T>>
+      {} as SchemaErrors<T>
     )
   );
 
   const validate = (updated: z.infer<T>) => {
     const result = schema.safeParse(updated);
+    //const result = { success: true, data: updated }; // Temporarily disable validation
 
     if (!result.success) {
       const fieldErrors = Object.keys(objectSchema.shape).reduce(
