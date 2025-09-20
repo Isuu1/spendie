@@ -14,11 +14,11 @@ interface InputProps {
   label?: string;
   layout: "horizontal" | "vertical";
   selectOptions?: string[];
-  errors?: string[] | null;
-  onChange?: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
+  errors?: string[];
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | void;
   defaultValue?: string | number;
+  value?: string | number | Date;
+  icon?: React.ReactNode;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -30,6 +30,8 @@ const Input: React.FC<InputProps> = ({
   errors,
   onChange,
   defaultValue,
+  value,
+  icon,
 }) => {
   return (
     <>
@@ -40,14 +42,20 @@ const Input: React.FC<InputProps> = ({
           </label>
         )}
         {type !== "select" && (
-          <input
-            className={`${styles.inputField} ${errors ? styles.inputError : ""}`}
-            id={id}
-            name={id}
-            type={type}
-            onChange={onChange}
-            defaultValue={defaultValue}
-          />
+          <div className={styles.inputFieldWrapper}>
+            <input
+              className={`${styles.inputField} ${icon ? styles.withIcon : ""}`}
+              id={id}
+              name={id}
+              type={type}
+              onChange={onChange}
+              defaultValue={defaultValue}
+              value={
+                value instanceof Date ? value.toISOString().slice(0, 10) : value
+              }
+            />
+            {icon && <span className={styles.icon}>{icon}</span>}
+          </div>
         )}
         {type === "select" && (
           <select className={styles.selectField} id={id} name={id}>
@@ -59,7 +67,7 @@ const Input: React.FC<InputProps> = ({
           </select>
         )}
       </div>
-      {errors && (
+      {errors && errors.length > 0 && (
         <div className={styles.errorContainer}>
           {errors.map((err, index) => (
             <span key={index} className={styles.errorMessage}>

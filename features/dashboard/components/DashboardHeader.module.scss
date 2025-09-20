@@ -1,5 +1,5 @@
 .header {
-  z-index: 99;
+  z-index: 97;
   position: fixed;
   top: 1rem;
   //Sidebar margin + width
@@ -7,7 +7,7 @@
   right: 0.5rem;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 1rem;
   background: linear-gradient(
     55deg,
@@ -19,8 +19,32 @@
   border: 1px solid rgba(109, 109, 109, 0.2);
   border-radius: 14px;
   padding: 0.5rem;
+  .welcome {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    .avatar {
+      cursor: pointer;
+      border-radius: 50%;
+    }
+    .data {
+      display: flex;
+      flex-direction: column;
+      .timestamp {
+        font-size: 0.9rem;
+        color: #888;
+      }
+    }
+  }
   .welcomeMessage {
     margin-right: auto;
+  }
+  .userImage {
+    position: relative;
+    .avatar {
+      cursor: pointer;
+      border-radius: 50%;
+    }
   }
   .notificationsIcon {
     position: relative;
@@ -37,8 +61,5 @@
       width: 14px;
       aspect-ratio: 1/1;
     }
-  }
-  .avatar {
-    border-radius: 50%;
   }
 }

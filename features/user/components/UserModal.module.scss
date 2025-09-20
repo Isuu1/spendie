@@ -1,0 +1,41 @@
+.userModal {
+  z-index: 99;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background: linear-gradient(
+    55deg,
+    rgba(18, 18, 18, 1) 20%,
+    rgba(26, 26, 26, 1) 100%
+  );
+  box-shadow: 0 4px 12px rgba(20, 20, 20, 0.3);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(109, 109, 109, 0.2);
+  padding: 1rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  .avatar {
+    border-radius: 50%;
+  }
+  .details {
+    display: flex;
+    flex-direction: column;
+    .email {
+      font-size: 0.9rem;
+      color: #888;
+    }
+  }
+  .item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: 0.3s color;
+    &:hover {
+      color: #41b300;
+    }
+  }
+}

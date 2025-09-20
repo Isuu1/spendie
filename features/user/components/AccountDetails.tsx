@@ -1,0 +1,35 @@
+import React from "react";
+
+//Styles
+import styles from "./AccountDetails.module.scss";
+//Types
+import { UserProfile } from "../types/user";
+//Components
+import ChangeDetailsForm from "./ChangeDetailsForm";
+import ChangePasswordForm from "./ChangePasswordForm";
+import ChangeAvatarForm from "./ChangeAvatarForm";
+
+interface AccountDetailsProps {
+  user: UserProfile;
+}
+
+const AccountDetails: React.FC<AccountDetailsProps> = ({ user }) => {
+  return (
+    <div className={styles.accountDetails}>
+      <section>
+        <h4>Profile picture</h4>
+        <ChangeAvatarForm />
+      </section>
+      <section>
+        <h4>Details</h4>
+        <ChangeDetailsForm user={user} />
+      </section>
+      <section>
+        <h4>Password</h4>
+        <ChangePasswordForm user={user} />
+      </section>
+    </div>
+  );
+};
+
+export default AccountDetails;

@@ -1,0 +1,14 @@
+.avatarContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  .editButton {
+    position: absolute;
+    top: 80px;
+    left: 50px;
+  }
+  .avatar {
+    border-radius: 50%;
+  }
+}

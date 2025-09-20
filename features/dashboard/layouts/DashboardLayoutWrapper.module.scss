@@ -12,6 +12,17 @@
   padding-right: auto;
 }
 
+.pageLayout {
+  min-height: 100vh;
+  //Sidebar margin + width
+  padding-left: calc(1.5rem + 38px);
+  //Header height + margin
+  padding-top: calc(2rem + 45px);
+  margin-right: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
 @media (min-width: 768px) {
   .dashboardLayout {
     display: inline-block;

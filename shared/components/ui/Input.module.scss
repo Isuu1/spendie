@@ -1,21 +1,39 @@
 .inputContainer {
   display: flex;
-  align-items: center;
   gap: 0.5rem;
   width: 100%;
   .label {
     white-space: nowrap;
+    font-size: 0.9rem;
   }
-  .inputError {
-    border: 1px solid red !important;
+  .inputFieldWrapper {
+    display: flex;
+    position: relative;
+    .inputField {
+      outline: 2px solid transparent;
+      background: #88888833;
+      font-size: 0.95rem;
+      border: 0;
+      padding: 0.6rem 0.5rem;
+      width: 100%;
+      border-radius: 8px;
+      font-family: inherit;
+      transition: 0.2s all ease;
+      &:focus {
+        outline: 2px solid #41b300;
+      }
+    }
+    .withIcon {
+      padding-left: 1.8rem;
+    }
+    .icon {
+      position: absolute;
+      top: 50%;
+      left: 0.5rem;
+      transform: translate(0, -50%);
+    }
   }
-  .inputField {
-    border: 0;
-    padding: 0.5rem;
-    width: 100%;
-    border-radius: 8px;
-    font-family: inherit;
-  }
+
   .selectField {
     width: 100%;
     border-radius: 8px;
@@ -32,21 +50,26 @@
 }
 .vertical {
   flex-direction: column;
+  .label {
+    margin-right: auto;
+  }
 }
 
 .errorContainer {
-  margin-left: auto;
+  margin-right: auto;
   color: rgb(255, 255, 255);
-  background: rgb(252, 11, 11);
-  font-size: 0.875rem;
-  padding: 0.2rem;
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.4rem;
   border-radius: 6px;
   .errorMessage {
     display: flex;
     align-items: center;
-    gap: 0.2rem;
+    gap: 0.3rem;
     .icon {
-      font-size: 1rem;
+      font-size: 1.3rem;
     }
   }
 }
