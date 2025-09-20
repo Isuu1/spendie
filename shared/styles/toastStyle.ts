@@ -1,22 +1,26 @@
 export const toastStyle = {
   style: {
     borderRadius: "10px",
-    background: "rgba(0, 0, 0, 1)",
     color: "#fff",
-    // marginTop: "60px",
-    fontWeight: "500",
-    fontSize: "1rem",
+    fontWeight: "600",
+    fontSize: "0.9rem",
   },
   success: {
+    style: {
+      background: "#297000ff",
+    },
     iconTheme: {
-      primary: "#13d95b",
-      secondary: "#fff",
+      primary: "#fff",
+      secondary: "#297000ff",
     },
   },
   error: {
+    style: {
+      background: "#af0000ff",
+    },
     iconTheme: {
-      primary: "red",
-      secondary: "#fff",
+      primary: "#fff",
+      secondary: "#af0000ff",
     },
   },
 };
