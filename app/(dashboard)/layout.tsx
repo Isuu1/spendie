@@ -15,9 +15,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <AppProviders>
         <div id="confirm-action-root"></div>
         <Toaster toastOptions={toastStyle} containerStyle={{ top: 100 }} />
-        <DashboardLayoutWrapper>
-          <DashboardHeader />
-          <Sidebar />
+        <DashboardLayoutWrapper
+          header={<DashboardHeader />}
+          sidebar={<Sidebar />}
+        >
           {children}
         </DashboardLayoutWrapper>
       </AppProviders>
