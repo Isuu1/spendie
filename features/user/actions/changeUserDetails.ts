@@ -53,6 +53,15 @@ export async function changeUserDetails(
 
     if (updateError || !updatedProfile) {
       console.error("Error updating profile:", updateError);
+      // Check for unique violation (Postgres error code: 23505)
+      if (updateError?.code === "23505") {
+        return {
+          success: false,
+          user: null,
+          error: "This email is already in use",
+          fieldErrors: { email: ["This email is already in use"] },
+        };
+      }
       return { success: false, user: null, error: "Failed to update profile" };
     }
 

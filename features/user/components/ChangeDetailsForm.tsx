@@ -39,7 +39,7 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
     initialFormState
   );
 
-  const { formData, errors, handleChange, resetForm } = useForm(
+  const { formData, errors, handleChange, resetForm, setErrors } = useForm(
     accountDetailsSchema,
     {
       name: user.name,
@@ -59,10 +59,16 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
       setEditMode(false);
       toast.success("Details updated successfully!", toastStyle);
     }
-    if (state && state.error) {
+    if (state && state.error && !state.fieldErrors) {
       toast.error(`Error: ${state.error}`, toastStyle);
     }
-  }, [state]);
+    if (state?.fieldErrors) {
+      setErrors((prev) => ({
+        ...prev,
+        ...state.fieldErrors,
+      }));
+    }
+  }, [state, setErrors]);
 
   return (
     <Form layout="vertical" action={formAction}>
