@@ -29,7 +29,6 @@ const initialFormState: ChangeDetailsFormState = {
   success: false,
   error: "",
   user: null,
-  //fieldErrors: {},
 };
 
 const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {

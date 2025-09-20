@@ -32,18 +32,10 @@ export async function changeUserDetails(
     });
 
     if (!result.success) {
-      // Map Zod errors into field -> string[] format
-      // const fieldErrors: Record<string, string[]> = {};
-      // result.error.errors.forEach((err) => {
-      //   const key = err.path[0] as string;
-      //   if (!fieldErrors[key]) fieldErrors[key] = [];
-      //   fieldErrors[key].push(err.message);
-      // });
       return {
         success: false,
         user: null,
         error: "Failed to update details, invalid data.",
-        //fieldErrors,
       };
     }
 
