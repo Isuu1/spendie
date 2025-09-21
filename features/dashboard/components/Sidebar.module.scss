@@ -1,14 +1,17 @@
 $background: #0a0a0a;
 $hover: #5be20d;
+$text: #b4b4b4;
+$active: #ffffff;
 
 .sidebar {
-  z-index: 99;
+  z-index: 97;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   padding-top: 4rem;
   padding-left: 1rem;
+  padding-bottom: 4rem;
   background: $background;
   backdrop-filter: blur(10px);
   max-width: 52px;
@@ -20,14 +23,28 @@ $hover: #5be20d;
     flex-direction: column;
     gap: 1.5rem;
     list-style: none;
+    height: 100%;
+    .settings {
+      margin-top: auto;
+    }
+    .logout {
+      color: #5be20d !important;
+      font-weight: bold;
+      // padding: 0.2rem;
+      // background: #b4b4b4;
+      // border-radius: 6px;
+    }
     .item {
       position: relative;
       cursor: pointer;
       display: flex;
       gap: 0.8rem;
       white-space: nowrap;
-      color: #b4b4b4;
+      color: $text;
       transition: 0.15s color ease;
+      .settings {
+        margin-top: auto;
+      }
       &:hover {
         color: $hover;
       }
@@ -44,14 +61,14 @@ $hover: #5be20d;
       }
     }
     .active {
-      color: #ffffff;
+      color: $active;
       &::after {
         content: "";
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
         right: 0;
-        background: #ffffff;
+        background: $active;
         height: 120%;
         width: 2px;
       }
@@ -75,7 +92,7 @@ $hover: #5be20d;
     right: 0;
     width: 2px;
     height: 100%;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.082);
     pointer-events: none;
     border-radius: 14px;
   }
