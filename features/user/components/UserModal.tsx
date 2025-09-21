@@ -35,9 +35,9 @@ const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
   const router = useRouter();
 
   const userModalVariants = {
-    hidden: { x: -200 },
-    visible: { x: 0, transition: { duration: 0.2 } },
-    exit: { x: -200, transition: { duration: 0.2 } },
+    hidden: { scale: 0 },
+    visible: { scale: 1, transition: { duration: 0.2 } },
+    exit: { scale: 0, transition: { duration: 0.2 } },
   };
 
   const handleMenuItemClick = useCallback(
@@ -56,7 +56,7 @@ const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
       animate="visible"
       exit="exit"
     >
-      <li>
+      <li className={styles.avatarContainer}>
         <Image
           className={styles.avatar}
           src="https://i.pravatar.cc/150?img=3"

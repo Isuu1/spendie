@@ -1,49 +1,39 @@
 .header {
-  z-index: 97;
-  position: fixed;
-  top: 1rem;
-  //Sidebar margin + width
-  left: calc(1.5rem + 38px);
-  right: 0.5rem;
+  z-index: 96;
+  grid-area: header;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  background: linear-gradient(
-    55deg,
-    rgba(18, 18, 18, 1) 20%,
-    rgba(26, 26, 26, 1) 100%
-  );
-  box-shadow: 0 4px 12px rgba(20, 20, 20, 0.3);
+  // background: linear-gradient(
+  //   55deg,
+  //   rgba(18, 18, 18, 1) 20%,
+  //   rgba(26, 26, 26, 1) 100%
+  // );
+  background: #ffffff00;
+  //box-shadow: 0 4px 12px rgba(20, 20, 20, 0.3);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(109, 109, 109, 0.2);
+  //border: 1px solid rgba(109, 109, 109, 0.2);
   border-radius: 14px;
   padding: 0.5rem;
-  .welcome {
+  margin-left: 0.5rem;
+  .userProfile {
+    position: relative;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
     .avatar {
-      cursor: pointer;
       border-radius: 50%;
+      border: 2px solid rgba(197, 197, 197, 0.767);
     }
-    .data {
-      display: flex;
-      flex-direction: column;
-      .timestamp {
-        font-size: 0.9rem;
-        color: #888;
-      }
+    .name {
+      font-weight: 600;
+      font-size: 1rem;
     }
-  }
-  .welcomeMessage {
-    margin-right: auto;
-  }
-  .userImage {
-    position: relative;
-    .avatar {
-      cursor: pointer;
-      border-radius: 50%;
+    .icon {
+      color: #8a8a8a;
+      font-size: 1.1rem;
     }
   }
   .notificationsIcon {

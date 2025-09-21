@@ -1,5 +1,4 @@
 import EditPaymentForm from "@/features/recurring-payments/components/EditPaymentForm";
-import PageWrapper from "@/shared/components/PageWrapper";
 import { createClient } from "@/supabase/server";
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -25,9 +24,9 @@ export default async function Page({ params }: { params: { id: string } }) {
     .single();
 
   return (
-    <PageWrapper>
+    <>
       <h2>Edit recurring payment</h2>
       <EditPaymentForm payment={payment} />
-    </PageWrapper>
+    </>
   );
 }
