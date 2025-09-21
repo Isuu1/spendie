@@ -16,9 +16,8 @@ import { getUserClient } from "@/features/user/api/getUserClient";
 import UserModal from "@/features/user/components/UserModal";
 
 const DashboardHeader = () => {
-  const [user, setUser] = React.useState<UserProfile | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log("User in DashboardHeader:", user);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -47,7 +46,7 @@ const DashboardHeader = () => {
               />
             )}
           </AnimatePresence>
-          {/* <div className={styles.avatarContainer}></div> */}
+
           <Image
             className={styles.avatar}
             src="https://i.pravatar.cc/150?img=3"
