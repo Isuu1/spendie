@@ -36,8 +36,8 @@ const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
 
   const userModalVariants = {
     hidden: { scale: 0 },
-    visible: { scale: 1, transition: { duration: 0.2 } },
-    exit: { scale: 0, transition: { duration: 0.2 } },
+    visible: { scale: 1, transition: { duration: 0.15 } },
+    exit: { scale: 0, transition: { duration: 0.15 } },
   };
 
   const handleMenuItemClick = useCallback(
