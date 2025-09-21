@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import moment from "moment";
 import { AnimatePresence } from "motion/react";
-
 //Icons
 import { IoNotifications } from "react-icons/io5";
+import { RiArrowDownSLine } from "react-icons/ri";
 //Styles
 import styles from "./DashboardHeader.module.scss";
 //Types
@@ -19,10 +18,15 @@ import UserModal from "@/features/user/components/UserModal";
 const DashboardHeader = () => {
   const [user, setUser] = React.useState<UserProfile | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  console.log("User in DashboardHeader:", user);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const user = await getUserClient();
+      const { user, error } = await getUserClient();
+      if (error) {
+        console.error("Error fetching user in DashboardHeader:", error);
+        return;
+      }
       setUser(user);
     };
     fetchUser();
@@ -30,29 +34,32 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <AnimatePresence>
-        {isModalOpen && (
-          <UserModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-          />
-        )}
-      </AnimatePresence>
       <div className={styles.header}>
-        <div className={styles.welcome}>
+        <div
+          className={styles.userProfile}
+          onClick={() => setIsModalOpen(!isModalOpen)}
+        >
+          <AnimatePresence>
+            {isModalOpen && (
+              <UserModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+              />
+            )}
+          </AnimatePresence>
+          {/* <div className={styles.avatarContainer}></div> */}
           <Image
             className={styles.avatar}
             src="https://i.pravatar.cc/150?img=3"
             alt=""
             width={32}
             height={32}
-            onClick={() => setIsModalOpen(!isModalOpen)}
           />
-          <div className={styles.data}>
-            <p className={styles.username}>{user?.username}</p>
-            <p className={styles.timestamp}>
-              {moment().format("MMMM Do YYYY")}
-            </p>
+          <p className={styles.name}>
+            {user?.name} {user?.surname}
+          </p>
+          <div className={styles.icon}>
+            <RiArrowDownSLine />
           </div>
         </div>
         <i className={styles.notificationsIcon}>

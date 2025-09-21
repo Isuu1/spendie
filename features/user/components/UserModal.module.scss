@@ -1,9 +1,10 @@
 .userModal {
-  z-index: 99;
+  cursor: default;
+  //z-index: 99;
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100vh;
+  top: 3rem;
+  right: 0;
+  // height: 100vh;
   background: linear-gradient(
     55deg,
     rgba(18, 18, 18, 1) 20%,
@@ -11,15 +12,23 @@
   );
   box-shadow: 0 4px 12px rgba(20, 20, 20, 0.3);
   backdrop-filter: blur(10px);
-  border-right: 1px solid rgba(109, 109, 109, 0.2);
+  border: 1px solid rgba(109, 109, 109, 0.2);
+  border-radius: 15px;
   padding: 1rem;
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
-  .avatar {
-    border-radius: 50%;
+  transform-origin: top right;
+  .avatarContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .avatar {
+      border-radius: 50%;
+    }
   }
+
   .details {
     display: flex;
     flex-direction: column;
