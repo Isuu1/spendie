@@ -1,8 +1,3 @@
-$background: #0a0a0a;
-$hover: #5be20d;
-$text: #b4b4b4;
-$active: #ffffff;
-
 .sidebar {
   z-index: 97;
   position: absolute;
@@ -11,10 +6,11 @@ $active: #ffffff;
   left: 0;
   padding-top: 6rem;
   padding-left: 1rem;
+  padding-right: 1rem;
   padding-bottom: 4rem;
-  background: $background;
+  background: var(--color-bg-main);
   backdrop-filter: blur(10px);
-  max-width: 52px;
+  max-width: 65px;
   transition: max-width 0.15s ease;
   .menu {
     z-index: 4;
@@ -28,11 +24,8 @@ $active: #ffffff;
       margin-top: auto;
     }
     .logout {
-      color: #5be20d !important;
+      color: var(--color-action-active) !important;
       font-weight: bold;
-      // padding: 0.2rem;
-      // background: #b4b4b4;
-      // border-radius: 6px;
     }
     .item {
       position: relative;
@@ -40,13 +33,14 @@ $active: #ffffff;
       display: flex;
       gap: 0.8rem;
       white-space: nowrap;
-      color: $text;
+      color: var(--color-text-secondary);
       transition: 0.15s color ease;
+      padding: 0.3rem;
       .settings {
         margin-top: auto;
       }
       &:hover {
-        color: $hover;
+        color: var(--color-action-hover);
       }
       svg {
         flex-shrink: 0;
@@ -61,22 +55,16 @@ $active: #ffffff;
       }
     }
     .active {
-      color: $active;
-      &::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 0;
-        background: $active;
-        height: 120%;
-        width: 2px;
+      color: var(--color-text-primary);
+      background: var(--color-action-active);
+      border-radius: 10px;
+      &:hover {
+        color: var(--color-text-primary);
       }
     }
   }
   &:hover {
     max-width: 250px;
-    box-shadow: 1px 1px 20px rgba(20, 20, 20, 0.3);
     padding-right: 1rem;
   }
   &:hover .menu .item .label {
@@ -84,16 +72,5 @@ $active: #ffffff;
   }
   &:hover .menu .item.active::after {
     right: -1rem;
-  }
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 2px;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.082);
-    pointer-events: none;
-    border-radius: 14px;
   }
 }

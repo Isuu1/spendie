@@ -1,13 +1,12 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-bg-main: #121212;
+  --color-bg-secondary: #171718;
+  --color-bg-tile: #1c1c1c;
+  --color-text-primary: #ededed;
+  --color-text-secondary: #b4b4b4;
+  --color-text-active: #d34702;
+  --color-action-hover: #d34702;
+  --color-action-active: #d34702;
 }
 
 html,
@@ -18,8 +17,8 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--color-text-primary);
+  background: var(--color-bg-main);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -40,12 +39,6 @@ a {
 /* Ensure SVGs don't have weird gaps below them */
 svg {
   display: block;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }
 
 .flex-row-space-between {
