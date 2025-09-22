@@ -1,55 +1,41 @@
 .tile {
-  padding: 0.7rem;
+  padding: 1.4rem;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background: linear-gradient(
-    55deg,
-    rgba(18, 18, 18, 1) 20%,
-    rgba(26, 26, 26, 1) 100%
-  );
-  box-shadow: 0 4px 12px rgba(20, 20, 20, 0.3);
+  background: var(--color-bg-tile);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(109, 109, 109, 0.2);
-  border-radius: 14px;
+  border-radius: 1.1rem;
   max-width: 510px;
-  //margin-bottom: 1rem;
   width: 100%;
-  &:hover {
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4); /* Increase shadow on hover */
-  }
-  .title {
+  break-inside: avoid;
+  .header {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 1.1rem;
-    .icon {
-      font-size: 1.4rem;
-      & svg {
-        display: block;
-      }
-    }
     .tileMenu {
+      cursor: pointer;
       margin-left: auto;
-      background: #0a0a0a;
-      border-radius: 8px;
-      padding: 0.3rem;
+      background: var(--color-bg-secondary);
+      border-radius: 10px;
+      padding: 0.6rem;
       display: flex;
       align-items: center;
       transition: all 0.2s ease-in-out;
       .icon {
         font-size: 1.2rem;
-        color: #ffffff;
-        cursor: pointer;
-
-        & svg {
-          display: block;
-        }
+        color: var(--color-text-primary);
       }
       &:hover {
-        background: #5be20d;
+        background: var(--color-text-active);
       }
     }
+  }
+}
+
+@media (min-width: 768px) {
+  .tile {
+    margin-bottom: 1.5rem;
   }
 }

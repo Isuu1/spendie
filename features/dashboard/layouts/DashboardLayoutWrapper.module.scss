@@ -12,6 +12,7 @@
   //   radial-gradient(circle at 30% 30%, rgba(255, 0, 150, 0.4), transparent 70%),
   //   radial-gradient(circle at 70% 70%, rgba(0, 200, 255, 0.4), transparent 70%);
   .innerWrapper {
+    background: #171718;
     position: relative;
     grid-area: main;
     width: 100%;
@@ -21,7 +22,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    padding: 1rem 0 1rem 1rem;
+    padding: 2rem 0 2rem 2rem;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
     &::-webkit-scrollbar {
@@ -34,5 +35,13 @@
   .dashboardLayout {
     display: inline-block !important;
     column-count: 2;
+    column-gap: 2em !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboardLayout {
+    display: inline-block !important;
+    column-count: 3;
   }
 }

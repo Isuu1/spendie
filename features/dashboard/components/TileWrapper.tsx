@@ -1,11 +1,8 @@
 "use client";
 
 import React from "react";
-
 //Styles
 import styles from "./TileWrapper.module.scss";
-//Animations
-import { motion } from "motion/react";
 //Icons
 import { TiThMenu } from "react-icons/ti";
 
@@ -17,17 +14,16 @@ interface TileWrapperProps {
 
 const TileWrapper: React.FC<TileWrapperProps> = ({ name, children }) => {
   return (
-    <motion.div className={styles.tile}>
-      <div className={styles.title}>
-        {/* <span className={styles.icon}>{icon}</span> */}
-        <p>{name}</p>
+    <div className={styles.tile}>
+      <div className={styles.header}>
+        <h3>{name}</h3>
         <span className={styles.tileMenu}>
           <TiThMenu className={styles.icon} />
         </span>
       </div>
 
       <div>{children}</div>
-    </motion.div>
+    </div>
   );
 };
 

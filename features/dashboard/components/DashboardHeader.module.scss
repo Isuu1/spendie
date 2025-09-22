@@ -1,26 +1,15 @@
 .header {
+  --color-avatar-border: rgba(233, 233, 233, 0.671);
   position: relative;
   z-index: 96;
   grid-area: header;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
-  background: #ffffff00;
-  backdrop-filter: blur(10px);
-  border-radius: 14px;
+  background: var(--color-bg-main);
   padding: 1rem 0.5rem 1rem 0;
   margin-left: 1rem;
   min-height: 70px;
-  &::after {
-    content: "";
-    position: fixed;
-    bottom: 0;
-    left: -1rem;
-    right: -1rem;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.082);
-  }
   .userProfile {
     position: relative;
     cursor: pointer;
@@ -29,7 +18,7 @@
     gap: 0.7rem;
     .avatar {
       border-radius: 50%;
-      border: 1px solid rgba(233, 233, 233, 0.671);
+      border: 1px solid var(--color-avatar-border);
       padding: 0.1rem;
     }
     .name {
@@ -37,7 +26,7 @@
       font-size: 0.95rem;
     }
     .icon {
-      color: #8a8a8a;
+      color: var(--color-text-secondary);
       font-size: 1.1rem;
     }
   }
@@ -51,7 +40,7 @@
       bottom: -7px;
       right: -6px;
       font-size: 0.8rem;
-      background-color: #41b300;
+      background-color: var(--color-text-active);
       border-radius: 50%;
       width: 14px;
       aspect-ratio: 1/1;
