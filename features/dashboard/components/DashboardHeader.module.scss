@@ -9,8 +9,9 @@
   background: #ffffff00;
   backdrop-filter: blur(10px);
   border-radius: 14px;
-  padding: 1rem 0.5rem 1rem 0.5rem;
+  padding: 1rem 0.5rem 1rem 0;
   margin-left: 1rem;
+  min-height: 70px;
   &::after {
     content: "";
     position: fixed;
@@ -41,6 +42,7 @@
     }
   }
   .notificationsIcon {
+    margin-left: auto;
     position: relative;
     font-size: 1.5rem;
     cursor: pointer;
