@@ -17,6 +17,7 @@ import { useState } from "react";
 import ConfirmAction from "@/shared/components/ConfirmAction";
 import toast from "react-hot-toast";
 import { toastStyle } from "@/shared/styles/toastStyle";
+import { AnimatePresence } from "motion/react";
 
 export default function Sidebar() {
   const [signoutClicked, setSignoutClicked] = useState(false);
@@ -94,13 +95,15 @@ export default function Sidebar() {
           <span className={styles.label}>Logout</span>
         </li>
       </ul>
-      {signoutClicked && (
-        <ConfirmAction
-          message="Are you sure you want to sign out?"
-          onCancel={() => setSignoutClicked(false)}
-          onConfirm={handleSignOut}
-        />
-      )}
+      <AnimatePresence>
+        {signoutClicked && (
+          <ConfirmAction
+            message="Are you sure you want to sign out?"
+            onCancel={() => setSignoutClicked(false)}
+            onConfirm={handleSignOut}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
