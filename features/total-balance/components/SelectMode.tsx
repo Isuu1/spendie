@@ -6,12 +6,12 @@ import styles from "./SelectMode.module.scss";
 //Icons
 import { IoMdArrowDropdown } from "react-icons/io";
 import { MdEditDocument } from "react-icons/md";
-
 //Components
 import Button from "@/shared/components/ui/Button";
 //Datepicker
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+//Animations
 import { AnimatePresence, motion } from "motion/react";
 
 interface SelectProps {
@@ -72,7 +72,7 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <div className={styles.selectContainer}>
-      <p>Changes at date</p>
+      <p>Payments by date</p>
 
       <div className={styles.select}>
         {openDatePicker && (

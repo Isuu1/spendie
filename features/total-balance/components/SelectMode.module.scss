@@ -5,9 +5,12 @@
   gap: 0.5rem;
   align-items: center;
   width: 100%;
+  background: var(--color-bg-secondary);
+  padding: 0.5rem 0.5rem 0.5rem 0.7rem;
+  border-radius: 10px;
   .select {
     position: relative;
-    background: var(--color-bg-secondary);
+    background: var(--color-bg-tile);
     border-radius: 10px;
     cursor: pointer;
     margin-left: auto;
