@@ -5,6 +5,8 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./SelectMode.module.scss";
 //Icons
 import { IoMdArrowDropdown } from "react-icons/io";
+import { MdEditDocument } from "react-icons/md";
+
 //Components
 import Button from "@/shared/components/ui/Button";
 //Datepicker
@@ -102,7 +104,8 @@ const Select: React.FC<SelectProps> = ({
       </div>
       {dateSelected && mode === "specificDate" && (
         <Button
-          text="Change"
+          //text="Change"
+          icon={<MdEditDocument />}
           variant="primary"
           size="small"
           onClick={() => setOpenDatePicker(true)}
