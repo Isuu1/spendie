@@ -10,6 +10,7 @@ import Button from "@/shared/components/ui/Button";
 //Datepicker
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { AnimatePresence, motion } from "motion/react";
 
 interface SelectProps {
   mode: "endOfMonth" | "specificDate";
@@ -19,6 +20,13 @@ interface SelectProps {
 }
 
 type Mode = "endOfMonth" | "specificDate";
+
+const selectModeOptionsVariants = {
+  hidden: { opacity: 0, y: -10 },
+  visible: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -10 },
+  transition: { duration: 0.15 },
+};
 
 const Select: React.FC<SelectProps> = ({
   mode,
@@ -100,30 +108,37 @@ const Select: React.FC<SelectProps> = ({
           onClick={() => setOpenDatePicker(true)}
         />
       )}
-
-      {showOptions && (
-        <div
-          className={`${styles.options} ${dateSelected && mode === "specificDate" ? styles.dateSelected : ""}`}
-          ref={optionsRef}
-        >
-          <p
-            className={`${styles.option} ${
-              mode === "endOfMonth" ? styles.activeOption : undefined
-            }`}
-            onClick={() => handleSelectRange("endOfMonth")}
+      <AnimatePresence>
+        {showOptions && (
+          <motion.div
+            className={`${styles.options} ${dateSelected && mode === "specificDate" ? styles.dateSelected : ""}`}
+            ref={optionsRef}
+            variants={selectModeOptionsVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
           >
-            End of the month
-          </p>
-          <p
-            className={`${styles.option} ${
-              mode === "specificDate" ? styles.activeOption : undefined
-            }`}
-            onClick={() => handleSelectRange("specificDate")}
-          >
-            {dateSelected ? dateSelected.format("DD MM YYYY") : "Specific date"}
-          </p>
-        </div>
-      )}
+            <p
+              className={`${styles.option} ${
+                mode === "endOfMonth" ? styles.activeOption : undefined
+              }`}
+              onClick={() => handleSelectRange("endOfMonth")}
+            >
+              End of the month
+            </p>
+            <p
+              className={`${styles.option} ${
+                mode === "specificDate" ? styles.activeOption : undefined
+              }`}
+              onClick={() => handleSelectRange("specificDate")}
+            >
+              {dateSelected
+                ? dateSelected.format("DD MM YYYY")
+                : "Specific date"}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
