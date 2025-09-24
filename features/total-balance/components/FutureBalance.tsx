@@ -11,7 +11,7 @@ import { populatePaymentsTillDate } from "@/features/recurring-payments/lib/util
 //Components
 import SelectMode from "@/features/total-balance/components/SelectMode";
 import PaymentsSummary from "./PaymentsSummary";
-import UpcomingPaymentsDetails from "./UpcomingPaymentsDetails";
+import PaymentsDetailsModal from "./PaymentsDetailsModal";
 
 interface FutureBalanceProps {
   recurringPayments: RecurringPayment[];
@@ -78,7 +78,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
         toggleDetails={handleToggleDetails}
       />
       {showUpcomingChangeDetails && (
-        <UpcomingPaymentsDetails
+        <PaymentsDetailsModal
           type={showUpcomingChangeDetails}
           toggleDetails={handleToggleDetails}
           paymentsTillDate={paymentsTillDate}

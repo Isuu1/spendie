@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Link from "next/link";
 //Styles
-import styles from "./UpcomingPaymentsDetails.module.scss";
+import styles from "./PaymentsDetailsModal.module.scss";
 //Components
 import Modal from "@/shared/components/Modal";
 //Icons
@@ -11,7 +11,7 @@ import { FaRepeat } from "react-icons/fa6";
 //Animations
 import { motion } from "motion/react";
 
-interface UpcomingPaymentsDetailsProps {
+interface PaymentsDetailsModalProps {
   type: "income" | "expense";
   toggleDetails?: (type: "income" | "expense" | null) => void;
   paymentsTillDate?: RecurringPayment[];
@@ -22,7 +22,7 @@ const activeIndicatorVariants = {
   expense: { x: "100%" },
 };
 
-const UpcomingPaymentsDetails: React.FC<UpcomingPaymentsDetailsProps> = ({
+const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
   type,
   toggleDetails,
   paymentsTillDate,
@@ -130,4 +130,4 @@ const UpcomingPaymentsDetails: React.FC<UpcomingPaymentsDetailsProps> = ({
   );
 };
 
-export default UpcomingPaymentsDetails;
+export default PaymentsDetailsModal;
