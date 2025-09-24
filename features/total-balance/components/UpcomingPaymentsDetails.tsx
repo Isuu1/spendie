@@ -4,15 +4,26 @@ import React, { useState } from "react";
 import styles from "./UpcomingPaymentsDetails.module.scss";
 import moment from "moment";
 import Modal from "@/shared/components/Modal";
+//Icons
+import { FaRepeat } from "react-icons/fa6";
+//Animations
+import { motion } from "motion/react";
 
 interface UpcomingPaymentsDetailsProps {
   type: "income" | "expense";
+  onTypeChange?: (type: "income" | "expense" | null) => void;
   toggleDetails?: (type: "income" | "expense" | null) => void;
   paymentsTillDate?: RecurringPayment[];
 }
 
+const activeIndicatorVariants = {
+  income: { x: 0 },
+  expense: { x: "100%" },
+};
+
 const UpcomingPaymentsDetails: React.FC<UpcomingPaymentsDetailsProps> = ({
   type,
+  onTypeChange,
   toggleDetails,
   paymentsTillDate,
 }) => {
@@ -39,21 +50,42 @@ const UpcomingPaymentsDetails: React.FC<UpcomingPaymentsDetailsProps> = ({
 
   return (
     <Modal onClose={() => toggleDetails?.(null)}>
-      <h4>{type === "income" ? "Upcoming Incomes" : "Upcoming Expenses"}</h4>
+      <h3>{type === "income" ? "Income payments" : "Expense payments"}</h3>
+      <ul className={styles.nav}>
+        <motion.span
+          className={styles.active}
+          variants={activeIndicatorVariants}
+          animate={type}
+          transition={{ type: "spring", stiffness: 700, damping: 30 }}
+        ></motion.span>
+        <li className={styles.item} onClick={() => onTypeChange?.("income")}>
+          Income
+        </li>
+        <li className={styles.item} onClick={() => onTypeChange?.("expense")}>
+          Expense
+        </li>
+      </ul>
+      <ul className={styles.menu}>
+        <li>Name</li>
+        <li>Date</li>
+        <li>Amount</li>
+      </ul>
       <div className={`${styles.paymentsList} `}>
         {currentItems?.map((payment, idx) => (
           <div key={idx} className={`${styles.paymentItem} ${styles[type]}`}>
             <div className={styles.details}>
-              <span>{payment.name ?? "Income"}</span>
-              <span>{payment.repeat}</span>
-            </div>
-            <div className={styles.amount}>
-              <span>
-                {type === "income" ? "+£" : "-£"}
-                {payment.amount?.toFixed(2) ?? "0.00"}
+              <span className={styles.name}>{payment.name ?? "Income"}</span>
+              <span className={styles.repeat}>
+                <FaRepeat /> {payment.repeat}
               </span>
-              <span>{moment(payment.date).format("DD MMM `YY")}</span>
             </div>
+            <span className={styles.date}>
+              {moment(payment.date).format("DD MMM `YY")}
+            </span>
+            <span className={styles.amount}>
+              {type === "income" ? "+£" : "-£"}
+              {payment.amount?.toFixed(2) ?? "0.00"}
+            </span>
           </div>
         ))}
         {totalPages > 1 && (
@@ -88,6 +120,9 @@ const UpcomingPaymentsDetails: React.FC<UpcomingPaymentsDetailsProps> = ({
           </div>
         )}
       </div>
+      {paymentsTillDate?.filter((p) => p.type.toLowerCase() === type).length ===
+        0 && <p>No upcoming payments</p>}
+      <p className={styles.paymentsLink}>All payments</p>
     </Modal>
   );
 };
