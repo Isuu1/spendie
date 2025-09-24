@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import moment, { Moment } from "moment";
 //Styles
 import styles from "./FutureBalance.module.scss";
@@ -47,14 +47,24 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
   const specificDate =
     mode === "endOfMonth" ? moment().endOf("month") : dateSelected;
 
-  const paymentsTillDate = populatePaymentsTillDate(
-    specificDate || moment().endOf("month"),
-    recurringPayments
+  const paymentsTillDate = useMemo(
+    () =>
+      populatePaymentsTillDate(
+        specificDate || moment().endOf("month"),
+        recurringPayments
+      ),
+    [specificDate, recurringPayments]
   );
 
-  const { income, expense } = calculateTotals(paymentsTillDate);
+  const { income, expense } = useMemo(
+    () => calculateTotals(paymentsTillDate),
+    [paymentsTillDate]
+  );
 
-  const futureBalance = totalBalance + income - expense;
+  const futureBalance = useMemo(
+    () => totalBalance + income - expense,
+    [totalBalance, income, expense]
+  );
 
   const handleToggleDetails = (type: "income" | "expense" | null) => {
     if (showUpcomingChangeDetails === type) {

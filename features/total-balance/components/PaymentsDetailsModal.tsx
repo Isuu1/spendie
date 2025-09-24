@@ -1,4 +1,3 @@
-import { RecurringPayment } from "@/shared/types/recurring-payment";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Link from "next/link";
@@ -10,6 +9,8 @@ import Modal from "@/shared/components/Modal";
 import { FaRepeat } from "react-icons/fa6";
 //Animations
 import { motion } from "motion/react";
+//Types
+import { RecurringPayment } from "@/shared/types/recurring-payment";
 
 interface PaymentsDetailsModalProps {
   type: "income" | "expense";
