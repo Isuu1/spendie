@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import moment, { Moment } from "moment";
-
 //Styles
 import styles from "./FutureBalance.module.scss";
 //Types
@@ -11,7 +10,7 @@ import { RecurringPayment } from "@/shared/types/recurring-payment";
 import { populatePaymentsTillDate } from "@/features/recurring-payments/lib/utils/populatePaymentsTillDate";
 //Components
 import SelectMode from "@/features/total-balance/components/SelectMode";
-import UpcomingPayments from "./UpcomingPayments";
+import PaymentsSummary from "./PaymentsSummary";
 import UpcomingPaymentsDetails from "./UpcomingPaymentsDetails";
 
 interface FutureBalanceProps {
@@ -73,7 +72,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
         onDateSelect={setDateSelected}
         onRangeSelect={setMode}
       />
-      <UpcomingPayments
+      <PaymentsSummary
         paymentsTillDate={paymentsTillDate}
         type={showUpcomingChangeDetails}
         toggleDetails={handleToggleDetails}
