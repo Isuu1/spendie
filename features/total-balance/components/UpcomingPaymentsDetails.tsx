@@ -1,8 +1,10 @@
 import { RecurringPayment } from "@/shared/types/recurring-payment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import moment from "moment";
+import Link from "next/link";
 //Styles
 import styles from "./UpcomingPaymentsDetails.module.scss";
-import moment from "moment";
+//Components
 import Modal from "@/shared/components/Modal";
 //Icons
 import { FaRepeat } from "react-icons/fa6";
@@ -11,7 +13,6 @@ import { motion } from "motion/react";
 
 interface UpcomingPaymentsDetailsProps {
   type: "income" | "expense";
-  onTypeChange?: (type: "income" | "expense" | null) => void;
   toggleDetails?: (type: "income" | "expense" | null) => void;
   paymentsTillDate?: RecurringPayment[];
 }
@@ -23,7 +24,6 @@ const activeIndicatorVariants = {
 
 const UpcomingPaymentsDetails: React.FC<UpcomingPaymentsDetailsProps> = ({
   type,
-  onTypeChange,
   toggleDetails,
   paymentsTillDate,
 }) => {
@@ -48,6 +48,8 @@ const UpcomingPaymentsDetails: React.FC<UpcomingPaymentsDetailsProps> = ({
     startIndex + ITEMS_PER_PAGE
   );
 
+  useEffect(() => setPage(1), [type]);
+
   return (
     <Modal onClose={() => toggleDetails?.(null)}>
       <h3>{type === "income" ? "Income payments" : "Expense payments"}</h3>
@@ -58,14 +60,14 @@ const UpcomingPaymentsDetails: React.FC<UpcomingPaymentsDetailsProps> = ({
           animate={type}
           transition={{ type: "spring", stiffness: 700, damping: 30 }}
         ></motion.span>
-        <li className={styles.item} onClick={() => onTypeChange?.("income")}>
+        <li className={styles.item} onClick={() => toggleDetails?.("income")}>
           Income
         </li>
-        <li className={styles.item} onClick={() => onTypeChange?.("expense")}>
+        <li className={styles.item} onClick={() => toggleDetails?.("expense")}>
           Expense
         </li>
       </ul>
-      <ul className={styles.menu}>
+      <ul className={styles.labelsBar}>
         <li>Name</li>
         <li>Date</li>
         <li>Amount</li>
@@ -120,9 +122,10 @@ const UpcomingPaymentsDetails: React.FC<UpcomingPaymentsDetailsProps> = ({
           </div>
         )}
       </div>
-      {paymentsTillDate?.filter((p) => p.type.toLowerCase() === type).length ===
-        0 && <p>No upcoming payments</p>}
-      <p className={styles.paymentsLink}>All payments</p>
+      {filteredPayments.length === 0 && <p>No upcoming payments</p>}
+      <Link href="/recurring-payments" className={styles.paymentsLink}>
+        All payments
+      </Link>
     </Modal>
   );
 };
