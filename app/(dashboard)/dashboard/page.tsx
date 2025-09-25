@@ -1,49 +1,48 @@
 //Components
-import AccountsTile from "@/features/accounts/components/AccountsTile";
 import TileWrapper from "@/features/dashboard/components/TileWrapper";
-import TotalBalanceTile from "@/features/total-balance/components/TotalBalanceTile";
-import TransactionsTile from "@/features/transactions/components/TransactionsTile";
+import ErrorMessage from "@/shared/components/ErrorMessage";
 //Icons
-import { MdAccountBalance } from "react-icons/md";
 import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
-
-import { BsCurrencyExchange } from "react-icons/bs";
+//Supabase
 import { createClient } from "@/supabase/server";
+//Api
+import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
+//Config
+import { tilesLibrary } from "@/features/dashboard/config/tilesLibrary";
 
 export default async function Page() {
   const supabase = await createClient();
 
   const user = await supabase.auth.getUser();
 
-  const tilesInUse = [
-    {
-      name: "Total Balance",
-      component: <TotalBalanceTile />,
-      icon: <MdAccountBalance />,
-    },
-    {
-      name: "Accounts",
-      component: <AccountsTile />,
-      icon: <MdAccountBalance />,
-    },
-    {
-      name: "Recent transactions",
-      component: <TransactionsTile />,
-      icon: <BsCurrencyExchange />,
-    },
-  ];
+  const { settings, error } = await getUserSettingsServer();
+
+  const visibleTiles = settings?.visible_tiles;
+
+  if (error || !settings) {
+    return (
+      <>
+        <h3>Account</h3>
+        <ErrorMessage message="Failed to load your account settings from the server." />
+      </>
+    );
+  }
 
   return (
     <>
       <div style={{ display: "none" }}>
         {user?.data.user && <PlaidLink userId={user.data.user.id} />}
       </div>
-
-      {tilesInUse.map((tile) => (
-        <TileWrapper key={tile.name} name={tile.name} icon={tile.icon}>
-          {tile.component}
-        </TileWrapper>
-      ))}
+      {tilesLibrary
+        .filter((tile) => visibleTiles.includes(tile.name))
+        .map((tile) => {
+          const TileComponent = tile.component;
+          return (
+            <TileWrapper key={tile.name} name={tile.name}>
+              <TileComponent />
+            </TileWrapper>
+          );
+        })}
     </>
   );
 }
