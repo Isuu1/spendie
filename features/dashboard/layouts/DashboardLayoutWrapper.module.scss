@@ -8,11 +8,8 @@
     "sidebar header"
     "sidebar main";
   padding: 0.5rem;
-  // background:
-  //   radial-gradient(circle at 30% 30%, rgba(255, 0, 150, 0.4), transparent 70%),
-  //   radial-gradient(circle at 70% 70%, rgba(0, 200, 255, 0.4), transparent 70%);
   .innerWrapper {
-    background: #171718;
+    background: var(--color-bg-secondary);
     position: relative;
     grid-area: main;
     width: 100%;
