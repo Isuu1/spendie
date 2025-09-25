@@ -14,6 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div>
       <AppProviders>
         <div id="confirm-action-root"></div>
+        <div id="modal-root"></div>
         <Toaster toastOptions={toastStyle} containerStyle={{ top: 100 }} />
         <DashboardLayoutWrapper
           header={<DashboardHeader />}
