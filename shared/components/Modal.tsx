@@ -25,10 +25,10 @@ const Modal: React.FC<Modal> = ({ children, onClose }) => {
 
   useEffect(() => {
     setIsMounted(true);
-    let portalNode = document.getElementById("confirm-action-root");
+    let portalNode = document.getElementById("modal-root");
     if (!portalNode) {
       portalNode = document.createElement("div");
-      portalNode.id = "confirm-action-root";
+      portalNode.id = "modal-root";
       document.body.appendChild(portalNode);
     }
     modalRootRef.current = portalNode;
