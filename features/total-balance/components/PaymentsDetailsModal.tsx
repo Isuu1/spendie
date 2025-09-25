@@ -59,6 +59,7 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
           className={styles.active}
           variants={activeIndicatorVariants}
           animate={type}
+          initial={false} // Prevent animation on initial render
           transition={{ type: "spring", stiffness: 700, damping: 30 }}
         ></motion.span>
         <li className={styles.item} onClick={() => toggleDetails?.("income")}>
