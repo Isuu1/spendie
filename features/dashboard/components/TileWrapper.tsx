@@ -8,7 +8,6 @@ import { TiThMenu } from "react-icons/ti";
 
 interface TileWrapperProps {
   name: string;
-  icon: React.ReactNode;
   children: React.ReactNode;
 }
 
