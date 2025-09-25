@@ -12,6 +12,7 @@ import { populatePaymentsTillDate } from "@/features/recurring-payments/lib/util
 import SelectMode from "@/features/total-balance/components/SelectMode";
 import PaymentsSummary from "./PaymentsSummary";
 import PaymentsDetailsModal from "./PaymentsDetailsModal";
+import { AnimatePresence } from "motion/react";
 
 interface FutureBalanceProps {
   recurringPayments: RecurringPayment[];
@@ -87,13 +88,15 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
         type={showUpcomingChangeDetails}
         toggleDetails={handleToggleDetails}
       />
-      {showUpcomingChangeDetails && (
-        <PaymentsDetailsModal
-          type={showUpcomingChangeDetails}
-          toggleDetails={handleToggleDetails}
-          paymentsTillDate={paymentsTillDate}
-        />
-      )}
+      <AnimatePresence>
+        {showUpcomingChangeDetails && (
+          <PaymentsDetailsModal
+            type={showUpcomingChangeDetails}
+            toggleDetails={handleToggleDetails}
+            paymentsTillDate={paymentsTillDate}
+          />
+        )}
+      </AnimatePresence>
       <div className={styles.balance}>
         <h3>Balance after payments</h3>
         <h2 className={styles.value}>£{futureBalance.toFixed(2)}</h2>
