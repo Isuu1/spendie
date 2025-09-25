@@ -1,0 +1,28 @@
+.pagination {
+  display: flex;
+  margin: auto;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+  .pageButton {
+    background: var(--color-bg-tile);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    padding: 0.5rem 0.7rem;
+    border-radius: 10px;
+    border: 0;
+    transition: all 0.2s ease-in-out;
+    &:disabled {
+      display: none;
+    }
+    &:hover {
+      background: #414141;
+    }
+  }
+  .active {
+    background: var(--color-action-active);
+  }
+  .pageNumbers {
+    display: flex;
+    gap: 0.8rem;
+  }
+}

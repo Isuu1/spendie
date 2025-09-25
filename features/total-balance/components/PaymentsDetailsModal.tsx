@@ -11,6 +11,7 @@ import { FaRepeat } from "react-icons/fa6";
 import { motion } from "motion/react";
 //Types
 import { RecurringPayment } from "@/shared/types/recurring-payment";
+import Pagination from "@/shared/components/Pagination";
 
 interface PaymentsDetailsModalProps {
   type: "income" | "expense";
@@ -93,35 +94,11 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
           </div>
         ))}
         {totalPages > 1 && (
-          <div className={styles.pagination}>
-            <button
-              className={styles.pageButton}
-              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-              disabled={page === 1}
-            >
-              Previous
-            </button>
-            <div className={styles.pageNumbers}>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (pageNum) => (
-                  <button
-                    className={`${styles.pageButton} ${page === pageNum ? styles.active : ""}`}
-                    key={pageNum}
-                    onClick={() => setPage(pageNum)}
-                  >
-                    {pageNum}
-                  </button>
-                )
-              )}
-            </div>
-            <button
-              className={styles.pageButton}
-              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-              disabled={page === totalPages}
-            >
-              Next
-            </button>
-          </div>
+          <Pagination
+            page={page}
+            onPageChange={setPage}
+            totalPages={totalPages}
+          />
         )}
       </div>
       {filteredPayments.length === 0 && <p>No upcoming payments</p>}
