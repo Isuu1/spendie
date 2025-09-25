@@ -21,8 +21,7 @@ const TileWrapper: React.FC<TileWrapperProps> = ({ name, children }) => {
           <TiThMenu className={styles.icon} />
         </span>
       </div>
-
-      <div>{children}</div>
+      <>{children}</>
     </div>
   );
 };

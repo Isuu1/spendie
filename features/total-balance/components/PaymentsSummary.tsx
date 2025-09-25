@@ -2,18 +2,18 @@ import React from "react";
 //Types
 import { RecurringPayment } from "@/shared/types/recurring-payment";
 //Styles
-import styles from "./UpcomingPayments.module.scss";
+import styles from "./PaymentsSummary.module.scss";
 //Icons
 import { TbArrowBigDownFilled } from "react-icons/tb";
 import { TbArrowBigUpFilled } from "react-icons/tb";
 
-interface UpcomingPaymentsProps {
+interface PaymentsSummaryProps {
   paymentsTillDate: RecurringPayment[];
   toggleDetails: (type: "income" | "expense" | null) => void;
   type?: "income" | "expense" | null;
 }
 
-const UpcomingPayments: React.FC<UpcomingPaymentsProps> = ({
+const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({
   paymentsTillDate,
   toggleDetails,
   type,
@@ -92,4 +92,4 @@ const UpcomingPayments: React.FC<UpcomingPaymentsProps> = ({
   );
 };
 
-export default UpcomingPayments;
+export default PaymentsSummary;

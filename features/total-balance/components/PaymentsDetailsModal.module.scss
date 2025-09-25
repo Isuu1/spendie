@@ -1,0 +1,108 @@
+.nav {
+  position: relative;
+  display: flex;
+  gap: 1.5rem;
+  background: var(--color-bg-tile) !important;
+  padding: 0.3rem 0.7rem;
+  list-style: none;
+  border-radius: 10px;
+  line-height: 1rem;
+  .item {
+    z-index: 2;
+    position: relative;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+  }
+  .active {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: var(--color-action-active);
+    border-radius: 10px;
+  }
+}
+
+.labelsBar {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  list-style: none;
+  li:last-child {
+    text-align: right;
+  }
+}
+
+.paymentsList {
+  --color-bg-income: rgba(65, 179, 0, 0.1);
+  --color-bg-icon-income: #42b30059;
+  --color-text-income: #41b300;
+  --color-bg-expense: rgba(255, 0, 0, 0.1);
+  --color-bg-icon-expense: #ff000059;
+  --color-text-expense: #ff0000;
+  min-width: 240px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.4rem;
+  .paymentItem {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 16px;
+    background: var(--color-bg-tile) !important;
+    .details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      .name {
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+      .repeat {
+        font-size: 0.8rem;
+        color: var(--color-text-secondary);
+        display: flex;
+        gap: 0.3rem;
+        align-items: center;
+      }
+    }
+    .amount {
+      justify-content: flex-end;
+    }
+    .date,
+    .amount {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .income {
+    .amount {
+      color: var(--color-text-income);
+    }
+  }
+
+  .expense {
+    .amount {
+      color: var(--color-text-expense);
+    }
+  }
+}
+
+.paymentsLink {
+  color: var(--color-action-active);
+  margin-left: auto;
+  font-weight: 700;
+}

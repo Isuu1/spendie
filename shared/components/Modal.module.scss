@@ -10,20 +10,13 @@
   justify-content: center;
   align-items: center;
   .innerContainer {
-    background: linear-gradient(
-      55deg,
-      rgb(26, 26, 26) 40%,
-      rgb(36, 36, 36) 100%
-    );
-    box-shadow: 0 4px 12px rgba(20, 20, 20, 0.3);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(109, 109, 109, 0.2);
+    background: var(--color-bg-secondary);
     line-height: 2rem;
-    padding: 1rem;
-    border-radius: 14px;
+    padding: 1.5rem;
+    border-radius: 21px;
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 1.5rem;
     align-items: center;
     .buttonsContainer {
       display: flex;
