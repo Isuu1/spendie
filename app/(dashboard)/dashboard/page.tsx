@@ -9,6 +9,7 @@ import { createClient } from "@/supabase/server";
 import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
 //Config
 import { tilesLibrary } from "@/features/dashboard/config/tilesLibrary";
+import DashboardControls from "@/features/dashboard/components/DashboardControls";
 
 export default async function Page() {
   const supabase = await createClient();
@@ -33,6 +34,9 @@ export default async function Page() {
       <div style={{ display: "none" }}>
         {user?.data.user && <PlaidLink userId={user.data.user.id} />}
       </div>
+
+      <DashboardControls />
+
       {tilesLibrary
         .filter((tile) => visibleTiles.includes(tile.name))
         .map((tile) => {
