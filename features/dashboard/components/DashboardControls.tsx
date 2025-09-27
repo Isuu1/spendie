@@ -5,12 +5,15 @@ import React from "react";
 import styles from "./DashboardControls.module.scss";
 import Button from "@/shared/components/ui/Button";
 import { MdDashboardCustomize } from "react-icons/md";
-//import { changeUserSettings } from "../changeUserSettings";
+import { changeUserSettings } from "../changeUserSettings";
 import { getUserSettingsClient } from "@/features/user/api/getUserSettingsClient";
+import { UserSettings } from "@/features/user/types/user";
 
 const DashboardControls = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
-  const [userSettings, setUserSettings] = React.useState(null);
+  const [userSettings, setUserSettings] = React.useState<UserSettings | null>(
+    null
+  );
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -26,14 +29,14 @@ const DashboardControls = () => {
 
   console.log(userSettings);
 
-  // const isTileActive = (tileName) => {
-  //   return userSettings?.visible_tiles?.includes(tileName);
-  // };
+  const isTileActive = (tileName: string) => {
+    return userSettings?.visible_tiles?.includes(tileName);
+  };
 
-  // const handleChange = async (tileName, isActive) => {
-  //   const result = await changeUserSettings(tileName, isActive);
-  //   console.log("Change Result:", result);
-  // };
+  const handleChange = async (tileName: string, isActive: boolean) => {
+    const result = await changeUserSettings(tileName, isActive);
+    console.log("Change Result:", result);
+  };
   // Update local state to reflect the change
 
   const tilesLibrary = [
@@ -56,12 +59,12 @@ const DashboardControls = () => {
           {tilesLibrary.map((tile) => (
             <li key={tile.name}>
               <Button
-                //text={isTileActive(tile.name) ? "Active" : "Inactive"}
-                //variant={isTileActive(tile.name) ? "primary" : "secondary"}
-                text="Test"
+                text={isTileActive(tile.name) ? "Active" : "Inactive"}
+                variant={isTileActive(tile.name) ? "primary" : "secondary"}
                 size="small"
-                variant="primary"
-                //onClick={() => handleChange(tile.name, isTileActive(tile.name))}
+                onClick={() =>
+                  handleChange(tile.name, !!isTileActive(tile.name))
+                }
               />
               {tile.name}
             </li>
