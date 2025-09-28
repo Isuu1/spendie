@@ -15,6 +15,8 @@ import { UserSettings } from "@/features/user/types/user";
 import { PanelName, panelsMetaData } from "../config/panelsMetaData";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
+import toast from "react-hot-toast";
+import { toastStyle } from "@/shared/styles/toastStyle";
 
 const panelMenuVariants = {
   hidden: { opacity: 0, y: -10 },
@@ -38,7 +40,11 @@ const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
 
   const handleChange = async (panelName: PanelName, isActive: boolean) => {
     const result = await togglePanelVisibility(panelName, isActive);
-    console.log("Change Result:", result);
+    if (!result.success) {
+      console.error("Failed to toggle panel visibility");
+      toast.error("Failed to update panel settings", toastStyle);
+      return;
+    }
   };
 
   useEffect(() => {

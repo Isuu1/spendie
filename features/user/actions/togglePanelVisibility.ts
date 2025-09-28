@@ -29,7 +29,7 @@ export async function togglePanelVisibility(
 
   if (settingsError) {
     console.error("Error fetching user settings:", settingsError);
-    throw new Error("Failed to fetch user settings");
+    return { success: false };
   }
 
   let visiblePanels: string[] = settingsData.visible_panels || [];
@@ -47,7 +47,7 @@ export async function togglePanelVisibility(
 
   if (updateError) {
     console.error("Error updating user settings:", updateError);
-    throw new Error("Failed to update user settings");
+    return { success: false };
   }
 
   revalidatePath("/dashboard");
