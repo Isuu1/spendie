@@ -3,7 +3,10 @@
 import { createClient } from "@/supabase/server";
 import { revalidatePath } from "next/cache";
 
-export async function changeUserSettings(panelName: string, isActive: boolean) {
+export async function togglePanelVisibility(
+  panelName: string,
+  isActive: boolean
+) {
   console.log("Panel Name:", panelName);
   console.log("Is Active:", isActive);
 
