@@ -3,41 +3,30 @@
 import React from "react";
 //Styles
 import styles from "./PanelsControls.module.scss";
+//Components
 import Button from "@/shared/components/ui/Button";
+//Icons
 import { MdDashboardCustomize } from "react-icons/md";
-import { changeUserSettings } from "../changeUserSettings";
-import { getUserSettingsClient } from "@/features/user/api/getUserSettingsClient";
+//Utils
+import { changeUserSettings } from "../../user/actions/changeUserSettings";
+//Types
 import { UserSettings } from "@/features/user/types/user";
 
-const PanelsControls = () => {
+interface PanelsControlsProps {
+  settings: UserSettings;
+}
+
+const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
-  const [userSettings, setUserSettings] = React.useState<UserSettings | null>(
-    null
-  );
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const { settings, error } = await getUserSettingsClient();
-      if (error) {
-        console.error("Error fetching user settings:", error);
-        return;
-      }
-      setUserSettings(settings);
-    };
-    fetchData();
-  }, []);
-
-  console.log(userSettings);
 
   const isTileActive = (tileName: string) => {
-    return userSettings?.visible_tiles?.includes(tileName);
+    return settings?.visible_tiles?.includes(tileName);
   };
 
   const handleChange = async (tileName: string, isActive: boolean) => {
     const result = await changeUserSettings(tileName, isActive);
     console.log("Change Result:", result);
   };
-  // Update local state to reflect the change
 
   const tilesLibrary = [
     { name: "Accounts", component: null },

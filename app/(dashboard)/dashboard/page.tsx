@@ -35,7 +35,7 @@ export default async function Page() {
         {user?.data.user && <PlaidLink userId={user.data.user.id} />}
       </div>
 
-      <PanelsControls />
+      <PanelsControls settings={settings} />
 
       {tilesLibrary
         .filter((tile) => visibleTiles.includes(tile.name))
