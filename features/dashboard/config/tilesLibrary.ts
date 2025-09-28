@@ -2,13 +2,14 @@
 import AccountsTile from "@/features/accounts/components/AccountsTile";
 import TotalBalanceTile from "@/features/total-balance/components/TotalBalanceTile";
 import TransactionsTile from "@/features/transactions/components/TransactionsTile";
+import type { PanelName } from "./panelsMetaData";
 
-export type TileDefinition = {
-  name: "Total Balance" | "Accounts" | "Recent transactions"; // literal union
+export type PanelDefinition = {
+  name: PanelName;
   component: React.ComponentType;
 };
 
-export const tilesLibrary: TileDefinition[] = [
+export const panelsLibrary: PanelDefinition[] = [
   {
     name: "Total Balance",
     component: TotalBalanceTile,

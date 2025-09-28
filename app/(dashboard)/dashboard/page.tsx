@@ -9,7 +9,7 @@ import { createClient } from "@/supabase/server";
 //Api
 import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
 //Config
-import { tilesLibrary } from "@/features/dashboard/config/tilesLibrary";
+import { panelsLibrary } from "@/features/dashboard/config/tilesLibrary";
 
 export default async function Page() {
   const supabase = await createClient();
@@ -18,7 +18,7 @@ export default async function Page() {
 
   const { settings, error } = await getUserSettingsServer();
 
-  const visibleTiles = settings?.visible_tiles;
+  const visiblePanels = settings?.visible_tiles;
 
   if (error || !settings) {
     return (
@@ -37,13 +37,13 @@ export default async function Page() {
 
       <PanelsControls settings={settings} />
 
-      {tilesLibrary
-        .filter((tile) => visibleTiles.includes(tile.name))
-        .map((tile) => {
-          const TileComponent = tile.component;
+      {panelsLibrary
+        .filter((panel) => visiblePanels.includes(panel.name))
+        .map((panel) => {
+          const PanelComponent = panel.component;
           return (
-            <TileWrapper key={tile.name} name={tile.name}>
-              <TileComponent />
+            <TileWrapper key={panel.name} name={panel.name}>
+              <PanelComponent />
             </TileWrapper>
           );
         })}

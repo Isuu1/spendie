@@ -11,6 +11,8 @@ import { MdDashboardCustomize } from "react-icons/md";
 import { changeUserSettings } from "../../user/actions/changeUserSettings";
 //Types
 import { UserSettings } from "@/features/user/types/user";
+//Config
+import { panelsMetaData } from "../config/panelsMetaData";
 
 interface PanelsControlsProps {
   settings: UserSettings;
@@ -28,12 +30,6 @@ const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
     console.log("Change Result:", result);
   };
 
-  const tilesLibrary = [
-    { name: "Accounts", component: null },
-    { name: "Recent transactions", component: null },
-    { name: "Total Balance", component: null },
-  ];
-
   return (
     <div className={styles.dashboardControls}>
       <Button
@@ -45,14 +41,14 @@ const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
       />
       {menuOpen && (
         <ul className={styles.menu}>
-          {tilesLibrary.map((tile) => (
+          {panelsMetaData.map((tile) => (
             <li key={tile.name}>
               <Button
                 text={isTileActive(tile.name) ? "Active" : "Inactive"}
                 variant={isTileActive(tile.name) ? "primary" : "secondary"}
                 size="small"
                 onClick={() =>
-                  handleChange(tile.name, !!isTileActive(tile.name))
+                  handleChange(tile.name, !isTileActive(tile.name))
                 }
               />
               {tile.name}
