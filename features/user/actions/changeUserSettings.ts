@@ -3,8 +3,8 @@
 import { createClient } from "@/supabase/server";
 import { revalidatePath } from "next/cache";
 
-export async function changeUserSettings(tileName: string, isActive: boolean) {
-  console.log("Tile Name:", tileName);
+export async function changeUserSettings(panelName: string, isActive: boolean) {
+  console.log("Panel Name:", panelName);
   console.log("Is Active:", isActive);
 
   const supabase = await createClient();
@@ -20,7 +20,7 @@ export async function changeUserSettings(tileName: string, isActive: boolean) {
 
   const { data: settingsData, error: settingsError } = await supabase
     .from("user_settings")
-    .select("visible_tiles")
+    .select("visible_panels")
     .eq("user_id", userId)
     .single();
 
@@ -29,17 +29,17 @@ export async function changeUserSettings(tileName: string, isActive: boolean) {
     throw new Error("Failed to fetch user settings");
   }
 
-  let visibleTiles: string[] = settingsData.visible_tiles || [];
+  let visiblePanels: string[] = settingsData.visible_panels || [];
 
   if (isActive) {
-    visibleTiles = visibleTiles.filter((tile) => tile !== tileName);
+    visiblePanels = visiblePanels.filter((panel) => panel !== panelName);
   } else {
-    visibleTiles.push(tileName);
+    visiblePanels.push(panelName);
   }
 
   const { error: updateError } = await supabase
     .from("user_settings")
-    .update({ visible_tiles: visibleTiles })
+    .update({ visible_panels: visiblePanels })
     .eq("user_id", userId);
 
   if (updateError) {

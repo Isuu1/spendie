@@ -48,7 +48,7 @@ const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
                 variant={isPanelActive(panel.name) ? "primary" : "secondary"}
                 size="small"
                 onClick={() =>
-                  handleChange(panel.name, !isPanelActive(panel.name))
+                  handleChange(panel.name, !!isPanelActive(panel.name))
                 }
               />
               {panel.name}
