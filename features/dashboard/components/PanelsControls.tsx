@@ -2,14 +2,14 @@
 
 import React from "react";
 //Styles
-import styles from "./DashboardControls.module.scss";
+import styles from "./PanelsControls.module.scss";
 import Button from "@/shared/components/ui/Button";
 import { MdDashboardCustomize } from "react-icons/md";
 import { changeUserSettings } from "../changeUserSettings";
 import { getUserSettingsClient } from "@/features/user/api/getUserSettingsClient";
 import { UserSettings } from "@/features/user/types/user";
 
-const DashboardControls = () => {
+const PanelsControls = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [userSettings, setUserSettings] = React.useState<UserSettings | null>(
     null
@@ -75,4 +75,4 @@ const DashboardControls = () => {
   );
 };
 
-export default DashboardControls;
+export default PanelsControls;

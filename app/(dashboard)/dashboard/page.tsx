@@ -1,6 +1,7 @@
 //Components
 import TileWrapper from "@/features/dashboard/components/TileWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";
+import PanelsControls from "@/features/dashboard/components/PanelsControls";
 //Icons
 import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 //Supabase
@@ -9,7 +10,6 @@ import { createClient } from "@/supabase/server";
 import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
 //Config
 import { tilesLibrary } from "@/features/dashboard/config/tilesLibrary";
-import DashboardControls from "@/features/dashboard/components/DashboardControls";
 
 export default async function Page() {
   const supabase = await createClient();
@@ -35,7 +35,7 @@ export default async function Page() {
         {user?.data.user && <PlaidLink userId={user.data.user.id} />}
       </div>
 
-      <DashboardControls />
+      <PanelsControls />
 
       {tilesLibrary
         .filter((tile) => visibleTiles.includes(tile.name))

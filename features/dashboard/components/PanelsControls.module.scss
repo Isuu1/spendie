@@ -10,11 +10,12 @@
   //width: 100%;
   break-inside: avoid;
   margin-left: auto;
+  margin-bottom: 1.5rem;
   .menu {
     z-index: 10;
     position: absolute;
     top: 40px;
-    left: 0;
+    right: 0;
     background: var(--color-bg-secondary);
     padding: 0.7rem;
     list-style: none;
