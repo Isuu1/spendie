@@ -18,7 +18,7 @@ export default async function Page() {
 
   const { settings, error } = await getUserSettingsServer();
 
-  const visiblePanels = settings?.visible_tiles;
+  const visiblePanels = settings?.visible_panels;
 
   if (error || !settings) {
     return (

@@ -22,7 +22,7 @@ const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   const isTileActive = (tileName: string) => {
-    return settings?.visible_tiles?.includes(tileName);
+    return settings?.visible_panels?.includes(tileName);
   };
 
   const handleChange = async (tileName: string, isActive: boolean) => {

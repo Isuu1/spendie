@@ -12,5 +12,5 @@ export type UserProfile = {
 export type UserSettings = {
   id: string;
   user_id: string;
-  visible_tiles: string[];
+  visible_panels: string[];
 };
