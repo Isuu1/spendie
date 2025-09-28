@@ -7,9 +7,6 @@ export async function togglePanelVisibility(
   panelName: string,
   isActive: boolean
 ) {
-  console.log("Panel Name:", panelName);
-  console.log("Is Active:", isActive);
-
   const supabase = await createClient();
 
   const { data: authData, error: authError } = await supabase.auth.getUser();
