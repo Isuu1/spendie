@@ -1,6 +1,7 @@
 //Components
 import TileWrapper from "@/features/dashboard/components/TileWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";
+import PanelsControls from "@/features/dashboard/components/PanelsControls";
 //Icons
 import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 //Supabase
@@ -8,7 +9,7 @@ import { createClient } from "@/supabase/server";
 //Api
 import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
 //Config
-import { tilesLibrary } from "@/features/dashboard/config/tilesLibrary";
+import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
 
 export default async function Page() {
   const supabase = await createClient();
@@ -17,7 +18,7 @@ export default async function Page() {
 
   const { settings, error } = await getUserSettingsServer();
 
-  const visibleTiles = settings?.visible_tiles;
+  const visiblePanels = settings?.visible_panels;
 
   if (error || !settings) {
     return (
@@ -33,13 +34,16 @@ export default async function Page() {
       <div style={{ display: "none" }}>
         {user?.data.user && <PlaidLink userId={user.data.user.id} />}
       </div>
-      {tilesLibrary
-        .filter((tile) => visibleTiles.includes(tile.name))
-        .map((tile) => {
-          const TileComponent = tile.component;
+
+      <PanelsControls settings={settings} />
+
+      {panelsLibrary
+        .filter((panel) => visiblePanels.includes(panel.name))
+        .map((panel) => {
+          const PanelComponent = panel.component;
           return (
-            <TileWrapper key={tile.name} name={tile.name}>
-              <TileComponent />
+            <TileWrapper key={panel.name} name={panel.name}>
+              <PanelComponent />
             </TileWrapper>
           );
         })}
