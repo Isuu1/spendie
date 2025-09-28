@@ -12,7 +12,7 @@ import { changeUserSettings } from "../../user/actions/changeUserSettings";
 //Types
 import { UserSettings } from "@/features/user/types/user";
 //Config
-import { panelsMetaData } from "../config/panelsMetaData";
+import { PanelName, panelsMetaData } from "../config/panelsMetaData";
 
 interface PanelsControlsProps {
   settings: UserSettings;
@@ -21,12 +21,12 @@ interface PanelsControlsProps {
 const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
-  const isTileActive = (tileName: string) => {
-    return settings?.visible_panels?.includes(tileName);
+  const isPanelActive = (panelName: PanelName) => {
+    return settings?.visible_panels?.includes(panelName);
   };
 
-  const handleChange = async (tileName: string, isActive: boolean) => {
-    const result = await changeUserSettings(tileName, isActive);
+  const handleChange = async (panelName: PanelName, isActive: boolean) => {
+    const result = await changeUserSettings(panelName, isActive);
     console.log("Change Result:", result);
   };
 
@@ -41,17 +41,17 @@ const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
       />
       {menuOpen && (
         <ul className={styles.menu}>
-          {panelsMetaData.map((tile) => (
-            <li key={tile.name}>
+          {panelsMetaData.map((panel) => (
+            <li key={panel.name}>
               <Button
-                text={isTileActive(tile.name) ? "Active" : "Inactive"}
-                variant={isTileActive(tile.name) ? "primary" : "secondary"}
+                text={isPanelActive(panel.name) ? "Active" : "Inactive"}
+                variant={isPanelActive(panel.name) ? "primary" : "secondary"}
                 size="small"
                 onClick={() =>
-                  handleChange(tile.name, !isTileActive(tile.name))
+                  handleChange(panel.name, !isPanelActive(panel.name))
                 }
               />
-              {tile.name}
+              {panel.name}
             </li>
           ))}
         </ul>

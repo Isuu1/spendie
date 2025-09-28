@@ -9,7 +9,7 @@ import { createClient } from "@/supabase/server";
 //Api
 import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
 //Config
-import { panelsLibrary } from "@/features/dashboard/config/tilesLibrary";
+import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
 
 export default async function Page() {
   const supabase = await createClient();
