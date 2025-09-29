@@ -1,7 +1,7 @@
 //Components
 import AccountsPanel from "@/features/accounts/components/AccountsPanel";
 import TotalBalanceTile from "@/features/total-balance/components/TotalBalanceTile";
-import TransactionsTile from "@/features/transactions/components/TransactionsTile";
+import TransactionsPanel from "@/features/transactions/components/TransactionsPanel";
 import type { PanelName } from "./panelsMetaData";
 
 export type PanelDefinition = {
@@ -20,6 +20,6 @@ export const panelsLibrary: PanelDefinition[] = [
   },
   {
     name: "Recent transactions",
-    component: TransactionsTile,
+    component: TransactionsPanel,
   },
 ];

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 //Styles
-import styles from "./TransactionsTile.module.scss";
+import styles from "./TransactionsPanel.module.scss";
 //Api
 import { getTransactionsServer } from "@/features/transactions/api/server";
 //Utils
@@ -11,7 +11,7 @@ import {
   displayTransactionCategory,
 } from "../lib/utils";
 
-const TransactionsTile: React.FC = async () => {
+const TransactionsPanel: React.FC = async () => {
   const transactions = await getTransactionsServer();
 
   if (!transactions) {
@@ -66,4 +66,4 @@ const TransactionsTile: React.FC = async () => {
   );
 };
 
-export default TransactionsTile;
+export default TransactionsPanel;
