@@ -1,6 +1,6 @@
 //Components
 import AccountsPanel from "@/features/accounts/components/AccountsPanel";
-import TotalBalanceTile from "@/features/total-balance/components/TotalBalanceTile";
+import TotalBalancePanel from "@/features/total-balance/components/TotalBalancePanel";
 import TransactionsPanel from "@/features/transactions/components/TransactionsPanel";
 import type { PanelName } from "./panelsMetaData";
 
@@ -12,7 +12,7 @@ export type PanelDefinition = {
 export const panelsLibrary: PanelDefinition[] = [
   {
     name: "Total Balance",
-    component: TotalBalanceTile,
+    component: TotalBalancePanel,
   },
   {
     name: "Accounts",

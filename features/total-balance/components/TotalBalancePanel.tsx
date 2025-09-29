@@ -1,6 +1,6 @@
 import React from "react";
 //Styles
-import styles from "./TotalBalanceTile.module.scss";
+import styles from "./TotalBalancePanel.module.scss";
 //Components
 import FutureBalance from "./FutureBalance";
 //Types
@@ -10,7 +10,7 @@ import { RecurringPayment } from "@/shared/types/recurring-payment";
 import { getAccountsServer } from "@/features/accounts/api/server";
 import { getRecurringPayments } from "@/features/recurring-payments/api/getRecurringPayments";
 
-const TotalBalanceTile: React.FC = async () => {
+const TotalBalancePanel: React.FC = async () => {
   const accounts = (await getAccountsServer()) as Account[];
 
   const recurringPayments =
@@ -36,4 +36,4 @@ const TotalBalanceTile: React.FC = async () => {
   );
 };
 
-export default TotalBalanceTile;
+export default TotalBalancePanel;
