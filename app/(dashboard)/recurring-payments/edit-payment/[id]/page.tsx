@@ -1,8 +1,12 @@
 import EditPaymentForm from "@/features/recurring-payments/components/EditPaymentForm";
 import { createClient } from "@/supabase/server";
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
 
   const supabase = await createClient();
 
