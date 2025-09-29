@@ -37,10 +37,7 @@ export async function getAccountsServer() {
     };
 
     const response = await plaidClient.accountsGet(plaidRequest);
-    console.log(
-      "Server-side getAccounts Function: Plaid accounts response status:",
-      response.status
-    );
+
     return response.data.accounts as Account[];
   } catch (error) {
     console.error("Error fetching accounts:", error);

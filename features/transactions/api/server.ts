@@ -45,13 +45,10 @@ export async function getTransactionsServer() {
     };
 
     const response = await plaidClient.transactionsGet(plaidRequest);
-    console.log(
-      "Server-side getAccounts Function: Plaid accounts response status:",
-      response.status
-    );
+
     return response.data.transactions as Transaction[];
   } catch (error) {
-    console.error("Error fetching accounts:", error);
+    console.error("Error fetching transactions:", error);
     throw error;
   }
 }
