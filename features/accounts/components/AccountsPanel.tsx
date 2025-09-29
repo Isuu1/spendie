@@ -8,7 +8,7 @@ import { Account } from "@/shared/types/account";
 import AccountsList from "./AccountsList";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 
-const AccountsPanel = async () => {
+const AccountsPanel: React.FC = async () => {
   const accounts: Account[] = (await getAccountsServer()) ?? [];
 
   if (accounts.length === 0) {

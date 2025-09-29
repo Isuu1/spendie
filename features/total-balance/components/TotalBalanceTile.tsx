@@ -10,7 +10,7 @@ import { RecurringPayment } from "@/shared/types/recurring-payment";
 import { getAccountsServer } from "@/features/accounts/api/server";
 import { getRecurringPayments } from "@/features/recurring-payments/api/getRecurringPayments";
 
-const TotalBalanceTile = async () => {
+const TotalBalanceTile: React.FC = async () => {
   const accounts = (await getAccountsServer()) as Account[];
 
   const recurringPayments =
