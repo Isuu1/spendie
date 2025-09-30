@@ -1,0 +1,65 @@
+@mixin shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 37%,
+    rgba(255, 255, 255, 0.05) 63%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding-right: 0.5rem;
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .panel {
+    background: var(--color-bg-tile);
+    border-radius: 21px;
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 350px;
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .panelName {
+        height: 40px;
+        width: 120px;
+        border-radius: 10px;
+        @include shimmer;
+      }
+      .panelIcon {
+        height: 40px;
+        width: 40px;
+        border-radius: 10px;
+        @include shimmer;
+      }
+    }
+    .body {
+      height: 100px;
+      border-radius: 10px;
+      background-color: #2a2a2a;
+      @include shimmer;
+    }
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
