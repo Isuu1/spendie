@@ -1,5 +1,5 @@
-import Loading from "@/shared/components/Loading";
+import DashboardLoading from "@/features/dashboard/components/DashboardLoading";
 
 export default function Page() {
-  return <Loading />;
+  return <DashboardLoading />;
 }
