@@ -14,6 +14,8 @@ import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
 export default async function Page() {
   const supabase = await createClient();
 
+  // await new Promise(() => {}); // Simulate a delay for demonstration purposes
+
   const user = await supabase.auth.getUser();
 
   const { settings, error } = await getUserSettingsServer();
