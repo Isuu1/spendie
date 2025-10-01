@@ -10,6 +10,8 @@ import { createClient } from "@/supabase/server";
 import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
 //Config
 import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
+import { Suspense } from "react";
+import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 
 export default async function Page() {
   const supabase = await createClient();
@@ -43,7 +45,9 @@ export default async function Page() {
           const PanelComponent = panel.component;
           return (
             <TileWrapper key={panel.name} name={panel.name}>
-              <PanelComponent />
+              <Suspense fallback={<DashboardPanelLoader />}>
+                <PanelComponent />
+              </Suspense>
             </TileWrapper>
           );
         })}
