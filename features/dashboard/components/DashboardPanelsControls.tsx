@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 //Styles
-import styles from "./PanelsControls.module.scss";
+import styles from "./DashboardPanelsControls.module.scss";
 //Components
 import Button from "@/shared/components/ui/Button";
 //Icons
@@ -29,7 +29,9 @@ interface PanelsControlsProps {
   settings: UserSettings;
 }
 
-const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
+const DashboardPanelsControls: React.FC<PanelsControlsProps> = ({
+  settings,
+}) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   const tileMenuRef = useRef<HTMLUListElement>(null);
@@ -101,4 +103,4 @@ const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
   );
 };
 
-export default PanelsControls;
+export default DashboardPanelsControls;
