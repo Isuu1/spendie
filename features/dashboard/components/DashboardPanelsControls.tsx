@@ -34,7 +34,7 @@ const DashboardPanelsControls: React.FC<DashboardPanelsControlsProps> = ({
 }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
-  const tileMenuRef = useRef<HTMLUListElement>(null);
+  const panelMenuRef = useRef<HTMLUListElement>(null);
 
   const isPanelActive = (panelName: PanelName) => {
     return settings?.visible_panels?.includes(panelName);
@@ -52,8 +52,8 @@ const DashboardPanelsControls: React.FC<DashboardPanelsControlsProps> = ({
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        tileMenuRef.current &&
-        !tileMenuRef.current.contains(event.target as Node)
+        panelMenuRef.current &&
+        !panelMenuRef.current.contains(event.target as Node)
       ) {
         setMenuOpen(false);
       }
@@ -62,7 +62,7 @@ const DashboardPanelsControls: React.FC<DashboardPanelsControlsProps> = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [tileMenuRef]);
+  }, [panelMenuRef]);
 
   return (
     <div className={styles.dashboardControls}>
@@ -72,7 +72,7 @@ const DashboardPanelsControls: React.FC<DashboardPanelsControlsProps> = ({
       <AnimatePresence>
         {menuOpen && (
           <motion.ul
-            ref={tileMenuRef}
+            ref={panelMenuRef}
             className={styles.menu}
             variants={panelMenuVariants}
             initial="hidden"
