@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import toast from "react-hot-toast";
 //Styles
 import styles from "./DashboardPanelsControls.module.scss";
+import { toastStyle } from "@/shared/styles/toastStyle";
 //Components
 import Button from "@/shared/components/ui/Button";
 //Icons
-import { MdDashboardCustomize } from "react-icons/md";
+import { MdSpaceDashboard } from "react-icons/md";
 //Utils
 import { togglePanelVisibility } from "../../user/actions/togglePanelVisibility";
 //Types
@@ -15,8 +17,6 @@ import { UserSettings } from "@/features/user/types/user";
 import { PanelName, panelsMetaData } from "../config/panelsMetaData";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
-import toast from "react-hot-toast";
-import { toastStyle } from "@/shared/styles/toastStyle";
 
 const panelMenuVariants = {
   hidden: { opacity: 0, y: -10 },
@@ -25,11 +25,11 @@ const panelMenuVariants = {
   transition: { duration: 0.15 },
 };
 
-interface PanelsControlsProps {
+interface DashboardPanelsControlsProps {
   settings: UserSettings;
 }
 
-const DashboardPanelsControls: React.FC<PanelsControlsProps> = ({
+const DashboardPanelsControls: React.FC<DashboardPanelsControlsProps> = ({
   settings,
 }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -66,13 +66,16 @@ const DashboardPanelsControls: React.FC<PanelsControlsProps> = ({
 
   return (
     <div className={styles.dashboardControls}>
-      <Button
-        text="Tiles"
+      {/* <Button
+        text="Tiles" 
         variant="secondary"
         size="medium"
         icon={<MdDashboardCustomize />}
         onClick={() => setMenuOpen(!menuOpen)}
-      />
+      /> */}
+      <i className={styles.panelsIcon} onClick={() => setMenuOpen(!menuOpen)}>
+        <MdSpaceDashboard />
+      </i>
       <AnimatePresence>
         {menuOpen && (
           <motion.ul

@@ -1,7 +1,7 @@
 //Components
 import TileWrapper from "@/features/dashboard/components/TileWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";
-import DashboardPanelsControls from "@/features/dashboard/components/DashboardPanelsControls";
+//import DashboardPanelsControls from "@/features/dashboard/components/DashboardPanelsControls";
 //Icons
 import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 //Supabase
@@ -37,7 +37,7 @@ export default async function Page() {
         {user?.data.user && <PlaidLink userId={user.data.user.id} />}
       </div>
 
-      <DashboardPanelsControls settings={settings} />
+      {/* <DashboardPanelsControls settings={settings} />  */}
 
       {panelsLibrary
         .filter((panel) => visiblePanels.includes(panel.name))

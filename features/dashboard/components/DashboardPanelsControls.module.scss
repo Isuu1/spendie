@@ -7,6 +7,11 @@
   border-radius: 21px;
   break-inside: avoid;
   margin-bottom: 1.5rem;
+  margin-left: auto;
+  .panelsIcon {
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
   .menu {
     z-index: 10;
     position: absolute;
