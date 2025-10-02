@@ -66,13 +66,6 @@ const DashboardPanelsControls: React.FC<DashboardPanelsControlsProps> = ({
 
   return (
     <div className={styles.dashboardControls}>
-      {/* <Button
-        text="Tiles" 
-        variant="secondary"
-        size="medium"
-        icon={<MdDashboardCustomize />}
-        onClick={() => setMenuOpen(!menuOpen)}
-      /> */}
       <i className={styles.panelsIcon} onClick={() => setMenuOpen(!menuOpen)}>
         <MdSpaceDashboard />
       </i>
