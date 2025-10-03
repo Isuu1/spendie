@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import toast from "react-hot-toast";
 //Styles
-import styles from "./PanelsControls.module.scss";
+import styles from "./DashboardPanelsControls.module.scss";
+import { toastStyle } from "@/shared/styles/toastStyle";
 //Components
 import Button from "@/shared/components/ui/Button";
 //Icons
-import { MdDashboardCustomize } from "react-icons/md";
+import { MdSpaceDashboard } from "react-icons/md";
 //Utils
 import { togglePanelVisibility } from "../../user/actions/togglePanelVisibility";
 //Types
@@ -15,8 +17,6 @@ import { UserSettings } from "@/features/user/types/user";
 import { PanelName, panelsMetaData } from "../config/panelsMetaData";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
-import toast from "react-hot-toast";
-import { toastStyle } from "@/shared/styles/toastStyle";
 
 const panelMenuVariants = {
   hidden: { opacity: 0, y: -10 },
@@ -25,14 +25,16 @@ const panelMenuVariants = {
   transition: { duration: 0.15 },
 };
 
-interface PanelsControlsProps {
+interface DashboardPanelsControlsProps {
   settings: UserSettings;
 }
 
-const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
+const DashboardPanelsControls: React.FC<DashboardPanelsControlsProps> = ({
+  settings,
+}) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
-  const tileMenuRef = useRef<HTMLUListElement>(null);
+  const panelMenuRef = useRef<HTMLUListElement>(null);
 
   const isPanelActive = (panelName: PanelName) => {
     return settings?.visible_panels?.includes(panelName);
@@ -50,8 +52,8 @@ const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        tileMenuRef.current &&
-        !tileMenuRef.current.contains(event.target as Node)
+        panelMenuRef.current &&
+        !panelMenuRef.current.contains(event.target as Node)
       ) {
         setMenuOpen(false);
       }
@@ -60,21 +62,17 @@ const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [tileMenuRef]);
+  }, [panelMenuRef]);
 
   return (
     <div className={styles.dashboardControls}>
-      <Button
-        text="Tiles"
-        variant="secondary"
-        size="medium"
-        icon={<MdDashboardCustomize />}
-        onClick={() => setMenuOpen(!menuOpen)}
-      />
+      <i className={styles.panelsIcon} onClick={() => setMenuOpen(!menuOpen)}>
+        <MdSpaceDashboard />
+      </i>
       <AnimatePresence>
         {menuOpen && (
           <motion.ul
-            ref={tileMenuRef}
+            ref={panelMenuRef}
             className={styles.menu}
             variants={panelMenuVariants}
             initial="hidden"
@@ -101,4 +99,4 @@ const PanelsControls: React.FC<PanelsControlsProps> = ({ settings }) => {
   );
 };
 
-export default PanelsControls;
+export default DashboardPanelsControls;
