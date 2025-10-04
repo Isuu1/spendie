@@ -13,9 +13,11 @@ import SelectMode from "@/features/total-balance/components/SelectMode";
 import PaymentsSummary from "./PaymentsSummary";
 import PaymentsDetailsModal from "./PaymentsDetailsModal";
 import { AnimatePresence } from "motion/react";
+import ErrorMessage from "@/shared/components/ErrorMessage";
 
 interface FutureBalanceProps {
   recurringPayments: RecurringPayment[];
+  recurringPaymentsError: string | null;
   totalBalance: number;
 }
 
@@ -36,6 +38,7 @@ type Mode = "endOfMonth" | "specificDate";
 const FutureBalance: React.FC<FutureBalanceProps> = ({
   totalBalance,
   recurringPayments,
+  recurringPaymentsError,
 }) => {
   //States
   const [mode, setMode] = useState<Mode>("endOfMonth");
@@ -83,11 +86,15 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
         onDateSelect={setDateSelected}
         onRangeSelect={setMode}
       />
-      <PaymentsSummary
-        paymentsTillDate={paymentsTillDate}
-        type={showUpcomingChangeDetails}
-        toggleDetails={handleToggleDetails}
-      />
+      {!recurringPaymentsError ? (
+        <PaymentsSummary
+          paymentsTillDate={paymentsTillDate}
+          type={showUpcomingChangeDetails}
+          toggleDetails={handleToggleDetails}
+        />
+      ) : (
+        <ErrorMessage message={recurringPaymentsError} />
+      )}
       <AnimatePresence>
         {showUpcomingChangeDetails && (
           <PaymentsDetailsModal

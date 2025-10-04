@@ -1,12 +1,18 @@
+import { RecurringPayment } from "@/shared/types/recurring-payment";
 import { createClient } from "@/supabase/server";
 
-export async function getRecurringPayments() {
+type RecurringPaymentsResult = {
+  recurringPayments: RecurringPayment[];
+  error: string | null;
+};
+
+export async function getRecurringPayments(): Promise<RecurringPaymentsResult> {
   const supabase = await createClient();
 
   const { data, error } = await supabase.auth.getUser();
 
   if (error) {
-    throw new Error("Error fetching user from database");
+    return { recurringPayments: [], error: error.message };
   }
 
   const { data: userRecurringPayments, error: userRecurringPaymentsError } =
@@ -17,7 +23,10 @@ export async function getRecurringPayments() {
       .order("date", { ascending: true });
 
   if (userRecurringPaymentsError) {
-    throw new Error("Error fetching your payments. Try to refresh the page.");
+    return {
+      recurringPayments: [],
+      error: "Could not load recurring payments",
+    };
   }
-  return userRecurringPayments;
+  return { recurringPayments: userRecurringPayments || [], error: null };
 }

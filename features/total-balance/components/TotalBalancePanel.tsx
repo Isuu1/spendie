@@ -3,7 +3,6 @@ import React from "react";
 import styles from "./TotalBalancePanel.module.scss";
 //Components
 import FutureBalance from "./FutureBalance";
-import { RecurringPayment } from "@/shared/types/recurring-payment";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 //Utils
 import { getAccountsServer } from "@/features/accounts/api/server";
@@ -18,8 +17,7 @@ const TotalBalancePanel: React.FC = async () => {
 
   const { accounts } = result;
 
-  const recurringPayments =
-    (await getRecurringPayments()) as RecurringPayment[];
+  const { recurringPayments, error } = await getRecurringPayments();
 
   const totalBalance = accounts?.reduce((sum, currentAccount) => {
     const currentBalance = currentAccount.balances.current ?? 0;
@@ -29,9 +27,11 @@ const TotalBalancePanel: React.FC = async () => {
   return (
     <div className={styles.totalBalanceTile}>
       <h1 className={styles.balance}>£{totalBalance ?? 0}</h1>
+
       <FutureBalance
         totalBalance={totalBalance}
         recurringPayments={recurringPayments}
+        recurringPaymentsError={error}
       />
     </div>
   );
