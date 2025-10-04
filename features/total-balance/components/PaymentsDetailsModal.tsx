@@ -10,7 +10,7 @@ import { FaRepeat } from "react-icons/fa6";
 //Animations
 import { motion } from "motion/react";
 //Types
-import { RecurringPayment } from "@/shared/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 import Pagination from "@/shared/components/Pagination";
 
 interface PaymentsDetailsModalProps {

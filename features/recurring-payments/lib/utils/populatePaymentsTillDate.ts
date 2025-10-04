@@ -1,4 +1,4 @@
-import { RecurringPayment } from "@/shared/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 import moment from "moment";
 
 export const populatePaymentsTillDate = (

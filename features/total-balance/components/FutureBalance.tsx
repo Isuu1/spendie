@@ -5,7 +5,7 @@ import moment, { Moment } from "moment";
 //Styles
 import styles from "./FutureBalance.module.scss";
 //Types
-import { RecurringPayment } from "@/shared/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Utils
 import { populatePaymentsTillDate } from "@/features/recurring-payments/lib/utils/populatePaymentsTillDate";
 //Components
