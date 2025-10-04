@@ -2,21 +2,21 @@
 
 import React from "react";
 //Styles
-import styles from "./TileWrapper.module.scss";
+import styles from "./PanelWrapper.module.scss";
 //Icons
 import { TiThMenu } from "react-icons/ti";
 
-interface TileWrapperProps {
+interface PanelWrapperProps {
   name: string;
   children: React.ReactNode;
 }
 
-const TileWrapper: React.FC<TileWrapperProps> = ({ name, children }) => {
+const PanelWrapper: React.FC<PanelWrapperProps> = ({ name, children }) => {
   return (
-    <div className={styles.tile}>
+    <div className={styles.panelWrapper}>
       <div className={styles.header}>
         <h3>{name}</h3>
-        <span className={styles.tileMenu}>
+        <span className={styles.panelMenu}>
           <TiThMenu className={styles.icon} />
         </span>
       </div>
@@ -25,4 +25,4 @@ const TileWrapper: React.FC<TileWrapperProps> = ({ name, children }) => {
   );
 };
 
-export default TileWrapper;
+export default PanelWrapper;

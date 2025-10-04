@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 //Components
-import TileWrapper from "@/features/dashboard/components/TileWrapper";
+import PanelWrapper from "@/features/dashboard/components/PanelWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 //Api
@@ -31,11 +31,11 @@ export default async function Page() {
         .map((panel) => {
           const PanelComponent = panel.component;
           return (
-            <TileWrapper key={panel.name} name={panel.name}>
+            <PanelWrapper key={panel.name} name={panel.name}>
               <Suspense fallback={<DashboardPanelLoader />}>
                 <PanelComponent />
               </Suspense>
-            </TileWrapper>
+            </PanelWrapper>
           );
         })}
       {visiblePanels.length === 0 && (
