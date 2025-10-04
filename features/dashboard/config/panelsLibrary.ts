@@ -1,8 +1,16 @@
 //Components
-import AccountsPanel from "@/features/accounts/components/AccountsPanel";
-import TotalBalancePanel from "@/features/total-balance/components/TotalBalancePanel";
-import TransactionsPanel from "@/features/transactions/components/TransactionsPanel";
+const AccountsPanel = dynamic(
+  () => import("@/features/accounts/components/AccountsPanel")
+);
+const TransactionsPanel = dynamic(
+  () => import("@/features/transactions/components/TransactionsPanel")
+);
+const TotalBalancePanel = dynamic(
+  () => import("@/features/total-balance/components/TotalBalancePanel")
+);
+//Types
 import type { PanelName } from "./panelsMetaData";
+import dynamic from "next/dynamic";
 
 export type PanelDefinition = {
   name: PanelName;

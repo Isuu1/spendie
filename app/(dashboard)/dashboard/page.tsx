@@ -13,7 +13,7 @@ export const revalidate = 60;
 export default async function Page() {
   const { settings, error } = await getUserSettingsServer();
 
-  const visiblePanels = settings?.visible_panels;
+  const visiblePanels = settings?.visible_panels || [];
 
   if (error || !settings) {
     return (
@@ -38,6 +38,9 @@ export default async function Page() {
             </TileWrapper>
           );
         })}
+      {visiblePanels.length === 0 && (
+        <p>You have no panels visible. Go to settings to enable some.</p>
+      )}
     </>
   );
 }
