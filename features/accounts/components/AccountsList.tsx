@@ -11,7 +11,7 @@ import { FaArrowLeft } from "react-icons/fa";
 //Utils
 import { generateAccountBackground } from "../utils/generateAccountBackground";
 //Types
-import { Account } from "@/shared/types/account";
+import { Account } from "@/features/accounts/types/account";
 
 interface AccountsListProps {
   accounts: Account[];
@@ -50,7 +50,9 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts }) => {
           <div
             key={account.account_id}
             className={`${styles.account}`}
-            style={{ background: generateAccountBackground(account.subtype) }}
+            style={{
+              background: generateAccountBackground(account.subtype ?? ""),
+            }}
           >
             <div className={styles.details}>
               <h4>{account.official_name}</h4>
