@@ -1,23 +1,15 @@
+import { Suspense } from "react";
 //Components
 import TileWrapper from "@/features/dashboard/components/TileWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";
-//import DashboardPanelsControls from "@/features/dashboard/components/DashboardPanelsControls";
-//Icons
-import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
-//Supabase
-import { createClient } from "@/supabase/server";
+import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 //Api
 import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
 //Config
 import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
-import { Suspense } from "react";
-import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
+import AddAccount from "@/features/accounts/components/AddAccount";
 
 export default async function Page() {
-  const supabase = await createClient();
-
-  const user = await supabase.auth.getUser();
-
   const { settings, error } = await getUserSettingsServer();
 
   const visiblePanels = settings?.visible_panels;
@@ -33,12 +25,7 @@ export default async function Page() {
 
   return (
     <>
-      <div style={{ display: "none" }}>
-        {user?.data.user && <PlaidLink userId={user.data.user.id} />}
-      </div>
-
-      {/* <DashboardPanelsControls settings={settings} />  */}
-
+      <AddAccount />
       {panelsLibrary
         .filter((panel) => visiblePanels.includes(panel.name))
         .map((panel) => {
