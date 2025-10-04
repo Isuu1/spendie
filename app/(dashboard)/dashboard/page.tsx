@@ -8,6 +8,8 @@ import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer
 //Config
 import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
 
+export const revalidate = 60;
+
 export default async function Page() {
   const { settings, error } = await getUserSettingsServer();
 
