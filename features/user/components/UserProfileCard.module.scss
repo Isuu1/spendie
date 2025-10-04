@@ -5,6 +5,7 @@ $background: #121212;
   background: $background;
   position: absolute;
   top: 0.5rem;
+  left: 0;
   max-height: 44px;
   transition: 0.15s max-height ease;
   cursor: pointer;

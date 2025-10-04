@@ -5,31 +5,12 @@
   grid-area: header;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 1rem;
   background: var(--color-bg-main);
   padding: 1rem 0.5rem 1rem 0;
   margin-left: 1rem;
   min-height: 70px;
-  .userProfile {
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    .avatar {
-      border-radius: 50%;
-      border: 1px solid var(--color-avatar-border);
-      padding: 0.1rem;
-    }
-    .name {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-    .icon {
-      color: var(--color-text-secondary);
-      font-size: 1.1rem;
-    }
-  }
   .notificationsIcon {
     //margin-left: auto;
     position: relative;
