@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAccountsClient } from "../api/client";
-import { Account } from "@/shared/types/account";
+import { Account } from "@/features/accounts/types/account";
 
 export function useAccounts() {
   return useQuery<Account[], Error>({
