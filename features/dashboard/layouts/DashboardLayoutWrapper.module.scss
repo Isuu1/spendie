@@ -32,7 +32,6 @@
   .dashboardLayout {
     display: inline-block !important;
     column-count: 2;
-    column-gap: 2em !important;
   }
 }
 
@@ -40,5 +39,12 @@
   .dashboardLayout {
     display: inline-block !important;
     column-count: 3;
+  }
+}
+
+@media (min-width: 1600px) {
+  .dashboardLayout {
+    display: inline-block !important;
+    column-count: 4;
   }
 }
