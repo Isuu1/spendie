@@ -1,9 +1,14 @@
 import { createClient } from "@/supabase/server";
 import { AccountsGetRequest } from "plaid";
 import plaidClient from "@/shared/lib/plaid";
-import { Account } from "@/shared/types/account";
+import { Account } from "@/features/accounts/types/account";
 
-export async function getAccountsServer() {
+type AccountsResult = {
+  accounts: Account[];
+  error: string | null;
+};
+
+export async function getAccountsServer(): Promise<AccountsResult> {
   try {
     const supabase = await createClient();
 
@@ -26,7 +31,10 @@ export async function getAccountsServer() {
         "Server-side getAccounts Function: Supabase fetch error for plaid_items:",
         fetchError
       );
-      return;
+      return {
+        accounts: [],
+        error: "Database error: No linked bank accounts found",
+      };
     }
 
     const accessToken = plaidItems[0].access_token;
@@ -38,9 +46,14 @@ export async function getAccountsServer() {
 
     const response = await plaidClient.accountsGet(plaidRequest);
 
-    return response.data.accounts as Account[];
+    if (!response) {
+      console.error("Error fetching accounts from Plaid");
+      return { accounts: [], error: "Failed to fetch accounts from Plaid" };
+    }
+
+    return { accounts: response.data.accounts, error: null };
   } catch (error) {
     console.error("Error fetching accounts:", error);
-    throw error;
+    return { accounts: [], error: "An unexpected error occurred" };
   }
 }

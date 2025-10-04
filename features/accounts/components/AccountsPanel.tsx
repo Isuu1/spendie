@@ -1,21 +1,20 @@
 import React from "react";
-
 //Api
 import { getAccountsServer } from "@/features/accounts/api/server";
-//Types
-import { Account } from "@/shared/types/account";
 //Components
 import AccountsList from "./AccountsList";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 
-const AccountsPanel: React.FC = async () => {
-  const accounts: Account[] = (await getAccountsServer()) ?? [];
+export const revalidate = 60;
 
-  if (accounts.length === 0) {
-    return (
-      <ErrorMessage message="No accounts found. Please link your bank account." />
-    );
+const AccountsPanel: React.FC = async () => {
+  const result = await getAccountsServer();
+
+  if (result.error) {
+    return <ErrorMessage message={result.error} />;
   }
+
+  const { accounts } = result;
 
   return (
     <>
