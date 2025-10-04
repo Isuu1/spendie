@@ -7,7 +7,6 @@ import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanel
 import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
 //Config
 import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
-import AddAccount from "@/features/accounts/components/AddAccount";
 
 export default async function Page() {
   const { settings, error } = await getUserSettingsServer();
@@ -25,7 +24,6 @@ export default async function Page() {
 
   return (
     <>
-      <AddAccount />
       {panelsLibrary
         .filter((panel) => visiblePanels.includes(panel.name))
         .map((panel) => {
