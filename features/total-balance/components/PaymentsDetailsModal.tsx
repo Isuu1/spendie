@@ -12,6 +12,8 @@ import { motion } from "motion/react";
 //Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 import Pagination from "@/shared/components/Pagination";
+import Button from "@/shared/components/ui/Button";
+import { markAsPaid } from "@/features/recurring-payments/lib/actions/markAsPaid";
 
 interface PaymentsDetailsModalProps {
   type: "income" | "expense";
@@ -37,7 +39,9 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
     paymentsTillDate
       ?.filter((p) => p.type.toLowerCase() === type)
       .sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        (a, b) =>
+          new Date(a.next_payment_date).getTime() -
+          new Date(b.next_payment_date).getTime()
       ) || [];
 
   const totalPages = Math.ceil(
@@ -49,6 +53,19 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
     startIndex,
     startIndex + ITEMS_PER_PAGE
   );
+
+  const handleMarkAsPaid = async (payment: RecurringPayment) => {
+    try {
+      const result = await markAsPaid(payment);
+      console.log("Payment marked as paid:", result);
+      if (result?.error) {
+        console.error("Error marking payment as paid:", result);
+        console.log("Message:", result.message);
+      }
+    } catch (error) {
+      console.error("Error marking payment as paid:", error);
+    }
+  };
 
   useEffect(() => setPage(1), [type]);
 
@@ -90,6 +107,12 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
             <span className={styles.amount}>
               {type === "income" ? "+£" : "-£"}
               {payment.amount?.toFixed(2) ?? "0.00"}
+              <Button
+                text="Mark as paid"
+                variant="primary"
+                size="medium"
+                onClick={() => handleMarkAsPaid(payment)}
+              />
             </span>
           </div>
         ))}
