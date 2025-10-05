@@ -24,13 +24,7 @@ export function populateRecurringPayments(
       if (occurrence.isSameOrAfter(todaysDate, "day")) {
         populated.push({
           ...payment,
-          // `date` is the specific occurrence date you'll show in UI
-          date: occurrenceStr,
-          // optional: set next_payment_date to the "next after this occurrence"
-          next_payment_date: occurrence
-            .clone()
-            //.add(1, "month")
-            .format("YYYY-MM-DD"),
+          next_payment_date: occurrence.clone().format("YYYY-MM-DD"),
         });
       }
       if (payment.repeat.toLowerCase() === "monthly") {

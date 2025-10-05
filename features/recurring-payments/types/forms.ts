@@ -4,7 +4,7 @@ export type AddPaymentFormState = {
     repeat: string;
     amount: number;
     type: string;
-    date: string;
+    next_payment_date: string;
   };
   success: boolean;
   message: string;

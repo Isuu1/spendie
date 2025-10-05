@@ -20,7 +20,7 @@ const initialState: AddPaymentFormState = {
     repeat: "",
     type: "",
     amount: 0,
-    date: new Date().toISOString().split("T")[0], //Today's date
+    next_payment_date: new Date().toISOString().split("T")[0], //Today's date
   },
   success: false,
   message: "",
@@ -95,13 +95,13 @@ const AddPaymentForm: React.FC = () => {
         defaultValue={state.data.amount}
       />
       <Input
-        id="date"
+        id="next_payment_date"
         type="date"
-        label="Date"
+        label="Next Payment Date"
         layout="horizontal"
         errors={errors.date?.errors}
         onChange={() => handleInputChange("date")}
-        defaultValue={state.data.date}
+        defaultValue={state.data.next_payment_date}
       />
       <div className="flex-row-space-between">
         <Button
