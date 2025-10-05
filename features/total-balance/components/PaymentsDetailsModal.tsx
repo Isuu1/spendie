@@ -14,6 +14,8 @@ import { RecurringPayment } from "@/features/recurring-payments/types/recurring-
 import Pagination from "@/shared/components/Pagination";
 import Button from "@/shared/components/ui/Button";
 import { markAsPaid } from "@/features/recurring-payments/lib/actions/markAsPaid";
+import toast from "react-hot-toast";
+import { toastStyle } from "@/shared/styles/toastStyle";
 
 interface PaymentsDetailsModalProps {
   type: "income" | "expense";
@@ -35,6 +37,8 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
 
   const [page, setPage] = useState(1);
 
+  const [loadingId, setLoadingId] = useState<string | null>(null);
+
   const filteredPayments =
     paymentsTillDate
       ?.filter((p) => p.type.toLowerCase() === type)
@@ -55,13 +59,15 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
   );
 
   const handleMarkAsPaid = async (payment: RecurringPayment) => {
+    setLoadingId(payment.id);
     try {
       const result = await markAsPaid(payment);
       console.log("Payment marked as paid:", result);
       if (result?.error) {
-        console.error("Error marking payment as paid:", result);
-        console.log("Message:", result.message);
+        console.error("Error marking payment as paid:", result.error);
+        toast.error(result.error, toastStyle);
       }
+      setTimeout(() => setLoadingId(null), 500);
     } catch (error) {
       console.error("Error marking payment as paid:", error);
     }
@@ -108,10 +114,13 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
               {type === "income" ? "+£" : "-£"}
               {payment.amount?.toFixed(2) ?? "0.00"}
               <Button
-                text="Mark as paid"
+                text={
+                  loadingId === payment.id ? "Processing..." : "Mark as paid"
+                }
                 variant="primary"
                 size="medium"
                 onClick={() => handleMarkAsPaid(payment)}
+                disabled={loadingId === payment.id}
               />
             </span>
           </div>

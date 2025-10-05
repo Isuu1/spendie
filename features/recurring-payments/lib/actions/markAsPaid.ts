@@ -5,6 +5,12 @@ import moment from "moment";
 import { RecurringPayment } from "../../types/recurring-payment";
 import { revalidatePath } from "next/cache";
 
+type MarkAsPaidResult = {
+  success: boolean;
+  error: string | null;
+  message: string | null;
+};
+
 function getNextDate(currentDate: string, repeat: string) {
   const date = moment(currentDate);
   if (repeat.toLowerCase() === "weekly") date.add(1, "week");
@@ -12,7 +18,9 @@ function getNextDate(currentDate: string, repeat: string) {
   return date.format("YYYY-MM-DD");
 }
 
-export async function markAsPaid(payment: RecurringPayment) {
+export async function markAsPaid(
+  payment: RecurringPayment
+): Promise<MarkAsPaidResult> {
   const supabase = await createClient();
 
   try {
@@ -25,23 +33,28 @@ export async function markAsPaid(payment: RecurringPayment) {
     const user = await supabase.auth.getUser();
     if (!user.data.user) {
       return {
+        success: false,
         error: "User not authenticated",
         message: "User not authenticated",
       };
     }
     // 1️⃣ Add entry to recurring_payments_history
     const { error: historyError } = await supabase
-      .from("recurring_payments_history")
+      .from("recurring_paymensts_history")
       .insert({
         user_id: user.data.user.id,
         recurring_payment_id: payment.id,
         paid_date: paidDate,
         amount: payment.amount,
       });
-    //.eq("user_id", user.data.user.id);
+    console.log("History insert result:");
     if (historyError) {
       console.error("History insert error:", historyError);
-      return { error: historyError, message: "Failed to log payment history" };
+      return {
+        success: false,
+        error: "There was an error logging the payment history",
+        message: "Failed to log payment history",
+      };
     }
 
     // 2️⃣ Update next_payment_date in recurring_payments
@@ -52,12 +65,20 @@ export async function markAsPaid(payment: RecurringPayment) {
 
     if (updateError) {
       console.error("Update error:", updateError);
-      return { error: updateError, message: "Failed to update payment" };
+      return {
+        success: false,
+        error: "There was an error updating the payment",
+        message: "Failed to update payment",
+      };
     }
     revalidatePath("/");
-    return { success: true };
+    return { success: true, error: null, message: "Payment marked as paid" };
   } catch (error) {
     console.error("Error marking payment as paid:", error);
-    return { error };
+    return {
+      success: false,
+      error: "An unexpected error occurred",
+      message: "An unexpected error occurred",
+    };
   }
 }
