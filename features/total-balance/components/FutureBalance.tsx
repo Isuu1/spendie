@@ -7,13 +7,14 @@ import styles from "./FutureBalance.module.scss";
 //Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Utils
-import { populatePaymentsTillDate } from "@/features/recurring-payments/lib/utils/populatePaymentsTillDate";
+//import { populatePaymentsTillDate } from "@/features/recurring-payments/lib/utils/populatePaymentsTillDate";
 //Components
 import SelectMode from "@/features/total-balance/components/SelectMode";
 import PaymentsSummary from "./PaymentsSummary";
 import PaymentsDetailsModal from "./PaymentsDetailsModal";
 import { AnimatePresence } from "motion/react";
 import ErrorMessage from "@/shared/components/ErrorMessage";
+import { populateRecurringPayments } from "@/features/recurring-payments/lib/utils/populateRecurringPayments";
 
 interface FutureBalanceProps {
   recurringPayments: RecurringPayment[];
@@ -53,7 +54,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
 
   const paymentsTillDate = useMemo(
     () =>
-      populatePaymentsTillDate(
+      populateRecurringPayments(
         specificDate || moment().endOf("month"),
         recurringPayments
       ),

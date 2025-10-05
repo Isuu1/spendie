@@ -85,7 +85,7 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
               </span>
             </div>
             <span className={styles.date}>
-              {moment(payment.date).format("DD MMM `YY")}
+              {moment(payment.next_payment_date).format("DD MMM `YY")}
             </span>
             <span className={styles.amount}>
               {type === "income" ? "+£" : "-£"}
