@@ -73,6 +73,20 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
     }
   };
 
+  const paymentStatus = (payment: RecurringPayment) => {
+    const today = moment();
+    const paymentDate = moment(payment.next_payment_date);
+    const daysDiff = paymentDate.diff(today, "days");
+
+    if (daysDiff < 0) {
+      return "This payment is late";
+    } else if (daysDiff === 0) {
+      return "Coming in 3 days";
+    } else {
+      return null;
+    }
+  };
+
   useEffect(() => setPage(1), [type]);
 
   return (
@@ -100,29 +114,34 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
       </ul>
       <div className={`${styles.paymentsList} `}>
         {currentItems?.map((payment, idx) => (
-          <div key={idx} className={`${styles.paymentItem} ${styles[type]}`}>
-            <div className={styles.details}>
-              <span className={styles.name}>{payment.name ?? "Income"}</span>
-              <span className={styles.repeat}>
-                <FaRepeat /> {payment.repeat}
+          <div className={styles.paymentItemWrapper} key={idx}>
+            <div className={`${styles.paymentItem} ${styles[type]}`}>
+              <div className={styles.details}>
+                <span className={styles.name}>{payment.name ?? "Income"}</span>
+                <span className={styles.repeat}>
+                  <FaRepeat /> {payment.repeat}
+                </span>
+              </div>
+              <span className={styles.date}>
+                {moment(payment.next_payment_date).format("DD MMM `YY")}
+              </span>
+              <span className={styles.amount}>
+                {type === "income" ? "+£" : "-£"}
+                {payment.amount?.toFixed(2) ?? "0.00"}
+                <Button
+                  text={
+                    loadingId === payment.id ? "Processing..." : "Mark as paid"
+                  }
+                  variant="primary"
+                  size="medium"
+                  onClick={() => handleMarkAsPaid(payment)}
+                  disabled={loadingId === payment.id}
+                />
               </span>
             </div>
-            <span className={styles.date}>
-              {moment(payment.next_payment_date).format("DD MMM `YY")}
-            </span>
-            <span className={styles.amount}>
-              {type === "income" ? "+£" : "-£"}
-              {payment.amount?.toFixed(2) ?? "0.00"}
-              <Button
-                text={
-                  loadingId === payment.id ? "Processing..." : "Mark as paid"
-                }
-                variant="primary"
-                size="medium"
-                onClick={() => handleMarkAsPaid(payment)}
-                disabled={loadingId === payment.id}
-              />
-            </span>
+            {paymentStatus(payment) && (
+              <span className={styles.status}>{paymentStatus(payment)}</span>
+            )}
           </div>
         ))}
         {totalPages > 1 && (

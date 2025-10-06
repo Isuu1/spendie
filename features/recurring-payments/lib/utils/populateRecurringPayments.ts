@@ -20,8 +20,10 @@ export function populateRecurringPayments(
     console.log("Monthly occurrence:", occurrenceStr);
 
     while (occurrence.isSameOrBefore(targetDate, "day")) {
-      // only include occurrences from today onwards (and not mocked paid)
-      if (occurrence.isSameOrAfter(todaysDate, "day")) {
+      if (
+        //Check for 30 days late
+        occurrence.isSameOrAfter(todaysDate.clone().subtract(30, "days"), "day")
+      ) {
         populated.push({
           ...payment,
           next_payment_date: occurrence.clone().format("YYYY-MM-DD"),

@@ -56,38 +56,50 @@
   gap: 1rem;
   font-size: 0.9rem;
   line-height: 1.4rem;
-  .paymentItem {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 1rem;
+  .paymentItemWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: 16px;
     background: var(--color-bg-tile) !important;
-    .details {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-      .name {
-        font-weight: 600;
-        font-size: 0.95rem;
-      }
-      .repeat {
-        font-size: 0.8rem;
-        color: var(--color-text-secondary);
+    .paymentItem {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 1rem;
+      .details {
         display: flex;
-        gap: 0.3rem;
+        flex-direction: column;
+        gap: 0.2rem;
+        .name {
+          font-weight: 600;
+          font-size: 0.95rem;
+        }
+        .repeat {
+          font-size: 0.8rem;
+          color: var(--color-text-secondary);
+          display: flex;
+          gap: 0.3rem;
+          align-items: center;
+        }
+      }
+      .amount {
+        justify-content: flex-end;
+      }
+      .date,
+      .amount {
+        display: flex;
         align-items: center;
       }
     }
-    .amount {
-      justify-content: flex-end;
-    }
-    .date,
-    .amount {
-      display: flex;
-      align-items: center;
+    .status {
+      margin-top: -0.3rem;
+      font-size: 0.85rem;
+      color: var(--color-text-active);
+      font-weight: 600;
     }
   }
+
   .income {
     .amount {
       color: var(--color-text-income);
