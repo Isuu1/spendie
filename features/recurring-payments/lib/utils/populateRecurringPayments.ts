@@ -9,15 +9,15 @@ export function populateRecurringPayments(
 
   const todaysDate = moment();
 
-  console.log("Target date:", targetDate.format("YYYY-MM-DD"));
+  //console.log("Target date:", targetDate.format("YYYY-MM-DD"));
 
   payments.forEach((payment) => {
     const nextPaymentDate = moment(payment.next_payment_date);
-    console.log("payment:", payment);
+    //console.log("payment:", payment);
 
     const occurrence = nextPaymentDate.clone();
-    const occurrenceStr = occurrence.format("YYYY-MM-DD");
-    console.log("Monthly occurrence:", occurrenceStr);
+    //const occurrenceStr = occurrence.format("YYYY-MM-DD");
+    //console.log("Monthly occurrence:", occurrenceStr);
 
     while (occurrence.isSameOrBefore(targetDate, "day")) {
       if (

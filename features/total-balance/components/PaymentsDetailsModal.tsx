@@ -16,6 +16,7 @@ import Button from "@/shared/components/ui/Button";
 import { markAsPaid } from "@/features/recurring-payments/lib/actions/markAsPaid";
 import toast from "react-hot-toast";
 import { toastStyle } from "@/shared/styles/toastStyle";
+import { paymentStatus } from "@/features/recurring-payments/utils/paymentStatus";
 
 interface PaymentsDetailsModalProps {
   type: "income" | "expense";
@@ -70,20 +71,6 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
       setTimeout(() => setLoadingId(null), 500);
     } catch (error) {
       console.error("Error marking payment as paid:", error);
-    }
-  };
-
-  const paymentStatus = (payment: RecurringPayment) => {
-    const today = moment();
-    const paymentDate = moment(payment.next_payment_date);
-    const daysDiff = paymentDate.diff(today, "days");
-
-    if (daysDiff < 0) {
-      return "This payment is late";
-    } else if (daysDiff === 0) {
-      return "Coming in 3 days";
-    } else {
-      return null;
     }
   };
 
