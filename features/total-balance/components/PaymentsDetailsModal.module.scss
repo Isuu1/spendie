@@ -92,12 +92,17 @@
         align-items: center;
       }
     }
-    .status {
-      margin-top: -0.3rem;
-      font-size: 0.85rem;
-      color: var(--color-text-active);
-      font-weight: 600;
-    }
+    // .statusWrapper {
+    //   display: flex;
+    //   justify-content: space-between;
+    //   align-items: center;
+    //   .status {
+    //     margin-top: -0.3rem;
+    //     font-size: 0.85rem;
+    //     color: var(--color-text-active);
+    //     font-weight: 600;
+    //   }
+    // }
   }
 
   .income {
