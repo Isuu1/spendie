@@ -7,6 +7,7 @@ import ErrorMessage from "@/shared/components/ErrorMessage";
 //Utils
 import { getAccountsServer } from "@/features/accounts/api/server";
 import { getRecurringPayments } from "@/features/recurring-payments/api/getRecurringPayments";
+import { getPaymentsHistory } from "@/features/recurring-payments/api/getPaymentsHistory";
 
 const TotalBalancePanel: React.FC = async () => {
   const result = await getAccountsServer();
@@ -17,7 +18,13 @@ const TotalBalancePanel: React.FC = async () => {
 
   const { accounts } = result;
 
-  const { recurringPayments, error } = await getRecurringPayments();
+  const { recurringPayments, error: recurringPaymentsError } =
+    await getRecurringPayments();
+
+  const { paymentsHistory, error: paymentHistoryError } =
+    await getPaymentsHistory();
+
+  console.log("paymentsHistory", paymentsHistory);
 
   const totalBalance = accounts?.reduce((sum, currentAccount) => {
     const currentBalance = currentAccount.balances.current ?? 0;
@@ -31,7 +38,7 @@ const TotalBalancePanel: React.FC = async () => {
       <FutureBalance
         totalBalance={totalBalance}
         recurringPayments={recurringPayments}
-        recurringPaymentsError={error}
+        recurringPaymentsError={recurringPaymentsError || paymentHistoryError}
       />
     </div>
   );
