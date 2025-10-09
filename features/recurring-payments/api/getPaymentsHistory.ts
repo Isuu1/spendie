@@ -19,12 +19,13 @@ export async function getPaymentsHistory(): Promise<RecurringPaymentsResult> {
     .from("recurring_payments_history")
     .select("*")
     .eq("user_id", data.user.id)
-    .order("next_payment_date", { ascending: true });
+    .order("paid_date", { ascending: true });
 
   if (paymentsHistoryError) {
+    console.log("paymentsHistoryError", paymentsHistoryError);
     return {
       paymentsHistory: [],
-      error: "Could not load recurring payments",
+      error: `Could not load recurring payments history`,
     };
   }
   return { paymentsHistory: paymentsHistory || [], error: null };
