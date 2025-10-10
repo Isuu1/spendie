@@ -5,18 +5,14 @@ import Link from "next/link";
 import styles from "./PaymentsDetailsModal.module.scss";
 //Components
 import Modal from "@/shared/components/Modal";
+import Pagination from "@/shared/components/Pagination";
+import PaymentStatus from "@/features/recurring-payments/components/PaymentStatus";
 //Icons
 import { FaRepeat } from "react-icons/fa6";
 //Animations
 import { motion } from "motion/react";
 //Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
-import Pagination from "@/shared/components/Pagination";
-import PaymentStatus from "@/features/recurring-payments/components/PaymentStatus";
-// import Button from "@/shared/components/ui/Button";
-// import { markAsPaid } from "@/features/recurring-payments/lib/actions/markAsPaid";
-// import toast from "react-hot-toast";
-// import { toastStyle } from "@/shared/styles/toastStyle";
 
 interface PaymentsDetailsModalProps {
   type: "income" | "expense";
@@ -38,8 +34,6 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
 
   const [page, setPage] = useState(1);
 
-  // const [loadingId, setLoadingId] = useState<string | null>(null);
-
   const filteredPayments =
     paymentsTillDate
       ?.filter((p) => p.type.toLowerCase() === type)
@@ -58,21 +52,6 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
     startIndex,
     startIndex + ITEMS_PER_PAGE
   );
-
-  // const handleMarkAsPaid = async (payment: RecurringPayment) => {
-  //   setLoadingId(payment.id);
-  //   try {
-  //     const result = await markAsPaid(payment);
-  //     console.log("Payment marked as paid:", result);
-  //     if (result?.error) {
-  //       console.error("Error marking payment as paid:", result.error);
-  //       toast.error(result.error, toastStyle);
-  //     }
-  //     setTimeout(() => setLoadingId(null), 500);
-  //   } catch (error) {
-  //     console.error("Error marking payment as paid:", error);
-  //   }
-  // };
 
   useEffect(() => setPage(1), [type]);
 
@@ -118,18 +97,6 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
               </span>
             </div>
             <PaymentStatus payment={payment} />
-            {/* <div className={styles.statusWrapper}>
-              <span className={styles.status}>{paymentStatus(payment)}</span>
-              <Button
-                text={
-                  loadingId === payment.id ? "Processing..." : "Mark as paid"
-                }
-                variant="primary"
-                size="small"
-                onClick={() => handleMarkAsPaid(payment)}
-                disabled={loadingId === payment.id}
-              />
-            </div> */}
           </div>
         ))}
         {totalPages > 1 && (
