@@ -45,7 +45,7 @@ const PaymentStatus = ({ payment }: { payment: RecurringPayment }) => {
       </span>
       <Button
         text={loadingId === payment.id ? "Processing..." : "Mark as paid"}
-        variant="primary"
+        variant="secondary"
         size="small"
         onClick={() => handleMarkAsPaid(payment)}
         disabled={loadingId === payment.id}
