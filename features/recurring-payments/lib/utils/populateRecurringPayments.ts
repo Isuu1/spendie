@@ -16,6 +16,7 @@ export function populateRecurringPayments(
       populated.push({
         ...payment,
         next_payment_date: occurrence.clone().format("YYYY-MM-DD"),
+        status: occurrence.isBefore(moment(), "day") ? "late" : "upcoming",
       });
 
       if (payment.repeat.toLowerCase() === "monthly") {

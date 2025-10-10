@@ -7,4 +7,5 @@ export type RecurringPayment = {
   next_payment_date: string;
   type: string;
   repeat: string;
+  status?: "upcoming" | "late" | "paid";
 };

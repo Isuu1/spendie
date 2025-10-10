@@ -36,11 +36,12 @@ const PaymentStatus = ({ payment }: { payment: RecurringPayment }) => {
 
   return (
     <div className={styles.statusWrapper}>
-      {/* <span className={styles.status}>{paymentStatus(payment)}</span> */}
       <span className={styles.status}>
-        {daysDiff < 0 && `${daysDiff.toString().slice(1, 20)} days late`}
-        {daysDiff === 0 && "Due today"}
-        {daysDiff > 0 && `Due in ${daysDiff} days`}
+        {payment.status === "paid"
+          ? "Paid"
+          : payment.status === "late"
+            ? `Late by ${Math.abs(daysDiff)} day(s)`
+            : `Upcoming in ${daysDiff} day(s)`}
       </span>
       <Button
         text={loadingId === payment.id ? "Processing..." : "Mark as paid"}
