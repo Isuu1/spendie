@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment";
 import Link from "next/link";
 //Styles
 import styles from "./PaymentsDetailsModal.module.scss";
 //Components
 import Modal from "@/shared/components/Modal";
 import Pagination from "@/shared/components/Pagination";
-import PaymentStatus from "@/features/recurring-payments/components/PaymentStatus";
-//Icons
-import { FaRepeat } from "react-icons/fa6";
+import PaymentsDetailsModalPayment from "./PaymentsDetailsModalPayment";
 //Animations
 import { motion } from "motion/react";
 //Types
@@ -80,24 +77,7 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
       </ul>
       <div className={`${styles.paymentsList} `}>
         {currentItems?.map((payment, idx) => (
-          <div className={styles.paymentItemWrapper} key={idx}>
-            <div className={`${styles.paymentItem} ${styles[type]}`}>
-              <div className={styles.details}>
-                <span className={styles.name}>{payment.name ?? "Income"}</span>
-                <span className={styles.repeat}>
-                  <FaRepeat /> {payment.repeat}
-                </span>
-              </div>
-              <span className={styles.date}>
-                {moment(payment.next_payment_date).format("DD MMM `YY")}
-              </span>
-              <span className={styles.amount}>
-                {type === "income" ? "+£" : "-£"}
-                {payment.amount?.toFixed(2) ?? "0.00"}
-              </span>
-            </div>
-            <PaymentStatus payment={payment} />
-          </div>
+          <PaymentsDetailsModalPayment key={idx} payment={payment} />
         ))}
         {totalPages > 1 && (
           <Pagination

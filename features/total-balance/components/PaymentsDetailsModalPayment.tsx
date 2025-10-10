@@ -1,0 +1,40 @@
+import React from "react";
+//Styles
+import styles from "./PaymentsDetailsModalPayment.module.scss";
+import { FaRepeat } from "react-icons/fa6";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import moment from "moment";
+import PaymentStatus from "@/features/recurring-payments/components/PaymentStatus";
+
+interface PaymentsDetailsModalPaymentProps {
+  payment: RecurringPayment;
+}
+
+const PaymentsDetailsModalPayment = ({
+  payment,
+}: PaymentsDetailsModalPaymentProps) => {
+  return (
+    <div className={styles.paymentItemWrapper}>
+      <div
+        className={`${styles.paymentItem} ${styles[payment.type.toLocaleLowerCase()]}`}
+      >
+        <div className={styles.details}>
+          <span className={styles.name}>{payment.name ?? "Income"}</span>
+          <span className={styles.repeat}>
+            <FaRepeat /> {payment.repeat}
+          </span>
+        </div>
+        <span className={styles.date}>
+          {moment(payment.next_payment_date).format("DD MMM `YY")}
+        </span>
+        <span className={styles.amount}>
+          {payment.type === "income" ? "+£" : "-£"}
+          {payment.amount?.toFixed(2) ?? "0.00"}
+        </span>
+      </div>
+      <PaymentStatus payment={payment} />
+    </div>
+  );
+};
+
+export default PaymentsDetailsModalPayment;
