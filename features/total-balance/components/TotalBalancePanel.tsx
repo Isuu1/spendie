@@ -39,6 +39,7 @@ const TotalBalancePanel: React.FC = async () => {
         totalBalance={totalBalance}
         recurringPayments={recurringPayments}
         recurringPaymentsError={recurringPaymentsError || paymentHistoryError}
+        paymentsHistory={paymentsHistory}
       />
     </div>
   );

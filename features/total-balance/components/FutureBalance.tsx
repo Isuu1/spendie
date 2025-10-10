@@ -20,6 +20,7 @@ interface FutureBalanceProps {
   recurringPayments: RecurringPayment[];
   recurringPaymentsError: string | null;
   totalBalance: number;
+  paymentsHistory: RecurringPayment[];
 }
 
 const calculateTotals = (payments: RecurringPayment[]) => {
@@ -40,6 +41,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
   totalBalance,
   recurringPayments,
   recurringPaymentsError,
+  paymentsHistory,
 }) => {
   //States
   const [mode, setMode] = useState<Mode>("endOfMonth");
@@ -56,9 +58,10 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
     () =>
       populateRecurringPayments(
         specificDate || moment().endOf("month"),
-        recurringPayments
+        recurringPayments,
+        paymentsHistory
       ),
-    [specificDate, recurringPayments]
+    [specificDate, recurringPayments, paymentsHistory]
   );
 
   const { income, expense } = useMemo(

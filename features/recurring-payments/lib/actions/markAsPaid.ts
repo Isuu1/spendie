@@ -40,10 +40,12 @@ export async function markAsPaid(
     }
     // 1️⃣ Add entry to recurring_payments_history
     const { error: historyError } = await supabase
-      .from("recurring_paymensts_history")
+      .from("recurring_payments_history")
       .insert({
         user_id: user.data.user.id,
-        recurring_payment_id: payment.id,
+        id: payment.id,
+        name: payment.name,
+        payment_date: payment.next_payment_date,
         paid_date: paidDate,
         amount: payment.amount,
       });
