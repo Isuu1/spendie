@@ -20,10 +20,10 @@ export function populateRecurringPayments(
       // Check payment history to see if this payment has been marked as paid
       const isPaid = paymentHistory.some(
         (history) =>
-          history.id === payment.id &&
+          history.payment_id === payment.id &&
           moment(history.payment_date).isSame(occurrence, "day")
       );
-      console.log(`Payment ${payment.name} isPaid:`, isPaid);
+
       if (!isPaid) {
         populated.push({
           ...payment,

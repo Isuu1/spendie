@@ -43,7 +43,7 @@ export async function markAsPaid(
       .from("recurring_payments_history")
       .insert({
         user_id: user.data.user.id,
-        id: payment.id,
+        payment_id: payment.id,
         name: payment.name,
         payment_date: payment.next_payment_date,
         paid_date: paidDate,
