@@ -5,22 +5,27 @@ import moment, { Moment } from "moment";
 //Styles
 import styles from "./FutureBalance.module.scss";
 //Types
-import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import {
+  RecurringPayment,
+  RecurringPaymentHistory,
+} from "@/features/recurring-payments/types/recurring-payment";
 //Utils
-//import { populatePaymentsTillDate } from "@/features/recurring-payments/lib/utils/populatePaymentsTillDate";
+import { populateRecurringPayments } from "@/features/recurring-payments/lib/utils/populateRecurringPayments";
 //Components
 import SelectMode from "@/features/total-balance/components/SelectMode";
 import PaymentsSummary from "./PaymentsSummary";
-import PaymentsDetailsModal from "./PaymentsDetailsModal";
-import { AnimatePresence } from "motion/react";
 import ErrorMessage from "@/shared/components/ErrorMessage";
-import { populateRecurringPayments } from "@/features/recurring-payments/lib/utils/populateRecurringPayments";
+import Modal from "@/shared/components/Modal";
+import RecurringPaymentsList from "@/features/recurring-payments/components/RecurringPaymentsList";
+//Animations
+import { AnimatePresence } from "motion/react";
+import Link from "next/link";
 
 interface FutureBalanceProps {
   recurringPayments: RecurringPayment[];
   recurringPaymentsError: string | null;
   totalBalance: number;
-  paymentsHistory: RecurringPayment[];
+  paymentsHistory: RecurringPaymentHistory[];
 }
 
 const calculateTotals = (payments: RecurringPayment[]) => {
@@ -101,11 +106,14 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
       )}
       <AnimatePresence>
         {showUpcomingChangeDetails && (
-          <PaymentsDetailsModal
-            type={showUpcomingChangeDetails}
-            toggleDetails={handleToggleDetails}
-            paymentsTillDate={paymentsTillDate}
-          />
+          <Modal onClose={() => handleToggleDetails(null)}>
+            <RecurringPaymentsList
+              type={showUpcomingChangeDetails}
+              toggleDetails={handleToggleDetails}
+              paymentsTillDate={paymentsTillDate}
+            />
+            <Link href="/recurring-payments">All payments</Link>
+          </Modal>
         )}
       </AnimatePresence>
       <div className={styles.balance}>

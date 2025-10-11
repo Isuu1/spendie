@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+"use client";
+
+import React from "react";
+import { useEffect, useState } from "react";
 //Styles
-import styles from "./PaymentsDetailsModal.module.scss";
-//Components
-import Modal from "@/shared/components/Modal";
-import Pagination from "@/shared/components/Pagination";
-import PaymentsDetailsModalPayment from "./PaymentsDetailsModalPayment";
-//Animations
+import styles from "./RecurringPaymentsList.module.scss";
 import { motion } from "motion/react";
-//Types
-import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import { RecurringPayment } from "../types/recurring-payment";
+import Pagination from "@/shared/components/Pagination";
+import RecurringPaymentItem from "./RecurringPaymentItem";
 
 interface PaymentsDetailsModalProps {
   type: "income" | "expense";
@@ -22,7 +20,7 @@ const activeIndicatorVariants = {
   expense: { x: "100%" },
 };
 
-const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
+const RecurringPaymentsList: React.FC<PaymentsDetailsModalProps> = ({
   type,
   toggleDetails,
   paymentsTillDate,
@@ -53,7 +51,7 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
   useEffect(() => setPage(1), [type]);
 
   return (
-    <Modal onClose={() => toggleDetails?.(null)}>
+    <>
       <h3>{type === "income" ? "Income payments" : "Expense payments"}</h3>
       <ul className={styles.nav}>
         <motion.span
@@ -77,7 +75,7 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
       </ul>
       <div className={`${styles.paymentsList} `}>
         {currentItems?.map((payment, idx) => (
-          <PaymentsDetailsModalPayment key={idx} payment={payment} />
+          <RecurringPaymentItem key={idx} payment={payment} />
         ))}
         {totalPages > 1 && (
           <Pagination
@@ -88,11 +86,8 @@ const PaymentsDetailsModal: React.FC<PaymentsDetailsModalProps> = ({
         )}
       </div>
       {filteredPayments.length === 0 && <p>No upcoming payments</p>}
-      <Link href="/recurring-payments" className={styles.paymentsLink}>
-        All payments
-      </Link>
-    </Modal>
+    </>
   );
 };
 
-export default PaymentsDetailsModal;
+export default RecurringPaymentsList;

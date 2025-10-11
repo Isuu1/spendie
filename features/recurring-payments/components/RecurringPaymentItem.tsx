@@ -1,18 +1,18 @@
 import React from "react";
 //Styles
-import styles from "./PaymentsDetailsModalPayment.module.scss";
+import styles from "./RecurringPaymentItem.module.scss";
 import { FaRepeat } from "react-icons/fa6";
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 import moment from "moment";
 import PaymentStatus from "@/features/recurring-payments/components/PaymentStatus";
 
-interface PaymentsDetailsModalPaymentProps {
+interface RecurringPaymentItemProps {
   payment: RecurringPayment;
 }
 
-const PaymentsDetailsModalPayment = ({
+const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   payment,
-}: PaymentsDetailsModalPaymentProps) => {
+}) => {
   return (
     <div className={styles.paymentItemWrapper}>
       <div
@@ -37,4 +37,4 @@ const PaymentsDetailsModalPayment = ({
   );
 };
 
-export default PaymentsDetailsModalPayment;
+export default RecurringPaymentItem;
