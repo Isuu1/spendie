@@ -3,7 +3,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 //Styles
-import styles from "./RecurringPaymentsList.module.scss";
+import styles from "./PopulatedRecurringPaymentsList.module.scss";
 //Animations
 import { motion } from "motion/react";
 //Types
@@ -12,7 +12,7 @@ import { RecurringPayment } from "@/features/recurring-payments/types/recurring-
 import Pagination from "@/shared/components/Pagination";
 import RecurringPaymentItem from "./RecurringPaymentItem";
 
-interface PaymentsDetailsModalProps {
+interface PopulatedPaymentsDetailsModalProps {
   type: "income" | "expense";
   toggleDetails: (type: "income" | "expense" | null) => void;
   paymentsTillDate: RecurringPayment[];
@@ -23,11 +23,9 @@ const activeIndicatorVariants = {
   expense: { x: "100%" },
 };
 
-const RecurringPaymentsList: React.FC<PaymentsDetailsModalProps> = ({
-  type,
-  toggleDetails,
-  paymentsTillDate,
-}) => {
+const PopulatedRecurringPaymentsList: React.FC<
+  PopulatedPaymentsDetailsModalProps
+> = ({ type, toggleDetails, paymentsTillDate }) => {
   const ITEMS_PER_PAGE = 3;
 
   const [page, setPage] = useState(1);
@@ -93,4 +91,4 @@ const RecurringPaymentsList: React.FC<PaymentsDetailsModalProps> = ({
   );
 };
 
-export default RecurringPaymentsList;
+export default PopulatedRecurringPaymentsList;

@@ -17,7 +17,7 @@ import SelectMode from "@/features/total-balance/components/SelectMode";
 import PaymentsSummary from "./PaymentsSummary";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 import Modal from "@/shared/components/Modal";
-import RecurringPaymentsList from "@/features/recurring-payments/components/RecurringPaymentsList";
+import PopulatedRecurringPaymentsList from "@/features/recurring-payments/components/PopulatedRecurringPaymentsList";
 //Animations
 import { AnimatePresence } from "motion/react";
 
@@ -107,7 +107,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
       <AnimatePresence>
         {showUpcomingChangeDetails && (
           <Modal onClose={() => handleToggleDetails(null)}>
-            <RecurringPaymentsList
+            <PopulatedRecurringPaymentsList
               type={showUpcomingChangeDetails}
               toggleDetails={handleToggleDetails}
               paymentsTillDate={paymentsTillDate}
