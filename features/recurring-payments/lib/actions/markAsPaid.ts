@@ -4,6 +4,7 @@ import { createClient } from "@/supabase/server";
 import moment from "moment";
 import { RecurringPayment } from "../../types/recurring-payment";
 import { revalidatePath } from "next/cache";
+import { getNextPaymentDate } from "../utils/getNextPaymentDate";
 
 type MarkAsPaidResult = {
   success: boolean;
@@ -11,25 +12,20 @@ type MarkAsPaidResult = {
   message: string | null;
 };
 
-function getNextDate(currentDate: string, repeat: string) {
-  const date = moment(currentDate);
-  if (repeat.toLowerCase() === "weekly") date.add(1, "week");
-  else if (repeat.toLowerCase() === "monthly") date.add(1, "month");
-  return date.format("YYYY-MM-DD");
-}
-
 export async function markAsPaid(
   payment: RecurringPayment
 ): Promise<MarkAsPaidResult> {
   const supabase = await createClient();
 
   try {
-    //const user = await supabase.auth.getUser();
-
     const paidDate = moment().format("YYYY-MM-DD");
 
-    const nextDate = getNextDate(payment.next_payment_date, payment.repeat);
-    //Get user Id form profiles
+    const nextDate = getNextPaymentDate(
+      payment.next_payment_date,
+      payment.repeat
+    );
+
+    //Get user ID from supabase auth
     const user = await supabase.auth.getUser();
     if (!user.data.user) {
       return {
@@ -38,7 +34,7 @@ export async function markAsPaid(
         message: "User not authenticated",
       };
     }
-    // 1️⃣ Add entry to recurring_payments_history
+    //Add entry to recurring_payments_history
     const { error: historyError } = await supabase
       .from("recurring_payments_history")
       .insert({
@@ -49,7 +45,7 @@ export async function markAsPaid(
         paid_date: paidDate,
         amount: payment.amount,
       });
-    console.log("History insert result:");
+
     if (historyError) {
       console.error("History insert error:", historyError);
       return {
@@ -59,7 +55,7 @@ export async function markAsPaid(
       };
     }
 
-    // 2️⃣ Update next_payment_date in recurring_payments
+    //Update next_payment_date in recurring_payments
     const { error: updateError } = await supabase
       .from("recurring_payments")
       .update({ next_payment_date: nextDate })
@@ -73,7 +69,8 @@ export async function markAsPaid(
         message: "Failed to update payment",
       };
     }
-    revalidatePath("/");
+    revalidatePath("/dashboard");
+
     return { success: true, error: null, message: "Payment marked as paid" };
   } catch (error) {
     console.error("Error marking payment as paid:", error);
