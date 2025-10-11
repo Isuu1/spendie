@@ -1,6 +1,6 @@
 import React from "react";
 //Styles
-import styles from "./RecurringPaymentItem.module.scss";
+import styles from "./PopulatedRecurringPaymentItem.module.scss";
 import { FaRepeat } from "react-icons/fa6";
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 import moment from "moment";
@@ -10,7 +10,7 @@ interface RecurringPaymentItemProps {
   payment: RecurringPayment;
 }
 
-const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
+const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   payment,
 }) => {
   return (
@@ -37,4 +37,4 @@ const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   );
 };
 
-export default RecurringPaymentItem;
+export default PopulatedRecurringPaymentItem;

@@ -10,7 +10,7 @@ import { motion } from "motion/react";
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import Pagination from "@/shared/components/Pagination";
-import RecurringPaymentItem from "./RecurringPaymentItem";
+import PopulatedRecurringPaymentItem from "./PopulatedRecurringPaymentItem";
 
 interface PopulatedPaymentsDetailsModalProps {
   type: "income" | "expense";
@@ -76,7 +76,7 @@ const PopulatedRecurringPaymentsList: React.FC<
       </ul>
       <div className={`${styles.paymentsList} `}>
         {currentItems?.map((payment, idx) => (
-          <RecurringPaymentItem key={idx} payment={payment} />
+          <PopulatedRecurringPaymentItem key={idx} payment={payment} />
         ))}
         {totalPages > 1 && (
           <Pagination
