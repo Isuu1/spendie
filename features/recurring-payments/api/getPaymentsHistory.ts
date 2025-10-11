@@ -1,8 +1,8 @@
-import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import { RecurringPaymentHistory } from "@/features/recurring-payments/types/recurring-payment";
 import { createClient } from "@/supabase/server";
 
 type RecurringPaymentsResult = {
-  paymentsHistory: RecurringPayment[];
+  paymentsHistory: RecurringPaymentHistory[];
   error: string | null;
 };
 

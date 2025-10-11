@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import moment, { Moment } from "moment";
+import Link from "next/link";
 //Styles
 import styles from "./FutureBalance.module.scss";
 //Types
@@ -19,7 +20,6 @@ import Modal from "@/shared/components/Modal";
 import RecurringPaymentsList from "@/features/recurring-payments/components/RecurringPaymentsList";
 //Animations
 import { AnimatePresence } from "motion/react";
-import Link from "next/link";
 
 interface FutureBalanceProps {
   recurringPayments: RecurringPayment[];

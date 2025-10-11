@@ -24,8 +24,6 @@ const TotalBalancePanel: React.FC = async () => {
   const { paymentsHistory, error: paymentHistoryError } =
     await getPaymentsHistory();
 
-  console.log("paymentsHistory", paymentsHistory);
-
   const totalBalance = accounts?.reduce((sum, currentAccount) => {
     const currentBalance = currentAccount.balances.current ?? 0;
     return sum + currentBalance;
