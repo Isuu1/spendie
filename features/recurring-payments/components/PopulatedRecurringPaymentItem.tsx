@@ -1,9 +1,12 @@
 import React from "react";
+import moment from "moment";
 //Styles
 import styles from "./PopulatedRecurringPaymentItem.module.scss";
+//Icons
 import { FaRepeat } from "react-icons/fa6";
+//Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
-import moment from "moment";
+//Components
 import PaymentStatus from "@/features/recurring-payments/components/PaymentStatus";
 
 interface RecurringPaymentItemProps {
