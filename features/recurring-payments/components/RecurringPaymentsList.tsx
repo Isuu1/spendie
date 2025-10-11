@@ -4,15 +4,18 @@ import React from "react";
 import { useEffect, useState } from "react";
 //Styles
 import styles from "./RecurringPaymentsList.module.scss";
+//Animations
 import { motion } from "motion/react";
-import { RecurringPayment } from "../types/recurring-payment";
+//Types
+import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+//Components
 import Pagination from "@/shared/components/Pagination";
 import RecurringPaymentItem from "./RecurringPaymentItem";
 
 interface PaymentsDetailsModalProps {
   type: "income" | "expense";
-  toggleDetails?: (type: "income" | "expense" | null) => void;
-  paymentsTillDate?: RecurringPayment[];
+  toggleDetails: (type: "income" | "expense" | null) => void;
+  paymentsTillDate: RecurringPayment[];
 }
 
 const activeIndicatorVariants = {
