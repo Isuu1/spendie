@@ -12,6 +12,7 @@ export function populateRecurringPayments(
 ) {
   const populated: PopulatedRecurringPayment[] = [];
 
+  //Create occurrences for each payment up to the target date from the first payment date
   payments.forEach((payment) => {
     const firstPaymentDate = moment(payment.first_payment_date);
 
@@ -25,6 +26,7 @@ export function populateRecurringPayments(
           moment(history.payment_date).isSame(occurrence, "day")
       );
 
+      //If not paid, add to populated list with status
       if (!isPaid) {
         populated.push({
           ...payment,
@@ -32,6 +34,7 @@ export function populateRecurringPayments(
           status: occurrence.isBefore(moment(), "day") ? "late" : "upcoming",
         });
       }
+
       if (payment.repeat.toLowerCase() === "monthly") {
         occurrence.add(1, "month");
       } else if (payment.repeat.toLowerCase() === "weekly") {
