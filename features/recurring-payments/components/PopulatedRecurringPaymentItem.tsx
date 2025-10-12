@@ -5,12 +5,12 @@ import styles from "./PopulatedRecurringPaymentItem.module.scss";
 //Icons
 import { FaRepeat } from "react-icons/fa6";
 //Types
-import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import { PopulatedRecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import PaymentStatus from "@/features/recurring-payments/components/PaymentStatus";
 
 interface RecurringPaymentItemProps {
-  payment: RecurringPayment;
+  payment: PopulatedRecurringPayment;
 }
 
 const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({

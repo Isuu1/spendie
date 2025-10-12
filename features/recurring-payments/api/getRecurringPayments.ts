@@ -20,7 +20,7 @@ export async function getRecurringPayments(): Promise<RecurringPaymentsResult> {
       .from("recurring_payments")
       .select("*")
       .eq("user_id", data.user.id)
-      .order("next_payment_date", { ascending: true });
+      .order("first_payment_date", { ascending: true });
 
   if (userRecurringPaymentsError) {
     return {

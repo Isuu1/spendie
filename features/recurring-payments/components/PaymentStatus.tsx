@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import { toast } from "react-hot-toast";
 //Types
-import { RecurringPayment } from "../types/recurring-payment";
+import { PopulatedRecurringPayment } from "../types/recurring-payment";
 import Button from "@/shared/components/ui/Button";
 //Styles
 import styles from "@/features/recurring-payments/components/PaymentStatus.module.scss";
@@ -12,14 +12,14 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 //Actions
 import { markAsPaid } from "../lib/actions/markAsPaid";
 
-const PaymentStatus = ({ payment }: { payment: RecurringPayment }) => {
+const PaymentStatus = ({ payment }: { payment: PopulatedRecurringPayment }) => {
   const [loadingId, setLoadingId] = useState<string | null>(null);
 
   const today = moment();
   const paymentDate = moment(payment.next_payment_date);
   const daysDiff = paymentDate.diff(today, "days");
 
-  const handleMarkAsPaid = async (payment: RecurringPayment) => {
+  const handleMarkAsPaid = async (payment: PopulatedRecurringPayment) => {
     setLoadingId(payment.id);
     try {
       const result = await markAsPaid(payment);
@@ -34,6 +34,10 @@ const PaymentStatus = ({ payment }: { payment: RecurringPayment }) => {
       console.error("Error marking payment as paid:", error);
     }
   };
+
+  console.log("next payment", payment.name, payment.next_payment_date);
+
+  console.log("populated payment", payment);
 
   return (
     <div className={styles.statusWrapper}>

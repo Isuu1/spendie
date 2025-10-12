@@ -1,4 +1,5 @@
 import {
+  PopulatedRecurringPayment,
   RecurringPayment,
   RecurringPaymentHistory,
 } from "@/features/recurring-payments/types/recurring-payment";
@@ -9,12 +10,12 @@ export function populateRecurringPayments(
   payments: RecurringPayment[],
   paymentHistory: RecurringPaymentHistory[]
 ) {
-  const populated: RecurringPayment[] = [];
+  const populated: PopulatedRecurringPayment[] = [];
 
   payments.forEach((payment) => {
-    const addPaymentDate = moment(payment.add_payment_date);
+    const firstPaymentDate = moment(payment.first_payment_date);
 
-    const occurrence = addPaymentDate.clone();
+    const occurrence = firstPaymentDate.clone();
 
     while (occurrence.isSameOrBefore(targetDate, "day")) {
       // Check payment history to see if this payment has been marked as paid
@@ -27,7 +28,7 @@ export function populateRecurringPayments(
       if (!isPaid) {
         populated.push({
           ...payment,
-          next_payment_date: occurrence.clone().format("YYYY-MM-DD"),
+          next_payment_date: occurrence.format("YYYY-MM-DD"),
           status: occurrence.isBefore(moment(), "day") ? "late" : "upcoming",
         });
       }

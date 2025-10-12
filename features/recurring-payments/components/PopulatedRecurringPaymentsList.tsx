@@ -7,7 +7,7 @@ import styles from "./PopulatedRecurringPaymentsList.module.scss";
 //Animations
 import { motion } from "motion/react";
 //Types
-import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import { PopulatedRecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import Pagination from "@/shared/components/Pagination";
 import PopulatedRecurringPaymentItem from "./PopulatedRecurringPaymentItem";
@@ -15,7 +15,7 @@ import PopulatedRecurringPaymentItem from "./PopulatedRecurringPaymentItem";
 interface PopulatedPaymentsDetailsModalProps {
   type: "income" | "expense";
   toggleDetails: (type: "income" | "expense" | null) => void;
-  paymentsTillDate: RecurringPayment[];
+  paymentsTillDate: PopulatedRecurringPayment[];
 }
 
 const activeIndicatorVariants = {
