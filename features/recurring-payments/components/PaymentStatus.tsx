@@ -35,18 +35,11 @@ const PaymentStatus = ({ payment }: { payment: PopulatedRecurringPayment }) => {
     }
   };
 
-  console.log("next payment", payment.name, payment.next_payment_date);
-
-  console.log("populated payment", payment);
-
   return (
     <div className={styles.statusWrapper}>
       <span className={styles.status}>
-        {payment.status === "paid"
-          ? "Paid"
-          : payment.status === "late"
-            ? `Late by ${Math.abs(daysDiff)} day(s)`
-            : `Upcoming in ${daysDiff} day(s)`}
+        {payment.status === "late" && `Late by ${Math.abs(daysDiff)} day(s)`}
+        {payment.status === "upcoming" && `Due in ${daysDiff} day(s)`}
       </span>
       <Button
         text={loadingId === payment.id ? "Processing..." : "Mark as paid"}
