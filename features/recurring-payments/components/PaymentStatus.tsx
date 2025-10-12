@@ -23,7 +23,7 @@ const PaymentStatus = ({ payment }: { payment: PopulatedRecurringPayment }) => {
     setLoadingId(payment.id);
     try {
       const result = await markAsPaid(payment);
-      console.log("Payment marked as paid:", result);
+
       if (result?.error) {
         console.error("Error marking payment as paid:", result.error);
         toast.error(result.error, toastStyle);

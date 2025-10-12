@@ -22,6 +22,6 @@ export type RecurringPaymentHistory = RecurringPaymentBase & {
 
 //Populated recurring payment with additional fields for display and status
 export type PopulatedRecurringPayment = RecurringPayment & {
-  status: "upcoming" | "late" | "paid";
+  status: "upcoming" | "late";
   next_payment_date: string;
 };
