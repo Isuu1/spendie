@@ -8,11 +8,9 @@ export type RecurringPaymentBase = {
 //Recurring payment type stored in the database - servers as a skeleton
 export type RecurringPayment = RecurringPaymentBase & {
   add_payment_date: string;
-  next_payment_date: string;
   type: string;
   repeat: string;
   first_payment_date: string;
-  status?: "upcoming" | "late" | "paid";
 };
 
 //History of payments made - stored in a separate table
