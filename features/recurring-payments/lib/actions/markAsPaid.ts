@@ -4,7 +4,6 @@ import { createClient } from "@/supabase/server";
 import moment from "moment";
 import { PopulatedRecurringPayment } from "../../types/recurring-payment";
 import { revalidatePath } from "next/cache";
-//import { getNextPaymentDate } from "../utils/getNextPaymentDate";
 
 type MarkAsPaidResult = {
   success: boolean;
@@ -12,14 +11,10 @@ type MarkAsPaidResult = {
   message: string | null;
 };
 
-///Plan
-
 export async function markAsPaid(
   payment: PopulatedRecurringPayment
 ): Promise<MarkAsPaidResult> {
   const supabase = await createClient();
-
-  // await new Promise(() => {});
 
   try {
     const paidDate = moment().format("YYYY-MM-DD");
@@ -55,6 +50,7 @@ export async function markAsPaid(
       };
     }
 
+    //Refresh data in dashboard by revalidating the path
     revalidatePath("/dashboard");
 
     return { success: true, error: null, message: "Payment marked as paid" };
