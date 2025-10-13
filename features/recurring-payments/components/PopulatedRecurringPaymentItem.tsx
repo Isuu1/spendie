@@ -20,12 +20,6 @@ interface RecurringPaymentItemProps {
   payment: PopulatedRecurringPayment;
 }
 
-const recurringPaymentItemVariants = {
-  hidden: { opacity: 0, scale: 0 },
-  visible: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0, transition: { duration: 4 } },
-};
-
 const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   payment,
 }) => {
@@ -40,8 +34,12 @@ const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
         console.error("Error marking payment as paid:", result.error);
         toast.error(result.error, toastStyle);
       }
-      //setTimeout(() => setLoadingId(null), 500);
-      //toast.success("Payment marked as paid.", toastStyle);
+      if (result?.success) {
+        toast.success("Payment marked as paid.", toastStyle);
+        // setTimeout(() => {
+        //   setLoadingId(null);
+        // }, 500);
+      }
     } catch (error) {
       console.error("Error marking payment as paid:", error);
     }
@@ -50,11 +48,11 @@ const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   return (
     <motion.div
       className={styles.paymentItemWrapper}
-      variants={recurringPaymentItemVariants}
-      initial="visible"
-      //animate="visible"
-      exit="exit"
+      //initial={false}
+      //exit={{ scale: 0 }}
       layout
+      transition={{ duration: 0.2, ease: "easeInOut" }}
+      onAnimationComplete={() => setLoadingId(null)}
     >
       {loadingId === payment.id && (
         <div className={styles.processingPayment}>

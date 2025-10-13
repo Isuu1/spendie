@@ -49,7 +49,8 @@ export async function markAsPaid(
       console.error("History insert error:", historyError);
       return {
         success: false,
-        error: "There was an error logging the payment history",
+        error:
+          "There was an error marking the payment as paid. Please try again.",
         message: "Failed to log payment history",
       };
     }

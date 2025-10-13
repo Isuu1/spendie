@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 //Styles
 import styles from "./PopulatedRecurringPaymentsList.module.scss";
 //Animations
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 //Types
 import { PopulatedRecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
@@ -54,6 +54,7 @@ const PopulatedRecurringPaymentsList: React.FC<
   return (
     <>
       <h3>{type === "income" ? "Income payments" : "Expense payments"}</h3>
+
       <ul className={styles.nav}>
         <motion.span
           className={styles.active}
@@ -69,20 +70,20 @@ const PopulatedRecurringPaymentsList: React.FC<
           Expense
         </li>
       </ul>
+
       <ul className={styles.labelsBar}>
         <li>Name</li>
         <li>Date</li>
         <li>Amount</li>
       </ul>
+
       <div className={`${styles.paymentsList} `}>
-        <AnimatePresence mode="popLayout">
-          {currentItems?.map((payment) => (
-            <PopulatedRecurringPaymentItem
-              key={payment.next_payment_date}
-              payment={payment}
-            />
-          ))}
-        </AnimatePresence>
+        {currentItems?.map((payment) => (
+          <PopulatedRecurringPaymentItem
+            key={`${payment.id}-${payment.next_payment_date}`}
+            payment={payment}
+          />
+        ))}
         {totalPages > 1 && (
           <Pagination
             page={page}
@@ -91,6 +92,7 @@ const PopulatedRecurringPaymentsList: React.FC<
           />
         )}
       </div>
+
       {filteredPayments.length === 0 && <p>No upcoming payments</p>}
     </>
   );
