@@ -19,6 +19,8 @@ export async function markAsPaid(
 ): Promise<MarkAsPaidResult> {
   const supabase = await createClient();
 
+  // await new Promise(() => {});
+
   try {
     const paidDate = moment().format("YYYY-MM-DD");
 

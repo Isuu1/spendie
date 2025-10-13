@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 //Styles
 import styles from "./PopulatedRecurringPaymentsList.module.scss";
 //Animations
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 //Types
 import { PopulatedRecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
@@ -75,9 +75,14 @@ const PopulatedRecurringPaymentsList: React.FC<
         <li>Amount</li>
       </ul>
       <div className={`${styles.paymentsList} `}>
-        {currentItems?.map((payment, idx) => (
-          <PopulatedRecurringPaymentItem key={idx} payment={payment} />
-        ))}
+        <AnimatePresence mode="popLayout">
+          {currentItems?.map((payment) => (
+            <PopulatedRecurringPaymentItem
+              key={payment.next_payment_date}
+              payment={payment}
+            />
+          ))}
+        </AnimatePresence>
         {totalPages > 1 && (
           <Pagination
             page={page}

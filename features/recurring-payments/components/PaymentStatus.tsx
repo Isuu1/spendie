@@ -1,39 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import moment from "moment";
-import { toast } from "react-hot-toast";
 //Types
 import { PopulatedRecurringPayment } from "../types/recurring-payment";
-import Button from "@/shared/components/ui/Button";
 //Styles
 import styles from "@/features/recurring-payments/components/PaymentStatus.module.scss";
-import { toastStyle } from "@/shared/styles/toastStyle";
-//Actions
-import { markAsPaid } from "../lib/actions/markAsPaid";
 
 const PaymentStatus = ({ payment }: { payment: PopulatedRecurringPayment }) => {
-  const [loadingId, setLoadingId] = useState<string | null>(null);
-
   const today = moment();
   const paymentDate = moment(payment.next_payment_date);
   const daysDiff = paymentDate.diff(today, "days");
-
-  const handleMarkAsPaid = async (payment: PopulatedRecurringPayment) => {
-    setLoadingId(payment.id);
-    try {
-      const result = await markAsPaid(payment);
-
-      if (result?.error) {
-        console.error("Error marking payment as paid:", result.error);
-        toast.error(result.error, toastStyle);
-      }
-      setTimeout(() => setLoadingId(null), 500);
-      toast.success("Payment marked as paid.", toastStyle);
-    } catch (error) {
-      console.error("Error marking payment as paid:", error);
-    }
-  };
 
   return (
     <div className={styles.statusWrapper}>
@@ -41,13 +18,6 @@ const PaymentStatus = ({ payment }: { payment: PopulatedRecurringPayment }) => {
         {payment.status === "late" && `Late by ${Math.abs(daysDiff)} day(s)`}
         {payment.status === "upcoming" && `Due in ${daysDiff} day(s)`}
       </span>
-      <Button
-        text={loadingId === payment.id ? "Processing..." : "Mark as paid"}
-        variant="secondary"
-        size="small"
-        onClick={() => handleMarkAsPaid(payment)}
-        disabled={loadingId === payment.id}
-      />
     </div>
   );
 };
