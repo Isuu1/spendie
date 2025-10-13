@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import moment from "moment";
+import toast from "react-hot-toast";
 //Styles
 import styles from "./PopulatedRecurringPaymentItem.module.scss";
+import { toastStyle } from "@/shared/styles/toastStyle";
 //Icons
 import { FaRepeat } from "react-icons/fa6";
 //Types
 import { PopulatedRecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import PaymentStatus from "@/features/recurring-payments/components/PaymentStatus";
+import Button from "@/shared/components/ui/Button";
+import LoadingSpinner from "@/shared/components/LoadingSpinner";
 //Animations
 import { motion } from "motion/react";
-import Button from "@/shared/components/ui/Button";
+//Actions
 import { markAsPaid } from "../lib/actions/markAsPaid";
-import toast from "react-hot-toast";
-import { toastStyle } from "@/shared/styles/toastStyle";
-import LoadingSpinner from "@/shared/components/LoadingSpinner";
 
 interface RecurringPaymentItemProps {
   payment: PopulatedRecurringPayment;
@@ -36,9 +37,6 @@ const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
       }
       if (result?.success) {
         toast.success("Payment marked as paid.", toastStyle);
-        // setTimeout(() => {
-        //   setLoadingId(null);
-        // }, 500);
       }
     } catch (error) {
       console.error("Error marking payment as paid:", error);
@@ -48,8 +46,6 @@ const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   return (
     <motion.div
       className={styles.paymentItemWrapper}
-      //initial={false}
-      //exit={{ scale: 0 }}
       layout
       transition={{ duration: 0.2, ease: "easeInOut" }}
       onAnimationComplete={() => setLoadingId(null)}
