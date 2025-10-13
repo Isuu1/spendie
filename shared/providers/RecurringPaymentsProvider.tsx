@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { createContext } from "react";
-import { RecurringPayment } from "../types/recurring-payment";
+import { RecurringPayment } from "../../features/recurring-payments/types/recurring-payment";
 
 interface RecurringPaymentsContextType {
   payments: RecurringPayment[];

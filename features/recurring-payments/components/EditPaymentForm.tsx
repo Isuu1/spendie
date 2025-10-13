@@ -13,7 +13,7 @@ import { editRecurringPayment } from "../lib/actions/edit-recurring-payment";
 import { AddPaymentFormState } from "@/features/recurring-payments/types/forms";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
-import { RecurringPayment } from "@/shared/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 
 const initialState: AddPaymentFormState = {
   data: {

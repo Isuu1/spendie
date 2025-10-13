@@ -12,7 +12,7 @@ import { FaLongArrowAltDown } from "react-icons/fa";
 import { IoTrashBin } from "react-icons/io5";
 import { BiSolidMessageSquareAdd } from "react-icons/bi";
 //Types
-import { RecurringPayment } from "@/shared/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import Button from "@/shared/components/ui/Button";
 import ConfirmAction from "@/shared/components/ConfirmAction";
@@ -94,7 +94,7 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
           <div className={styles.data}>
             <div className={styles.details}>
               <p>{payment.name}</p>
-              <p className={styles.date}>{payment.date}</p>
+              <p className={styles.date}>{payment.next_payment_date}</p>
             </div>
             <p className={styles.frequency}>{payment.repeat}</p>
             {payment.type === "Income" ? (

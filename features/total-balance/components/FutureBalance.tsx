@@ -2,21 +2,30 @@
 
 import React, { useMemo, useState } from "react";
 import moment, { Moment } from "moment";
+import Link from "next/link";
 //Styles
 import styles from "./FutureBalance.module.scss";
 //Types
-import { RecurringPayment } from "@/shared/types/recurring-payment";
+import {
+  RecurringPayment,
+  RecurringPaymentHistory,
+} from "@/features/recurring-payments/types/recurring-payment";
 //Utils
-import { populatePaymentsTillDate } from "@/features/recurring-payments/lib/utils/populatePaymentsTillDate";
+import { populateRecurringPayments } from "@/features/recurring-payments/lib/utils/populateRecurringPayments";
 //Components
 import SelectMode from "@/features/total-balance/components/SelectMode";
 import PaymentsSummary from "./PaymentsSummary";
-import PaymentsDetailsModal from "./PaymentsDetailsModal";
+import ErrorMessage from "@/shared/components/ErrorMessage";
+import Modal from "@/shared/components/Modal";
+import PopulatedRecurringPaymentsList from "@/features/recurring-payments/components/PopulatedRecurringPaymentsList";
+//Animations
 import { AnimatePresence } from "motion/react";
 
 interface FutureBalanceProps {
   recurringPayments: RecurringPayment[];
+  recurringPaymentsError: string | null;
   totalBalance: number;
+  paymentsHistory: RecurringPaymentHistory[];
 }
 
 const calculateTotals = (payments: RecurringPayment[]) => {
@@ -36,6 +45,8 @@ type Mode = "endOfMonth" | "specificDate";
 const FutureBalance: React.FC<FutureBalanceProps> = ({
   totalBalance,
   recurringPayments,
+  recurringPaymentsError,
+  paymentsHistory,
 }) => {
   //States
   const [mode, setMode] = useState<Mode>("endOfMonth");
@@ -50,11 +61,12 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
 
   const paymentsTillDate = useMemo(
     () =>
-      populatePaymentsTillDate(
+      populateRecurringPayments(
         specificDate || moment().endOf("month"),
-        recurringPayments
+        recurringPayments,
+        paymentsHistory
       ),
-    [specificDate, recurringPayments]
+    [specificDate, recurringPayments, paymentsHistory]
   );
 
   const { income, expense } = useMemo(
@@ -83,18 +95,25 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
         onDateSelect={setDateSelected}
         onRangeSelect={setMode}
       />
-      <PaymentsSummary
-        paymentsTillDate={paymentsTillDate}
-        type={showUpcomingChangeDetails}
-        toggleDetails={handleToggleDetails}
-      />
+      {!recurringPaymentsError ? (
+        <PaymentsSummary
+          paymentsTillDate={paymentsTillDate}
+          type={showUpcomingChangeDetails}
+          toggleDetails={handleToggleDetails}
+        />
+      ) : (
+        <ErrorMessage message={recurringPaymentsError} />
+      )}
       <AnimatePresence>
         {showUpcomingChangeDetails && (
-          <PaymentsDetailsModal
-            type={showUpcomingChangeDetails}
-            toggleDetails={handleToggleDetails}
-            paymentsTillDate={paymentsTillDate}
-          />
+          <Modal onClose={() => handleToggleDetails(null)}>
+            <PopulatedRecurringPaymentsList
+              type={showUpcomingChangeDetails}
+              toggleDetails={handleToggleDetails}
+              paymentsTillDate={paymentsTillDate}
+            />
+            <Link href="/recurring-payments">All payments</Link>
+          </Modal>
         )}
       </AnimatePresence>
       <div className={styles.balance}>

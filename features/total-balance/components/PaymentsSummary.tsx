@@ -1,6 +1,6 @@
 import React from "react";
 //Types
-import { RecurringPayment } from "@/shared/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Styles
 import styles from "./PaymentsSummary.module.scss";
 //Icons

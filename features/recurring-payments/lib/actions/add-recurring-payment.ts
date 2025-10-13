@@ -17,7 +17,7 @@ export async function addRecurringPayment(
     repeat: formData.get("repeat")?.toString() || "",
     amount: (amountValue && parseFloat(amountValue as string)) || 0,
     type: formData.get("type")?.toString() || "",
-    date: formData.get("date")?.toString() || "",
+    next_payment_date: formData.get("next_payment_date")?.toString() || "",
   };
 
   //Validate the form data
@@ -30,7 +30,7 @@ export async function addRecurringPayment(
     type: z.enum(["Income", "Expense"], {
       message: "Invalid type value",
     }),
-    date: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    next_payment_date: z.string().refine((val) => !isNaN(Date.parse(val)), {
       message: "Invalid date format",
     }),
   });

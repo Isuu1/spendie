@@ -1,0 +1,67 @@
+.paymentItemWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 16px;
+  background: var(--color-bg-tile) !important;
+  .processingPayment {
+    cursor: not-allowed;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-bg-tile) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 16px;
+    z-index: 10;
+  }
+  .paymentItem {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1rem;
+    .details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      .name {
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+      .repeat {
+        font-size: 0.8rem;
+        color: var(--color-text-secondary);
+        display: flex;
+        gap: 0.3rem;
+        align-items: center;
+      }
+    }
+    .amount {
+      justify-content: flex-end;
+    }
+    .date,
+    .amount {
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.income {
+  .amount {
+    color: var(--color-text-income);
+  }
+}
+
+.expense {
+  .amount {
+    color: var(--color-text-expense);
+  }
+}

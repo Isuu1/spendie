@@ -1,0 +1,14 @@
+.statusWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .status {
+    padding: 0.2rem;
+    border-radius: 8px;
+  }
+  .status {
+    font-size: 0.85rem;
+    color: var(--color-text-active);
+    font-weight: 600;
+  }
+}
