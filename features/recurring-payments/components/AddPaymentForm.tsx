@@ -25,14 +25,28 @@ const AddPaymentForm: React.FC = () => {
     initialRecurringPaymentFormState
   );
 
-  const { formData, errors, handleChange } = useForm(recurringPaymentSchema, {
-    name: "",
-    repeat: "",
-    type: "",
-    amount: 0,
-    //add_payment_date: "",
-    first_payment_date: "",
-  });
+  const { formData, errors, handleChange, validate } = useForm(
+    recurringPaymentSchema,
+    {
+      name: "",
+      repeat: "",
+      type: "",
+      amount: 0,
+      first_payment_date: "",
+    }
+  );
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    //Validate form data before submitting
+    const isValid = validate(formData);
+    if (!isValid) return;
+
+    //Otherwise run server action
+    const form = new FormData(e.currentTarget as HTMLFormElement);
+    formAction(form);
+  };
 
   useEffect(() => {
     if (state.success) {
@@ -44,11 +58,8 @@ const AddPaymentForm: React.FC = () => {
     }
   }, [state, router]);
 
-  console.log("form state", state);
-  console.log("errors", errors);
-
   return (
-    <Form layout="vertical" action={formAction}>
+    <Form layout="vertical" onSubmit={handleSubmit}>
       <Input
         id="name"
         type="text"

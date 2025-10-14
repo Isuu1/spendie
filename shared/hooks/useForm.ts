@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { z, ZodRawShape } from "zod";
 
 // Generic type for schema-based errors
@@ -14,11 +14,6 @@ export function useForm<T extends z.ZodTypeAny>(
 ) {
   console.log("Schema in useForm:", schema);
   console.log("Default values in useForm:", defaultValues);
-
-  useEffect(() => {
-    validate(formData); // validate immediately on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // Unwrap schema if it's a ZodEffects
   const objectSchema = (
@@ -52,6 +47,7 @@ export function useForm<T extends z.ZodTypeAny>(
       });
 
       setErrors(fieldErrors);
+      return false;
     } else {
       // Clear all errors if valid
       setErrors(
@@ -60,6 +56,7 @@ export function useForm<T extends z.ZodTypeAny>(
           {} as SchemaErrors<T>
         )
       );
+      return true;
     }
   };
 
@@ -79,5 +76,5 @@ export function useForm<T extends z.ZodTypeAny>(
     );
   };
 
-  return { formData, errors, handleChange, resetForm, setErrors };
+  return { formData, errors, handleChange, resetForm, setErrors, validate };
 }
