@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useActionState, useEffect, useState } from "react";
+import React, { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 //Components
@@ -8,57 +8,44 @@ import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 //Actions
-import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/add-recurring-payment";
+import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/addRecurringPayment";
 //Types
-import { AddPaymentFormState } from "@/features/recurring-payments/types/forms";
+import { initialRecurringPaymentFormState } from "@/features/recurring-payments/types/forms";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
-
-const initialState: AddPaymentFormState = {
-  data: {
-    name: "",
-    repeat: "",
-    type: "",
-    amount: 0,
-    next_payment_date: new Date().toISOString().split("T")[0], //Today's date
-  },
-  success: false,
-  message: "",
-  error: null,
-};
+import { useForm } from "@/shared/hooks/useForm";
+//Schemas
+import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/forms";
 
 const AddPaymentForm: React.FC = () => {
   const router = useRouter();
 
   const [state, formAction, isPending] = useActionState(
     addRecurringPayment,
-    initialState
+    initialRecurringPaymentFormState
   );
 
-  const [errors, setErrors] = useState<
-    Record<string, { errors: string[] } | null>
-  >({});
-
-  //Remove input error when user starts typing
-  const handleInputChange = (id: string) => {
-    setErrors((prev) => ({ ...prev, [id]: null }));
-  };
+  const { formData, errors, handleChange } = useForm(recurringPaymentSchema, {
+    name: "",
+    repeat: "",
+    type: "",
+    amount: 0,
+    //add_payment_date: "",
+    first_payment_date: "",
+  });
 
   useEffect(() => {
     if (state.success) {
       toast.success("Recurring payment added successfully!", toastStyle);
       router.push("/recurring-payments");
     }
-  }, [state.success, router]);
-
-  useEffect(() => {
     if (state.error) {
-      setErrors(state.error);
+      toast.error(`Error: ${state.error}`, toastStyle);
     }
-    if (state.error?.general) {
-      toast.error(state.error.general.errors[0], toastStyle);
-    }
-  }, [state.error]);
+  }, [state, router]);
+
+  console.log("form state", state);
+  console.log("errors", errors);
 
   return (
     <Form layout="vertical" action={formAction}>
@@ -67,9 +54,9 @@ const AddPaymentForm: React.FC = () => {
         type="text"
         label="Payment Name"
         layout="horizontal"
-        errors={errors.name?.errors}
-        onChange={() => handleInputChange("name")}
-        defaultValue={state.data.name}
+        errors={errors.name}
+        value={formData.name}
+        onChange={(e) => handleChange("name", e.target.value)}
       />
       <Input
         id="repeat"
@@ -77,6 +64,8 @@ const AddPaymentForm: React.FC = () => {
         label="Repeat"
         layout="horizontal"
         selectOptions={["Monthly", "Yearly", "Weekly", "Daily"]}
+        value={formData.repeat}
+        onChange={(e) => handleChange("repeat", e.target.value)}
       />
       <Input
         id="type"
@@ -84,24 +73,26 @@ const AddPaymentForm: React.FC = () => {
         label="Type"
         layout="horizontal"
         selectOptions={["Income", "Expense"]}
+        value={formData.type}
+        onChange={(e) => handleChange("type", e.target.value)}
       />
       <Input
         id="amount"
         type="number"
         label="Amount"
         layout="horizontal"
-        errors={errors.amount?.errors}
-        onChange={() => handleInputChange("amount")}
-        defaultValue={state.data.amount}
+        errors={errors.amount}
+        value={formData.amount}
+        onChange={(e) => handleChange("amount", e.target.value)}
       />
       <Input
-        id="next_payment_date"
+        id="first_payment_date"
         type="date"
-        label="Next Payment Date"
+        label="First Payment Date"
         layout="horizontal"
-        errors={errors.date?.errors}
-        onChange={() => handleInputChange("date")}
-        defaultValue={state.data.next_payment_date}
+        errors={errors.first_payment_date}
+        value={formData.first_payment_date}
+        onChange={(e) => handleChange("first_payment_date", e.target.value)}
       />
       <div className="flex-row-space-between">
         <Button
