@@ -60,7 +60,10 @@ export function useForm<T extends z.ZodTypeAny>(
     }
   };
 
-  const handleChange = (id: keyof z.infer<T>, value: string | Date) => {
+  const handleChange = (
+    id: keyof z.infer<T>,
+    value: string | number | Date
+  ) => {
     const updated = { ...formData, [id]: value };
     setFormData(updated);
     validate(updated);

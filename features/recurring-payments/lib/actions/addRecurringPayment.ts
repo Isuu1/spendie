@@ -11,12 +11,12 @@ export async function addRecurringPayment(
 ) {
   const supabase = await createClient();
 
-  const amountValue = formData.get("amount");
+  const amountValue = parseFloat(formData.get("amount") as string);
 
   const data = {
     name: formData.get("name")?.toString() || "",
     repeat: formData.get("repeat")?.toString() || "",
-    amount: (amountValue && parseFloat(amountValue as string)) || 0,
+    amount: amountValue || 0,
     type: formData.get("type")?.toString() || "",
     //add_payment_date: formData.get("add_payment_date")?.toString() || "",
     first_payment_date: formData.get("first_payment_date")?.toString() || "",

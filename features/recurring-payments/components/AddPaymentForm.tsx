@@ -32,20 +32,19 @@ const AddPaymentForm: React.FC = () => {
       repeat: "",
       type: "",
       amount: 0,
+      //add_payment_date: "",
       first_payment_date: "",
     }
   );
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    //Validate form data before submitting
+  const handleValidationBeforeSubmit = (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     const isValid = validate(formData);
-    if (!isValid) return;
-
-    //Otherwise run server action
-    const form = new FormData(e.currentTarget as HTMLFormElement);
-    formAction(form);
+    if (!isValid) {
+      e.preventDefault(); // Stop form submission if invalid
+      toast.error("Please fix the errors before submitting.", toastStyle);
+    }
   };
 
   useEffect(() => {
@@ -58,8 +57,15 @@ const AddPaymentForm: React.FC = () => {
     }
   }, [state, router]);
 
+  console.log("form state", state);
+  console.log("errors", errors);
+
   return (
-    <Form layout="vertical" onSubmit={handleSubmit}>
+    <Form
+      layout="vertical"
+      action={formAction}
+      onSubmit={handleValidationBeforeSubmit}
+    >
       <Input
         id="name"
         type="text"

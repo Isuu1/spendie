@@ -8,7 +8,9 @@ interface FormProps {
   action?: (string | ((formData: FormData) => void)) | undefined;
   layout: "horizontal" | "vertical";
   ref?: React.Ref<HTMLFormElement>;
-  onSubmit?: (e: React.FormEvent) => void;
+  onSubmit?:
+    | ((e: React.FormEvent) => void)
+    | ((e: React.FormEvent<HTMLFormElement>) => void);
 }
 
 const Form: React.FC<FormProps> = ({
