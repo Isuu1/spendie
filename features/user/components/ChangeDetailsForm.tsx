@@ -70,6 +70,9 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
     }
   }, [state, setErrors]);
 
+  console.log("form state", state);
+  console.log("form errors", errors);
+
   return (
     <Form layout="vertical" action={formAction}>
       <Input

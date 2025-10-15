@@ -12,7 +12,7 @@ import { PopulatedRecurringPayment } from "@/features/recurring-payments/types/r
 import Pagination from "@/shared/components/Pagination";
 import PopulatedRecurringPaymentItem from "./PopulatedRecurringPaymentItem";
 
-interface PopulatedPaymentsDetailsModalProps {
+interface PopulatedRecurringPaymentsListProps {
   type: "income" | "expense";
   toggleDetails: (type: "income" | "expense" | null) => void;
   paymentsTillDate: PopulatedRecurringPayment[];
@@ -24,7 +24,7 @@ const activeIndicatorVariants = {
 };
 
 const PopulatedRecurringPaymentsList: React.FC<
-  PopulatedPaymentsDetailsModalProps
+  PopulatedRecurringPaymentsListProps
 > = ({ type, toggleDetails, paymentsTillDate }) => {
   const ITEMS_PER_PAGE = 3;
 
@@ -53,7 +53,7 @@ const PopulatedRecurringPaymentsList: React.FC<
 
   return (
     <>
-      <h3>{type === "income" ? "Income payments" : "Expense payments"}</h3>
+      <h3>Upcoming payments</h3>
 
       <ul className={styles.nav}>
         <motion.span

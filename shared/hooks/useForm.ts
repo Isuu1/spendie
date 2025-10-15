@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { z, ZodRawShape } from "zod";
 
@@ -24,9 +26,23 @@ export function useForm<T extends z.ZodTypeAny>(
     )
   );
 
-  const validate = (updated: z.infer<T>) => {
+  //Validate a single field on change
+  const validateField = (
+    id: keyof z.infer<T>,
+    value: string | number | Date
+  ) => {
+    const fieldSchema = objectSchema.shape[id as string];
+    const result = fieldSchema.safeParse(value);
+
+    setErrors((prev) => ({
+      ...prev,
+      [id]: result.success ? [] : result.error.issues.map((e) => e.message),
+    }));
+  };
+
+  //Validate the entire form
+  const validateForm = (updated: z.infer<T>) => {
     const result = schema.safeParse(updated);
-    //const result = { success: true, data: updated }; // Temporarily disable validation
 
     if (!result.success) {
       const fieldErrors = Object.keys(objectSchema.shape).reduce(
@@ -40,6 +56,7 @@ export function useForm<T extends z.ZodTypeAny>(
       });
 
       setErrors(fieldErrors);
+      return false;
     } else {
       // Clear all errors if valid
       setErrors(
@@ -48,13 +65,28 @@ export function useForm<T extends z.ZodTypeAny>(
           {} as SchemaErrors<T>
         )
       );
+      return true;
     }
   };
 
-  const handleChange = (id: keyof z.infer<T>, value: string | Date) => {
-    const updated = { ...formData, [id]: value };
+  const handleChange = (
+    id: keyof z.infer<T>,
+    value: string | number | Date
+  ) => {
+    //Convert numeric strings to numbers automatically
+    const schemaField = objectSchema.shape[id as string];
+    let parsedValue = value;
+
+    if (
+      schemaField._def.typeName === "ZodNumber" &&
+      typeof value === "string"
+    ) {
+      parsedValue = value === "" ? "" : Number(value);
+    }
+
+    const updated = { ...formData, [id]: parsedValue };
     setFormData(updated);
-    validate(updated);
+    validateField(id, parsedValue);
   };
 
   const resetForm = () => {
@@ -67,5 +99,13 @@ export function useForm<T extends z.ZodTypeAny>(
     );
   };
 
-  return { formData, errors, handleChange, resetForm, setErrors };
+  return {
+    formData,
+    errors,
+    handleChange,
+    resetForm,
+    setErrors,
+    validateForm,
+    validateField,
+  };
 }
