@@ -25,7 +25,7 @@ const AddPaymentForm: React.FC = () => {
     initialRecurringPaymentFormState
   );
 
-  const { formData, errors, handleChange, validate } = useForm(
+  const { formData, errors, handleChange, validateForm } = useForm(
     recurringPaymentSchema,
     {
       name: "",
@@ -39,10 +39,10 @@ const AddPaymentForm: React.FC = () => {
   const handleValidationBeforeSubmit = (
     e: React.FormEvent<HTMLFormElement>
   ) => {
-    const isValid = validate(formData);
+    const isValid = validateForm(formData);
     if (!isValid) {
       e.preventDefault(); // Stop form submission if invalid
-      toast.error("Please fix the errors before submitting.", toastStyle);
+      //toast.error("Please fix the errors before submitting.", toastStyle);
     }
   };
 

@@ -29,12 +29,24 @@ export function useForm<T extends z.ZodTypeAny>(
     )
   );
 
-  console.log("Initial errors state:", errors);
+  //Validate a single field on change
+  const validateField = (
+    id: keyof z.infer<T>,
+    value: string | number | Date
+  ) => {
+    const fieldSchema = objectSchema.shape[id as string];
+    const result = fieldSchema.safeParse(value);
 
-  const validate = (updated: z.infer<T>) => {
+    setErrors((prev) => ({
+      ...prev,
+      [id]: result.success ? [] : result.error.issues.map((e) => e.message),
+    }));
+  };
+
+  //Validate the entire form
+  const validateForm = (updated: z.infer<T>) => {
     const result = schema.safeParse(updated);
-    //const result = { success: true, data: updated }; // Temporarily disable validation
-    console.log("Validation errors:", result);
+
     if (!result.success) {
       const fieldErrors = Object.keys(objectSchema.shape).reduce(
         (acc, key) => ({ ...acc, [key]: [] }),
@@ -66,7 +78,7 @@ export function useForm<T extends z.ZodTypeAny>(
   ) => {
     const updated = { ...formData, [id]: value };
     setFormData(updated);
-    validate(updated);
+    validateField(id, value);
   };
 
   const resetForm = () => {
@@ -79,5 +91,13 @@ export function useForm<T extends z.ZodTypeAny>(
     );
   };
 
-  return { formData, errors, handleChange, resetForm, setErrors, validate };
+  return {
+    formData,
+    errors,
+    handleChange,
+    resetForm,
+    setErrors,
+    validateForm,
+    validateField,
+  };
 }
