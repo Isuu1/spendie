@@ -18,7 +18,6 @@ export async function addRecurringPayment(
     repeat: formData.get("repeat")?.toString() || "",
     amount: amountValue || 0,
     type: formData.get("type")?.toString() || "",
-    //add_payment_date: formData.get("add_payment_date")?.toString() || "",
     first_payment_date: formData.get("first_payment_date")?.toString() || "",
   };
 
@@ -26,12 +25,10 @@ export async function addRecurringPayment(
   const validateData = recurringPaymentSchema.safeParse(data);
 
   if (!validateData.success) {
-    //const tree = z.treeifyError(validateData.error);
     return {
       data,
       success: false,
       message: "Validation error",
-      //error: tree.properties,
       error: "Unable to validate form data",
     };
   }
@@ -49,7 +46,7 @@ export async function addRecurringPayment(
     add_payment_date: moment().format("YYYY-MM-DD"),
     ...data,
   };
-  console.log("new payment", newPayment);
+
   const { error: updateError } = await supabase
     .from("recurring_payments")
     .insert(newPayment);

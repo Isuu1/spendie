@@ -32,7 +32,6 @@ const AddPaymentForm: React.FC = () => {
       repeat: "",
       type: "",
       amount: 0,
-      //add_payment_date: "",
       first_payment_date: "",
     }
   );
