@@ -39,10 +39,11 @@ const AddPaymentForm: React.FC = () => {
   const handleValidationBeforeSubmit = (
     e: React.FormEvent<HTMLFormElement>
   ) => {
+    //This runs before server action to validate all fields on client side
     const isValid = validateForm(formData);
     if (!isValid) {
-      e.preventDefault(); // Stop form submission if invalid
-      //toast.error("Please fix the errors before submitting.", toastStyle);
+      //Stop form submission if invalid
+      e.preventDefault();
     }
   };
 

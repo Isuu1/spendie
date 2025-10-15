@@ -5,7 +5,9 @@ export const recurringPaymentSchema = z.object({
   repeat: z.enum(["Monthly", "Yearly", "Weekly", "Daily", ""], {
     message: "Invalid repeat value",
   }),
-  amount: z.number().min(1, "Amount must be a positive number"),
+  amount: z
+    .number({ invalid_type_error: "Please provide amount" })
+    .min(0.01, "Amount must be greater than 0"),
   type: z.enum(["Income", "Expense", ""], {
     message: "Invalid type value",
   }),

@@ -12,9 +12,6 @@ export function useForm<T extends z.ZodTypeAny>(
   schema: T,
   defaultValues: z.infer<T>
 ) {
-  console.log("Schema in useForm:", schema);
-  console.log("Default values in useForm:", defaultValues);
-
   // Unwrap schema if it's a ZodEffects
   const objectSchema = (
     schema instanceof z.ZodEffects ? schema._def.schema : schema
@@ -76,9 +73,20 @@ export function useForm<T extends z.ZodTypeAny>(
     id: keyof z.infer<T>,
     value: string | number | Date
   ) => {
-    const updated = { ...formData, [id]: value };
+    //Convert numeric strings to numbers automatically
+    const schemaField = objectSchema.shape[id as string];
+    let parsedValue = value;
+
+    if (
+      schemaField._def.typeName === "ZodNumber" &&
+      typeof value === "string"
+    ) {
+      parsedValue = value === "" ? "" : Number(value);
+    }
+
+    const updated = { ...formData, [id]: parsedValue };
     setFormData(updated);
-    validateField(id, value);
+    validateField(id, parsedValue);
   };
 
   const resetForm = () => {
