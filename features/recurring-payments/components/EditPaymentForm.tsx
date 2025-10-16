@@ -8,7 +8,7 @@ import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 //Actions
-import { editRecurringPayment } from "../lib/actions/edit-recurring-payment";
+import { editRecurringPayment } from "@/features/recurring-payments/lib/actions/editRecurringPayment";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
