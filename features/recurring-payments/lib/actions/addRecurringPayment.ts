@@ -1,7 +1,11 @@
 "use server";
 
 import { createClient } from "@/supabase/server";
-import { RecurringPaymentFormState } from "../../types/forms";
+import {
+  PaymentType,
+  RecurringPaymentFormState,
+  Repeat,
+} from "@/features/recurring-payments/types/forms";
 import moment from "moment";
 import { recurringPaymentSchema } from "../../schemas/forms";
 
@@ -15,9 +19,9 @@ export async function addRecurringPayment(
 
   const data = {
     name: formData.get("name")?.toString() || "",
-    repeat: formData.get("repeat")?.toString() || "",
+    repeat: formData.get("repeat") as Repeat,
     amount: amountValue || 0,
-    type: formData.get("type")?.toString() || "",
+    type: formData.get("type") as PaymentType,
     first_payment_date: formData.get("first_payment_date")?.toString() || "",
   };
 

@@ -94,7 +94,7 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
           <div className={styles.data}>
             <div className={styles.details}>
               <p>{payment.name}</p>
-              <p className={styles.date}>{payment.next_payment_date}</p>
+              <p className={styles.date}>{payment.first_payment_date}</p>
             </div>
             <p className={styles.frequency}>{payment.repeat}</p>
             {payment.type === "Income" ? (
