@@ -13,7 +13,7 @@ interface InputProps {
   type: "text" | "number" | "email" | "password" | "select" | "date";
   label?: string;
   layout: "horizontal" | "vertical";
-  selectOptions?: string[];
+  selectOptions?: readonly string[];
   errors?: string[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | void;
   defaultValue?: string | number;

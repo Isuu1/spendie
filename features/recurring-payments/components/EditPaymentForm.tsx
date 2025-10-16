@@ -12,7 +12,11 @@ import { editRecurringPayment } from "@/features/recurring-payments/lib/actions/
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
-import { initialRecurringPaymentFormState } from "../types/forms";
+import {
+  initialRecurringPaymentFormState,
+  repeatOptions,
+  typeOptions,
+} from "../types/forms";
 import { recurringPaymentSchema } from "../schemas/forms";
 import { useForm } from "@/shared/hooks/useForm";
 
@@ -83,7 +87,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
         type="select"
         label="Repeat"
         layout="horizontal"
-        selectOptions={["Monthly", "Yearly", "Weekly", "Daily"]}
+        selectOptions={repeatOptions}
         value={formData.repeat}
         onChange={(e) => handleChange("repeat", e.target.value)}
       />
@@ -92,7 +96,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
         type="select"
         label="Type"
         layout="horizontal"
-        selectOptions={["Income", "Expense"]}
+        selectOptions={typeOptions}
         value={formData.type}
         onChange={(e) => handleChange("type", e.target.value)}
       />
