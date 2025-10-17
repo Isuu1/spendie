@@ -1,0 +1,34 @@
+.selectContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  .optionsWrapper {
+    position: relative;
+    flex: 1;
+    .selectedOption {
+      display: block;
+      width: 100%;
+      background: var(--color-bg-tile);
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .selectOptions {
+      z-index: 6;
+      position: absolute;
+      top: 30px;
+      left: 0;
+      background: var(--color-bg-tile);
+      list-style: none;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      width: 100%;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+  }
+}
