@@ -1,46 +1,93 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 //Styles
 import styles from "./SelectInput.module.scss";
+//Animations
+import { AnimatePresence, motion } from "motion/react";
 
 interface SelectInputProps {
+  id: string;
   label?: string;
-  selectedOption?: string;
+  value?: string;
   selectOptions?: readonly string[];
   onChange?: (option: string) => void;
+  layout: "horizontal" | "vertical";
 }
 
+const selectModeOptionsVariants = {
+  hidden: { opacity: 0, y: -10 },
+  visible: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -10 },
+  transition: { duration: 0.15 },
+};
+
 const SelectInput: React.FC<SelectInputProps> = ({
+  id,
   label,
   selectOptions,
-  selectedOption,
+  value,
   onChange,
+  layout,
 }) => {
   const [showOptions, setShowOptions] = useState(false);
+
+  const selectRef = useRef<HTMLDivElement>(null);
 
   const handleOptionClick = (option: string) => {
     onChange?.(option);
     setShowOptions(false);
   };
 
+  //Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        selectRef.current &&
+        !selectRef.current.contains(event.target as Node)
+      ) {
+        setShowOptions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div
-      className={styles.selectContainer}
+      className={`${styles.selectContainer} ${styles[layout]}`}
       onClick={() => setShowOptions(!showOptions)}
+      ref={selectRef}
     >
       {label && <label className={styles.label}>{label}</label>}
+      <input
+        id={id}
+        name={id}
+        type="hidden"
+        value={value}
+        className={styles.selectInput}
+      />
       <div className={styles.optionsWrapper}>
-        <span className={styles.selectedOption}>
-          {selectedOption || selectOptions?.[0]}
-        </span>
-        {showOptions && (
-          <ul className={styles.selectOptions}>
-            {selectOptions?.map((option, index) => (
-              <li key={index} onClick={() => handleOptionClick(option)}>
-                {option}
-              </li>
-            ))}
-          </ul>
-        )}
+        <span className={styles.value}>{value || selectOptions?.[0]}</span>
+        <AnimatePresence>
+          {showOptions && (
+            <motion.ul
+              className={styles.selectOptions}
+              variants={selectModeOptionsVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              {selectOptions?.map((option, index) => (
+                <li
+                  key={index}
+                  onClick={() => handleOptionClick(option)}
+                  className={`${styles.option} ${value === option ? styles.active : ""}`}
+                >
+                  {option}
+                </li>
+              ))}
+            </motion.ul>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

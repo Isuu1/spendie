@@ -7,7 +7,7 @@
   .optionsWrapper {
     position: relative;
     flex: 1;
-    .selectedOption {
+    .value {
       display: block;
       width: 100%;
       background: var(--color-bg-tile);
@@ -29,6 +29,28 @@
       width: 100%;
       cursor: pointer;
       border-radius: 10px;
+      .option {
+        padding: 0.5rem;
+        border-radius: 8px;
+        &:hover {
+          background: var(--color-action-active-hover);
+          color: var(--color-text-on-accent);
+        }
+      }
+      .active {
+        background: var(--color-action-active);
+        color: var(--color-text-on-accent);
+      }
     }
+  }
+}
+
+.horizontal {
+  flex-direction: row;
+}
+.vertical {
+  flex-direction: column;
+  .label {
+    margin-right: auto;
   }
 }

@@ -16,6 +16,7 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 import { useForm } from "@/shared/hooks/useForm";
 //Schemas
 import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/forms";
+import SelectInput from "@/shared/components/ui/SelectInput";
 
 const AddPaymentForm: React.FC = () => {
   const router = useRouter();
@@ -41,6 +42,7 @@ const AddPaymentForm: React.FC = () => {
   ) => {
     //This runs before server action to validate all fields on client side
     const isValid = validateForm(formData);
+    console.log("data before submit", formData, isValid);
     if (!isValid) {
       //Stop form submission if invalid
       e.preventDefault();
@@ -84,7 +86,7 @@ const AddPaymentForm: React.FC = () => {
         value={formData.repeat}
         onChange={(e) => handleChange("repeat", e.target.value)}
       />
-      <Input
+      {/* <Input
         id="type"
         type="select"
         label="Type"
@@ -92,6 +94,14 @@ const AddPaymentForm: React.FC = () => {
         selectOptions={["Income", "Expense"]}
         value={formData.type}
         onChange={(e) => handleChange("type", e.target.value)}
+      /> */}
+      <SelectInput
+        id="type"
+        label="Type"
+        layout="horizontal"
+        selectOptions={["Income", "Expense"]}
+        value={formData.type}
+        onChange={(val) => handleChange("type", val)}
       />
       <Input
         id="amount"
