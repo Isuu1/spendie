@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 //Styles
 import styles from "./SelectInput.module.scss";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
+import { useClickOutside } from "@/shared/hooks/useClickOutside";
 
 interface SelectInputProps {
   id: string;
@@ -37,19 +38,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
     setShowOptions(false);
   };
 
-  //Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        selectRef.current &&
-        !selectRef.current.contains(event.target as Node)
-      ) {
-        setShowOptions(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  useClickOutside(selectRef, () => setShowOptions(false));
 
   return (
     <div
