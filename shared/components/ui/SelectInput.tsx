@@ -47,6 +47,9 @@ const SelectInput: React.FC<SelectInputProps> = ({
       ref={selectRef}
     >
       {label && <label className={styles.label}>{label}</label>}
+
+      {/* Hidden input to store the selected value */}
+
       <input
         id={id}
         name={id}
