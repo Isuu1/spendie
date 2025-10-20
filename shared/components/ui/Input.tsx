@@ -13,7 +13,6 @@ interface InputProps {
   type: "text" | "number" | "email" | "password" | "select" | "date";
   label?: string;
   layout: "horizontal" | "vertical";
-  selectOptions?: readonly string[];
   errors?: string[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | void;
   defaultValue?: string | number;
@@ -26,7 +25,6 @@ const Input: React.FC<InputProps> = ({
   type,
   label,
   layout,
-  selectOptions,
   errors,
   onChange,
   defaultValue,
@@ -56,15 +54,6 @@ const Input: React.FC<InputProps> = ({
             />
             {icon && <span className={styles.icon}>{icon}</span>}
           </div>
-        )}
-        {type === "select" && (
-          <select className={styles.selectField} id={id} name={id}>
-            {selectOptions?.map((option, index) => (
-              <option className={styles.option} key={index} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
         )}
       </div>
       {errors && errors.length > 0 && (
