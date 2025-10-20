@@ -30,8 +30,8 @@ const AddPaymentForm: React.FC = () => {
     recurringPaymentSchema,
     {
       name: "",
-      repeat: "",
-      type: "",
+      repeat: "Monthly",
+      type: "Income",
       amount: 0,
       first_payment_date: "",
     }
@@ -77,24 +77,14 @@ const AddPaymentForm: React.FC = () => {
         value={formData.name}
         onChange={(e) => handleChange("name", e.target.value)}
       />
-      <Input
+      <SelectInput
         id="repeat"
-        type="select"
         label="Repeat"
         layout="horizontal"
         selectOptions={["Monthly", "Yearly", "Weekly", "Daily"]}
         value={formData.repeat}
-        onChange={(e) => handleChange("repeat", e.target.value)}
+        onChange={(val) => handleChange("repeat", val)}
       />
-      {/* <Input
-        id="type"
-        type="select"
-        label="Type"
-        layout="horizontal"
-        selectOptions={["Income", "Expense"]}
-        value={formData.type}
-        onChange={(e) => handleChange("type", e.target.value)}
-      /> */}
       <SelectInput
         id="type"
         label="Type"
