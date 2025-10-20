@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 //Styles
 import styles from "./DateInput.module.scss";
 import moment from "moment";
@@ -17,28 +18,40 @@ const DateInput: React.FC<DateInputProps> = ({
   id,
   label,
   value,
-  onChange,
+  //onChange,
   layout,
 }) => {
   const [openDatePicker, setOpenDatePicker] = useState(false);
 
+  const formatValue = (dateStr: string) => {
+    return moment(dateStr).format("Do MMMM YYYY");
+  };
+
   return (
     <div>
-      <div className={`${styles[layout]}`}>
+      <div className={`${styles.dateContainer} ${styles[layout]}`}>
         <input type="hidden" id={id} name={id} />
-        {label && <label>{label}</label>}
-        <div onClick={() => setOpenDatePicker(!openDatePicker)}>
-          <span>{value || moment().format("MMMM Do YYYY")}</span>
-        </div>
+        {label && <label className={styles.label}>{label}</label>}
+        <span
+          className={styles.value}
+          onClick={() => setOpenDatePicker(!openDatePicker)}
+        >
+          {value ? formatValue(value) : moment().format("Do MMMM YYYY")}
+        </span>
         {openDatePicker && (
           <DatePicker
             selected={value ? new Date(value) : null}
-            onChange={(date) => {
-              if (date) {
-                onChange(date.toISOString());
-              }
-            }}
+            // onChange={(date) => {
+            //   if (date) {
+            //     onChange(date.toISOString());
+            //   }
+            // }}
             inline
+            calendarClassName={styles.datePicker}
+            minDate={moment().toDate()}
+            onSelect={() => {
+              setOpenDatePicker(false);
+            }}
           />
         )}
       </div>
