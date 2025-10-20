@@ -17,6 +17,7 @@ import { useForm } from "@/shared/hooks/useForm";
 //Schemas
 import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/forms";
 import SelectInput from "@/shared/components/ui/SelectInput";
+import DateInput from "@/shared/components/ui/DateInput";
 
 const AddPaymentForm: React.FC = () => {
   const router = useRouter();
@@ -102,7 +103,14 @@ const AddPaymentForm: React.FC = () => {
         value={formData.amount}
         onChange={(e) => handleChange("amount", e.target.value)}
       />
-      <Input
+      <DateInput
+        id="first_payment_date"
+        label="First Payment Date"
+        layout="horizontal"
+        value={formData.first_payment_date}
+        onChange={(val) => handleChange("first_payment_date", val)}
+      />
+      {/* <Input
         id="first_payment_date"
         type="date"
         label="First Payment Date"
@@ -110,7 +118,7 @@ const AddPaymentForm: React.FC = () => {
         errors={errors.first_payment_date}
         value={formData.first_payment_date}
         onChange={(e) => handleChange("first_payment_date", e.target.value)}
-      />
+      /> */}
       <div className="flex-row-space-between">
         <Button
           variant="secondary"
