@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 //Styles
 import styles from "./DateInput.module.scss";
 import moment from "moment";
+import InputError from "../InputError";
 
 interface DateInputProps {
   id: string;
@@ -12,6 +13,7 @@ interface DateInputProps {
   selectOptions?: readonly string[];
   onChange?: (option: string) => void;
   layout: "horizontal" | "vertical";
+  errors?: string[];
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -20,6 +22,7 @@ const DateInput: React.FC<DateInputProps> = ({
   value,
   //onChange,
   layout,
+  errors,
 }) => {
   const [openDatePicker, setOpenDatePicker] = useState(false);
 
@@ -28,7 +31,7 @@ const DateInput: React.FC<DateInputProps> = ({
   };
 
   return (
-    <div>
+    <>
       <div className={`${styles.dateContainer} ${styles[layout]}`}>
         <input type="hidden" id={id} name={id} />
         {label && <label className={styles.label}>{label}</label>}
@@ -55,7 +58,8 @@ const DateInput: React.FC<DateInputProps> = ({
           />
         )}
       </div>
-    </div>
+      {errors && errors.length > 0 && <InputError errors={errors} />}
+    </>
   );
 };
 

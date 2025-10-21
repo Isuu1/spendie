@@ -107,18 +107,11 @@ const AddPaymentForm: React.FC = () => {
         id="first_payment_date"
         label="First Payment Date"
         layout="horizontal"
+        errors={errors.first_payment_date}
         value={formData.first_payment_date}
         onChange={(val) => handleChange("first_payment_date", val)}
       />
-      {/* <Input
-        id="first_payment_date"
-        type="date"
-        label="First Payment Date"
-        layout="horizontal"
-        errors={errors.first_payment_date}
-        value={formData.first_payment_date}
-        onChange={(e) => handleChange("first_payment_date", e.target.value)}
-      /> */}
+
       <div className="flex-row-space-between">
         <Button
           variant="secondary"
