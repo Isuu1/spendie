@@ -10,13 +10,7 @@
   }
   .value {
     @include mixins.defaultInput;
-    //flex: 1;
     cursor: pointer;
-    // display: block;
-    // background: var(--color-input-bg);
-    // border-radius: var(--border-radius-m);
-    // cursor: pointer;
-    // padding: 0.8rem;
   }
   .datePicker {
     z-index: 99;
