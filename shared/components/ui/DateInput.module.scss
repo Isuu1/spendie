@@ -1,0 +1,34 @@
+@use "@/shared/styles/mixins" as mixins;
+
+.dateContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  .label {
+    @include mixins.inputLabel;
+  }
+  .value {
+    @include mixins.defaultInput;
+    cursor: pointer;
+  }
+  .datePicker {
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-bg-secondary);
+    border: 0;
+  }
+}
+
+.horizontal {
+  flex-direction: row;
+}
+.vertical {
+  flex-direction: column;
+  .label {
+    margin-right: auto;
+  }
+}

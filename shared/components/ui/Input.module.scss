@@ -1,27 +1,19 @@
+@use "@/shared/styles/mixins" as mixins;
+
 .inputContainer {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
   width: 100%;
   .label {
-    white-space: nowrap;
-    font-size: 0.9rem;
+    @include mixins.inputLabel;
   }
   .inputFieldWrapper {
     display: flex;
     position: relative;
+    flex: 1;
     .inputField {
-      outline: 2px solid transparent;
-      background: #88888833;
-      font-size: 0.95rem;
-      border: 0;
-      padding: 0.6rem 0.5rem;
-      width: 100%;
-      border-radius: 8px;
-      font-family: inherit;
-      transition: 0.2s all ease;
-      &:focus {
-        outline: 2px solid #41b300;
-      }
+      @include mixins.defaultInput;
     }
     .withIcon {
       padding-left: 1.8rem;
@@ -33,16 +25,6 @@
       transform: translate(0, -50%);
     }
   }
-
-  .selectField {
-    width: 100%;
-    border-radius: 8px;
-    padding: 0.5rem;
-    border: 0;
-    .option {
-      padding: 0.5rem;
-    }
-  }
 }
 
 .horizontal {
@@ -52,24 +34,5 @@
   flex-direction: column;
   .label {
     margin-right: auto;
-  }
-}
-
-.errorContainer {
-  margin-right: auto;
-  color: rgb(255, 255, 255);
-  background: rgba(255, 0, 0, 0.1);
-  border: 1px solid rgba(255, 0, 0, 0.3);
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 0.4rem;
-  border-radius: 6px;
-  .errorMessage {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    .icon {
-      font-size: 1.3rem;
-    }
   }
 }

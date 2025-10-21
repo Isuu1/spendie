@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
+import SelectInput from "@/shared/components/ui/SelectInput";
+import DateInput from "@/shared/components/ui/DateInput";
 //Actions
 import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/addRecurringPayment";
 //Types
@@ -29,8 +31,8 @@ const AddPaymentForm: React.FC = () => {
     recurringPaymentSchema,
     {
       name: "",
-      repeat: "",
-      type: "",
+      repeat: "Monthly",
+      type: "Income",
       amount: 0,
       first_payment_date: "",
     }
@@ -41,6 +43,7 @@ const AddPaymentForm: React.FC = () => {
   ) => {
     //This runs before server action to validate all fields on client side
     const isValid = validateForm(formData);
+    console.log("data before submit", formData, isValid);
     if (!isValid) {
       //Stop form submission if invalid
       e.preventDefault();
@@ -75,23 +78,21 @@ const AddPaymentForm: React.FC = () => {
         value={formData.name}
         onChange={(e) => handleChange("name", e.target.value)}
       />
-      <Input
+      <SelectInput
         id="repeat"
-        type="select"
         label="Repeat"
         layout="horizontal"
         selectOptions={["Monthly", "Yearly", "Weekly", "Daily"]}
         value={formData.repeat}
-        onChange={(e) => handleChange("repeat", e.target.value)}
+        onChange={(val) => handleChange("repeat", val)}
       />
-      <Input
+      <SelectInput
         id="type"
-        type="select"
         label="Type"
         layout="horizontal"
         selectOptions={["Income", "Expense"]}
         value={formData.type}
-        onChange={(e) => handleChange("type", e.target.value)}
+        onChange={(val) => handleChange("type", val)}
       />
       <Input
         id="amount"
@@ -102,15 +103,15 @@ const AddPaymentForm: React.FC = () => {
         value={formData.amount}
         onChange={(e) => handleChange("amount", e.target.value)}
       />
-      <Input
+      <DateInput
         id="first_payment_date"
-        type="date"
         label="First Payment Date"
         layout="horizontal"
         errors={errors.first_payment_date}
         value={formData.first_payment_date}
-        onChange={(e) => handleChange("first_payment_date", e.target.value)}
+        onChange={(val) => handleChange("first_payment_date", val)}
       />
+
       <div className="flex-row-space-between">
         <Button
           variant="secondary"

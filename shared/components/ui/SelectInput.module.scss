@@ -1,0 +1,59 @@
+@use "@/shared/styles/mixins" as mixins;
+
+.selectContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  .label {
+    @include mixins.inputLabel;
+  }
+  .optionsWrapper {
+    position: relative;
+    flex: 1;
+    .value {
+      display: block;
+      @include mixins.defaultInput;
+      cursor: pointer;
+    }
+    .selectOptions {
+      transform-origin: top;
+      z-index: 6;
+      position: absolute;
+      top: 30px;
+      left: 0;
+      background: var(--color-bg-tile);
+      list-style: none;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      width: 100%;
+      cursor: pointer;
+      border-radius: 10px;
+      .option {
+        padding: 0.5rem;
+        border-radius: 8px;
+        &:hover {
+          background: var(--color-action-active-hover);
+          color: var(--color-text-on-accent);
+        }
+      }
+      .active {
+        background: var(--color-action-active);
+        color: var(--color-text-on-accent);
+      }
+    }
+  }
+}
+
+.horizontal {
+  flex-direction: row;
+}
+.vertical {
+  flex-direction: column;
+  .label {
+    margin-right: auto;
+  }
+}

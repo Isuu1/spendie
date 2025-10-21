@@ -7,6 +7,11 @@
   --color-text-active: #d34702;
   --color-action-hover: #d34702;
   --color-action-active: #d34702;
+  --color-action-active-hover: #973a13;
+  /* Border */
+  --border-radius-s: 5px;
+  --border-radius-m: 10px;
+  --border-radius-l: 15px;
 }
 
 html,
@@ -39,6 +44,10 @@ a {
 /* Ensure SVGs don't have weird gaps below them */
 svg {
   display: block;
+}
+
+input {
+  font-family: inherit;
 }
 
 .flex-row-space-between {
