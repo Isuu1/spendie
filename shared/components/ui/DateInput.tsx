@@ -20,7 +20,7 @@ const DateInput: React.FC<DateInputProps> = ({
   id,
   label,
   value,
-  //onChange,
+  onChange,
   layout,
   errors,
 }) => {
@@ -44,11 +44,11 @@ const DateInput: React.FC<DateInputProps> = ({
         {openDatePicker && (
           <DatePicker
             selected={value ? new Date(value) : null}
-            // onChange={(date) => {
-            //   if (date) {
-            //     onChange(date.toISOString());
-            //   }
-            // }}
+            onChange={(date) => {
+              if (date) {
+                onChange?.(date.toISOString());
+              }
+            }}
             inline
             calendarClassName={styles.datePicker}
             minDate={moment().toDate()}

@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
+import SelectInput from "@/shared/components/ui/SelectInput";
+import DateInput from "@/shared/components/ui/DateInput";
 //Actions
 import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/addRecurringPayment";
 //Types
@@ -16,8 +18,6 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 import { useForm } from "@/shared/hooks/useForm";
 //Schemas
 import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/forms";
-import SelectInput from "@/shared/components/ui/SelectInput";
-import DateInput from "@/shared/components/ui/DateInput";
 
 const AddPaymentForm: React.FC = () => {
   const router = useRouter();
