@@ -1,18 +1,22 @@
+@use "@/shared/styles/mixins" as mixins;
+
 .dateContainer {
   position: relative;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   .label {
-    white-space: nowrap;
+    @include mixins.inputLabel;
   }
   .value {
-    display: block;
-    width: 100%;
-    background: var(--color-bg-tile);
-    border-radius: 10px;
+    @include mixins.defaultInput;
+    //flex: 1;
     cursor: pointer;
-    padding: 0.6rem 0.5rem;
+    // display: block;
+    // background: var(--color-input-bg);
+    // border-radius: var(--border-radius-m);
+    // cursor: pointer;
+    // padding: 0.8rem;
   }
   .datePicker {
     z-index: 99;

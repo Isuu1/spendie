@@ -1,19 +1,21 @@
+@use "@/shared/styles/mixins" as mixins;
+
 .selectContainer {
   position: relative;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   width: 100%;
+  .label {
+    @include mixins.inputLabel;
+  }
   .optionsWrapper {
     position: relative;
     flex: 1;
     .value {
       display: block;
-      width: 100%;
-      background: var(--color-bg-tile);
-      border-radius: 10px;
+      @include mixins.defaultInput;
       cursor: pointer;
-      padding: 0.5rem;
     }
     .selectOptions {
       transform-origin: top;
