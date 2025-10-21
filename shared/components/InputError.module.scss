@@ -1,0 +1,17 @@
+.errorContainer {
+  margin-right: auto;
+  color: rgb(255, 255, 255);
+  background: #af0000ff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.4rem;
+  border-radius: 6px;
+  .errorMessage {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    .icon {
+      font-size: 1.3rem;
+    }
+  }
+}
