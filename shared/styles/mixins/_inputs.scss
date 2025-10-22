@@ -1,0 +1,45 @@
+//Main input container
+@mixin inputContainer {
+  color: var(--color-input-text);
+  flex: 1;
+  font-size: var(--input-font-size);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+@mixin inputLabel {
+  --input-label-font-size: 1rem;
+  --input-label-width: 150px;
+  white-space: nowrap;
+  font-size: var(--input-label-font-size);
+  width: var(--input-label-width);
+}
+
+@mixin inputIcon {
+  position: absolute;
+  top: 50%;
+  left: 0.5rem;
+  transform: translate(0, -50%);
+}
+
+@mixin inputFieldWrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1;
+  gap: 1rem;
+}
+
+@mixin inputField {
+  outline: 2px solid transparent;
+  background: var(--color-input-bg);
+  border: 0;
+  padding: 0.8rem 1.3rem;
+  border-radius: var(--border-radius-l);
+  transition: 0.1s all ease;
+  &:focus {
+    outline: 2px solid var(--color-action-active);
+  }
+}

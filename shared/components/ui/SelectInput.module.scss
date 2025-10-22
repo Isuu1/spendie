@@ -1,4 +1,4 @@
-@use "@/shared/styles/mixins" as mixins;
+//@use "@/shared/styles/mixins" as mixins;
 
 .selectContainer {
   position: relative;
@@ -7,14 +7,14 @@
   gap: 0.5rem;
   width: 100%;
   .label {
-    @include mixins.inputLabel;
+    //@include mixins.inputLabel;
   }
   .optionsWrapper {
     position: relative;
     flex: 1;
     .value {
       display: block;
-      @include mixins.defaultInput;
+      //@include mixins.defaultInput;
       cursor: pointer;
     }
     .selectOptions {

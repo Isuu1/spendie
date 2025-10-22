@@ -1,19 +1,21 @@
-@use "@/shared/styles/mixins" as mixins;
+@use "@/shared/styles/mixins/inputs" as inputs;
 
 .inputContainer {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
+  // display: flex;
+  // align-items: center;
+  // gap: 0.5rem;
+  // width: 100%;
+  //@include mixins.inputContainer;
+  @include inputs.inputContainer;
   .label {
-    @include mixins.inputLabel;
+    @include inputs.inputLabel;
   }
   .inputFieldWrapper {
     display: flex;
     position: relative;
     flex: 1;
     .inputField {
-      @include mixins.defaultInput;
+      // @include mixins.defaultInput;
     }
     .withIcon {
       padding-left: 1.8rem;

@@ -1,4 +1,4 @@
-@use "@/shared/styles/mixins" as mixins;
+//@use "@/shared/styles/mixins" as mixins;
 
 .dateContainer {
   position: relative;
@@ -6,10 +6,10 @@
   align-items: center;
   gap: 0.5rem;
   .label {
-    @include mixins.inputLabel;
+    // @include mixins.inputLabel;
   }
   .value {
-    @include mixins.defaultInput;
+    // @include mixins.defaultInput;
     cursor: pointer;
   }
   .datePicker {

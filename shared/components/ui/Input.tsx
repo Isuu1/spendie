@@ -37,23 +37,24 @@ const Input: React.FC<InputProps> = ({
             {label}
           </label>
         )}
-
-        <div className={styles.inputFieldWrapper}>
-          <input
-            className={`${styles.inputField} ${icon ? styles.withIcon : ""}`}
-            id={id}
-            name={id}
-            type={type}
-            onChange={onChange}
-            defaultValue={defaultValue}
-            value={
-              value instanceof Date ? value.toISOString().slice(0, 10) : value
-            }
-          />
-          {icon && <span className={styles.icon}>{icon}</span>}
+        <div className={styles.fieldWrapper}>
+          <div className={styles.inputFieldWrapper}>
+            <input
+              className={`${styles.inputField} ${icon ? styles.withIcon : ""}`}
+              id={id}
+              name={id}
+              type={type}
+              onChange={onChange}
+              defaultValue={defaultValue}
+              value={
+                value instanceof Date ? value.toISOString().slice(0, 10) : value
+              }
+            />
+            {icon && <span className={styles.icon}>{icon}</span>}
+          </div>
+          {errors && errors.length > 0 && <InputError errors={errors} />}
         </div>
       </div>
-      {errors && errors.length > 0 && <InputError errors={errors} />}
     </>
   );
 };

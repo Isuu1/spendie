@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "@/shared/styles/globals.css";
+import "@/shared/styles/globals.scss";
 
 const inter = Inter({
   variable: "--font-inter",
