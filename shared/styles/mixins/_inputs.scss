@@ -8,6 +8,7 @@
   gap: 1rem;
   @media (min-width: 600px) {
     grid-template-columns: 150px 1fr;
+    grid-template-rows: auto;
   }
 }
 
@@ -40,7 +41,7 @@
 }
 
 @mixin inputField {
-  outline: 3px solid var(--color-input-bg);
+  outline: 3px solid transparent;
   flex: 1;
   background: var(--color-input-bg);
   color: var(--color-input-text);

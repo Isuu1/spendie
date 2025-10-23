@@ -42,11 +42,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   useClickOutside(selectRef, () => setShowOptions(false));
 
   return (
-    <div
-      className={`${styles.inputContainer} ${styles[layout]}`}
-      onClick={() => setShowOptions(!showOptions)}
-      ref={selectRef}
-    >
+    <div className={`${styles.inputContainer} ${styles[layout]}`}>
       {label && <label className={styles.label}>{label}</label>}
 
       {/* Hidden input to store the selected value */}
@@ -59,7 +55,11 @@ const SelectInput: React.FC<SelectInputProps> = ({
       />
       <div className={styles.fieldWrapper}>
         <div className={styles.inputFieldWrapper}>
-          <span className={`${styles.inputField} ${styles.selectInput}`}>
+          <span
+            className={`${styles.inputField} ${styles.selectInput}`}
+            onClick={() => setShowOptions(!showOptions)}
+            ref={selectRef}
+          >
             {value || selectOptions?.[0]}
             <motion.i
               className={`${styles.dropdownIcon} ${showOptions ? styles.dropdownOpen : ""}`}
