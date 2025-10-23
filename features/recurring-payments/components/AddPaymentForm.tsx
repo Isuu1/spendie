@@ -73,7 +73,6 @@ const AddPaymentForm: React.FC = () => {
         id="name"
         type="text"
         label="Payment Name"
-        layout="horizontal"
         errors={errors.name}
         value={formData.name}
         onChange={(e) => handleChange("name", e.target.value)}
@@ -98,7 +97,6 @@ const AddPaymentForm: React.FC = () => {
         id="amount"
         type="number"
         label="Amount"
-        layout="horizontal"
         errors={errors.amount}
         value={formData.amount}
         onChange={(e) => handleChange("amount", e.target.value)}
