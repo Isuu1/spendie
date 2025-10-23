@@ -10,7 +10,7 @@ interface InputProps {
   id: string;
   type: "text" | "number" | "email" | "password";
   label?: string;
-  layout: "horizontal" | "vertical";
+  layout?: "horizontal" | "vertical";
   errors?: string[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | void;
   defaultValue?: string | number;
@@ -22,7 +22,7 @@ const Input: React.FC<InputProps> = ({
   id,
   type,
   label,
-  layout,
+  layout = "horizontal",
   errors,
   onChange,
   defaultValue,
@@ -38,7 +38,7 @@ const Input: React.FC<InputProps> = ({
           </label>
         )}
         <div className={styles.fieldWrapper}>
-          <div className={styles.inputFieldWrapper}>
+          <div className={`${styles.inputFieldWrapper} `}>
             <input
               className={`${styles.inputField} ${icon ? styles.withIcon : ""}`}
               id={id}
@@ -52,7 +52,9 @@ const Input: React.FC<InputProps> = ({
             />
             {icon && <span className={styles.icon}>{icon}</span>}
           </div>
-          {errors && errors.length > 0 && <InputError errors={errors} />}
+          <div className={styles.errorContainer}>
+            {errors && errors.length > 0 && <InputError errors={errors} />}
+          </div>
         </div>
       </div>
     </>

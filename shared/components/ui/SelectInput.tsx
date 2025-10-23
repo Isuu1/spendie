@@ -11,7 +11,7 @@ interface SelectInputProps {
   value?: string;
   selectOptions?: readonly string[];
   onChange?: (option: string) => void;
-  layout: "horizontal" | "vertical";
+  layout?: "horizontal" | "vertical";
 }
 
 const selectModeOptionsVariants = {
@@ -27,7 +27,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   selectOptions,
   value,
   onChange,
-  layout,
+  layout = "horizontal",
 }) => {
   const [showOptions, setShowOptions] = useState(false);
 
@@ -42,14 +42,13 @@ const SelectInput: React.FC<SelectInputProps> = ({
 
   return (
     <div
-      className={`${styles.selectContainer} ${styles[layout]}`}
+      className={`${styles.inputContainer} ${styles[layout]}`}
       onClick={() => setShowOptions(!showOptions)}
       ref={selectRef}
     >
       {label && <label className={styles.label}>{label}</label>}
 
       {/* Hidden input to store the selected value */}
-
       <input
         id={id}
         name={id}
@@ -57,29 +56,33 @@ const SelectInput: React.FC<SelectInputProps> = ({
         value={value}
         className={styles.selectInput}
       />
-      <div className={styles.optionsWrapper}>
-        <span className={styles.value}>{value || selectOptions?.[0]}</span>
-        <AnimatePresence>
-          {showOptions && (
-            <motion.ul
-              className={styles.selectOptions}
-              variants={selectModeOptionsVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-            >
-              {selectOptions?.map((option, index) => (
-                <li
-                  key={index}
-                  onClick={() => handleOptionClick(option)}
-                  className={`${styles.option} ${value === option ? styles.active : ""}`}
-                >
-                  {option}
-                </li>
-              ))}
-            </motion.ul>
-          )}
-        </AnimatePresence>
+      <div className={styles.fieldWrapper}>
+        <div className={styles.inputFieldWrapper}>
+          <span className={styles.inputField}>
+            {value || selectOptions?.[0]}
+          </span>
+          <AnimatePresence>
+            {showOptions && (
+              <motion.ul
+                className={styles.selectOptions}
+                variants={selectModeOptionsVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                {selectOptions?.map((option, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleOptionClick(option)}
+                    className={`${styles.option} ${value === option ? styles.active : ""}`}
+                  >
+                    {option}
+                  </li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

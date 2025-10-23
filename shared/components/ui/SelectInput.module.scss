@@ -1,59 +1,44 @@
 //@use "@/shared/styles/mixins" as mixins;
+@use "@/shared/styles/mixins/inputs" as inputs;
 
-.selectContainer {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  .label {
-    //@include mixins.inputLabel;
-  }
-  .optionsWrapper {
-    position: relative;
-    flex: 1;
-    .value {
-      display: block;
-      //@include mixins.defaultInput;
-      cursor: pointer;
-    }
-    .selectOptions {
-      transform-origin: top;
-      z-index: 6;
-      position: absolute;
-      top: 30px;
-      left: 0;
-      background: var(--color-bg-tile);
-      list-style: none;
+.inputContainer {
+  @include inputs.inputSkeleton;
+  cursor: pointer;
+  .selectOptions {
+    transform-origin: top;
+    z-index: 6;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    background: var(--color-bg-tile);
+    font-size: var(--input-font-size);
+    list-style: none;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 10px;
+    .option {
       padding: 0.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      width: 100%;
-      cursor: pointer;
-      border-radius: 10px;
-      .option {
-        padding: 0.5rem;
-        border-radius: 8px;
-        &:hover {
-          background: var(--color-action-active-hover);
-          color: var(--color-text-on-accent);
-        }
-      }
-      .active {
-        background: var(--color-action-active);
+      border-radius: 8px;
+      &:hover {
+        background: var(--color-action-active-hover);
         color: var(--color-text-on-accent);
       }
+    }
+    .active {
+      background: var(--color-action-active);
+      color: var(--color-text-on-accent);
     }
   }
 }
 
 .horizontal {
-  flex-direction: row;
+  grid-template-columns: 150px 1fr;
 }
 .vertical {
-  flex-direction: column;
-  .label {
-    margin-right: auto;
-  }
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
 }
