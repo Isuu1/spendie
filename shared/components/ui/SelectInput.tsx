@@ -43,8 +43,6 @@ const SelectInput: React.FC<SelectInputProps> = ({
 
   return (
     <div className={`${styles.inputContainer} ${styles[layout]}`}>
-      {label && <label className={styles.label}>{label}</label>}
-
       {/* Hidden input to store the selected value */}
       <input
         id={id}
@@ -53,6 +51,12 @@ const SelectInput: React.FC<SelectInputProps> = ({
         value={value}
         className={styles.selectInput}
       />
+
+      {label && (
+        <label htmlFor={id} className={styles.label}>
+          {label}
+        </label>
+      )}
       <div className={styles.fieldWrapper}>
         <div className={styles.inputFieldWrapper}>
           <span

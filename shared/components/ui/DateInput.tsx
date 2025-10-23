@@ -5,6 +5,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import styles from "./DateInput.module.scss";
 import moment from "moment";
 import InputError from "../InputError";
+//Animations
+import { AnimatePresence, motion } from "motion/react";
 
 interface DateInputProps {
   id: string;
@@ -32,31 +34,45 @@ const DateInput: React.FC<DateInputProps> = ({
 
   return (
     <>
-      <div className={`${styles.dateContainer} ${styles[layout]}`}>
-        <input type="hidden" id={id} name={id} />
-        {label && <label className={styles.label}>{label}</label>}
-        <span
-          className={styles.value}
-          onClick={() => setOpenDatePicker(!openDatePicker)}
-        >
-          {value ? formatValue(value) : moment().format("Do MMMM YYYY")}
-        </span>
-        {openDatePicker && (
-          <DatePicker
-            selected={value ? new Date(value) : null}
-            onChange={(date) => {
-              if (date) {
-                onChange?.(date.toISOString());
-              }
-            }}
-            inline
-            calendarClassName={styles.datePicker}
-            minDate={moment().toDate()}
-            onSelect={() => {
-              setOpenDatePicker(false);
-            }}
-          />
+      <div className={`${styles.inputContainer} ${styles[layout]}`}>
+        {/* Hidden input to store the selected value */}
+        <input type="hidden" id={id} name={id} value={value} />
+
+        {label && (
+          <label htmlFor={id} className={styles.label}>
+            {label}
+          </label>
         )}
+        <div className={styles.fieldWrapper}>
+          <div className={styles.inputFieldWrapper}>
+            <span
+              className={styles.inputField}
+              onClick={() => setOpenDatePicker(!openDatePicker)}
+            >
+              {value ? formatValue(value) : moment().format("Do MMMM YYYY")}
+            </span>
+          </div>
+          <AnimatePresence>
+            {openDatePicker && (
+              <motion.div className={styles.datePickerWrapper}>
+                <DatePicker
+                  selected={value ? new Date(value) : null}
+                  onChange={(date) => {
+                    if (date) {
+                      onChange?.(date.toISOString());
+                    }
+                  }}
+                  inline
+                  calendarClassName={styles.datePicker}
+                  minDate={moment().toDate()}
+                  onSelect={() => {
+                    setOpenDatePicker(false);
+                  }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
       {errors && errors.length > 0 && <InputError errors={errors} />}
     </>
