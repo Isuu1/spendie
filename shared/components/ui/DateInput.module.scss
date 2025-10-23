@@ -3,17 +3,10 @@
 .inputContainer {
   cursor: pointer;
   @include inputs.inputSkeleton;
-  .datePickerWrapper {
-    z-index: 99;
+  .dropdownIcon {
     position: absolute;
-    top: 45px;
-    .datePicker {
-      //position: absolute;
-      // top: 0;
-      // left: 50%;
-      // transform: translateX(-50%);
-      background: var(--color-bg-secondary);
-      border: 0;
-    }
+    right: 1.3rem;
+    color: var(--color-input-text);
+    font-size: 1.2rem;
   }
 }
