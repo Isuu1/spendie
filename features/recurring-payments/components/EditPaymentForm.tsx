@@ -39,8 +39,8 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
     recurringPaymentSchema,
     {
       name: payment.name,
-      repeat: payment.repeat as "" | "Monthly" | "Weekly",
-      type: payment.type as "" | "Income" | "Expense",
+      repeat: payment.repeat as "Monthly" | "Weekly",
+      type: payment.type as "Income" | "Expense",
       amount: payment.amount,
       first_payment_date: payment.first_payment_date,
     }
