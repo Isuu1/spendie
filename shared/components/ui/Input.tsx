@@ -52,9 +52,11 @@ const Input: React.FC<InputProps> = ({
             />
             {icon && <span className={styles.icon}>{icon}</span>}
           </div>
-          <div className={styles.errorContainer}>
-            {errors && errors.length > 0 && <InputError errors={errors} />}
-          </div>
+          {errors && errors.length > 0 && (
+            <div className={styles.errorContainer}>
+              <InputError errors={errors} />
+            </div>
+          )}
         </div>
       </div>
     </>

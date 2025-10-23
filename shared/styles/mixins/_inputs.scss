@@ -7,8 +7,6 @@
 }
 
 @mixin inputLabel {
-  --input-label-font-size: 1rem;
-  --input-label-width: 150px;
   white-space: nowrap;
   font-size: var(--input-label-font-size);
   padding-top: 0.8rem;
@@ -42,8 +40,8 @@
   background: var(--color-input-bg);
   color: var(--color-input-text);
   border: 0;
-  padding: 0.8rem 1.3rem;
-  border-radius: var(--border-radius-l);
+  padding: 0.7rem 1.3rem;
+  border-radius: var(--border-radius-m);
   transition: 0.2s all ease;
   font-size: var(--input-font-size);
   &:focus {
