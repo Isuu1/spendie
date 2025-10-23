@@ -1,10 +1,4 @@
-export const repeatOptions = [
-  "Monthly",
-  "Yearly",
-  "Weekly",
-  "Daily",
-  "",
-] as const;
+export const repeatOptions = ["Monthly", "Weekly", ""] as const;
 export const typeOptions = ["Income", "Expense", ""] as const;
 
 export type Repeat = (typeof repeatOptions)[number];
