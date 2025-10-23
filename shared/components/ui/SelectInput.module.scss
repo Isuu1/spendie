@@ -4,22 +4,35 @@
 .inputContainer {
   @include inputs.inputSkeleton;
   cursor: pointer;
+  .selectInput {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .dropdownIcon {
+      font-size: 1.1rem;
+      // animation: iconAnimation 0.2s ease forwards;
+      transition: all 0.2s ease;
+    }
+    .dropdownOpen {
+      transform: rotate(180deg);
+    }
+  }
   .selectOptions {
     transform-origin: top;
     z-index: 6;
     position: absolute;
-    top: 30px;
-    left: 0;
-    background: var(--color-bg-tile);
+    top: 50px;
+    left: -5px;
+    right: -5px;
+    background: var(--color-input-bg);
     font-size: var(--input-font-size);
     list-style: none;
-    padding: 0.5rem;
+    //padding: 0.7rem 1.3rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    width: 100%;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: var(--border-radius-l);
     .option {
       padding: 0.5rem;
       border-radius: 8px;
@@ -35,10 +48,19 @@
   }
 }
 
-.horizontal {
-  grid-template-columns: 150px 1fr;
-}
-.vertical {
-  grid-template-columns: 1fr;
-  grid-template-rows: auto auto;
-}
+// .horizontal {
+//   grid-template-columns: 150px 1fr;
+// }
+// .vertical {
+//   grid-template-columns: 1fr;
+//   grid-template-rows: auto auto;
+// }
+
+// @keyframes iconAnimation {
+//   0% {
+//     transform: rotate(0deg);
+//   }
+//   100% {
+//     transform: rotate(180deg);
+//   }
+// }

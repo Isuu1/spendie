@@ -3,7 +3,12 @@
   color: var(--color-input-text);
   width: 100%;
   display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
   gap: 1rem;
+  @media (min-width: 600px) {
+    grid-template-columns: 150px 1fr;
+  }
 }
 
 @mixin inputLabel {

@@ -4,6 +4,7 @@ import styles from "./SelectInput.module.scss";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
+import { TbArrowBigDownLineFilled } from "react-icons/tb";
 
 interface SelectInputProps {
   id: string;
@@ -58,8 +59,13 @@ const SelectInput: React.FC<SelectInputProps> = ({
       />
       <div className={styles.fieldWrapper}>
         <div className={styles.inputFieldWrapper}>
-          <span className={styles.inputField}>
+          <span className={`${styles.inputField} ${styles.selectInput}`}>
             {value || selectOptions?.[0]}
+            <motion.i
+              className={`${styles.dropdownIcon} ${showOptions ? styles.dropdownOpen : ""}`}
+            >
+              <TbArrowBigDownLineFilled />
+            </motion.i>
           </span>
           <AnimatePresence>
             {showOptions && (

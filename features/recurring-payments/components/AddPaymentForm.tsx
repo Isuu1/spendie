@@ -82,7 +82,7 @@ const AddPaymentForm: React.FC = () => {
         id="repeat"
         label="Repeat"
         layout="horizontal"
-        selectOptions={["Monthly", "Yearly", "Weekly", "Daily"]}
+        selectOptions={["Monthly", "Weekly"]}
         value={formData.repeat}
         onChange={(val) => handleChange("repeat", val)}
       />

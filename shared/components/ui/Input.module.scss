@@ -3,10 +3,3 @@
 .inputContainer {
   @include inputs.inputSkeleton;
 }
-.horizontal {
-  grid-template-columns: 150px 1fr;
-}
-.vertical {
-  grid-template-columns: 1fr;
-  grid-template-rows: auto auto;
-}
