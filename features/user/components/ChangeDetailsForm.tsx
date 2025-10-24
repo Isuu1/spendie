@@ -20,6 +20,7 @@ import { ChangeDetailsFormState } from "@/features/user/types/forms";
 import { accountDetailsSchema } from "@/features/user/schemas/forms";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
+import DateInput from "@/shared/components/ui/DateInput";
 
 interface ChangeDetailsFormProps {
   user: UserProfile;
@@ -76,7 +77,6 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
   return (
     <Form layout="vertical" action={formAction}>
       <Input
-        layout="vertical"
         id="name"
         type="text"
         label="Name"
@@ -89,7 +89,6 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
         icon={<FaUser />}
       />
       <Input
-        layout="vertical"
         id="surname"
         type="text"
         label="Surname"
@@ -101,21 +100,18 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
         errors={errors.surname}
         icon={<FaUser />}
       />
-      <Input
-        layout="vertical"
+      <DateInput
         id="dob"
-        type="date"
         label="Date of Birth"
         value={formData.dob}
-        onChange={(e) => {
-          handleChange("dob", e.target.value);
+        onChange={(value) => {
+          handleChange("dob", value);
           setEditMode(true);
         }}
         errors={errors.dob}
         icon={<BsCalendarDateFill />}
       />
       <Input
-        layout="vertical"
         id="email"
         type="email"
         label="Email"
