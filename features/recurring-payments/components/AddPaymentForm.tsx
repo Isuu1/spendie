@@ -18,6 +18,8 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 import { useForm } from "@/shared/hooks/useForm";
 //Schemas
 import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/forms";
+//Icons
+import { IoCalendarNumber } from "react-icons/io5";
 
 const AddPaymentForm: React.FC = () => {
   const router = useRouter();
@@ -108,7 +110,7 @@ const AddPaymentForm: React.FC = () => {
         errors={errors.first_payment_date}
         value={formData.first_payment_date}
         onChange={(val) => handleChange("first_payment_date", val)}
-        icon
+        icon={<IoCalendarNumber />}
       />
 
       <div className="flex-row-space-between">

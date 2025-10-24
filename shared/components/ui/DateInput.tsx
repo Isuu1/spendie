@@ -8,7 +8,6 @@ import { AnimatePresence, motion } from "motion/react";
 //Components
 import CustomDatePicker from "./CustomDatePicker";
 //Icons
-import { IoCalendarNumber } from "react-icons/io5";
 import { TbArrowBigDownLineFilled } from "react-icons/tb";
 
 interface DateInputProps {
@@ -17,9 +16,8 @@ interface DateInputProps {
   value?: string;
   selectOptions?: readonly string[];
   onChange?: (option: string) => void;
-  //layout: "horizontal" | "vertical";
   errors?: string[];
-  icon?: boolean;
+  icon?: React.ReactNode;
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -27,7 +25,6 @@ const DateInput: React.FC<DateInputProps> = ({
   label,
   value,
   onChange,
-  //layout,
   errors,
   icon,
 }) => {
@@ -54,7 +51,7 @@ const DateInput: React.FC<DateInputProps> = ({
               className={`${styles.inputField} ${styles.dateInput} ${icon ? styles.withIcon : ""}`}
               onClick={() => setOpenDatePicker(!openDatePicker)}
             >
-              {icon && <IoCalendarNumber className={styles.icon} />}
+              {icon && <i className={styles.icon}>{icon}</i>}
               {value ? formatValue(value) : moment().format("Do MMMM YYYY")}
               <motion.i
                 className={`${styles.dropdownIcon} ${openDatePicker ? styles.dropdownOpen : ""}`}
