@@ -82,7 +82,6 @@ const AddPaymentForm: React.FC = () => {
       <SelectInput
         id="repeat"
         label="Repeat"
-        layout="horizontal"
         selectOptions={["Monthly", "Weekly"]}
         value={formData.repeat}
         onChange={(val) => handleChange("repeat", val)}
@@ -90,7 +89,6 @@ const AddPaymentForm: React.FC = () => {
       <SelectInput
         id="type"
         label="Type"
-        layout="horizontal"
         selectOptions={["Income", "Expense"]}
         value={formData.type}
         onChange={(val) => handleChange("type", val)}
@@ -106,7 +104,6 @@ const AddPaymentForm: React.FC = () => {
       <DateInput
         id="first_payment_date"
         label="First Payment Date"
-        //layout="horizontal"
         errors={errors.first_payment_date}
         value={formData.first_payment_date}
         onChange={(val) => handleChange("first_payment_date", val)}

@@ -12,7 +12,6 @@ interface SelectInputProps {
   value?: string;
   selectOptions?: readonly string[];
   onChange?: (option: string) => void;
-  layout?: "horizontal" | "vertical";
   icon?: React.ReactNode;
 }
 
@@ -29,7 +28,6 @@ const SelectInput: React.FC<SelectInputProps> = ({
   selectOptions,
   value,
   onChange,
-  layout = "horizontal",
   icon,
 }) => {
   const [showOptions, setShowOptions] = useState(false);
@@ -44,7 +42,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   useClickOutside(selectRef, () => setShowOptions(false));
 
   return (
-    <div className={`${styles.inputContainer} ${styles[layout]}`}>
+    <div className={styles.inputContainer}>
       {/* Hidden input to store the selected value */}
       <input
         id={id}
