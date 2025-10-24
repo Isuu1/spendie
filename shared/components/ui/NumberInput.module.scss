@@ -1,0 +1,15 @@
+@use "@/shared/styles/mixins/inputs" as inputs;
+
+.inputContainer {
+  @include inputs.inputSkeleton;
+  // Hide native number input spinners
+  input[type="number"] {
+    appearance: none;
+    -moz-appearance: textfield;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}

@@ -21,6 +21,7 @@ import { recurringPaymentSchema } from "../schemas/forms";
 import { useForm } from "@/shared/hooks/useForm";
 import SelectInput from "@/shared/components/ui/SelectInput";
 import DateInput from "@/shared/components/ui/DateInput";
+import NumberInput from "@/shared/components/ui/NumberInput";
 
 interface EditPaymentFormProps {
   payment: RecurringPayment;
@@ -95,9 +96,8 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
         value={formData.type}
         onChange={(val) => handleChange("type", val)}
       />
-      <Input
+      <NumberInput
         id="amount"
-        type="number"
         label="Amount"
         errors={errors.amount}
         value={formData.amount}

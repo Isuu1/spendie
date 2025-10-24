@@ -9,6 +9,7 @@ import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 import SelectInput from "@/shared/components/ui/SelectInput";
 import DateInput from "@/shared/components/ui/DateInput";
+import NumberInput from "@/shared/components/ui/NumberInput";
 //Actions
 import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/addRecurringPayment";
 //Types
@@ -62,9 +63,6 @@ const AddPaymentForm: React.FC = () => {
     }
   }, [state, router]);
 
-  console.log("form state", state);
-  console.log("errors", errors);
-
   return (
     <Form
       layout="vertical"
@@ -93,9 +91,8 @@ const AddPaymentForm: React.FC = () => {
         value={formData.type}
         onChange={(val) => handleChange("type", val)}
       />
-      <Input
+      <NumberInput
         id="amount"
-        type="number"
         label="Amount"
         errors={errors.amount}
         value={formData.amount}
