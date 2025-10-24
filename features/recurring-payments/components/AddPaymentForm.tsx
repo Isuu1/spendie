@@ -13,7 +13,11 @@ import NumberInput from "@/shared/components/ui/NumberInput";
 //Actions
 import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/addRecurringPayment";
 //Types
-import { initialRecurringPaymentFormState } from "@/features/recurring-payments/types/forms";
+import {
+  initialRecurringPaymentFormState,
+  repeatOptions,
+  typeOptions,
+} from "@/features/recurring-payments/types/forms";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
 import { useForm } from "@/shared/hooks/useForm";
@@ -80,14 +84,14 @@ const AddPaymentForm: React.FC = () => {
       <SelectInput
         id="repeat"
         label="Repeat"
-        selectOptions={["Monthly", "Weekly"]}
+        selectOptions={repeatOptions}
         value={formData.repeat}
         onChange={(val) => handleChange("repeat", val)}
       />
       <SelectInput
         id="type"
         label="Type"
-        selectOptions={["Income", "Expense"]}
+        selectOptions={typeOptions}
         value={formData.type}
         onChange={(val) => handleChange("type", val)}
       />

@@ -7,21 +7,24 @@ import toast from "react-hot-toast";
 import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
+import SelectInput from "@/shared/components/ui/SelectInput";
+import DateInput from "@/shared/components/ui/DateInput";
+import NumberInput from "@/shared/components/ui/NumberInput";
 //Actions
 import { editRecurringPayment } from "@/features/recurring-payments/lib/actions/editRecurringPayment";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
+//Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 import {
   initialRecurringPaymentFormState,
   repeatOptions,
   typeOptions,
 } from "../types/forms";
+//Schemas
 import { recurringPaymentSchema } from "../schemas/forms";
+//Hooks
 import { useForm } from "@/shared/hooks/useForm";
-import SelectInput from "@/shared/components/ui/SelectInput";
-import DateInput from "@/shared/components/ui/DateInput";
-import NumberInput from "@/shared/components/ui/NumberInput";
 
 interface EditPaymentFormProps {
   payment: RecurringPayment;
