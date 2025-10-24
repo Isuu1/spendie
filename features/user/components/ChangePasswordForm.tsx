@@ -51,7 +51,6 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = () => {
   return (
     <Form layout="vertical" ref={formRef}>
       <Input
-        layout="vertical"
         id="newPassword"
         type="text"
         label="New password"
@@ -64,7 +63,6 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = () => {
         errors={errors.newPassword}
       />
       <Input
-        layout="vertical"
         id="confirmPassword"
         type="email"
         label="Confirm password"
