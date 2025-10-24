@@ -52,7 +52,7 @@ const DateInput: React.FC<DateInputProps> = ({
               onClick={() => setOpenDatePicker(!openDatePicker)}
             >
               {icon && <i className={styles.icon}>{icon}</i>}
-              {value ? formatValue(value) : moment().format("Do MMMM YYYY")}
+              {value ? formatValue(value) : "Select Date"}
               <motion.i
                 className={`${styles.dropdownIcon} ${openDatePicker ? styles.dropdownOpen : ""}`}
               >
