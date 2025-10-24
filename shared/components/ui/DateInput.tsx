@@ -48,7 +48,7 @@ const DateInput: React.FC<DateInputProps> = ({
         <div className={styles.fieldWrapper}>
           <div className={styles.inputFieldWrapper}>
             <span
-              className={`${styles.inputField} ${styles.dateInput} ${icon ? styles.withIcon : ""}`}
+              className={`${styles.inputField} ${icon ? styles.withIcon : ""}`}
               onClick={() => setOpenDatePicker(!openDatePicker)}
             >
               {icon && <i className={styles.icon}>{icon}</i>}

@@ -38,9 +38,6 @@
   position: relative;
   display: flex;
   align-items: center;
-  .inputWithIcon {
-    padding-left: 2.8rem !important;
-  }
 }
 
 @mixin inputField {
@@ -53,6 +50,9 @@
   border-radius: var(--border-radius-m);
   transition: 0.2s all ease;
   font-size: var(--input-font-size);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   &:focus {
     outline: 3px solid var(--color-action-active);
   }
@@ -72,7 +72,7 @@
     .inputFieldWrapper {
       @include inputFieldWrapper;
       .withIcon {
-        padding-left: 3rem !important;
+        padding-left: 2.6rem !important;
       }
       .inputField {
         @include inputField;

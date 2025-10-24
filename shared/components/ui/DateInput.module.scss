@@ -3,11 +3,6 @@
 .inputContainer {
   cursor: pointer;
   @include inputs.inputSkeleton;
-  .dateInput {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
   .dropdownIcon {
     font-size: 1.1rem;
     transition: all 0.2s ease;

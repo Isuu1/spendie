@@ -1,20 +1,14 @@
-//@use "@/shared/styles/mixins" as mixins;
 @use "@/shared/styles/mixins/inputs" as inputs;
 
 .inputContainer {
   cursor: pointer;
   @include inputs.inputSkeleton;
-  .selectInput {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .dropdownIcon {
-      font-size: 1.1rem;
-      transition: all 0.2s ease;
-    }
-    .dropdownOpen {
-      transform: rotate(180deg);
-    }
+  .dropdownIcon {
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+  }
+  .dropdownOpen {
+    transform: rotate(180deg);
   }
   .selectOptions {
     transform-origin: top;

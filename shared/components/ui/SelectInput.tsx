@@ -13,6 +13,7 @@ interface SelectInputProps {
   selectOptions?: readonly string[];
   onChange?: (option: string) => void;
   layout?: "horizontal" | "vertical";
+  icon?: React.ReactNode;
 }
 
 const selectModeOptionsVariants = {
@@ -29,6 +30,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   value,
   onChange,
   layout = "horizontal",
+  icon,
 }) => {
   const [showOptions, setShowOptions] = useState(false);
 
@@ -60,10 +62,11 @@ const SelectInput: React.FC<SelectInputProps> = ({
       <div className={styles.fieldWrapper}>
         <div className={styles.inputFieldWrapper}>
           <span
-            className={`${styles.inputField} ${styles.selectInput}`}
+            className={`${styles.inputField} ${icon ? styles.withIcon : ""}`}
             onClick={() => setShowOptions(!showOptions)}
             ref={selectRef}
           >
+            {icon && <i className={styles.icon}>{icon}</i>}
             {value || selectOptions?.[0]}
             <motion.i
               className={`${styles.dropdownIcon} ${showOptions ? styles.dropdownOpen : ""}`}
