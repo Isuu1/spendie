@@ -108,7 +108,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
       <DateInput
         id="first_payment_date"
         label="First Payment Date"
-        layout="horizontal"
+        //layout="horizontal"
         errors={errors.first_payment_date}
         value={formData.first_payment_date}
         onChange={(val) => handleChange("first_payment_date", val)}

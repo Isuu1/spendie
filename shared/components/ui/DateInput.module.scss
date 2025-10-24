@@ -3,10 +3,16 @@
 .inputContainer {
   cursor: pointer;
   @include inputs.inputSkeleton;
+  .dateInput {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   .dropdownIcon {
-    position: absolute;
-    right: 1.3rem;
-    color: var(--color-input-text);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+  }
+  .dropdownOpen {
+    transform: rotate(180deg);
   }
 }

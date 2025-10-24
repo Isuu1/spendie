@@ -1,12 +1,31 @@
 .datePickerWrapper {
   z-index: 99;
   position: absolute;
-  top: 45px;
+  top: 50px;
   border-radius: var(--border-radius-l);
+  background: var(--color-input-bg);
   overflow: hidden;
+  transform-origin: top center;
+  padding: 0.7rem;
   .datePicker :global {
     background: var(--color-input-bg);
     border: 0;
+    // padding: 0.7rem;
+    .react-datepicker__month {
+      margin: 0;
+    }
+    .react-datepicker__navigation {
+      top: 0;
+      //line-height: 1rem;
+      &--previous {
+        right: auto;
+        left: 1rem;
+      }
+      &--next {
+        right: 1rem;
+        left: auto;
+      }
+    }
     .react-datepicker__header {
       background: var(--color-input-bg);
       border-bottom: 0;
@@ -16,17 +35,46 @@
         margin-bottom: 0.5rem;
       }
     }
+    .react-datepicker__day-names {
+      background: var(--color-action-active);
+      border-radius: var(--border-radius-m);
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+      //border-bottom: 2px solid var(--color-action-active);
+    }
     .react-datepicker__day-name {
       color: var(--color-text-primary);
+      margin: 0.3rem 0.5rem;
+      font-weight: 600;
     }
     .react-datepicker__day {
+      color: var(--color-text-primary);
+      border-radius: var(--border-radius-s);
+      margin: 0.4rem 0.5rem;
+      &:hover {
+        background: var(--color-action-active-hover);
+      }
+      &--keyboard-selected {
+        //background: var(--color-action-active);
+        background: transparent;
+        &:hover {
+          background: var(--color-action-active-hover);
+        }
+      }
       &--today {
-        //color: var(--color-action-active);
+        //border: 2px solid var(--color-action-active);
       }
       &--selected {
         background: var(--color-action-active);
         &:hover {
-          background: var(--color-action-active);
+          background: var(--color-action-active-hover);
+        }
+      }
+      &--disabled {
+        opacity: 0.3;
+        pointer-events: none;
+        &:hover {
+          cursor: not-allowed !important;
         }
       }
     }
