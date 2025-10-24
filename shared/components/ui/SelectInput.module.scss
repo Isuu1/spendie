@@ -1,59 +1,43 @@
-@use "@/shared/styles/mixins" as mixins;
+@use "@/shared/styles/mixins/inputs" as inputs;
 
-.selectContainer {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  .label {
-    @include mixins.inputLabel;
+.inputContainer {
+  cursor: pointer;
+  @include inputs.inputSkeleton;
+  .dropdownIcon {
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
   }
-  .optionsWrapper {
-    position: relative;
-    flex: 1;
-    .value {
-      display: block;
-      @include mixins.defaultInput;
-      cursor: pointer;
-    }
-    .selectOptions {
-      transform-origin: top;
-      z-index: 6;
-      position: absolute;
-      top: 30px;
-      left: 0;
-      background: var(--color-bg-tile);
-      list-style: none;
+  .dropdownOpen {
+    transform: rotate(180deg);
+  }
+  .selectOptions {
+    transform-origin: top;
+    z-index: 6;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    background: var(--color-input-bg);
+    font-size: var(--input-font-size);
+    list-style: none;
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    cursor: pointer;
+    border-radius: var(--border-radius-l);
+    .option {
       padding: 0.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      width: 100%;
-      cursor: pointer;
-      border-radius: 10px;
-      .option {
-        padding: 0.5rem;
-        border-radius: 8px;
-        &:hover {
-          background: var(--color-action-active-hover);
-          color: var(--color-text-on-accent);
-        }
-      }
-      .active {
-        background: var(--color-action-active);
+      border-radius: var(--border-radius-m);
+      transition: 0.2s all ease;
+      &:hover {
+        background: var(--color-action-active-hover);
         color: var(--color-text-on-accent);
       }
     }
-  }
-}
-
-.horizontal {
-  flex-direction: row;
-}
-.vertical {
-  flex-direction: column;
-  .label {
-    margin-right: auto;
+    .active {
+      background: var(--color-action-active);
+      color: var(--color-text-on-accent);
+    }
   }
 }

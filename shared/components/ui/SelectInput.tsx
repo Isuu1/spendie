@@ -4,6 +4,7 @@ import styles from "./SelectInput.module.scss";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
+import { TbArrowBigDownLineFilled } from "react-icons/tb";
 
 interface SelectInputProps {
   id: string;
@@ -11,7 +12,7 @@ interface SelectInputProps {
   value?: string;
   selectOptions?: readonly string[];
   onChange?: (option: string) => void;
-  layout: "horizontal" | "vertical";
+  icon?: React.ReactNode;
 }
 
 const selectModeOptionsVariants = {
@@ -27,7 +28,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   selectOptions,
   value,
   onChange,
-  layout,
+  icon,
 }) => {
   const [showOptions, setShowOptions] = useState(false);
 
@@ -41,15 +42,8 @@ const SelectInput: React.FC<SelectInputProps> = ({
   useClickOutside(selectRef, () => setShowOptions(false));
 
   return (
-    <div
-      className={`${styles.selectContainer} ${styles[layout]}`}
-      onClick={() => setShowOptions(!showOptions)}
-      ref={selectRef}
-    >
-      {label && <label className={styles.label}>{label}</label>}
-
+    <div className={styles.inputContainer}>
       {/* Hidden input to store the selected value */}
-
       <input
         id={id}
         name={id}
@@ -57,29 +51,49 @@ const SelectInput: React.FC<SelectInputProps> = ({
         value={value}
         className={styles.selectInput}
       />
-      <div className={styles.optionsWrapper}>
-        <span className={styles.value}>{value || selectOptions?.[0]}</span>
-        <AnimatePresence>
-          {showOptions && (
-            <motion.ul
-              className={styles.selectOptions}
-              variants={selectModeOptionsVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
+
+      {label && (
+        <label htmlFor={id} className={styles.label}>
+          {label}
+        </label>
+      )}
+      <div className={styles.fieldWrapper}>
+        <div className={styles.inputFieldWrapper}>
+          <span
+            className={`${styles.inputField} ${icon ? styles.withIcon : ""}`}
+            onClick={() => setShowOptions(!showOptions)}
+            ref={selectRef}
+          >
+            {icon && <i className={styles.icon}>{icon}</i>}
+            {value || selectOptions?.[0]}
+            <motion.i
+              className={`${styles.dropdownIcon} ${showOptions ? styles.dropdownOpen : ""}`}
             >
-              {selectOptions?.map((option, index) => (
-                <li
-                  key={index}
-                  onClick={() => handleOptionClick(option)}
-                  className={`${styles.option} ${value === option ? styles.active : ""}`}
-                >
-                  {option}
-                </li>
-              ))}
-            </motion.ul>
-          )}
-        </AnimatePresence>
+              <TbArrowBigDownLineFilled />
+            </motion.i>
+          </span>
+          <AnimatePresence>
+            {showOptions && (
+              <motion.ul
+                className={styles.selectOptions}
+                variants={selectModeOptionsVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                {selectOptions?.map((option, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleOptionClick(option)}
+                    className={`${styles.option} ${value === option ? styles.active : ""}`}
+                  >
+                    {option}
+                  </li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

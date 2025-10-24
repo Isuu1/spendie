@@ -9,15 +9,22 @@ import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 import SelectInput from "@/shared/components/ui/SelectInput";
 import DateInput from "@/shared/components/ui/DateInput";
+import NumberInput from "@/shared/components/ui/NumberInput";
 //Actions
 import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/addRecurringPayment";
 //Types
-import { initialRecurringPaymentFormState } from "@/features/recurring-payments/types/forms";
+import {
+  initialRecurringPaymentFormState,
+  repeatOptions,
+  typeOptions,
+} from "@/features/recurring-payments/types/forms";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
 import { useForm } from "@/shared/hooks/useForm";
 //Schemas
 import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/forms";
+//Icons
+import { IoCalendarNumber } from "react-icons/io5";
 
 const AddPaymentForm: React.FC = () => {
   const router = useRouter();
@@ -60,9 +67,6 @@ const AddPaymentForm: React.FC = () => {
     }
   }, [state, router]);
 
-  console.log("form state", state);
-  console.log("errors", errors);
-
   return (
     <Form
       layout="vertical"
@@ -73,7 +77,6 @@ const AddPaymentForm: React.FC = () => {
         id="name"
         type="text"
         label="Payment Name"
-        layout="horizontal"
         errors={errors.name}
         value={formData.name}
         onChange={(e) => handleChange("name", e.target.value)}
@@ -81,24 +84,20 @@ const AddPaymentForm: React.FC = () => {
       <SelectInput
         id="repeat"
         label="Repeat"
-        layout="horizontal"
-        selectOptions={["Monthly", "Yearly", "Weekly", "Daily"]}
+        selectOptions={repeatOptions}
         value={formData.repeat}
         onChange={(val) => handleChange("repeat", val)}
       />
       <SelectInput
         id="type"
         label="Type"
-        layout="horizontal"
-        selectOptions={["Income", "Expense"]}
+        selectOptions={typeOptions}
         value={formData.type}
         onChange={(val) => handleChange("type", val)}
       />
-      <Input
+      <NumberInput
         id="amount"
-        type="number"
         label="Amount"
-        layout="horizontal"
         errors={errors.amount}
         value={formData.amount}
         onChange={(e) => handleChange("amount", e.target.value)}
@@ -106,10 +105,10 @@ const AddPaymentForm: React.FC = () => {
       <DateInput
         id="first_payment_date"
         label="First Payment Date"
-        layout="horizontal"
         errors={errors.first_payment_date}
         value={formData.first_payment_date}
         onChange={(val) => handleChange("first_payment_date", val)}
+        icon={<IoCalendarNumber />}
       />
 
       <div className="flex-row-space-between">

@@ -7,17 +7,23 @@ import toast from "react-hot-toast";
 import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
+import SelectInput from "@/shared/components/ui/SelectInput";
+import DateInput from "@/shared/components/ui/DateInput";
+import NumberInput from "@/shared/components/ui/NumberInput";
 //Actions
 import { editRecurringPayment } from "@/features/recurring-payments/lib/actions/editRecurringPayment";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
+//Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 import {
   initialRecurringPaymentFormState,
   repeatOptions,
   typeOptions,
 } from "../types/forms";
+//Schemas
 import { recurringPaymentSchema } from "../schemas/forms";
+//Hooks
 import { useForm } from "@/shared/hooks/useForm";
 
 interface EditPaymentFormProps {
@@ -33,14 +39,12 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
     initialRecurringPaymentFormState
   );
 
-  console.log("payment to edit", payment);
-
   const { formData, errors, handleChange, validateForm } = useForm(
     recurringPaymentSchema,
     {
       name: payment.name,
-      repeat: payment.repeat as "" | "Monthly" | "Yearly" | "Weekly" | "Daily",
-      type: payment.type as "" | "Income" | "Expense",
+      repeat: payment.repeat as "Monthly" | "Weekly",
+      type: payment.type as "Income" | "Expense",
       amount: payment.amount,
       first_payment_date: payment.first_payment_date,
     }
@@ -77,46 +81,37 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
         id="name"
         type="text"
         label="Payment Name"
-        layout="horizontal"
         errors={errors.name}
         value={formData.name}
         onChange={(e) => handleChange("name", e.target.value)}
       />
-      <Input
+      <SelectInput
         id="repeat"
-        type="select"
         label="Repeat"
-        layout="horizontal"
         selectOptions={repeatOptions}
         value={formData.repeat}
-        onChange={(e) => handleChange("repeat", e.target.value)}
+        onChange={(val) => handleChange("repeat", val)}
       />
-      <Input
+      <SelectInput
         id="type"
-        type="select"
         label="Type"
-        layout="horizontal"
         selectOptions={typeOptions}
         value={formData.type}
-        onChange={(e) => handleChange("type", e.target.value)}
+        onChange={(val) => handleChange("type", val)}
       />
-      <Input
+      <NumberInput
         id="amount"
-        type="number"
         label="Amount"
-        layout="horizontal"
         errors={errors.amount}
         value={formData.amount}
         onChange={(e) => handleChange("amount", e.target.value)}
       />
-      <Input
+      <DateInput
         id="first_payment_date"
-        type="date"
         label="First Payment Date"
-        layout="horizontal"
         errors={errors.first_payment_date}
         value={formData.first_payment_date}
-        onChange={(e) => handleChange("first_payment_date", e.target.value)}
+        onChange={(val) => handleChange("first_payment_date", val)}
       />
       <div className="flex-row-space-between">
         <Button

@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 //Styles
 import styles from "./DateInput.module.scss";
 import moment from "moment";
 import InputError from "../InputError";
+//Animations
+import { AnimatePresence, motion } from "motion/react";
+//Components
+import CustomDatePicker from "./CustomDatePicker";
+//Icons
+import { TbArrowBigDownLineFilled } from "react-icons/tb";
 
 interface DateInputProps {
   id: string;
@@ -12,8 +16,8 @@ interface DateInputProps {
   value?: string;
   selectOptions?: readonly string[];
   onChange?: (option: string) => void;
-  layout: "horizontal" | "vertical";
   errors?: string[];
+  icon?: React.ReactNode;
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -21,8 +25,8 @@ const DateInput: React.FC<DateInputProps> = ({
   label,
   value,
   onChange,
-  layout,
   errors,
+  icon,
 }) => {
   const [openDatePicker, setOpenDatePicker] = useState(false);
 
@@ -32,33 +36,44 @@ const DateInput: React.FC<DateInputProps> = ({
 
   return (
     <>
-      <div className={`${styles.dateContainer} ${styles[layout]}`}>
-        <input type="hidden" id={id} name={id} />
-        {label && <label className={styles.label}>{label}</label>}
-        <span
-          className={styles.value}
-          onClick={() => setOpenDatePicker(!openDatePicker)}
-        >
-          {value ? formatValue(value) : moment().format("Do MMMM YYYY")}
-        </span>
-        {openDatePicker && (
-          <DatePicker
-            selected={value ? new Date(value) : null}
-            onChange={(date) => {
-              if (date) {
-                onChange?.(date.toISOString());
-              }
-            }}
-            inline
-            calendarClassName={styles.datePicker}
-            minDate={moment().toDate()}
-            onSelect={() => {
-              setOpenDatePicker(false);
-            }}
-          />
+      <div className={styles.inputContainer}>
+        {/* Hidden input to store the selected value */}
+        <input type="hidden" id={id} name={id} value={value} />
+
+        {label && (
+          <label htmlFor={id} className={styles.label}>
+            {label}
+          </label>
         )}
+        <div className={styles.fieldWrapper}>
+          <div className={styles.inputFieldWrapper}>
+            <span
+              className={`${styles.inputField} ${icon ? styles.withIcon : ""}`}
+              onClick={() => setOpenDatePicker(!openDatePicker)}
+            >
+              {icon && <i className={styles.icon}>{icon}</i>}
+              {value ? formatValue(value) : "Select Date"}
+              <motion.i
+                className={`${styles.dropdownIcon} ${openDatePicker ? styles.dropdownOpen : ""}`}
+              >
+                <TbArrowBigDownLineFilled />
+              </motion.i>
+            </span>
+          </div>
+          <AnimatePresence>
+            {openDatePicker && (
+              <CustomDatePicker
+                value={value}
+                onChange={(val) => {
+                  onChange?.(val);
+                }}
+                onClose={() => setOpenDatePicker(false)}
+              />
+            )}
+          </AnimatePresence>
+          {errors && errors.length > 0 && <InputError errors={errors} />}
+        </div>
       </div>
-      {errors && errors.length > 0 && <InputError errors={errors} />}
     </>
   );
 };

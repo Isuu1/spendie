@@ -1,0 +1,88 @@
+//Main input container
+@mixin inputContainer {
+  color: var(--color-input-text);
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+  @media (min-width: 600px) {
+    grid-template-columns: 150px 1fr;
+    grid-template-rows: auto;
+  }
+}
+
+@mixin inputLabel {
+  white-space: nowrap;
+  font-size: var(--input-label-font-size);
+  padding-top: 0.8rem;
+}
+
+@mixin inputIcon {
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 0.8rem;
+  transform: translate(0, -50%);
+  font-size: var(--input-icon-size);
+}
+
+@mixin fieldWrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 1rem;
+}
+
+@mixin inputFieldWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+@mixin inputField {
+  outline: 3px solid transparent;
+  flex: 1;
+  background: var(--color-input-bg);
+  color: var(--color-input-text);
+  border: 0;
+  padding: 0.7rem 1.3rem;
+  border-radius: var(--border-radius-m);
+  transition: 0.2s all ease;
+  font-size: var(--input-font-size);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &:focus {
+    outline: 3px solid var(--color-action-active);
+  }
+}
+
+@mixin errorContainer {
+  width: fit-content;
+}
+
+@mixin inputSkeleton {
+  @include inputContainer;
+  .label {
+    @include inputLabel;
+  }
+  .fieldWrapper {
+    @include fieldWrapper;
+    .inputFieldWrapper {
+      @include inputFieldWrapper;
+      .withIcon {
+        padding-left: 2.6rem !important;
+      }
+      .inputField {
+        @include inputField;
+      }
+      .icon {
+        @include inputIcon;
+      }
+    }
+    .errorContainer {
+      @include errorContainer;
+    }
+  }
+}

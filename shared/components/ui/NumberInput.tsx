@@ -2,28 +2,24 @@
 
 import React from "react";
 //Styles
-import styles from "./Input.module.scss";
+import styles from "./NumberInput.module.scss";
 //Components
 import InputError from "@/shared/components/InputError";
 
-interface InputProps {
+interface NumberInputProps {
   id: string;
-  type: "text" | "number" | "email" | "password";
   label?: string;
   errors?: string[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | void;
-  defaultValue?: string | number;
   value?: string | number | Date;
   icon?: React.ReactNode;
 }
 
-const Input: React.FC<InputProps> = ({
+const NumberInput: React.FC<NumberInputProps> = ({
   id,
-  type,
   label,
   errors,
   onChange,
-  defaultValue,
   value,
   icon,
 }) => {
@@ -41,9 +37,8 @@ const Input: React.FC<InputProps> = ({
               className={`${styles.inputField} ${icon ? styles.withIcon : ""}`}
               id={id}
               name={id}
-              type={type}
+              type="number"
               onChange={onChange}
-              defaultValue={defaultValue}
               value={
                 value instanceof Date ? value.toISOString().slice(0, 10) : value
               }
@@ -61,4 +56,4 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export default Input;
+export default NumberInput;
