@@ -28,10 +28,12 @@
     top: 45px;
     right: 0;
     background: var(--color-bg-secondary);
-    border-radius: var(--border-radius-m);
-    padding: 1rem;
+    border-radius: var(--border-radius-l);
+    padding: 0.8rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    list-style: none;
+    white-space: nowrap;
   }
 }

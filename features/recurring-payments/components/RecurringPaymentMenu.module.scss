@@ -1,3 +1,23 @@
-.deleteButton {
-  background: #ff0000 !important;
+.menuItem {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: var(--border-radius-m);
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  &:hover {
+    background: var(--color-action-hover);
+  }
+  .icon {
+    font-size: 1.1rem;
+  }
+}
+
+.deleteItem {
+  background: var(--color-action-danger) !important;
+  transition: background 0.2s ease-in-out;
+  &:hover {
+    background: var(--color-action-danger-hover) !important;
+  }
 }
