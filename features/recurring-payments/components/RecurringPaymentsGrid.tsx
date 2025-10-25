@@ -8,11 +8,10 @@ import styles from "./RecurringPaymentsGrid.module.scss";
 //Icons
 import { FaLongArrowAltUp } from "react-icons/fa";
 import { FaLongArrowAltDown } from "react-icons/fa";
-import { FaCalendarPlus } from "react-icons/fa";
+import { MdOutlineAddCard } from "react-icons/md";
 //Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
-import Button from "@/shared/components/ui/Button";
 import SelectInput from "@/shared/components/ui/SelectInput";
 import RecurringPaymentMenu from "./RecurringPaymentMenu";
 
@@ -26,15 +25,14 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
   return (
     <div className={styles.gridContainer}>
       <div className={styles.optionsBar}>
-        <Link href="/recurring-payments/add-payment">
-          <Button
-            variant="primary"
-            size="medium"
-            type="button"
-            text="Add payment"
-            icon={<FaCalendarPlus />}
-            iconPosition="left"
-          />
+        <Link
+          className={styles.addPayment}
+          href="/recurring-payments/add-payment"
+        >
+          <i className={styles.icon}>
+            <MdOutlineAddCard />
+          </i>
+          Add payment
         </Link>
         <div className={styles.sorting}>
           <span>Sort by</span>

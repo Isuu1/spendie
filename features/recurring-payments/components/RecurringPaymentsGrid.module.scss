@@ -12,9 +12,23 @@ $lightFontColor: #b3b3b3;
     gap: 1rem;
     background: var(--color-bg-secondary);
     border-radius: var(--border-radius-l);
-    margin-top: 2rem;
-    //padding: 1rem;
     white-space: nowrap;
+    .addPayment {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--color-action-active);
+      padding: 0.5rem 0.7rem;
+      border-radius: var(--border-radius-m);
+      font-weight: 600;
+      transition: background 0.2s ease-in-out;
+      .icon {
+        font-size: 1.2rem;
+      }
+      &:hover {
+        background: var(--color-action-active-hover);
+      }
+    }
     .sorting {
       display: flex;
       align-items: center;
