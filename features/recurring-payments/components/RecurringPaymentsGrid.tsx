@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import toast from "react-hot-toast";
+import React from "react";
 import Link from "next/link";
 
 //Styles
@@ -9,15 +8,13 @@ import styles from "./RecurringPaymentsGrid.module.scss";
 //Icons
 import { FaLongArrowAltUp } from "react-icons/fa";
 import { FaLongArrowAltDown } from "react-icons/fa";
-import { IoTrashBin } from "react-icons/io5";
-import { BiSolidMessageSquareAdd } from "react-icons/bi";
+import { FaCalendarPlus } from "react-icons/fa";
 //Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import Button from "@/shared/components/ui/Button";
-import ConfirmAction from "@/shared/components/ConfirmAction";
-//Actions
-import { deleteRecurringPayment } from "../lib/actions/delete-recurring-payment";
+import SelectInput from "@/shared/components/ui/SelectInput";
+import RecurringPaymentMenu from "./RecurringPaymentMenu";
 
 interface RecurringPaymentsGridProps {
   recurringPayments: RecurringPayment[];
@@ -26,34 +23,23 @@ interface RecurringPaymentsGridProps {
 const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
   recurringPayments,
 }) => {
-  const [confirmDeletePayment, setConfirmDeletePayment] = useState<
-    string | null
-  >(null);
-
-  const handleDeletePayment = async (paymentId: string) => {
-    const result = await deleteRecurringPayment(paymentId);
-    if (result.success) {
-      toast.success("Payment deleted successfully!");
-    }
-    if (result.error) {
-      toast.error(`Failed to delete payment: ${result.error}`);
-    }
-    setConfirmDeletePayment(null);
-  };
-
   return (
     <div className={styles.gridContainer}>
-      <div className={styles.newPaymentButton}>
+      <div className={styles.optionsBar}>
         <Link href="/recurring-payments/add-payment">
           <Button
             variant="primary"
             size="medium"
             type="button"
-            text="New"
-            icon={<BiSolidMessageSquareAdd />}
+            text="Add payment"
+            icon={<FaCalendarPlus />}
             iconPosition="left"
           />
         </Link>
+        <div className={styles.sorting}>
+          <span>Sort by</span>
+          <SelectInput id="sort" selectOptions={["Date", "Amount", "Name"]} />
+        </div>
       </div>
 
       {!recurringPayments ||
@@ -63,34 +49,8 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
 
       {recurringPayments.map((payment: RecurringPayment) => (
         <div key={payment.id} className={styles.gridItem}>
-          <div className={styles.menu}>
-            <Link href={`/recurring-payments/edit-payment/${payment.id}`}>
-              <Button
-                variant="secondary"
-                size="small"
-                type="button"
-                text="Edit"
-                icon={<BiSolidMessageSquareAdd />}
-                iconPosition="left"
-              />
-            </Link>
-            <Button
-              variant="secondary"
-              size="small"
-              type="button"
-              text="Delete"
-              icon={<IoTrashBin />}
-              iconPosition="left"
-              onClick={() => setConfirmDeletePayment(payment.id)}
-            />
-            {confirmDeletePayment && (
-              <ConfirmAction
-                message="Delete payment?"
-                onCancel={() => setConfirmDeletePayment(null)}
-                onConfirm={() => handleDeletePayment(payment.id)}
-              />
-            )}
-          </div>
+          <RecurringPaymentMenu payment={payment} />
+
           <div className={styles.data}>
             <div className={styles.details}>
               <p>{payment.name}</p>

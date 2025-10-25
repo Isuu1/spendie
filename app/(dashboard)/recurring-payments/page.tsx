@@ -9,9 +9,9 @@ export default async function Page() {
   }
 
   return (
-    <>
+    <div className="page">
       <h2>Recurring payments</h2>
       <RecurringPaymentsGrid recurringPayments={recurringPayments} />
-    </>
+    </div>
   );
 }
