@@ -5,28 +5,70 @@ $lightFontColor: #b3b3b3;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  .newPaymentButton {
-    margin-right: auto;
-  }
-  .gridItem {
+  .optionsBar {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 1rem 0.7rem;
-    background: #272727;
-    border-radius: 12px;
-    .menu {
-      display: flex;
-      gap: 0.5rem;
-      justify-content: flex-end;
-    }
-    .data {
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: var(--color-bg-secondary);
+    border-radius: var(--border-radius-l);
+    white-space: nowrap;
+    .addPayment {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-
+      gap: 0.5rem;
+      background: var(--color-action-active);
+      padding: 0.5rem 0.7rem;
+      border-radius: var(--border-radius-m);
+      font-weight: 600;
+      transition: background 0.2s ease-in-out;
+      .icon {
+        font-size: 1.2rem;
+      }
+      &:hover {
+        background: var(--color-action-active-hover);
+      }
+    }
+    .sorting {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+  .paymentsGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 0.5fr auto;
+    gap: 1rem;
+    .gridHeader {
+      display: contents;
+      font-weight: 600;
+      color: $lightFontColor;
+      list-style: none;
+      li {
+        padding: 1rem 0;
+        background: var(--color-bg-secondary);
+        &:nth-child(1) {
+          padding-left: 0.7rem;
+        }
+        &:nth-child(4) {
+          text-align: right;
+          padding-right: 0.7rem;
+        }
+      }
+    }
+    .gridItem {
+      display: grid;
+      grid-template-columns: subgrid; //Use parent grid columns
+      grid-column: 1 / -1; //Span all columns
+      align-items: center;
+      padding: 1rem 0.7rem;
+      background: var(--color-bg-tile);
+      border-radius: 12px;
+      font-size: 1rem;
       .details {
-        line-height: 1.4rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
         .date {
           color: $lightFontColor;
           font-size: 0.9rem;
@@ -34,16 +76,17 @@ $lightFontColor: #b3b3b3;
       }
       .frequency {
         color: $lightFontColor;
-        font-size: 0.9rem;
+        //font-size: 0.9rem;
         text-transform: capitalize;
       }
       .type {
         display: flex;
+        align-items: center;
         gap: 0.1rem;
         border-radius: 6px;
         padding: 0.2rem 0.3rem 0.1rem 0.1rem;
         //margin-right: auto;
-        font-size: 1rem;
+        //font-size: 1rem;
         font-weight: bold;
       }
       .income {

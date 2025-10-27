@@ -1,0 +1,39 @@
+.left {
+  margin-right: auto;
+}
+
+.right {
+  margin-left: auto;
+}
+
+.menu {
+  position: relative;
+  cursor: pointer;
+  margin-left: auto;
+  .menuIcon {
+    font-size: 1.2rem;
+    color: var(--color-text-primary);
+    background: var(--color-bg-secondary);
+    border-radius: 10px;
+    padding: 0.6rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      background: var(--color-text-active);
+    }
+  }
+  .options {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: var(--color-bg-secondary);
+    border-radius: var(--border-radius-l);
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+    white-space: nowrap;
+  }
+}
