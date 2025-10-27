@@ -40,39 +40,40 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
         </div>
       </div>
 
-      <ul className={styles.gridHeader}>
-        <li>Details</li>
-        <li>Frequency</li>
-        <li>Amount</li>
-        <li>Actions</li>
-      </ul>
+      <div className={styles.paymentsGrid}>
+        <ul className={styles.gridHeader}>
+          <li>Details</li>
+          <li>Frequency</li>
+          <li>Amount</li>
+          <li>Actions</li>
+        </ul>
+        {recurringPayments.map((payment: RecurringPayment) => (
+          <div key={payment.id} className={styles.gridItem}>
+            <div className={styles.details}>
+              <p>{payment.name}</p>
+              <p className={styles.date}>{payment.first_payment_date}</p>
+            </div>
+            <p className={styles.frequency}>{payment.repeat}</p>
+            {payment.type === "Income" ? (
+              <div className={`${styles.type} ${styles.income}`}>
+                <FaLongArrowAltUp />
+                <span>£{payment.amount}</span>
+              </div>
+            ) : (
+              <div className={`${styles.type} ${styles.expense}`}>
+                <FaLongArrowAltDown />
+                <span>£{payment.amount}</span>
+              </div>
+            )}
+            <RecurringPaymentMenu payment={payment} />
+          </div>
+        ))}
+      </div>
 
       {!recurringPayments ||
         (recurringPayments.length === 0 && (
           <p className={styles.noPayments}>No recurring payments found.</p>
         ))}
-
-      {recurringPayments.map((payment: RecurringPayment) => (
-        <div key={payment.id} className={styles.gridItem}>
-          <div className={styles.details}>
-            <p>{payment.name}</p>
-            <p className={styles.date}>{payment.first_payment_date}</p>
-          </div>
-          <p className={styles.frequency}>{payment.repeat}</p>
-          {payment.type === "Income" ? (
-            <div className={`${styles.type} ${styles.income}`}>
-              <FaLongArrowAltUp />
-              <span>£{payment.amount}</span>
-            </div>
-          ) : (
-            <div className={`${styles.type} ${styles.expense}`}>
-              <FaLongArrowAltDown />
-              <span>£{payment.amount}</span>
-            </div>
-          )}
-          <RecurringPaymentMenu payment={payment} />
-        </div>
-      ))}
     </div>
   );
 };
