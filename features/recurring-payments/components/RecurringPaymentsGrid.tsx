@@ -2,12 +2,9 @@
 
 import React from "react";
 import Link from "next/link";
-
 //Styles
 import styles from "./RecurringPaymentsGrid.module.scss";
 //Icons
-import { FaLongArrowAltUp } from "react-icons/fa";
-import { FaLongArrowAltDown } from "react-icons/fa";
 import { MdOutlineAddCard } from "react-icons/md";
 //Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
@@ -54,17 +51,11 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
               <p className={styles.date}>{payment.first_payment_date}</p>
             </div>
             <p className={styles.frequency}>{payment.repeat}</p>
-            {payment.type === "Income" ? (
-              <div className={`${styles.type} ${styles.income}`}>
-                <FaLongArrowAltUp />
-                <span>£{payment.amount}</span>
-              </div>
-            ) : (
-              <div className={`${styles.type} ${styles.expense}`}>
-                <FaLongArrowAltDown />
-                <span>£{payment.amount}</span>
-              </div>
-            )}
+            <div
+              className={`${styles.type} ${payment.type === "Income" ? styles.income : styles.expense}`}
+            >
+              <span>£{payment.amount}</span>
+            </div>
             <RecurringPaymentMenu payment={payment} />
           </div>
         ))}
