@@ -1,5 +1,3 @@
-$lightFontColor: #b3b3b3;
-
 .gridContainer {
   flex: 1;
   display: flex;
@@ -42,7 +40,7 @@ $lightFontColor: #b3b3b3;
     .gridHeader {
       display: contents;
       font-weight: 600;
-      color: $lightFontColor;
+      color: var(--color-text-secondary);
       list-style: none;
       li {
         padding: 1rem 0;
@@ -65,18 +63,23 @@ $lightFontColor: #b3b3b3;
       background: var(--color-bg-tile);
       border-radius: 12px;
       font-size: 1rem;
+      p {
+        font-size: 0.95rem;
+      }
       .details {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.6rem;
+        .name {
+          font-weight: bold;
+          font-size: 1rem;
+        }
         .date {
-          color: $lightFontColor;
-          font-size: 0.9rem;
+          color: var(--color-text-secondary);
         }
       }
       .frequency {
-        color: $lightFontColor;
-        //font-size: 0.9rem;
+        color: var(--color-text-secondary);
         text-transform: capitalize;
       }
       .type {
