@@ -11,14 +11,19 @@ import { RecurringPayment } from "@/features/recurring-payments/types/recurring-
 //Components
 import SelectInput from "@/shared/components/ui/SelectInput";
 import RecurringPaymentMenu from "./RecurringPaymentMenu";
+import ErrorMessage from "@/shared/components/ErrorMessage";
 
 interface RecurringPaymentsGridProps {
   recurringPayments: RecurringPayment[];
+  error?: string | null;
 }
 
 const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
   recurringPayments,
+  error,
 }) => {
+  const hasPayments = recurringPayments.length > 0;
+
   return (
     <div className={styles.gridContainer}>
       <div className={styles.optionsBar}>
@@ -44,6 +49,7 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
           <li>Amount</li>
           <li>Actions</li>
         </ul>
+
         {recurringPayments.map((payment: RecurringPayment) => (
           <div key={payment.id} className={styles.gridItem}>
             <div className={styles.details}>
@@ -61,10 +67,11 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
         ))}
       </div>
 
-      {!recurringPayments ||
-        (recurringPayments.length === 0 && (
-          <p className={styles.noPayments}>No recurring payments found.</p>
-        ))}
+      {error && <ErrorMessage message="Failed to load recurring payments." />}
+
+      {!hasPayments && !error && (
+        <p className={styles.noPayments}>No recurring payments found.</p>
+      )}
     </div>
   );
 };
