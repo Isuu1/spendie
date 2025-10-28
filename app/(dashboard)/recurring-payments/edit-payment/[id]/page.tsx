@@ -1,4 +1,5 @@
 import EditPaymentForm from "@/features/recurring-payments/components/EditPaymentForm";
+import BackButton from "@/shared/components/BackButton";
 import { createClient } from "@/supabase/server";
 
 export default async function Page({
@@ -28,9 +29,10 @@ export default async function Page({
     .single();
 
   return (
-    <>
+    <div className="page">
+      <BackButton />
       <h2>Edit recurring payment</h2>
       <EditPaymentForm payment={payment} />
-    </>
+    </div>
   );
 }
