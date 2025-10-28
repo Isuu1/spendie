@@ -42,7 +42,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   useClickOutside(selectRef, () => setShowOptions(false));
 
   return (
-    <div className={styles.inputContainer}>
+    <div className={`${styles.inputContainer} ${!label ? styles.noLabel : ""}`}>
       {/* Hidden input to store the selected value */}
       <input
         id={id}

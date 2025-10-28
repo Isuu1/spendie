@@ -1,5 +1,9 @@
 @use "@/shared/styles/mixins/inputs" as inputs;
 
+.noLabel {
+  grid-template-columns: 150px !important;
+}
+
 .inputContainer {
   cursor: pointer;
   @include inputs.inputSkeleton;

@@ -1,17 +1,20 @@
+import { getPaymentsHistory } from "@/features/recurring-payments/api/getPaymentsHistory";
 import { getRecurringPayments } from "@/features/recurring-payments/api/getRecurringPayments";
 import RecurringPaymentsGrid from "@/features/recurring-payments/components/RecurringPaymentsGrid";
 
 export default async function Page() {
   const { recurringPayments, error } = await getRecurringPayments();
-
-  if (error) {
-    return <div>Error fetching your payments. Try to refresh the page.</div>;
-  }
+  const { paymentsHistory, error: historyError } = await getPaymentsHistory();
+  //No error handling needed here as it is handled in the grid component to show the most of the UI
 
   return (
     <div className="page">
       <h2>Recurring payments</h2>
-      <RecurringPaymentsGrid recurringPayments={recurringPayments} />
+      <RecurringPaymentsGrid
+        recurringPayments={recurringPayments || []}
+        paymentsHistory={paymentsHistory || []}
+        error={error || historyError}
+      />
     </div>
   );
 }
