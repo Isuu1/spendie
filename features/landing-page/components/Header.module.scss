@@ -1,0 +1,49 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  .loginButton {
+    margin-left: auto;
+  }
+  .mobileNav {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    .icon {
+      font-size: 1.2rem;
+      color: var(--color-text-primary);
+      background: var(--color-bg-secondary);
+      border-radius: 10px;
+      padding: 0.6rem;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        background: var(--color-text-active);
+      }
+    }
+  }
+  .nav {
+    display: none;
+    list-style: none;
+    gap: 1rem;
+    font-size: 1rem;
+    .navItem {
+      cursor: pointer;
+    }
+  }
+}
+
+@media (min-width: 600px) {
+  .loginButton {
+    margin-left: 0 !important;
+  }
+  .nav {
+    display: flex !important;
+  }
+  .mobileNav {
+    display: none !important;
+  }
+}

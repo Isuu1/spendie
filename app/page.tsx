@@ -1,3 +1,4 @@
+import Header from "@/features/landing-page/components/Header";
 import { createClient } from "@/supabase/server";
 //import { redirect } from "next/navigation";
 
@@ -13,7 +14,7 @@ export default async function Home() {
   // }
   return (
     <div>
-      <h1>Home page</h1>
+      <Header />
     </div>
   );
 }
