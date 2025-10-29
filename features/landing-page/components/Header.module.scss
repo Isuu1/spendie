@@ -4,8 +4,14 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
+  font-size: 1rem;
   .loginButton {
     margin-left: auto;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+    &:hover {
+      color: var(--color-text-active);
+    }
   }
   .mobileNav {
     display: block;
@@ -29,9 +35,12 @@
     display: none;
     list-style: none;
     gap: 1rem;
-    font-size: 1rem;
     .navItem {
       cursor: pointer;
+      transition: color 0.2s ease-in-out;
+      &:hover {
+        color: var(--color-text-active);
+      }
     }
   }
 }
