@@ -1,4 +1,5 @@
 import Header from "@/features/landing-page/components/Header";
+import HeroSection from "@/features/landing-page/components/HeroSection";
 import { createClient } from "@/supabase/server";
 //import { redirect } from "next/navigation";
 
@@ -13,8 +14,9 @@ export default async function Home() {
   //   redirect("/dashboard");
   // }
   return (
-    <div>
+    <div className="page landing-page">
       <Header />
+      <HeroSection />
     </div>
   );
 }
