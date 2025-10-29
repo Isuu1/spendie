@@ -1,17 +1,20 @@
+import Header from "@/features/landing-page/components/Header";
 import { createClient } from "@/supabase/server";
-import { redirect } from "next/navigation";
+//import { redirect } from "next/navigation";
 
 export default async function Home() {
   const supabase = await createClient();
 
-  const user = await supabase.auth.getUser();
+  const { data: user } = await supabase.auth.getUser();
 
-  if (user) {
-    redirect("/dashboard");
-  }
+  console.log("User on home page:", user);
+
+  // if (user) {
+  //   redirect("/dashboard");
+  // }
   return (
     <div>
-      <h1>Home page</h1>
+      <Header />
     </div>
   );
 }

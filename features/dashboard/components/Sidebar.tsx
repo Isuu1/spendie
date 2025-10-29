@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 //Styles
 import styles from "./Sidebar.module.scss";
@@ -24,6 +24,8 @@ export default function Sidebar() {
 
   const pathname = usePathname();
 
+  const router = useRouter();
+
   const supabase = createClient();
 
   const handleSignOut = async () => {
@@ -32,6 +34,7 @@ export default function Sidebar() {
       console.error("Error signing out:", error);
       toast.error("Error signing out. Please try again.", toastStyle);
     }
+    router.push("/");
   };
 
   return (
