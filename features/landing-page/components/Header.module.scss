@@ -2,10 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
   padding: 0.5rem;
   font-size: 1rem;
   .loginButton {
+    display: none;
     margin-left: auto;
     cursor: pointer;
     transition: color 0.2s ease-in-out;
@@ -31,6 +32,27 @@
       }
     }
   }
+  .mobileMenu {
+    list-style: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: var(--color-bg-secondary);
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    .mobileMenuItem {
+      cursor: pointer;
+      transition: color 0.2s ease-in-out;
+      width: fit-content;
+      margin: 0 1rem;
+      &:hover {
+        color: var(--color-text-active);
+      }
+    }
+  }
   .nav {
     display: none;
     list-style: none;
@@ -47,6 +69,7 @@
 
 @media (min-width: 600px) {
   .loginButton {
+    display: block !important;
     margin-left: 0 !important;
   }
   .nav {
