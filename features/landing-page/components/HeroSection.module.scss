@@ -21,10 +21,23 @@
     position: relative !important;
     max-width: 1050px;
     aspect-ratio: 3 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: var(--border-radius-l);
+    background: linear-gradient(
+      30deg,
+      var(--color-bg-main) 0%,
+      var(--color-bg-main) 25%,
+      #d34702 50%,
+      var(--color-bg-main) 75%,
+      var(--color-bg-main) 100%
+    );
     img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      border-radius: var(--border-radius-l);
     }
   }
 }
