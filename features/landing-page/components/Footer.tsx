@@ -11,15 +11,15 @@ const Footer = () => {
           {/* <p>Your one-stop solution for managing your expenses.</p> */}
         </div>
         <ul className={styles.footerLinks}>
-          <li>Features</li>
-          <li>Pricing</li>
-          <li>About</li>
-          <li>Contact</li>
+          <li className={styles.footerLink}>Home</li>
+          <li className={styles.footerLink}>Features</li>
+          <li className={styles.footerLink}>About</li>
+          <li className={styles.footerLink}>Contact</li>
         </ul>
       </div>
 
       <div className={styles.footerBottom}>
-        <p>© 2024 Spendie</p>
+        <p>© 2025 Spendie</p>
         <p>Terms of Service</p>
         <p>Privacy Policy</p>
       </div>
