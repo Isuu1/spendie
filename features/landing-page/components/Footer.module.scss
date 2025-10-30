@@ -1,0 +1,25 @@
+.footer {
+  background: black;
+  padding: 1rem;
+  .footerTop {
+    display: flex;
+    justify-content: space-between;
+  }
+  .footerLinks {
+    list-style: none;
+    display: flex;
+    gap: 0.4rem;
+  }
+  .footerBottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    p {
+      &:nth-child(2) {
+        margin-left: auto;
+      }
+    }
+  }
+}
