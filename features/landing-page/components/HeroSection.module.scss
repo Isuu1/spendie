@@ -17,6 +17,13 @@
       line-height: 2rem;
     }
   }
+  .cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+  }
   .image {
     position: relative !important;
     max-width: 1050px;

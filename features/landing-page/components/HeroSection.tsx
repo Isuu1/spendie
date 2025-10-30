@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "./HeroSection.module.scss";
 //Images
 import dashboard from "@/public/images/dashboard2.png";
+import Button from "@/shared/components/ui/Button";
 
 const HeroSection = () => {
   return (
@@ -14,6 +15,10 @@ const HeroSection = () => {
           Spendie brings your accounts, bills, and recurring payments together
           into one clear dashboard — so you can plan smarter and stress less.
         </p>
+        <div className={styles.cta}>
+          <Button text="Get Started" variant="secondary" size="large" />
+          <Button text="Try demo" variant="primary" size="large" />
+        </div>
       </div>
       <div className={styles.image}>
         <Image src={dashboard} alt="Hero Image" />
