@@ -1,0 +1,51 @@
+.heroSection {
+  font-size: 1.3rem;
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  .headline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    max-width: 900px;
+    margin: auto;
+    .subheadline {
+      line-height: 2rem;
+    }
+  }
+  .cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  .image {
+    position: relative !important;
+    max-width: 1050px;
+    aspect-ratio: 3 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: var(--border-radius-l);
+    background: linear-gradient(
+      30deg,
+      var(--color-bg-main) 0%,
+      var(--color-bg-main) 25%,
+      #d34702 50%,
+      var(--color-bg-main) 75%,
+      var(--color-bg-main) 100%
+    );
+    //box-shadow: 0 0 20px 5px #d3470242;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: var(--border-radius-l);
+    }
+  }
+}
