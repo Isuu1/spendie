@@ -4,6 +4,7 @@ import { createClient } from "@/supabase/server";
 import Image from "next/image";
 //import { redirect } from "next/navigation";
 import bg from "@/public/images/step_background.svg";
+import Features from "@/features/landing-page/components/Features";
 
 export default async function Home() {
   const supabase = await createClient();
@@ -19,6 +20,7 @@ export default async function Home() {
     <div className="page landing-page">
       <Header />
       <HeroSection />
+      <Features />
       <Image src={bg} alt="Background Image" fill className="bg" />
     </div>
   );

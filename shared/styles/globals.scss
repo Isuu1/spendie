@@ -69,6 +69,8 @@ input {
 
 .landing-page {
   padding: 1rem;
+  width: 100%;
+  margin: auto;
   //background: var(----color-bg-main);
   //background: linear-gradient(to bottom, #d3480283, black);
   .bg {
@@ -76,5 +78,12 @@ input {
     z-index: -1;
     object-fit: cover;
     opacity: 0.3;
+    height: 100vh !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .landing-page {
+    width: 90%;
   }
 }

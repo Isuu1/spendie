@@ -1,0 +1,42 @@
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  justify-content: center;
+  margin-top: 4rem;
+  .headline {
+    text-align: center;
+    font-size: 1.3rem;
+    line-height: 2.2rem;
+  }
+  .cardsContainer {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    .featureCard {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+      padding: 2rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius-l);
+      background: var(--color-bg-secondary);
+      transition: background 0.3s;
+      max-width: 330px;
+      &:hover {
+        background: var(--color-bg-tile);
+      }
+      .icon {
+        font-size: 1.6rem;
+        //color: var(--color-text-active);
+        //background: var(--color-bg-tile);
+        background: var(--color-action-active);
+        padding: 0.5rem;
+        border-radius: var(--border-radius-m);
+      }
+    }
+  }
+}
