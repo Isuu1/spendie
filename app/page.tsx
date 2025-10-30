@@ -6,6 +6,7 @@ import { createClient } from "@/supabase/server";
 //import bg from "@/public/images/step_background.svg";
 import Features from "@/features/landing-page/components/Features";
 import Footer from "@/features/landing-page/components/Footer";
+import DetailedFeatures from "@/features/landing-page/components/DetailedFeatures";
 
 export default async function Home() {
   const supabase = await createClient();
@@ -22,6 +23,7 @@ export default async function Home() {
       <Header />
       <HeroSection />
       <Features />
+      <DetailedFeatures />
       <Footer />
       {/* <Image src={bg} alt="Background Image" fill className="bg" /> */}
     </div>

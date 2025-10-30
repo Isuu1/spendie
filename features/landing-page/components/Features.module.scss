@@ -7,7 +7,7 @@
   .headline {
     text-align: center;
     font-size: 1.3rem;
-    line-height: 2.2rem;
+    line-height: 3rem;
   }
   .cardsContainer {
     display: flex;
@@ -26,16 +26,18 @@
       background: var(--color-bg-secondary);
       transition: background 0.3s;
       max-width: 330px;
+      font-size: 1rem;
       &:hover {
         background: var(--color-bg-tile);
       }
       .icon {
         font-size: 1.6rem;
-        //color: var(--color-text-active);
-        //background: var(--color-bg-tile);
         background: var(--color-action-active);
         padding: 0.5rem;
         border-radius: var(--border-radius-m);
+      }
+      p {
+        line-height: 1.5rem;
       }
     }
   }
