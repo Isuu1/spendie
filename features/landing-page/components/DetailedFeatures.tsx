@@ -26,7 +26,7 @@ const DetailedFeatures = () => {
           />
         </div>
         <div className={styles.textContent}>
-          <h2>Track Your Regular Payments</h2>
+          <h2>Track your regular payments</h2>
           <p>
             Stay on top of your finances with our advanced payments management
             features. Easily track recurring payments, mark bills as paid, and
@@ -35,12 +35,24 @@ const DetailedFeatures = () => {
             financial life.
           </p>
           <ul className={styles.featuresList}>
-            <li>🔄 Automatically track your regular payments</li>
-            <li>⏰ Get reminders for upcoming due dates</li>
-            <li>📊 Visualize your payment history and trends</li>
             <li>
-              📅 Visual timeline view — see upcoming and overdue payments in
-              seconds.
+              <span></span>
+              <p>Automatically track your regular payments</p>
+            </li>
+            <li>
+              <span></span>
+              <p>Get reminders for upcoming due dates</p>
+            </li>
+            <li>
+              <span></span>
+              <p>Visualize your payment history and trends</p>
+            </li>
+            <li>
+              <span></span>
+              <p>
+                Visual timeline view — see upcoming and overdue payments in
+                seconds.
+              </p>
             </li>
           </ul>
         </div>

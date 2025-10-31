@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     <div className={styles.header}>
-      <h2>Spendie.</h2>
+      <h2 className={styles.logo}>Spendie.</h2>
       <ul className={styles.nav}>
         <li className={styles.navItem}>Home</li>
         <li className={styles.navItem}>About</li>
