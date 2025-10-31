@@ -6,6 +6,7 @@ import { FaPiggyBank } from "react-icons/fa6";
 import { FaRepeat } from "react-icons/fa6";
 // import { FaChartLine } from "react-icons/fa6";
 import { MdSpaceDashboard } from "react-icons/md";
+import Button from "@/shared/components/ui/Button";
 
 const Features = () => {
   return (
@@ -24,6 +25,7 @@ const Features = () => {
             Connect bank accounts with Plaid and see your total balance in one
             view.
           </p>
+          <Button text="Read more" variant="primary" size="medium" />
         </div>
         <div className={styles.featureCard}>
           <i className={styles.icon}>
@@ -34,6 +36,7 @@ const Features = () => {
             Never miss a bill again. Mark payments as paid and see what’s due
             next.
           </p>
+          <Button text="Read more" variant="primary" size="medium" />
         </div>
         <div className={styles.featureCard}>
           <i className={styles.icon}>
@@ -41,6 +44,7 @@ const Features = () => {
           </i>
           <h2>Customizable dashboard</h2>
           <p>Choose your dashboard tiles and make Spendie fit your goals.</p>
+          <Button text="Read more" variant="primary" size="medium" />
         </div>
       </div>
     </div>
