@@ -1,9 +1,20 @@
 .header {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 1rem;
+  background: #121212c4;
+  backdrop-filter: blur(15px);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  .logo {
+    color: var(--color-action-active);
+  }
   .loginButton {
     display: none;
     margin-left: auto;
@@ -55,7 +66,7 @@
   .nav {
     display: none;
     list-style: none;
-    gap: 1rem;
+    gap: 2rem;
     .navItem {
       cursor: pointer;
       transition: color 0.2s ease-in-out;
@@ -63,6 +74,19 @@
         color: var(--color-text-active);
       }
     }
+  }
+  .blur {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background: radial-gradient(
+      circle,
+      rgba(211, 71, 2, 0.4) 0%,
+      rgba(211, 71, 2, 0) 60%
+    );
+    filter: blur(100px);
+    z-index: -1;
   }
 }
 
