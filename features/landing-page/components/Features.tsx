@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 //Styles
 import styles from "./Features.module.scss";
@@ -9,6 +11,13 @@ import { MdSpaceDashboard } from "react-icons/md";
 import Button from "@/shared/components/ui/Button";
 
 const Features = () => {
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className={styles.features}>
       <div className={styles.headline}>
@@ -36,7 +45,12 @@ const Features = () => {
             Never miss a bill again. Mark payments as paid and see what’s due
             next.
           </p>
-          <Button text="Read more" variant="primary" size="medium" />
+          <Button
+            text="Read more"
+            variant="primary"
+            size="medium"
+            onClick={() => scrollToSection("payments")}
+          />
         </div>
         <div className={styles.featureCard}>
           <i className={styles.icon}>

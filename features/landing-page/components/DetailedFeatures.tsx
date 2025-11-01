@@ -6,7 +6,7 @@ import styles from "./DetailedFeatures.module.scss";
 
 const DetailedFeatures = () => {
   return (
-    <div className={styles.detailedFeatures}>
+    <div className={styles.detailedFeatures} id="payments">
       <div className={styles.bg}></div>
       <div className={styles.headline}>
         <h2>Never miss a bill again.</h2>
