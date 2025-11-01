@@ -9,6 +9,7 @@ import { FaRepeat } from "react-icons/fa6";
 // import { FaChartLine } from "react-icons/fa6";
 import { MdSpaceDashboard } from "react-icons/md";
 import Button from "@/shared/components/ui/Button";
+import Headline from "./Headline";
 
 const Features = () => {
   const scrollToSection = (id: string) => {
@@ -20,10 +21,10 @@ const Features = () => {
 
   return (
     <div className={styles.features}>
-      <div className={styles.headline}>
-        <h2>All your money, organized.</h2>
-        <p>Track, plan, and forecast effortlessly.</p>
-      </div>
+      <Headline
+        title="All your money, organized."
+        subtitle="Track, plan, and forecast effortlessly."
+      />
       <div className={styles.cardsContainer}>
         <div className={styles.featureCard}>
           <i className={styles.icon}>

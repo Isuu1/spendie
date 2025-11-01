@@ -3,15 +3,16 @@ import payments from "@/public/images/payments2.png";
 import Image from "next/image";
 //Styles
 import styles from "./PaymentsFeature.module.scss";
+import Headline from "./Headline";
 
 const PaymentsFeature = () => {
   return (
     <div className={styles.paymentsFeature} id="payments">
       <div className={styles.bg}></div>
-      <div className={styles.headline}>
-        <h2>Never miss a bill again.</h2>
-        <p>Keep your subscriptions and payments on track — automatically.</p>
-      </div>
+      <Headline
+        title="Never miss a bill again."
+        subtitle="Keep your subscriptions and payments on track — automatically."
+      />
       <div className={styles.payments}>
         <div className={styles.imageWrapper}>
           <div className={styles.blur}></div>
