@@ -88,7 +88,7 @@
 }
 
 @media (min-width: 768px) {
-  .detailedFeatures {
+  .paymentsFeature {
     .payments {
       max-width: 700px;
       .imageWrapper {
@@ -100,7 +100,7 @@
 }
 
 @media (min-width: 1024px) {
-  .detailedFeatures {
+  .paymentsFeature {
     .payments {
       grid-template-columns: 1fr 1fr;
       grid-template-rows: auto;
