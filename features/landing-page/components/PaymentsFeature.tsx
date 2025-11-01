@@ -2,11 +2,11 @@ import React from "react";
 import payments from "@/public/images/payments2.png";
 import Image from "next/image";
 //Styles
-import styles from "./DetailedFeatures.module.scss";
+import styles from "./PaymentsFeature.module.scss";
 
-const DetailedFeatures = () => {
+const PaymentsFeature = () => {
   return (
-    <div className={styles.detailedFeatures}>
+    <div className={styles.detailedFeatures} id="payments">
       <div className={styles.bg}></div>
       <div className={styles.headline}>
         <h2>Never miss a bill again.</h2>
@@ -61,4 +61,4 @@ const DetailedFeatures = () => {
   );
 };
 
-export default DetailedFeatures;
+export default PaymentsFeature;
