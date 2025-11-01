@@ -6,7 +6,7 @@ import styles from "./PaymentsFeature.module.scss";
 
 const PaymentsFeature = () => {
   return (
-    <div className={styles.detailedFeatures} id="payments">
+    <div className={styles.paymentsFeature} id="payments">
       <div className={styles.bg}></div>
       <div className={styles.headline}>
         <h2>Never miss a bill again.</h2>
@@ -19,9 +19,8 @@ const PaymentsFeature = () => {
             src={payments}
             alt="Advanced Payments Illustration"
             className={styles.image}
-            fill // fills parent container
-            unoptimized // no compression
-            sizes="(max-width: 768px) 100vw, 800px" // responsive
+            fill
+            unoptimized
             priority
           />
         </div>
