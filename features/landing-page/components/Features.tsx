@@ -10,14 +10,15 @@ import { FaRepeat } from "react-icons/fa6";
 import { MdSpaceDashboard } from "react-icons/md";
 import Button from "@/shared/components/ui/Button";
 import Headline from "./Headline";
+import { scrollToSection } from "../lib/utils/scrollToSection";
 
 const Features = () => {
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  // const scrollToSection = (id: string) => {
+  //   const element = document.getElementById(id);
+  //   if (element) {
+  //     element.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // };
 
   return (
     <div className={styles.features}>
