@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/supabase/server";
+import { revalidatePath } from "next/cache";
 
 export async function togglePanelVisibility(
   panelName: string,
@@ -45,6 +46,8 @@ export async function togglePanelVisibility(
     console.error("Error updating user settings:", updateError);
     return { success: false };
   }
+
+  revalidatePath("/dashboard");
 
   return { success: true };
 }

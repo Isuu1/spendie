@@ -15,7 +15,6 @@ import { UserSettings } from "@/features/user/types/user";
 import { PanelName, panelsMetaData } from "../config/panelsMetaData";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
-import { useRouter } from "next/navigation";
 
 const panelMenuVariants = {
   hidden: { opacity: 0 },
@@ -38,8 +37,6 @@ const DashboardPanelsControls: React.FC<DashboardPanelsControlsProps> = ({
 
   const panelMenuRef = useRef<HTMLUListElement>(null);
 
-  const router = useRouter();
-
   const isPanelActive = (panelName: PanelName) => {
     return localVisiblePanels.includes(panelName);
   };
@@ -54,7 +51,6 @@ const DashboardPanelsControls: React.FC<DashboardPanelsControlsProps> = ({
       toast.error("Failed to update panel settings", toastStyle);
       return;
     }
-    router.refresh();
   };
 
   // useEffect(() => {
