@@ -14,12 +14,33 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.8rem;
     border-radius: 10px;
+    white-space: nowrap;
     li {
       display: flex;
       gap: 0.7rem;
       align-items: center;
+      .active {
+        background: var(--color-action-active) !important;
+      }
+      .inactive {
+        background: var(--color-bg-tile) !important;
+      }
+      .panelStatus {
+        width: 50px;
+        height: 25px;
+        border-radius: var(--border-radius-l);
+        background: var(--color-bg-tile);
+        padding: 0.1rem;
+        span {
+          width: 50%;
+          height: 100%;
+          display: block;
+          border-radius: var(--border-radius-l);
+          //background: var(--color-bg-secondary);
+        }
+      }
     }
   }
 }

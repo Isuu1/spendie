@@ -1,12 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
 //Styles
 import styles from "./DashboardPanelsControls.module.scss";
 import { toastStyle } from "@/shared/styles/toastStyle";
-//Components
-import Button from "@/shared/components/ui/Button";
 //Icons
 import { MdSpaceDashboard } from "react-icons/md";
 //Utils
@@ -17,6 +15,7 @@ import { UserSettings } from "@/features/user/types/user";
 import { PanelName, panelsMetaData } from "../config/panelsMetaData";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
+import { useRouter } from "next/navigation";
 
 const panelMenuVariants = {
   hidden: { opacity: 0 },
@@ -33,36 +32,45 @@ const DashboardPanelsControls: React.FC<DashboardPanelsControlsProps> = ({
   settings,
 }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const [localVisiblePanels, setLocalVisiblePanels] = useState<string[]>(
+    settings?.visible_panels ?? []
+  );
 
   const panelMenuRef = useRef<HTMLUListElement>(null);
 
+  const router = useRouter();
+
   const isPanelActive = (panelName: PanelName) => {
-    return settings?.visible_panels?.includes(panelName);
+    return localVisiblePanels.includes(panelName);
   };
 
   const handleChange = async (panelName: PanelName, isActive: boolean) => {
+    setLocalVisiblePanels((prev) =>
+      isActive ? prev.filter((p) => p !== panelName) : [...prev, panelName]
+    );
     const result = await togglePanelVisibility(panelName, isActive);
     if (!result.success) {
       console.error("Failed to toggle panel visibility");
       toast.error("Failed to update panel settings", toastStyle);
       return;
     }
+    router.refresh();
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        panelMenuRef.current &&
-        !panelMenuRef.current.contains(event.target as Node)
-      ) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [panelMenuRef]);
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (
+  //       panelMenuRef.current &&
+  //       !panelMenuRef.current.contains(event.target as Node)
+  //     ) {
+  //       setMenuOpen(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [panelMenuRef]);
 
   return (
     <div className={styles.dashboardControls}>
@@ -81,14 +89,24 @@ const DashboardPanelsControls: React.FC<DashboardPanelsControlsProps> = ({
           >
             {panelsMetaData.map((panel) => (
               <li key={panel.name}>
-                <Button
-                  text={isPanelActive(panel.name) ? "Active" : "Inactive"}
-                  variant={isPanelActive(panel.name) ? "primary" : "secondary"}
-                  size="small"
+                <span
+                  className={`${styles.panelStatus} ${
+                    isPanelActive(panel.name) ? styles.active : styles.inactive
+                  }`}
                   onClick={() =>
                     handleChange(panel.name, !!isPanelActive(panel.name))
                   }
-                />
+                >
+                  <motion.span
+                    initial={false}
+                    animate={{
+                      x: isPanelActive(panel.name) ? "0%" : "100%",
+                      backgroundColor: isPanelActive(panel.name)
+                        ? "#b4b4b4"
+                        : "#444444ff",
+                    }}
+                  />
+                </span>
                 {panel.name}
               </li>
             ))}
