@@ -1,19 +1,15 @@
-import { Suspense } from "react";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { QueryProvider } from "@/shared/providers/QueryProvider";
 //Components
-import PanelWrapper from "@/features/dashboard/components/PanelWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";
-import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
+import Dashboard from "@/features/dashboard/components/Dashboard";
 //Api
 import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
-//Config
-import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
-
-export const revalidate = 60;
 
 export default async function Page() {
-  const { settings, error } = await getUserSettingsServer();
+  const queryClient = new QueryClient();
 
-  const visiblePanels = settings?.visible_panels || [];
+  const { settings, error } = await getUserSettingsServer();
 
   if (error || !settings) {
     return (
@@ -24,23 +20,19 @@ export default async function Page() {
     );
   }
 
+  // Prefill React Query cache
+  await queryClient.prefetchQuery({
+    queryKey: ["userSettings"],
+    queryFn: () => Promise.resolve(settings),
+  });
+
+  const dehydratedState = dehydrate(queryClient);
+
   return (
     <>
-      {panelsLibrary
-        .filter((panel) => visiblePanels.includes(panel.name))
-        .map((panel) => {
-          const PanelComponent = panel.component;
-          return (
-            <PanelWrapper key={panel.name} name={panel.name}>
-              <Suspense fallback={<DashboardPanelLoader />}>
-                <PanelComponent />
-              </Suspense>
-            </PanelWrapper>
-          );
-        })}
-      {visiblePanels.length === 0 && (
-        <p>You have no panels visible. Go to settings to enable some.</p>
-      )}
+      <QueryProvider state={dehydratedState}>
+        <Dashboard />
+      </QueryProvider>
     </>
   );
 }
