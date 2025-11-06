@@ -1,6 +1,6 @@
 "use client";
 
-//import TotalBalancePanel from "@/features/total-balance/components/TotalBalancePanel";
+import TotalBalancePanel from "@/features/total-balance/components/TotalBalancePanel";
 import { useUserSettingsClient } from "@/features/user/api/useUserSettingsClient";
 import React from "react";
 import PanelWrapper from "./PanelWrapper";
@@ -11,7 +11,7 @@ import ErrorMessage from "@/shared/components/ErrorMessage";
 export const panelsLibrary = [
   {
     name: "Total Balance",
-    //component: TotalBalancePanel,
+    component: TotalBalancePanel,
   },
   //   {
   //     name: "Accounts",
@@ -40,13 +40,12 @@ const Dashboard = () => {
       {panelsLibrary
         .filter((panel) => visiblePanels.includes(panel.name))
         .map((panel) => {
-          //const PanelComponent = panel.component;
+          const PanelComponent = panel.component;
           return (
             <PanelWrapper key={panel.name} name={panel.name}>
               {/* <Suspense fallback={<DashboardPanelLoader />}> */}
-              {/* <PanelComponent /> */}
+              <PanelComponent />
               {/* </Suspense> */}
-              <p>Panel content goes here</p>
             </PanelWrapper>
           );
         })}
