@@ -6,14 +6,17 @@ import Dashboard from "@/features/dashboard/components/Dashboard";
 //Api
 import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
 import { getAccountsServer } from "@/features/accounts/api/server";
+import { getRecurringPaymentsServer } from "@/features/recurring-payments/api/getRecurringPaymentsServer";
 
 export default async function Page() {
   const queryClient = new QueryClient();
 
   const { settings, error: settingsError } = await getUserSettingsServer();
   const { accounts, error: accountsError } = await getAccountsServer();
+  const { recurringPayments, error: recurringPaymentsError } =
+    await getRecurringPaymentsServer();
 
-  if (settingsError || accountsError) {
+  if (settingsError || accountsError || recurringPaymentsError) {
     return (
       <>
         <h3>Account</h3>
@@ -31,6 +34,11 @@ export default async function Page() {
   await queryClient.prefetchQuery({
     queryKey: ["accounts"],
     queryFn: () => Promise.resolve(accounts),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["recurringPayments"],
+    queryFn: () => Promise.resolve(recurringPayments),
   });
 
   const dehydratedState = dehydrate(queryClient);

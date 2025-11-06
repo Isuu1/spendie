@@ -8,7 +8,7 @@ import styles from "./FutureBalance.module.scss";
 //Types
 import {
   RecurringPayment,
-  RecurringPaymentHistory,
+  //RecurringPaymentHistory,
 } from "@/features/recurring-payments/types/recurring-payment";
 //Utils
 import { populateRecurringPayments } from "@/features/recurring-payments/lib/utils/populateRecurringPayments";
@@ -20,12 +20,11 @@ import Modal from "@/shared/components/Modal";
 import PopulatedRecurringPaymentsList from "@/features/recurring-payments/components/PopulatedRecurringPaymentsList";
 //Animations
 import { AnimatePresence } from "motion/react";
+import { useRecurringPaymentsClient } from "@/features/recurring-payments/hooks/useRecurringPaymentsClient";
 
 interface FutureBalanceProps {
-  recurringPayments: RecurringPayment[];
   recurringPaymentsError: string | null;
   totalBalance: number;
-  paymentsHistory: RecurringPaymentHistory[];
 }
 
 const calculateTotals = (payments: RecurringPayment[]) => {
@@ -44,9 +43,7 @@ type Mode = "endOfMonth" | "specificDate";
 
 const FutureBalance: React.FC<FutureBalanceProps> = ({
   totalBalance,
-  recurringPayments,
   recurringPaymentsError,
-  paymentsHistory,
 }) => {
   //States
   const [mode, setMode] = useState<Mode>("endOfMonth");
@@ -54,6 +51,13 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
   const [showUpcomingChangeDetails, setShowUpcomingChangeDetails] = useState<
     "income" | "expense" | null
   >(null);
+
+  const {
+    data: recurringPayments,
+    // isLoading,
+    // error,
+  } = useRecurringPaymentsClient();
+  console.log("Recurring Payments Data:", recurringPayments);
 
   //Payments filtering
   const specificDate =
@@ -63,8 +67,9 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
     () =>
       populateRecurringPayments(
         specificDate || moment().endOf("month"),
-        recurringPayments,
-        paymentsHistory
+        recurringPayments || [],
+        // @ts-expect-error for testing
+        paymentsHistory || []
       ),
     [specificDate, recurringPayments, paymentsHistory]
   );
