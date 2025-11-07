@@ -5,7 +5,7 @@ import ErrorMessage from "@/shared/components/ErrorMessage";
 import Dashboard from "@/features/dashboard/components/Dashboard";
 //Api
 import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
-import { getAccountsServer } from "@/features/accounts/api/server";
+import { getAccountsServer } from "@/features/accounts/api/getAccountsServer";
 import { getRecurringPaymentsServer } from "@/features/recurring-payments/api/getRecurringPaymentsServer";
 import { getRecurringPaymentsHistoryServer } from "@/features/recurring-payments/api/getRecurringPaymentsHistoryServer";
 

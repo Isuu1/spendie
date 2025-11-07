@@ -1,6 +1,6 @@
 import React from "react";
 //Api
-import { getAccountsServer } from "@/features/accounts/api/server";
+import { getAccountsServer } from "@/features/accounts/api/getAccountsServer";
 //Components
 import AccountsList from "./AccountsList";
 import ErrorMessage from "@/shared/components/ErrorMessage";
