@@ -5,7 +5,7 @@ import styles from "./TotalBalancePanel.module.scss";
 import FutureBalance from "./FutureBalance";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 //Api
-import { useAccountsClient } from "@/features/accounts/api/useAccountsClient";
+import { useAccountsClient } from "@/features/accounts/hooks/useAccountsClient";
 
 const TotalBalancePanel: React.FC = () => {
   const { data, error } = useAccountsClient();
