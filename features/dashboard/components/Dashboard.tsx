@@ -5,6 +5,7 @@ import { useUserSettingsClient } from "@/features/user/api/useUserSettingsClient
 import React from "react";
 import PanelWrapper from "./PanelWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";
+import AccountsPanel from "@/features/accounts/components/AccountsPanel";
 //Config
 //import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
 
@@ -13,10 +14,10 @@ export const panelsLibrary = [
     name: "Total Balance",
     component: TotalBalancePanel,
   },
-  //   {
-  //     name: "Accounts",
-  //     component: AccountsPanel,
-  //   },
+  {
+    name: "Accounts",
+    component: AccountsPanel,
+  },
   //   {
   //     name: "Recent transactions",
   //     component: TransactionsPanel,

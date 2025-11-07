@@ -1,24 +1,22 @@
 import React from "react";
-//Api
-import { getAccountsServer } from "@/features/accounts/api/getAccountsServer";
 //Components
 import AccountsList from "./AccountsList";
 import ErrorMessage from "@/shared/components/ErrorMessage";
+//Hooks
+import { useAccountsClient } from "../hooks/useAccountsClient";
 
 export const revalidate = 60;
 
-const AccountsPanel: React.FC = async () => {
-  const result = await getAccountsServer();
+const AccountsPanel: React.FC = () => {
+  const { data, error } = useAccountsClient();
 
-  if (result.error) {
-    return <ErrorMessage message={result.error} />;
+  if (error) {
+    return <ErrorMessage message={error.message} />;
   }
-
-  const { accounts } = result;
 
   return (
     <>
-      <AccountsList accounts={accounts} />
+      <AccountsList accounts={data} />
     </>
   );
 };
