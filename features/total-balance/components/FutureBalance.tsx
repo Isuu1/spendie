@@ -21,6 +21,7 @@ import PopulatedRecurringPaymentsList from "@/features/recurring-payments/compon
 //Animations
 import { AnimatePresence } from "motion/react";
 import { useRecurringPaymentsClient } from "@/features/recurring-payments/hooks/useRecurringPaymentsClient";
+import { useRecurringPaymentsHistoryClient } from "@/features/recurring-payments/hooks/useRecurringPaymentsHistoryClient";
 
 interface FutureBalanceProps {
   recurringPaymentsError: string | null;
@@ -57,6 +58,11 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
     // isLoading,
     // error,
   } = useRecurringPaymentsClient();
+  const {
+    data: paymentsHistory,
+    //isLoading,
+    //error,
+  } = useRecurringPaymentsHistoryClient();
   console.log("Recurring Payments Data:", recurringPayments);
 
   //Payments filtering
@@ -68,7 +74,6 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
       populateRecurringPayments(
         specificDate || moment().endOf("month"),
         recurringPayments || [],
-        // @ts-expect-error for testing
         paymentsHistory || []
       ),
     [specificDate, recurringPayments, paymentsHistory]

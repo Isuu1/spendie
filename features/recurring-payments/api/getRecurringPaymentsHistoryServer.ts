@@ -6,7 +6,7 @@ type RecurringPaymentsResult = {
   error: string | null;
 };
 
-export async function getPaymentsHistory(): Promise<RecurringPaymentsResult> {
+export async function getRecurringPaymentsHistoryServer(): Promise<RecurringPaymentsResult> {
   const supabase = await createClient();
 
   const { data, error } = await supabase.auth.getUser();

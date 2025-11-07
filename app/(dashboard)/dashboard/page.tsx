@@ -7,6 +7,7 @@ import Dashboard from "@/features/dashboard/components/Dashboard";
 import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
 import { getAccountsServer } from "@/features/accounts/api/server";
 import { getRecurringPaymentsServer } from "@/features/recurring-payments/api/getRecurringPaymentsServer";
+import { getRecurringPaymentsHistoryServer } from "@/features/recurring-payments/api/getRecurringPaymentsHistoryServer";
 
 export default async function Page() {
   const queryClient = new QueryClient();
@@ -15,8 +16,15 @@ export default async function Page() {
   const { accounts, error: accountsError } = await getAccountsServer();
   const { recurringPayments, error: recurringPaymentsError } =
     await getRecurringPaymentsServer();
+  const { paymentsHistory, error: historyError } =
+    await getRecurringPaymentsHistoryServer();
 
-  if (settingsError || accountsError || recurringPaymentsError) {
+  if (
+    settingsError ||
+    accountsError ||
+    recurringPaymentsError ||
+    historyError
+  ) {
     return (
       <>
         <h3>Account</h3>
@@ -39,6 +47,11 @@ export default async function Page() {
   await queryClient.prefetchQuery({
     queryKey: ["recurringPayments"],
     queryFn: () => Promise.resolve(recurringPayments),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["paymentsHistory"],
+    queryFn: () => Promise.resolve(paymentsHistory),
   });
 
   const dehydratedState = dehydrate(queryClient);
