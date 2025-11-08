@@ -7,7 +7,13 @@ import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanel
 import { useAccountsClient } from "../hooks/useAccountsClient";
 
 const AccountsPanel: React.FC = () => {
-  const { data: accounts, isLoading, isFetching, error } = useAccountsClient();
+  const {
+    data: accounts,
+    isLoading,
+    isFetching,
+    refetch,
+    error,
+  } = useAccountsClient();
   console.log("is loading accounts:", isLoading);
   console.log("is fetching accounts:", isFetching);
   console.log("accounts data:", accounts);
@@ -17,7 +23,13 @@ const AccountsPanel: React.FC = () => {
   }
 
   if (error) {
-    return <ErrorMessage variant="panel" message={error.message} />;
+    return (
+      <ErrorMessage
+        onReload={refetch}
+        variant="panel"
+        message="Error loading accounts"
+      />
+    );
   }
 
   return (
