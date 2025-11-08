@@ -2,11 +2,9 @@ import React from "react";
 //Components
 import AccountsList from "./AccountsList";
 import ErrorMessage from "@/shared/components/ErrorMessage";
+import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 //Hooks
 import { useAccountsClient } from "../hooks/useAccountsClient";
-import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
-
-export const revalidate = 60;
 
 const AccountsPanel: React.FC = () => {
   const { data: accounts, isLoading, isFetching, error } = useAccountsClient();
@@ -19,7 +17,7 @@ const AccountsPanel: React.FC = () => {
   }
 
   if (error) {
-    return <ErrorMessage message={error.message} />;
+    return <ErrorMessage variant="panel" message={error.message} />;
   }
 
   return (

@@ -11,13 +11,13 @@ import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
 
 const Dashboard = () => {
   const { data: settings, isFetching, error } = useUserSettingsClient();
-  console.log("user settings loading:", isFetching);
 
   if (error)
     return (
-      <div style={{ position: "absolute" }}>
-        <ErrorMessage message="Failed to load your account settings from the server." />
-      </div>
+      <ErrorMessage
+        variant="dashboard"
+        message="Failed to load your account settings from the server."
+      />
     );
 
   const visiblePanels = settings?.visible_panels || [];

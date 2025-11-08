@@ -12,7 +12,7 @@ import { useTransactionsClient } from "../hooks/useTransactionsClient";
 //Types
 import { Transaction } from "plaid";
 //Components
-import ErrorMessage from "@/shared/components/ErrorMessage";
+//import ErrorMessage from "@/shared/components/ErrorMessage";
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 
 const TransactionsPanel: React.FC = () => {
@@ -37,7 +37,7 @@ const TransactionsPanel: React.FC = () => {
       {transactions?.length === 0 && !error && (
         <p className={styles.noTransactions}>No recent transactions found.</p>
       )}
-      {error && <ErrorMessage message="Failed to load recent transactions." />}
+
       {transactions?.slice(0, 6).map((transaction: Transaction) => (
         <div
           key={transaction.transaction_id}

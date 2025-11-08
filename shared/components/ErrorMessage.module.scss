@@ -6,8 +6,13 @@
   color: rgb(255, 255, 255);
   background: rgba(255, 0, 0, 0.1);
   border: 1px solid rgba(255, 0, 0, 0.3);
-  padding: 16px;
-  border-radius: 4px;
-  margin: 16px 0;
+  border-radius: var(--border-radius-l);
   text-align: center;
+}
+
+.dashboard {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1.5rem;
 }
