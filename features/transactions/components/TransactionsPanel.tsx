@@ -12,7 +12,7 @@ import { useTransactionsClient } from "../hooks/useTransactionsClient";
 //Types
 import { Transaction } from "plaid";
 //Components
-//import ErrorMessage from "@/shared/components/ErrorMessage";
+import ErrorMessage from "@/shared/components/ErrorMessage";
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 
 const TransactionsPanel: React.FC = () => {
@@ -21,16 +21,20 @@ const TransactionsPanel: React.FC = () => {
     data: transactions,
     error,
     refetch,
+    isFetching,
   } = useTransactionsClient();
 
-  if (isLoading) {
-    return <DashboardPanelLoader />;
+  if (isLoading || isFetching) {
+    return <DashboardPanelLoader height={467} />;
   }
-  if (error) {
-    return <button onClick={() => refetch()}>Retry</button>;
-  }
-  // if (error)
-  //   return <ErrorMessage message="Failed to load recent transactions." />;
+  if (error)
+    return (
+      <ErrorMessage
+        onReload={refetch}
+        variant="panel"
+        message="Failed to load recent transactions."
+      />
+    );
 
   return (
     <div className={styles.transactionsTile}>
