@@ -60,6 +60,14 @@ export async function getTransactionsServer(): Promise<TransactionsResult> {
 
     const response = await plaidClient.transactionsGet(plaidRequest);
 
+    if (!response) {
+      console.error("Error fetching transactions from Plaid");
+      return {
+        transactions: [],
+        error: "Failed to fetch transactions from Plaid",
+      };
+    }
+
     return {
       transactions: response.data.transactions,
     };

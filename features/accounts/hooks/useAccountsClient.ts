@@ -22,5 +22,8 @@ export function useAccountsClient() {
       const accounts = await response.json();
       return accounts;
     },
+    // retry logic:
+    retry: 1, // try once after SSR failure
+    refetchOnMount: true, // allow client to reattempt after hydration
   });
 }
