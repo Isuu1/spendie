@@ -1,26 +1,44 @@
 import React from "react";
 import Image from "next/image";
-
 //Styles
 import styles from "./TransactionsPanel.module.scss";
-//Api
-import { getTransactionsServer } from "@/features/transactions/api/server";
 //Utils
 import {
   displayTransactionAmount,
   displayTransactionCategory,
 } from "../lib/utils";
+//Hooks
+import { useTransactionsClient } from "../hooks/useTransactionsClient";
+//Types
+import { Transaction } from "plaid";
+//Components
+import ErrorMessage from "@/shared/components/ErrorMessage";
+import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 
-const TransactionsPanel: React.FC = async () => {
-  const transactions = await getTransactionsServer();
+const TransactionsPanel: React.FC = () => {
+  const {
+    isLoading,
+    data: transactions,
+    error,
+    refetch,
+  } = useTransactionsClient();
 
-  if (!transactions) {
-    return <div>No transactions found.</div>;
+  if (isLoading) {
+    return <DashboardPanelLoader />;
   }
+  if (error) {
+    return <button onClick={() => refetch()}>Retry</button>;
+  }
+  // if (error)
+  //   return <ErrorMessage message="Failed to load recent transactions." />;
 
   return (
     <div className={styles.transactionsTile}>
-      {transactions.slice(0, 6).map((transaction) => (
+      {transactions?.length === 0 && !error && (
+        <p className={styles.noTransactions}>No recent transactions found.</p>
+      )}
+      {error && <ErrorMessage message="Failed to load recent transactions." />}
+      {transactions?.slice(0, 6).map((transaction: Transaction) => (
         <div
           key={transaction.transaction_id}
           className={styles.transactionItem}
@@ -40,7 +58,7 @@ const TransactionsPanel: React.FC = async () => {
             <p className={styles.name}>{transaction.name ?? "Unknown"}</p>
             <p className={styles.category}>
               {displayTransactionCategory(
-                transaction?.personal_finance_category.primary ??
+                transaction?.personal_finance_category?.primary ??
                   "Uncategorized"
               )}
             </p>

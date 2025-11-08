@@ -2,10 +2,12 @@
 
 import TotalBalancePanel from "@/features/total-balance/components/TotalBalancePanel";
 import { useUserSettingsClient } from "@/features/user/api/useUserSettingsClient";
-import React from "react";
+import React, { Suspense } from "react";
 import PanelWrapper from "./PanelWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 import AccountsPanel from "@/features/accounts/components/AccountsPanel";
+import TransactionsPanel from "@/features/transactions/components/TransactionsPanel";
+import DashboardPanelLoader from "./DashboardPanelLoader";
 //Config
 //import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
 
@@ -18,10 +20,10 @@ export const panelsLibrary = [
     name: "Accounts",
     component: AccountsPanel,
   },
-  //   {
-  //     name: "Recent transactions",
-  //     component: TransactionsPanel,
-  //   },
+  {
+    name: "Recent transactions",
+    component: TransactionsPanel,
+  },
 ];
 
 const Dashboard = () => {
@@ -44,9 +46,9 @@ const Dashboard = () => {
           const PanelComponent = panel.component;
           return (
             <PanelWrapper key={panel.name} name={panel.name}>
-              {/* <Suspense fallback={<DashboardPanelLoader />}> */}
-              <PanelComponent />
-              {/* </Suspense> */}
+              <Suspense fallback={<DashboardPanelLoader />}>
+                <PanelComponent />
+              </Suspense>
             </PanelWrapper>
           );
         })}

@@ -1,13 +1,13 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 //Components
-import ErrorMessage from "@/shared/components/ErrorMessage";
 import Dashboard from "@/features/dashboard/components/Dashboard";
 //Api
 import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
 import { getAccountsServer } from "@/features/accounts/api/getAccountsServer";
 import { getRecurringPaymentsServer } from "@/features/recurring-payments/api/getRecurringPaymentsServer";
 import { getRecurringPaymentsHistoryServer } from "@/features/recurring-payments/api/getRecurringPaymentsHistoryServer";
+import { getTransactionsServer } from "@/features/transactions/api/getTransactionsServer";
 
 export default async function Page() {
   const queryClient = new QueryClient();
@@ -19,18 +19,23 @@ export default async function Page() {
   const { paymentsHistory, error: historyError } =
     await getRecurringPaymentsHistoryServer();
 
+  const { transactions, error: transactionsError } =
+    await getTransactionsServer();
+
   if (
     settingsError ||
     accountsError ||
     recurringPaymentsError ||
-    historyError
+    historyError ||
+    transactionsError
   ) {
-    return (
-      <>
-        <h3>Account</h3>
-        <ErrorMessage message="Failed to load your account settings from the server." />
-      </>
-    );
+    console.error("Error loading dashboard data:", {
+      settingsError,
+      accountsError,
+      recurringPaymentsError,
+      historyError,
+      transactionsError,
+    });
   }
 
   // Prefill React Query cache
@@ -52,6 +57,11 @@ export default async function Page() {
   await queryClient.prefetchQuery({
     queryKey: ["paymentsHistory"],
     queryFn: () => Promise.resolve(paymentsHistory),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["transactions"],
+    queryFn: () => Promise.resolve(transactions),
   });
 
   const dehydratedState = dehydrate(queryClient);

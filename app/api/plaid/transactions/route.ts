@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/supabase/server";
 
-import { TransactionsGetRequest } from "plaid";
+import { Transaction, TransactionsGetRequest } from "plaid";
 import moment from "moment"; // Or another date handling library
 import plaidClient from "@/shared/lib/plaid";
-import { Transaction } from "@/shared/types/transaction";
 
 export async function GET() {
   try {
