@@ -19,7 +19,7 @@ const AccountsPanel: React.FC = () => {
   console.log("accounts data:", accounts);
 
   if (isFetching || isLoading) {
-    return <DashboardPanelLoader />;
+    return <DashboardPanelLoader height={215} />;
   }
 
   if (error) {
