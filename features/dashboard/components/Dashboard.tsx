@@ -1,43 +1,27 @@
 "use client";
 
-import TotalBalancePanel from "@/features/total-balance/components/TotalBalancePanel";
+import React from "react";
+//Hooks
 import { useUserSettingsClient } from "@/features/user/api/useUserSettingsClient";
-import React, { Suspense } from "react";
+//Components
 import PanelWrapper from "./PanelWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";
-import AccountsPanel from "@/features/accounts/components/AccountsPanel";
-import TransactionsPanel from "@/features/transactions/components/TransactionsPanel";
-import DashboardPanelLoader from "./DashboardPanelLoader";
 //Config
-//import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
-
-export const panelsLibrary = [
-  {
-    name: "Total Balance",
-    component: TotalBalancePanel,
-  },
-  {
-    name: "Accounts",
-    component: AccountsPanel,
-  },
-  {
-    name: "Recent transactions",
-    component: TransactionsPanel,
-  },
-];
+import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
 
 const Dashboard = () => {
-  const { data, isLoading, error } = useUserSettingsClient();
+  const { data: settings, isFetching, error } = useUserSettingsClient();
+  console.log("user settings loading:", isFetching);
 
   if (error)
     return (
-      <ErrorMessage message="Failed to load your account settings from the server." />
+      <div style={{ position: "absolute" }}>
+        <ErrorMessage message="Failed to load your account settings from the server." />
+      </div>
     );
 
-  const visiblePanels = data?.visible_panels || [];
-  console.log("User Settings Data:", data);
-  console.log("Loading State:", isLoading);
-  console.log("Error State:", error);
+  const visiblePanels = settings?.visible_panels || [];
+
   return (
     <div>
       {panelsLibrary
@@ -46,13 +30,11 @@ const Dashboard = () => {
           const PanelComponent = panel.component;
           return (
             <PanelWrapper key={panel.name} name={panel.name}>
-              <Suspense fallback={<DashboardPanelLoader />}>
-                <PanelComponent />
-              </Suspense>
+              <PanelComponent />
             </PanelWrapper>
           );
         })}
-      {visiblePanels.length === 0 && (
+      {visiblePanels.length === 0 && !isFetching && (
         <p>No panels to display. Please update your settings.</p>
       )}
     </div>
