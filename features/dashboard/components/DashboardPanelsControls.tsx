@@ -5,8 +5,8 @@ import React, { useRef, useState } from "react";
 import styles from "./DashboardPanelsControls.module.scss";
 //Icons
 import { MdSpaceDashboard } from "react-icons/md";
-//Config
-import { PanelName } from "../config/panelsMetaData";
+//Types
+import { PanelName } from "@/features/dashboard/config/panelsLibrary";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
 //Hooks
