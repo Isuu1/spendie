@@ -10,14 +10,17 @@
     top: 50px;
     right: 0;
     background: var(--color-bg-main);
-    padding: 0.7rem;
+    padding: 1rem;
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
-    border-radius: 10px;
+    border-radius: var(--border-radius-l);
     white-space: nowrap;
-    li {
+    .title {
+      margin-bottom: 1rem;
+    }
+    .menuItem {
       display: flex;
       gap: 0.7rem;
       align-items: center;
@@ -28,12 +31,13 @@
         background: var(--color-bg-tile) !important;
       }
       .panelStatus {
+        cursor: pointer;
         width: 50px;
         height: 25px;
         border-radius: var(--border-radius-l);
         background: var(--color-bg-tile);
         padding: 0.1rem;
-        span {
+        .indicator {
           width: 50%;
           height: 100%;
           display: block;

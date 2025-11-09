@@ -60,8 +60,9 @@ const DashboardPanelsControls: React.FC = ({}) => {
             animate="visible"
             exit="exit"
           >
+            <h3 className={styles.title}>Dashboard panels</h3>
             {panelsLibrary.map((panel) => (
-              <li key={panel.name}>
+              <li className={styles.menuItem} key={panel.name}>
                 <span
                   className={`${styles.panelStatus} ${
                     isPanelActive(panel.name) ? styles.active : styles.inactive
@@ -71,6 +72,7 @@ const DashboardPanelsControls: React.FC = ({}) => {
                   }
                 >
                   <motion.span
+                    className={styles.indicator}
                     initial={false}
                     animate={{
                       x: isPanelActive(panel.name) ? "0%" : "100%",
