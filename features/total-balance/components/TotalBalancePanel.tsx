@@ -6,12 +6,17 @@ import FutureBalance from "./FutureBalance";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 //Api
 import { useAccountsClient } from "@/features/accounts/hooks/useAccountsClient";
+import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 
 const TotalBalancePanel: React.FC = () => {
-  const { data, error } = useAccountsClient();
+  const { data, error, isLoading } = useAccountsClient();
 
   if (error) {
-    return <ErrorMessage message={error.message} />;
+    return <ErrorMessage variant="panel" message={error.message} />;
+  }
+
+  if (isLoading) {
+    return <DashboardPanelLoader height={218} />;
   }
 
   const totalBalance = data?.reduce(

@@ -19,9 +19,7 @@ const DashboardHeader = async () => {
     <>
       <div className={styles.header}>
         {user && !userError && <UserProfileCard user={user} />}
-        {settings && !settingsError && (
-          <DashboardPanelsControls settings={settings} />
-        )}
+        {settings && !settingsError && <DashboardPanelsControls />}
         <i className={styles.notificationsIcon}>
           <IoNotifications />
           <span className={styles.counter}></span>

@@ -21,10 +21,9 @@ const TransactionsPanel: React.FC = () => {
     data: transactions,
     error,
     refetch,
-    isFetching,
   } = useTransactionsClient();
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return <DashboardPanelLoader height={467} />;
   }
   if (error)
