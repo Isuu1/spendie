@@ -7,16 +7,7 @@ import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanel
 import { useAccountsClient } from "../hooks/useAccountsClient";
 
 const AccountsPanel: React.FC = () => {
-  const {
-    data: accounts,
-    isLoading,
-    isFetching,
-    refetch,
-    error,
-  } = useAccountsClient();
-  console.log("is loading accounts:", isLoading);
-  console.log("is fetching accounts:", isFetching);
-  console.log("accounts data:", accounts);
+  const { data: accounts, isLoading, refetch, error } = useAccountsClient();
 
   if (isLoading) {
     return <DashboardPanelLoader height={215} />;
