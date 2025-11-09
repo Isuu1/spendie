@@ -1,20 +1,36 @@
 import React from "react";
-//Api
-import { getAccountsServer } from "@/features/accounts/api/server";
 //Components
 import AccountsList from "./AccountsList";
 import ErrorMessage from "@/shared/components/ErrorMessage";
+import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
+//Hooks
+import { useAccountsClient } from "../hooks/useAccountsClient";
 
-export const revalidate = 60;
+const AccountsPanel: React.FC = () => {
+  const {
+    data: accounts,
+    isLoading,
+    isFetching,
+    refetch,
+    error,
+  } = useAccountsClient();
+  console.log("is loading accounts:", isLoading);
+  console.log("is fetching accounts:", isFetching);
+  console.log("accounts data:", accounts);
 
-const AccountsPanel: React.FC = async () => {
-  const result = await getAccountsServer();
-
-  if (result.error) {
-    return <ErrorMessage message={result.error} />;
+  if (isLoading) {
+    return <DashboardPanelLoader height={215} />;
   }
 
-  const { accounts } = result;
+  if (error) {
+    return (
+      <ErrorMessage
+        onReload={refetch}
+        variant="panel"
+        message="Error loading accounts"
+      />
+    );
+  }
 
   return (
     <>

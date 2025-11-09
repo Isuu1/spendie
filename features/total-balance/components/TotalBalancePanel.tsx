@@ -4,30 +4,28 @@ import styles from "./TotalBalancePanel.module.scss";
 //Components
 import FutureBalance from "./FutureBalance";
 import ErrorMessage from "@/shared/components/ErrorMessage";
-//Utils
-import { getAccountsServer } from "@/features/accounts/api/server";
-import { getRecurringPayments } from "@/features/recurring-payments/api/getRecurringPayments";
-import { getPaymentsHistory } from "@/features/recurring-payments/api/getPaymentsHistory";
+//Api
+import { useAccountsClient } from "@/features/accounts/hooks/useAccountsClient";
+import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 
-const TotalBalancePanel: React.FC = async () => {
-  const result = await getAccountsServer();
+const TotalBalancePanel: React.FC = () => {
+  const { data, error, isLoading } = useAccountsClient();
 
-  if (result.error) {
-    return <ErrorMessage message={result.error} />;
+  if (error) {
+    return <ErrorMessage variant="panel" message={error.message} />;
   }
 
-  const { accounts } = result;
+  if (isLoading) {
+    return <DashboardPanelLoader height={218} />;
+  }
 
-  const { recurringPayments, error: recurringPaymentsError } =
-    await getRecurringPayments();
-
-  const { paymentsHistory, error: paymentHistoryError } =
-    await getPaymentsHistory();
-
-  const totalBalance = accounts?.reduce((sum, currentAccount) => {
-    const currentBalance = currentAccount.balances.current ?? 0;
-    return sum + currentBalance;
-  }, 0);
+  const totalBalance = data?.reduce(
+    (sum: number, currentAccount: { balances: { current: number } }) => {
+      const currentBalance = currentAccount.balances.current ?? 0;
+      return sum + currentBalance;
+    },
+    0
+  );
 
   return (
     <div className={styles.totalBalanceTile}>
@@ -35,9 +33,7 @@ const TotalBalancePanel: React.FC = async () => {
 
       <FutureBalance
         totalBalance={totalBalance}
-        recurringPayments={recurringPayments}
-        recurringPaymentsError={recurringPaymentsError || paymentHistoryError}
-        paymentsHistory={paymentsHistory}
+        recurringPaymentsError={error}
       />
     </div>
   );

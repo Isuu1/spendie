@@ -5,7 +5,7 @@ import { Account } from "@/features/accounts/types/account";
 
 type AccountsResult = {
   accounts: Account[];
-  error: string | null;
+  error?: string | null;
 };
 
 export async function getAccountsServer(): Promise<AccountsResult> {
@@ -26,14 +26,21 @@ export async function getAccountsServer(): Promise<AccountsResult> {
       .select("access_token")
       .eq("user_id", userId);
 
-    if (fetchError || !plaidItems || plaidItems.length === 0) {
+    if (fetchError) {
       console.error(
         "Server-side getAccounts Function: Supabase fetch error for plaid_items:",
         fetchError
       );
       return {
         accounts: [],
-        error: "Database error: No linked bank accounts found",
+        error: "Database error: Failed to fetch Plaid items",
+      };
+    }
+
+    if (!plaidItems || plaidItems.length === 0) {
+      return {
+        accounts: [],
+        error: "Database error: No linked accounts found",
       };
     }
 
@@ -51,9 +58,11 @@ export async function getAccountsServer(): Promise<AccountsResult> {
       return { accounts: [], error: "Failed to fetch accounts from Plaid" };
     }
 
-    return { accounts: response.data.accounts, error: null };
+    return {
+      accounts: response.data.accounts,
+    };
   } catch (error) {
     console.error("Error fetching accounts:", error);
-    return { accounts: [], error: "An unexpected error occurred" };
+    throw new Error("Failed to fetch accounts");
   }
 }

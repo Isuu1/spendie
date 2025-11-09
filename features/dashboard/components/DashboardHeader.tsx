@@ -15,18 +15,11 @@ const DashboardHeader = async () => {
   const { user, error: userError } = await getUserServer();
   const { settings, error: settingsError } = await getUserSettingsServer();
 
-  if (userError || settingsError) {
-    //Does not need UI hence dashboard will show feedback UI
-    return null;
-  }
-
   return (
     <>
       <div className={styles.header}>
         {user && !userError && <UserProfileCard user={user} />}
-        {settings && !settingsError && (
-          <DashboardPanelsControls settings={settings} />
-        )}
+        {settings && !settingsError && <DashboardPanelsControls />}
         <i className={styles.notificationsIcon}>
           <IoNotifications />
           <span className={styles.counter}></span>

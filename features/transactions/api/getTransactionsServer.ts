@@ -1,10 +1,14 @@
 import { createClient } from "@/supabase/server";
-import { TransactionsGetRequest } from "plaid";
+import { Transaction, TransactionsGetRequest } from "plaid";
 import plaidClient from "@/shared/lib/plaid";
 import moment from "moment";
-import { Transaction } from "@/shared/types/transaction";
 
-export async function getTransactionsServer() {
+type TransactionsResult = {
+  transactions: Transaction[];
+  error?: string | null;
+};
+
+export async function getTransactionsServer(): Promise<TransactionsResult> {
   try {
     const supabase = await createClient();
 
@@ -22,12 +26,22 @@ export async function getTransactionsServer() {
       .select("access_token")
       .eq("user_id", userId);
 
-    if (fetchError || !plaidItems || plaidItems.length === 0) {
+    if (fetchError) {
       console.error(
-        "Server-side getAccounts Function: Supabase fetch error for plaid_items:",
+        "Server-side getTransactions Function: Supabase fetch error for plaid_items:",
         fetchError
       );
-      return;
+      return {
+        transactions: [],
+        error: "Database error: Failed to fetch Plaid items",
+      };
+    }
+
+    if (!plaidItems || plaidItems.length === 0) {
+      return {
+        transactions: [],
+        error: "Database error: No linked transactions found",
+      };
     }
 
     const accessToken = plaidItems[0].access_token;
@@ -46,9 +60,19 @@ export async function getTransactionsServer() {
 
     const response = await plaidClient.transactionsGet(plaidRequest);
 
-    return response.data.transactions as Transaction[];
+    if (!response) {
+      console.error("Error fetching transactions from Plaid");
+      return {
+        transactions: [],
+        error: "Failed to fetch transactions from Plaid",
+      };
+    }
+
+    return {
+      transactions: response.data.transactions,
+    };
   } catch (error) {
     console.error("Error fetching transactions:", error);
-    throw error;
+    throw new Error("An unexpected error occurred while fetching transactions");
   }
 }

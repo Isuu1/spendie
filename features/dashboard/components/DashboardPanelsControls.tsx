@@ -1,20 +1,21 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import toast from "react-hot-toast";
 //Styles
 import styles from "./DashboardPanelsControls.module.scss";
-import { toastStyle } from "@/shared/styles/toastStyle";
 //Icons
 import { MdSpaceDashboard } from "react-icons/md";
-//Utils
-import { togglePanelVisibility } from "../../user/actions/togglePanelVisibility";
 //Types
-import { UserSettings } from "@/features/user/types/user";
-//Config
-import { PanelName, panelsMetaData } from "../config/panelsMetaData";
+import { PanelName } from "@/features/dashboard/config/panelsLibrary";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
+//Hooks
+import { useClickOutside } from "@/shared/hooks/useClickOutside";
+//Config
+import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
+//Api
+import { useUserSettingsClient } from "@/features/user/api/useUserSettingsClient";
+import { useTogglePanelVisibility } from "@/features/user/api/useTogglePanelVisibility";
 
 const panelMenuVariants = {
   hidden: { opacity: 0 },
@@ -23,50 +24,26 @@ const panelMenuVariants = {
   transition: { duration: 0.15 },
 };
 
-interface DashboardPanelsControlsProps {
-  settings: UserSettings;
-}
+const DashboardPanelsControls: React.FC = ({}) => {
+  const [menuOpen, setMenuOpen] = useState(false);
 
-const DashboardPanelsControls: React.FC<DashboardPanelsControlsProps> = ({
-  settings,
-}) => {
-  const [menuOpen, setMenuOpen] = React.useState(false);
-  const [localVisiblePanels, setLocalVisiblePanels] = useState<string[]>(
-    settings?.visible_panels ?? []
-  );
+  const { data: settings } = useUserSettingsClient();
+
+  const { mutate: togglePanel } = useTogglePanelVisibility();
+
+  const visiblePanels = settings?.visible_panels || [];
 
   const panelMenuRef = useRef<HTMLUListElement>(null);
 
   const isPanelActive = (panelName: PanelName) => {
-    return localVisiblePanels.includes(panelName);
+    return visiblePanels.includes(panelName);
   };
 
-  const handleChange = async (panelName: PanelName, isActive: boolean) => {
-    setLocalVisiblePanels((prev) =>
-      isActive ? prev.filter((p) => p !== panelName) : [...prev, panelName]
-    );
-    const result = await togglePanelVisibility(panelName, isActive);
-    if (!result.success) {
-      console.error("Failed to toggle panel visibility");
-      toast.error("Failed to update panel settings", toastStyle);
-      return;
-    }
+  const handleChange = (panelName: PanelName, isActive: boolean) => {
+    togglePanel({ panelName, isActive });
   };
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     if (
-  //       panelMenuRef.current &&
-  //       !panelMenuRef.current.contains(event.target as Node)
-  //     ) {
-  //       setMenuOpen(false);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [panelMenuRef]);
+  useClickOutside(panelMenuRef, () => setMenuOpen(false));
 
   return (
     <div className={styles.dashboardControls}>
@@ -83,7 +60,7 @@ const DashboardPanelsControls: React.FC<DashboardPanelsControlsProps> = ({
             animate="visible"
             exit="exit"
           >
-            {panelsMetaData.map((panel) => (
+            {panelsLibrary.map((panel) => (
               <li key={panel.name}>
                 <span
                   className={`${styles.panelStatus} ${
