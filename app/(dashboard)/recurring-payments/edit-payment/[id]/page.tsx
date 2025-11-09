@@ -30,7 +30,10 @@ export default async function Page({
     return (
       <div className="page">
         <BackButton />
-        <ErrorMessage message="Could not find the recurring payment you are trying to edit." />
+        <ErrorMessage
+          variant="panel"
+          message="Could not find the recurring payment you are trying to edit."
+        />
       </div>
     );
   }
