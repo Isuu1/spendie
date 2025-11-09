@@ -11,7 +11,10 @@ export default async function Page() {
     return (
       <>
         <h3>Account</h3>
-        <ErrorMessage message="Failed to load your account from the server." />
+        <ErrorMessage
+          variant="panel"
+          message="Failed to load your account from the server."
+        />
       </>
     );
   }
