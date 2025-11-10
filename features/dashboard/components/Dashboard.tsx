@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+//Styles
+import styles from "./Dashboard.module.scss";
 //Hooks
 import { useUserSettingsClient } from "@/features/user/api/useUserSettingsClient";
 //Components
@@ -25,7 +27,7 @@ const Dashboard = () => {
   const visiblePanels = settings?.visible_panels || [];
 
   return (
-    <motion.div>
+    <motion.div className={styles.dashboard}>
       <AnimatePresence>
         {panelsLibrary
           .filter((panel) => visiblePanels.includes(panel.name))

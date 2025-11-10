@@ -105,7 +105,12 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
         })}
       </div>
 
-      {error && <ErrorMessage message="Failed to load recurring payments." />}
+      {error && (
+        <ErrorMessage
+          variant="panel"
+          message="Failed to load recurring payments."
+        />
+      )}
 
       {!hasPayments && !error && (
         <p className={styles.noPayments}>No recurring payments found.</p>

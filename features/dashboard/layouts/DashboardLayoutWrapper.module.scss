@@ -25,24 +25,3 @@
     }
   }
 }
-
-@media (min-width: 768px) {
-  .dashboardLayout {
-    display: inline-block !important;
-    column-count: 2;
-  }
-}
-
-@media (min-width: 1024px) {
-  .dashboardLayout {
-    display: inline-block !important;
-    column-count: 3;
-  }
-}
-
-@media (min-width: 1600px) {
-  .dashboardLayout {
-    display: inline-block !important;
-    column-count: 4;
-  }
-}

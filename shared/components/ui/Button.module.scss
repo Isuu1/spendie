@@ -1,6 +1,7 @@
 .button {
   --color-bg-button-primary: #d34702;
   --color-bg-button-primary-hover: #7c2a00;
+  --color-bg-button-secondary: #1c1c1c;
   cursor: pointer;
   width: fit-content;
   display: flex;
@@ -11,7 +12,7 @@
   transition: all 0.2s ease-in-out;
   font-size: 0.9rem;
   .icon {
-    font-size: 1.1rem;
+    //font-size: 1.1rem;
     svg {
       display: block;
     }
@@ -35,11 +36,17 @@
 .medium {
   padding: 0.5rem 0.7rem;
   font-size: 0.9rem;
+  .icon {
+    font-size: 1rem;
+  }
 }
 .large {
   padding: 0.7rem 1rem;
   font-size: 1rem;
   border-radius: 12px;
+  .icon {
+    font-size: 1.2rem;
+  }
 }
 .primary {
   background: var(--color-bg-button-primary);
@@ -51,7 +58,7 @@
 }
 
 .secondary {
-  background: #5e5e5e;
+  background: var(--color-bg-button-secondary);
   color: white;
   font-weight: 600;
   &:hover {

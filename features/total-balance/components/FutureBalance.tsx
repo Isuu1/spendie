@@ -112,7 +112,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
           toggleDetails={handleToggleDetails}
         />
       ) : (
-        <ErrorMessage message={recurringPaymentsError} />
+        <ErrorMessage variant="panel" message={recurringPaymentsError} />
       )}
       <AnimatePresence>
         {showUpcomingChangeDetails && (
