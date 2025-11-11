@@ -4,7 +4,7 @@ import React from "react";
 //Styles
 import styles from "./Dashboard.module.scss";
 //Hooks
-import { useUserSettingsClient } from "@/features/user/api/useUserSettingsClient";
+import { useUserSettingsClient } from "@/features/user/hooks/useUserSettingsClient";
 //Components
 import PanelWrapper from "./PanelWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";

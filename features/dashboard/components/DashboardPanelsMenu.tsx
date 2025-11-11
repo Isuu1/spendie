@@ -4,8 +4,8 @@ import clsx from "clsx";
 import React, { useRef } from "react";
 //Animations
 import { motion } from "motion/react";
-import { useUserSettingsClient } from "@/features/user/api/useUserSettingsClient";
-import { useTogglePanelVisibility } from "@/features/user/api/useTogglePanelVisibility";
+import { useUserSettingsClient } from "@/features/user/hooks/useUserSettingsClient";
+import { useTogglePanelVisibility } from "@/features/user/hooks/useTogglePanelVisibility";
 import { PanelName, panelsLibrary } from "../config/panelsLibrary";
 //Styles
 import styles from "./DashboardPanelsMenu.module.scss";
@@ -27,10 +27,7 @@ const DashboardPanelsMenu: React.FC<DashboardPanelsMenuProps> = ({
 }) => {
   const { data: settings } = useUserSettingsClient();
 
-  const { mutate: togglePanel, isPending, error } = useTogglePanelVisibility();
-
-  console.log("isPending:", isPending);
-  console.log("error:", error);
+  const { mutate: togglePanel, isPending } = useTogglePanelVisibility();
 
   const visiblePanels = settings?.visible_panels || [];
 
