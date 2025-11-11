@@ -26,7 +26,9 @@ const DashboardPanelsMenu: React.FC<DashboardPanelsMenuProps> = ({
 }) => {
   const { data: settings } = useUserSettingsClient();
 
-  const { mutate: togglePanel } = useTogglePanelVisibility();
+  const { mutate: togglePanel, isPending } = useTogglePanelVisibility();
+
+  console.log("isPending:", isPending);
 
   const visiblePanels = settings?.visible_panels || [];
 
@@ -54,7 +56,7 @@ const DashboardPanelsMenu: React.FC<DashboardPanelsMenuProps> = ({
       {panelsLibrary.map((panel) => (
         <li className={styles.menuItem} key={panel.name}>
           <span
-            className={`${styles.panelStatus} ${
+            className={`${styles.panelStatus} ${isPending ? styles.pending : ""} ${
               isPanelActive(panel.name) ? styles.active : styles.inactive
             }`}
             onClick={() =>

@@ -32,6 +32,9 @@
         background: #444444ff;
       }
     }
+    .pending {
+      pointer-events: none;
+    }
     .panelStatus {
       cursor: pointer;
       width: 45px;
