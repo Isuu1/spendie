@@ -23,15 +23,6 @@ const DashboardOptions = () => {
         iconPosition="left"
         onClick={() => setOpenPanelsMenu(!openPanelsMenu)}
       />
-      <Button
-        className={styles.panelsButton}
-        text="Sort panels"
-        variant="secondary"
-        size="medium"
-        icon={<MdSpaceDashboard />}
-        iconPosition="left"
-        //onClick={() => setOpenPanelsMenu(!openPanelsMenu)}
-      />
       <AnimatePresence>
         {openPanelsMenu && (
           <DashboardPanelsMenu onClose={() => setOpenPanelsMenu(false)} />
