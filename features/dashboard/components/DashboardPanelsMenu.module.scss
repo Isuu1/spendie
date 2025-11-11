@@ -41,6 +41,12 @@
       border-radius: var(--border-radius-l);
       background: var(--color-bg-tile);
       padding: 0.2rem;
+      &.active {
+        background: var(--color-action-active) !important;
+        .indicator {
+          background: #fff;
+        }
+      }
       .indicator {
         width: 50%;
         aspect-ratio: 1/1;

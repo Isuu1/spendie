@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import React, { useRef } from "react";
 //Animations
 import { motion } from "motion/react";
@@ -26,9 +27,10 @@ const DashboardPanelsMenu: React.FC<DashboardPanelsMenuProps> = ({
 }) => {
   const { data: settings } = useUserSettingsClient();
 
-  const { mutate: togglePanel, isPending } = useTogglePanelVisibility();
+  const { mutate: togglePanel, isPending, error } = useTogglePanelVisibility();
 
   console.log("isPending:", isPending);
+  console.log("error:", error);
 
   const visiblePanels = settings?.visible_panels || [];
 
@@ -56,9 +58,11 @@ const DashboardPanelsMenu: React.FC<DashboardPanelsMenuProps> = ({
       {panelsLibrary.map((panel) => (
         <li className={styles.menuItem} key={panel.name}>
           <span
-            className={`${styles.panelStatus} ${isPending ? styles.pending : ""} ${
-              isPanelActive(panel.name) ? styles.active : styles.inactive
-            }`}
+            className={clsx(styles.panelStatus, [
+              { [styles.pending]: isPending },
+              { [styles.active]: isPanelActive(panel.name) },
+              { [styles.inactive]: !isPanelActive(panel.name) },
+            ])}
             onClick={() =>
               handleChange(panel.name, !!isPanelActive(panel.name))
             }
