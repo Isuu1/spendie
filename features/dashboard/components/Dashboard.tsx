@@ -8,11 +8,11 @@ import { useUserSettingsClient } from "@/features/user/hooks/useUserSettingsClie
 //Components
 import PanelWrapper from "./PanelWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";
+import DashboardOptions from "./DashboardOptions";
 //Config
 import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
-import DashboardOptions from "./DashboardOptions";
 
 const Dashboard = () => {
   const { data: settings, isFetching, error } = useUserSettingsClient();

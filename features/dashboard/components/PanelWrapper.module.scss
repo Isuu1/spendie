@@ -10,6 +10,7 @@
   max-width: 510px;
   width: 100%;
   break-inside: avoid;
+  margin-bottom: 1rem;
   .header {
     display: flex;
     align-items: center;
@@ -34,8 +35,8 @@
   }
 }
 
-@media (min-width: 768px) {
-  .tile {
-    margin-bottom: 1.5rem;
-  }
-}
+// @media (min-width: 768px) {
+//   .tile {
+//     margin-bottom: 1.5rem;
+//   }
+// }
