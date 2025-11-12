@@ -1,0 +1,33 @@
+.switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  .label {
+    opacity: 1;
+  }
+  .panelStatus {
+    cursor: pointer;
+    width: 45px;
+    border-radius: var(--border-radius-l);
+    background: var(--color-bg-tile);
+    padding: 0.2rem;
+    &.active {
+      background: var(--color-action-active) !important;
+      .indicator {
+        background: #fff;
+      }
+    }
+    &.inactive {
+      background: #b4b4b4 !important;
+      .indicator {
+        background: #444444ff;
+      }
+    }
+    .indicator {
+      width: 50%;
+      aspect-ratio: 1/1;
+      display: block;
+      border-radius: 50%;
+    }
+  }
+}

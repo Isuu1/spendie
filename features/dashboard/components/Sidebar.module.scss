@@ -1,17 +1,24 @@
 .sidebar {
   z-index: 97;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  padding-top: 6rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 4rem;
   background: var(--color-bg-main);
   backdrop-filter: blur(10px);
   max-width: 65px;
   transition: max-width 0.15s ease;
+  grid-area: sidebar;
+  padding: 6rem 1rem 1rem 1rem;
+  height: 100%;
+  &.expanded {
+    position: relative;
+    width: calc(196px + 2rem);
+    max-width: none;
+    .menu .item .label {
+      opacity: 1;
+    }
+    .menu .sidebarSwitch {
+      opacity: 1;
+    }
+  }
   .menu {
     z-index: 4;
     position: relative;
@@ -26,6 +33,7 @@
     .logout {
       color: var(--color-action-active) !important;
       font-weight: bold;
+      margin-top: auto;
     }
     .item {
       position: relative;
@@ -62,15 +70,70 @@
         color: var(--color-text-primary);
       }
     }
+    // .expandButton {
+    //   position: absolute;
+    //   top: 50%;
+    //   right: 0;
+    // }
+    // .panelStatus {
+    //   opacity: 0;
+    // }
+    .sidebarSwitch {
+      display: flex;
+      gap: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      // &.expanded {
+      //   opacity: 1;
+      // }
+      .panelStatus {
+        display: block;
+        cursor: pointer;
+        width: 45px;
+        border-radius: var(--border-radius-l);
+        background: var(--color-bg-tile);
+        padding: 0.2rem;
+        &.active {
+          background: var(--color-action-active) !important;
+          .indicator {
+            background: #fff;
+          }
+        }
+        &.inactive {
+          background: #b4b4b4 !important;
+          .indicator {
+            background: #444444ff;
+          }
+        }
+        .indicator {
+          width: 50%;
+          aspect-ratio: 1/1;
+          display: block;
+          border-radius: 50%;
+        }
+      }
+      .label {
+        color: var(--color-text-secondary);
+        font-size: 1rem;
+      }
+    }
   }
+
+  .expandButton {
+    z-index: 11;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    font-size: 2rem;
+  }
+
   &:hover {
     max-width: 250px;
-    padding-right: 1rem;
   }
   &:hover .menu .item .label {
     opacity: 1;
   }
-  &:hover .menu .item.active::after {
-    right: -1rem;
+  &:hover .menu .sidebarSwitch {
+    opacity: 1;
   }
 }
