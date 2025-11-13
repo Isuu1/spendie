@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-
+import clsx from "clsx";
+import { createClient } from "@/supabase/client";
+import toast from "react-hot-toast";
 //Styles
 import styles from "./Sidebar.module.scss";
 //Icons
@@ -12,15 +15,13 @@ import { FaCalculator } from "react-icons/fa6";
 import { FaRepeat } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
 import { FaSignOutAlt } from "react-icons/fa";
-import { createClient } from "@/supabase/client";
-import { useState } from "react";
+//Components
 import ConfirmAction from "@/shared/components/ConfirmAction";
-import toast from "react-hot-toast";
-import { toastStyle } from "@/shared/styles/toastStyle";
-import { AnimatePresence } from "motion/react";
-import clsx from "clsx";
-//import { TbLayoutSidebarLeftExpandFilled } from "react-icons/tb";
 import Switcher from "@/shared/components/ui/Switcher";
+//Styles
+import { toastStyle } from "@/shared/styles/toastStyle";
+//Animations
+import { AnimatePresence } from "motion/react";
 
 export default function Sidebar() {
   const [signoutClicked, setSignoutClicked] = useState(false);
@@ -76,37 +77,9 @@ export default function Sidebar() {
             </Link>
           </li>
         ))}
-        {/* 
-        <li
-          className={clsx(styles.sidebarSwitch, [
-            { [styles.expanded]: !collapsed },
-          ])}
-        >
-          <span
-            className={clsx(styles.panelStatus, [
-              // { [styles.pending]: isPending },
-              { [styles.active]: !collapsed },
-              { [styles.inactive]: collapsed },
-            ])}
-            onClick={() => handleSidebarToggle()}
-          >
-            <motion.span
-              className={styles.indicator}
-              initial={false}
-              animate={{
-                x: collapsed ? "0%" : "100%",
-              }}
-            />
-          </span>
-          <span className={styles.label}>
-            {collapsed ? "Pin Sidebar" : "Unpin Sidebar"}
-          </span>
-        </li> */}
-        <Switcher
-          value={collapsed}
-          onChange={handleSidebarToggle}
-          label={collapsed ? "Pin Sidebar" : "Unpin Sidebar"}
-        />
+        <li className={styles.sidebarSwitch}>
+          <Switcher value={collapsed} onChange={handleSidebarToggle} />
+        </li>
 
         <li
           className={`${styles.item} ${styles.logout}`}

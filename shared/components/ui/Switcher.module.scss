@@ -2,8 +2,13 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  justify-content: space-between;
+  &.labelLeft {
+    flex-direction: row-reverse;
+  }
   .label {
     opacity: 1;
+    white-space: nowrap;
   }
   .panelStatus {
     cursor: pointer;
