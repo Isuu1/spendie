@@ -1,6 +1,6 @@
 .sidebar {
   background: var(--color-bg-main);
-  max-width: 65px;
+  max-width: 62px;
   transition: max-width 0.15s ease;
   grid-area: sidebar;
   padding: 6rem 1rem 1rem 1rem;
@@ -9,7 +9,7 @@
   &.expanded {
     position: relative;
     //Sidebar menu width + padding
-    width: calc(180px + 2rem);
+    width: calc(178px + 2rem);
     max-width: none;
     .menu .item .label {
       opacity: 1;
@@ -42,6 +42,9 @@
       color: var(--color-action-active) !important;
       font-weight: bold;
       margin-top: auto;
+      &:hover {
+        color: var(--color-action-active-hover) !important;
+      }
     }
     .item {
       position: relative;
@@ -67,12 +70,10 @@
       &:hover {
         color: var(--color-action-hover);
       }
-      svg {
+      .icon {
         flex-shrink: 0;
         display: block;
         font-size: 1.2rem;
-        //This is to adjust label alignment with icons as label is always visible even if not defined
-        margin-left: 0.1rem;
       }
       .label {
         opacity: 0;
@@ -97,9 +98,14 @@
     position: absolute !important;
     &.expanded {
       position: absolute !important;
-      //Sidebar menu width + padding
       width: auto;
-      max-width: 65px;
+      max-width: 62px;
+      &:hover {
+        max-width: 250px;
+        .menu .item .label {
+          opacity: 1;
+        }
+      }
       .menu .item .label {
         opacity: 0;
       }

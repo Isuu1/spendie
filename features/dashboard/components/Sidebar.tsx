@@ -72,7 +72,7 @@ export default function Sidebar() {
               href={item.href}
               className={`${styles.item} ${pathname === item.href ? styles.active : ""}`}
             >
-              {item.icon}
+              <i className={styles.icon}>{item.icon}</i>
               <span className={styles.label}>{item.name}</span>
             </Link>
           </li>
@@ -85,7 +85,9 @@ export default function Sidebar() {
           className={`${styles.item} ${styles.logout}`}
           onClick={() => setSignoutClicked(true)}
         >
-          <FaSignOutAlt />
+          <i className={styles.icon}>
+            <FaSignOutAlt />
+          </i>
           <span className={styles.label}>Logout</span>
         </li>
       </ul>
