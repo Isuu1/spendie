@@ -46,13 +46,14 @@
     list-style: none;
     position: absolute;
     top: 0;
-    bottom: 0;
+    height: 100vh;
     right: 0;
     background: var(--color-bg-secondary);
     padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
     .mobileMenuItem {
       cursor: pointer;
       transition: color 0.2s ease-in-out;
