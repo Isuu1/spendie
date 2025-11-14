@@ -1,6 +1,6 @@
 .sidebar {
   background: var(--color-bg-main);
-  max-width: 65px;
+  max-width: 62px;
   transition: max-width 0.15s ease;
   grid-area: sidebar;
   padding: 6rem 1rem 1rem 1rem;
@@ -9,7 +9,7 @@
   &.expanded {
     position: relative;
     //Sidebar menu width + padding
-    width: calc(180px + 2rem);
+    width: calc(178px + 2rem);
     max-width: none;
     .menu .item .label {
       opacity: 1;
@@ -17,6 +17,15 @@
     .menu .sidebarSwitch {
       opacity: 1;
     }
+  }
+  &:hover {
+    max-width: 250px;
+  }
+  &:hover .menu .item .label {
+    opacity: 1;
+  }
+  &:hover .menu .sidebarSwitch {
+    opacity: 1;
   }
   .menu {
     z-index: 4;
@@ -33,6 +42,9 @@
       color: var(--color-action-active) !important;
       font-weight: bold;
       margin-top: auto;
+      &:hover {
+        color: var(--color-action-active-hover) !important;
+      }
     }
     .item {
       position: relative;
@@ -44,31 +56,29 @@
       color: var(--color-text-secondary);
       transition: color 0.25s ease;
       padding: 0.3rem;
+      &.active {
+        color: var(--color-text-primary);
+        background: var(--color-action-active);
+        border-radius: 10px;
+        &:hover {
+          color: var(--color-text-primary);
+        }
+      }
       .settings {
         margin-top: auto;
       }
       &:hover {
         color: var(--color-action-hover);
       }
-      svg {
+      .icon {
         flex-shrink: 0;
         display: block;
         font-size: 1.2rem;
-        //This is to adjust label alignment with icons as label is always visible even if not defined
-        margin-left: 0.1rem;
       }
       .label {
         opacity: 0;
         pointer-events: none;
         transition: 0.15s opacity ease;
-      }
-    }
-    .active {
-      color: var(--color-text-primary);
-      background: var(--color-action-active);
-      border-radius: 10px;
-      &:hover {
-        color: var(--color-text-primary);
       }
     }
     .sidebarSwitch {
@@ -77,54 +87,7 @@
       position: absolute;
       top: 50%;
       right: -1rem;
-      .panelStatus {
-        display: block;
-        cursor: pointer;
-        width: 45px;
-        border-radius: var(--border-radius-l);
-        background: var(--color-bg-tile);
-        padding: 0.2rem;
-        &.active {
-          background: var(--color-action-active) !important;
-          .indicator {
-            background: #fff;
-          }
-        }
-        &.inactive {
-          background: #b4b4b4 !important;
-          .indicator {
-            background: #444444ff;
-          }
-        }
-        .indicator {
-          width: 50%;
-          aspect-ratio: 1/1;
-          display: block;
-          border-radius: 50%;
-        }
-      }
-      .label {
-        color: var(--color-text-secondary);
-        font-size: 1rem;
-      }
     }
-  }
-  .expandButton {
-    z-index: 11;
-    position: absolute;
-    top: 50%;
-    right: 0;
-    font-size: 2rem;
-  }
-
-  &:hover {
-    max-width: 250px;
-  }
-  &:hover .menu .item .label {
-    opacity: 1;
-  }
-  &:hover .menu .sidebarSwitch {
-    opacity: 1;
   }
 }
 
@@ -133,6 +96,23 @@
   .sidebar {
     z-index: 97;
     position: absolute !important;
+    &.expanded {
+      position: absolute !important;
+      width: auto;
+      max-width: 62px;
+      &:hover {
+        max-width: 250px;
+        .menu .item .label {
+          opacity: 1;
+        }
+      }
+      .menu .item .label {
+        opacity: 0;
+      }
+      .menu .sidebarSwitch {
+        opacity: 0;
+      }
+    }
     .menu .sidebarSwitch {
       display: none;
     }
