@@ -49,7 +49,7 @@ export function useTogglePanelVisibility() {
       if (context?.previousSettings) {
         queryClient.setQueryData(["userSettings"], context.previousSettings);
       }
-      toast.error("Failed to update panel settings", toastStyle);
+      toast.error("Failed to update panels settings", toastStyle);
     },
 
     // 🔄 Revalidate in background after mutation

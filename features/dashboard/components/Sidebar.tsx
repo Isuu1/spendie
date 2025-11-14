@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-
+import clsx from "clsx";
+import { createClient } from "@/supabase/client";
+import toast from "react-hot-toast";
 //Styles
 import styles from "./Sidebar.module.scss";
 //Icons
@@ -12,21 +15,40 @@ import { FaCalculator } from "react-icons/fa6";
 import { FaRepeat } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
 import { FaSignOutAlt } from "react-icons/fa";
-import { createClient } from "@/supabase/client";
-import { useState } from "react";
+//Components
 import ConfirmAction from "@/shared/components/ConfirmAction";
-import toast from "react-hot-toast";
+import Switcher from "@/shared/components/ui/Switcher";
+//Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
+//Animations
 import { AnimatePresence } from "motion/react";
 
 export default function Sidebar() {
   const [signoutClicked, setSignoutClicked] = useState(false);
+
+  const [collapsed, setCollapsed] = useState(true);
 
   const pathname = usePathname();
 
   const router = useRouter();
 
   const supabase = createClient();
+
+  const sidebarItems = [
+    {
+      name: "Dashboard",
+      href: "/dashboard",
+      icon: <TbLayoutDashboardFilled />,
+    },
+    { name: "Transactions", href: "/transactions", icon: <IoWallet /> },
+    { name: "Budget planner", href: "/budget-planner", icon: <FaCalculator /> },
+    {
+      name: "Recurring payments",
+      href: "/recurring-payments",
+      icon: <FaRepeat />,
+    },
+    { name: "Settings", href: "/user/account-settings", icon: <IoSettings /> },
+  ];
 
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -37,57 +59,26 @@ export default function Sidebar() {
     router.push("/");
   };
 
+  const handleSidebarToggle = () => {
+    setCollapsed(!collapsed);
+  };
+
   return (
-    <div className={`${styles.sidebar}`}>
+    <div className={clsx(styles.sidebar, collapsed ? "" : styles.expanded)}>
       <ul className={styles.menu}>
-        <li>
-          <Link
-            href="/dashboard"
-            className={`${styles.item} ${pathname === "/dashboard" ? styles.active : ""}`}
-          >
-            <TbLayoutDashboardFilled />
-            <span className={styles.label}>Dashboard</span>
-          </Link>
-        </li>
-
-        <li>
-          <Link
-            href="/transactions"
-            className={`${styles.item} ${pathname === "/transactions" ? styles.active : ""}`}
-          >
-            <IoWallet />
-            <span className={styles.label}>Transactions</span>
-          </Link>
-        </li>
-
-        <li>
-          <Link
-            href="/budget-planner"
-            className={`${styles.item} ${pathname === "/budget-planner" ? styles.active : ""}`}
-          >
-            <FaCalculator />
-            <span className={styles.label}>Budget planner</span>
-          </Link>
-        </li>
-
-        <li>
-          <Link
-            href="/recurring-payments"
-            className={`${styles.item} ${pathname === "/recurring-payments" ? styles.active : ""}`}
-          >
-            <FaRepeat />
-            <span className={styles.label}>Recurring payments</span>
-          </Link>
-        </li>
-
-        <li className={styles.settings}>
-          <Link
-            href="/user/account-settings"
-            className={`${styles.item} ${pathname === "/user/account-settings" ? styles.active : ""}`}
-          >
-            <IoSettings />
-            <span className={styles.label}>Settings</span>
-          </Link>
+        {sidebarItems.map((item) => (
+          <li key={item.name}>
+            <Link
+              href={item.href}
+              className={`${styles.item} ${pathname === item.href ? styles.active : ""}`}
+            >
+              {item.icon}
+              <span className={styles.label}>{item.name}</span>
+            </Link>
+          </li>
+        ))}
+        <li className={styles.sidebarSwitch}>
+          <Switcher value={collapsed} onChange={handleSidebarToggle} />
         </li>
 
         <li

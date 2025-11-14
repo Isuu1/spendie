@@ -2,12 +2,13 @@
   overflow: hidden;
   height: 100vh;
   display: grid;
-  grid-template-columns: 45px 1fr;
+  grid-template-columns: minmax(65px, auto) 1fr;
   grid-template-rows: auto 1fr;
   grid-template-areas:
     "sidebar header"
     "sidebar main";
   .innerWrapper {
+    border-radius: var(--border-radius-l);
     background: var(--color-bg-secondary);
     position: relative;
     grid-area: main;
@@ -20,6 +21,7 @@
     padding: 2rem 0.5rem 2rem 2rem;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+    transition: all 0.3s ease;
     &::-webkit-scrollbar {
       display: none;
     }
