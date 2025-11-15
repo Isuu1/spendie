@@ -60,7 +60,12 @@ const Features = () => {
           </i>
           <h2>Customizable dashboard</h2>
           <p>Choose your dashboard tiles and make Spendie fit your goals.</p>
-          <Button text="Read more" variant="primary" size="medium" />
+          <Button
+            text="Read more"
+            variant="primary"
+            size="medium"
+            onClick={() => scrollToSection("dashboard")}
+          />
         </div>
       </div>
     </div>
