@@ -1,0 +1,19 @@
+.dashboardFeature {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  .imageWrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 0.1rem;
+    background: var(--color-bg-secondary);
+    border-radius: var(--border-radius-l);
+    margin: auto;
+    .image {
+      position: relative !important;
+      border-radius: var(--border-radius-l);
+      width: 100%;
+    }
+  }
+}
