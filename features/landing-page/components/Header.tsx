@@ -50,7 +50,7 @@ const Header = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            transition={{ duration: 0.2, type: "tween" }}
+            transition={{ duration: 0.15, type: "tween" }}
           >
             <li className={styles.mobileMenuItem}>Home</li>
             <li className={styles.mobileMenuItem}>About</li>
