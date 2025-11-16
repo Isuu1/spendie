@@ -2,7 +2,7 @@ import LoginForm from "@/features/auth/components/LoginForm";
 
 export default function Page() {
   return (
-    <div>
+    <div className="page">
       <LoginForm />
     </div>
   );
