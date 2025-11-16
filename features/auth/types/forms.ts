@@ -1,7 +1,7 @@
 export type LoginFormState = {
   error: string | null;
   success: boolean;
-  data: { email: string | ""; password: string | "" };
+  data: { email: string | ""; password: string | "" } | null;
   status: number;
   resetKey?: number;
 };

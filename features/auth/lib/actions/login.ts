@@ -3,6 +3,7 @@
 import { createClient } from "@/supabase/server";
 import { LoginFormState } from "../../types/forms";
 import { revalidatePath } from "next/cache";
+import { loginFormSchema } from "../../schemas/forms";
 
 export async function login(prevData: LoginFormState, formData: FormData) {
   const supabase = await createClient();
@@ -17,6 +18,21 @@ export async function login(prevData: LoginFormState, formData: FormData) {
       error: "Email and password are required",
       success: false,
       data,
+      status: 400,
+      resetKey: Date.now(),
+    };
+  }
+
+  const result = loginFormSchema.safeParse({
+    email: data.email,
+    password: data.password,
+  });
+
+  if (!result.success) {
+    return {
+      error: "Failed to update details, invalid data.",
+      success: false,
+      data: null,
       status: 400,
       resetKey: Date.now(),
     };
