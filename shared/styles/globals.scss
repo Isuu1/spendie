@@ -84,6 +84,17 @@ input {
   }
 }
 
+.auth-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
 @media (min-width: 1200px) {
   .landing-page {
     width: 90%;
