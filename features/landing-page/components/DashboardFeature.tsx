@@ -1,5 +1,5 @@
 import React from "react";
-import dashboard from "@/public/images/dashboard-feature.png";
+import dashboard from "@/public/images/dashboard-feature3.png";
 import Image from "next/image";
 //Styles
 import styles from "./DashboardFeature.module.scss";
@@ -12,7 +12,7 @@ const DashboardFeature = () => {
         title="Choose Your Dashboard"
         subtitle="Customize your experience with our advanced dashboard features."
       />
-
+      <div className={styles.bg}></div>
       <div className={styles.dashboard}>
         <div className={styles.textContent}>
           <h2>Your dashboard, built your way</h2>
@@ -47,6 +47,7 @@ const DashboardFeature = () => {
           </ul>
         </div>
         <div className={styles.imageWrapper}>
+          <div className={styles.blur}></div>
           <Image
             src={dashboard}
             alt="Advanced Payments Illustration"

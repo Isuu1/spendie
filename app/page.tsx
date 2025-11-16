@@ -20,7 +20,7 @@ export default async function Home() {
   //   redirect("/dashboard");
   // }
   return (
-    <div className="page landing-page">
+    <div className="landing-page">
       <Header />
       <HeroSection />
       <Features />
