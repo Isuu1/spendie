@@ -80,6 +80,11 @@
       .icon {
         @include inputIcon;
       }
+      .showPasswordToggle {
+        position: absolute;
+        right: 0.8rem;
+        font-size: var(--input-icon-size);
+      }
     }
     .errorContainer {
       @include errorContainer;

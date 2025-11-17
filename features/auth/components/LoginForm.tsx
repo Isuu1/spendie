@@ -1,5 +1,5 @@
 "use client";
-import React, { useActionState, useEffect } from "react";
+import React, { useActionState, useEffect, useState } from "react";
 import { LoginFormState } from "../types/forms";
 import { login } from "../lib/actions/login";
 import Form from "@/shared/components/ui/Form";
@@ -15,6 +15,9 @@ import { loginFormSchema } from "../schemas/forms";
 import toast from "react-hot-toast";
 import { toastStyle } from "@/shared/styles/toastStyle";
 import Providers from "./Providers";
+//Icons
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 const initialState: LoginFormState = {
   error: null,
@@ -26,6 +29,7 @@ const initialState: LoginFormState = {
 
 const LoginForm = () => {
   const [state, formAction, isPending] = useActionState(login, initialState);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { formData, errors, handleChange, validateForm } = useForm(
     loginFormSchema,
@@ -78,13 +82,26 @@ const LoginForm = () => {
             onChange={(e) => handleChange("email", e.target.value)}
           />
           <Input
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             label="Password"
             icon={<RiLockPasswordFill />}
             errors={errors.password}
             value={formData.password}
             onChange={(e) => handleChange("password", e.target.value)}
+            passwordIcon={
+              showPassword ? (
+                <FaEyeSlash
+                  onClick={() => setShowPassword(false)}
+                  style={{ cursor: "pointer" }}
+                />
+              ) : (
+                <FaEye
+                  onClick={() => setShowPassword(true)}
+                  style={{ cursor: "pointer" }}
+                />
+              )
+            }
           />
           <Button
             className={styles.loginButton}
