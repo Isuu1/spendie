@@ -15,6 +15,7 @@ interface InputProps {
   defaultValue?: string | number;
   value?: string | number | Date;
   icon?: React.ReactNode;
+  passwordIcon?: React.ReactNode;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -26,6 +27,7 @@ const Input: React.FC<InputProps> = ({
   defaultValue,
   value,
   icon,
+  passwordIcon,
 }) => {
   return (
     <>
@@ -49,6 +51,9 @@ const Input: React.FC<InputProps> = ({
               }
             />
             {icon && <span className={styles.icon}>{icon}</span>}
+            {passwordIcon && (
+              <i className={styles.showPasswordToggle}>{passwordIcon}</i>
+            )}
           </div>
           {errors && errors.length > 0 && (
             <div className={styles.errorContainer}>

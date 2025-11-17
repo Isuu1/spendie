@@ -1,10 +1,4 @@
 .loginFormContainer {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   .loginForm {
     display: flex;
     flex-direction: column;
@@ -16,7 +10,6 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     .logo {
       color: var(--color-action-active);
-      //margin-bottom: 2rem;
     }
     .subtitle {
       text-align: center;

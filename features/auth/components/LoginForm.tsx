@@ -1,19 +1,28 @@
 "use client";
-import React, { useActionState, useEffect } from "react";
+import React, { useActionState, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+//Types
 import { LoginFormState } from "../types/forms";
+//Actions
 import { login } from "../lib/actions/login";
+//Components
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 import Button from "@/shared/components/ui/Button";
+import Providers from "./Providers";
 //Styles
 import styles from "./LoginForm.module.scss";
+import { toastStyle } from "@/shared/styles/toastStyle";
+//Hooks
+import { useForm } from "@/shared/hooks/useForm";
+//Schemas
+import { loginFormSchema } from "../schemas/forms";
+//Icons
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { useForm } from "@/shared/hooks/useForm";
-import { loginFormSchema } from "../schemas/forms";
-import toast from "react-hot-toast";
-import { toastStyle } from "@/shared/styles/toastStyle";
 
 const initialState: LoginFormState = {
   error: null,
@@ -25,6 +34,7 @@ const initialState: LoginFormState = {
 
 const LoginForm = () => {
   const [state, formAction, isPending] = useActionState(login, initialState);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { formData, errors, handleChange, validateForm } = useForm(
     loginFormSchema,
@@ -77,13 +87,26 @@ const LoginForm = () => {
             onChange={(e) => handleChange("email", e.target.value)}
           />
           <Input
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             label="Password"
             icon={<RiLockPasswordFill />}
             errors={errors.password}
             value={formData.password}
             onChange={(e) => handleChange("password", e.target.value)}
+            passwordIcon={
+              showPassword ? (
+                <FaEyeSlash
+                  onClick={() => setShowPassword(false)}
+                  style={{ cursor: "pointer" }}
+                />
+              ) : (
+                <FaEye
+                  onClick={() => setShowPassword(true)}
+                  style={{ cursor: "pointer" }}
+                />
+              )
+            }
           />
           <Button
             className={styles.loginButton}
@@ -92,7 +115,9 @@ const LoginForm = () => {
             variant="primary"
             type="submit"
             icon={<IoSend />}
+            disabled={isPending}
           />
+          <Providers />
         </Form>
       </div>
     </div>
