@@ -1,23 +1,28 @@
 "use client";
 import React, { useActionState, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+//Types
 import { LoginFormState } from "../types/forms";
+//Actions
 import { login } from "../lib/actions/login";
+//Components
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 import Button from "@/shared/components/ui/Button";
+import Providers from "./Providers";
 //Styles
 import styles from "./LoginForm.module.scss";
-import { IoSend } from "react-icons/io5";
-import { MdEmail } from "react-icons/md";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { useForm } from "@/shared/hooks/useForm";
-import { loginFormSchema } from "../schemas/forms";
-import toast from "react-hot-toast";
 import { toastStyle } from "@/shared/styles/toastStyle";
-import Providers from "./Providers";
+//Hooks
+import { useForm } from "@/shared/hooks/useForm";
+//Schemas
+import { loginFormSchema } from "../schemas/forms";
 //Icons
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { IoSend } from "react-icons/io5";
+import { MdEmail } from "react-icons/md";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 const initialState: LoginFormState = {
   error: null,
