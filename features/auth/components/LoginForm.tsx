@@ -14,6 +14,7 @@ import { useForm } from "@/shared/hooks/useForm";
 import { loginFormSchema } from "../schemas/forms";
 import toast from "react-hot-toast";
 import { toastStyle } from "@/shared/styles/toastStyle";
+import Providers from "./Providers";
 
 const initialState: LoginFormState = {
   error: null,
@@ -94,6 +95,7 @@ const LoginForm = () => {
             icon={!isPending && <IoSend />}
             disabled={isPending}
           />
+          <Providers />
         </Form>
       </div>
     </div>

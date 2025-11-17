@@ -1,0 +1,42 @@
+.providersContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  .loginOptions {
+    position: relative;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 40%;
+      height: 1px;
+      background-color: var(--color-text-secondary);
+      z-index: -1;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 40%;
+      height: 1px;
+      background-color: var(--color-text-secondary);
+      z-index: -1;
+    }
+  }
+  button {
+    width: 100%;
+    justify-content: center;
+  }
+  .googleLoginButton {
+    background: #034086;
+    &:hover {
+      background: #023978;
+    }
+  }
+}
