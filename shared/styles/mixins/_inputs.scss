@@ -56,6 +56,11 @@
   &:focus {
     outline: 3px solid var(--color-action-active);
   }
+  &:is(:-webkit-autofill, :autofill) {
+    box-shadow: 0 0 0px 1000px var(--color-input-bg) inset;
+    -webkit-text-fill-color: var(--color-input-text);
+    transition: background-color 5000s ease-in-out 0s;
+  }
 }
 
 @mixin errorContainer {
