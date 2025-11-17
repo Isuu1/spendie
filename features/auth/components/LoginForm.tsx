@@ -91,7 +91,8 @@ const LoginForm = () => {
             size="large"
             variant="primary"
             type="submit"
-            icon={<IoSend />}
+            icon={!isPending && <IoSend />}
+            disabled={isPending}
           />
         </Form>
       </div>
