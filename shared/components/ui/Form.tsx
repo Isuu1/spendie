@@ -26,6 +26,7 @@ const Form: React.FC<FormProps> = ({
       className={`${styles.formContainer} ${styles[layout]}`}
       ref={ref}
       onSubmit={onSubmit}
+      noValidate
     >
       {children}
     </form>
