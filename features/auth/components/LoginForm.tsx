@@ -23,6 +23,7 @@ import { FaEyeSlash } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { useRouter } from "next/navigation";
 
 const initialState: LoginFormState = {
   error: null,
@@ -43,8 +44,10 @@ const LoginForm = () => {
       password: "",
     }
   );
-  console.log("errors", errors);
-  console.log("LoginForm state", state);
+
+  console.log("state", state);
+
+  const router = useRouter();
 
   const handleValidationBeforeSubmit = (
     e: React.FormEvent<HTMLFormElement>
@@ -62,7 +65,14 @@ const LoginForm = () => {
     if (state.error) {
       toast.error(`Error: ${state.error}`, toastStyle);
     }
-  }, [state]);
+    if (state.success) {
+      toast.success(
+        "Logged in successfully! Redirecting to dashboard...",
+        toastStyle
+      );
+      router.push("/dashboard");
+    }
+  }, [state, router]);
 
   return (
     <div className={styles.loginFormContainer}>
