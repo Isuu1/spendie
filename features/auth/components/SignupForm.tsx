@@ -1,5 +1,5 @@
 "use client";
-import React, { useActionState, useState } from "react";
+import React, { useActionState, useEffect, useState } from "react";
 //Types
 import { SignupFormState } from "../types/forms";
 //Actions
@@ -19,6 +19,8 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { useForm } from "@/shared/hooks/useForm";
 import { signupFormSchema } from "../schemas/forms";
+import toast from "react-hot-toast";
+import { toastStyle } from "@/shared/styles/toastStyle";
 
 const initialState: SignupFormState = {
   error: null,
@@ -53,6 +55,12 @@ const SignupForm = () => {
       e.preventDefault();
     }
   };
+
+  useEffect(() => {
+    if (state.error) {
+      toast.error(`Error: ${state.error}`, toastStyle);
+    }
+  }, [state]);
 
   return (
     <div className={styles.signupForm}>
