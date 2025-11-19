@@ -15,14 +15,15 @@ import Input from "@/shared/components/ui/Input";
 import { IoSend } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { FaUserAlt } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { useForm } from "@/shared/hooks/useForm";
+import { signupFormSchema } from "../schemas/forms";
 
 const initialState: SignupFormState = {
   error: null,
   success: false,
-  data: { email: "", username: "", password: "", confirmPassword: "" },
+  data: { email: "", password: "", confirmPassword: "" },
   status: 0,
   resetKey: Date.now(),
 };
@@ -31,26 +32,56 @@ const SignupForm = () => {
   const [state, formAction, isPending] = useActionState(signup, initialState);
   const [showPassword, setShowPassword] = useState(false);
   console.log("LoginForm state", state);
+
+  const { formData, errors, handleChange, validateForm } = useForm(
+    signupFormSchema,
+    {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    }
+  );
+
+  const handleValidationBeforeSubmit = (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    //This runs before server action to validate all fields on client side
+    const isValid = validateForm(formData);
+    console.log("data before submit", formData, isValid);
+    if (!isValid) {
+      //Stop form submission if invalid
+      e.preventDefault();
+    }
+  };
+
   return (
     <div className={styles.signupForm}>
       <h1 className={styles.logo}>Spendie.</h1>
       <h3 className={styles.subtitle}>
-        Manage your finances, track payments, and pick up right where you left
-        off.
+        Create your account and start managing money with confidence.
       </h3>
-      <Form layout="vertical" action={formAction}>
-        <Input label="Email" id="email" type="text" icon={<MdEmail />} />
+      <Form
+        layout="vertical"
+        action={formAction}
+        onSubmit={handleValidationBeforeSubmit}
+      >
         <Input
-          label="Username"
-          id="username"
+          label="Email"
+          id="email"
           type="text"
-          icon={<FaUserAlt />}
+          icon={<MdEmail />}
+          errors={errors.email}
+          value={formData.email}
+          onChange={(e) => handleChange("email", e.target.value)}
         />
         <Input
           label="Password"
           id="password"
           type={showPassword ? "text" : "password"}
           icon={<RiLockPasswordFill />}
+          errors={errors.password}
+          value={formData.password}
+          onChange={(e) => handleChange("password", e.target.value)}
           passwordIcon={
             showPassword ? (
               <FaEyeSlash
@@ -70,6 +101,9 @@ const SignupForm = () => {
           id="confirmPassword"
           type={showPassword ? "text" : "password"}
           icon={<RiLockPasswordFill />}
+          errors={errors.confirmPassword}
+          value={formData.confirmPassword}
+          onChange={(e) => handleChange("confirmPassword", e.target.value)}
         />
         <Button
           className={styles.loginButton}

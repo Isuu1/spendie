@@ -10,11 +10,10 @@ export type SignupFormState = {
   error: string | null;
   success: boolean;
   data: {
-    email: string;
-    username: string;
-    password: string;
-    confirmPassword: string;
-  };
+    email: string | "";
+    password: string | "";
+    confirmPassword: string | "";
+  } | null;
   status: number;
   resetKey?: number;
 };
