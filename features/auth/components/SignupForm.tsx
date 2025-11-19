@@ -21,6 +21,7 @@ import { useForm } from "@/shared/hooks/useForm";
 import { signupFormSchema } from "../schemas/forms";
 import toast from "react-hot-toast";
 import { toastStyle } from "@/shared/styles/toastStyle";
+import { useRouter } from "next/navigation";
 
 const initialState: SignupFormState = {
   error: null,
@@ -44,6 +45,8 @@ const SignupForm = () => {
     }
   );
 
+  const router = useRouter();
+
   const handleValidationBeforeSubmit = (
     e: React.FormEvent<HTMLFormElement>
   ) => {
@@ -60,7 +63,10 @@ const SignupForm = () => {
     if (state.error) {
       toast.error(`Error: ${state.error}`, toastStyle);
     }
-  }, [state]);
+    if (state.success) {
+      router.push("/signup/success");
+    }
+  }, [state, router]);
 
   return (
     <div className={styles.signupForm}>

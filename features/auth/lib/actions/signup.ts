@@ -28,17 +28,6 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
     };
   }
 
-  //Return data along with error message to to able to set email as default value (prevent clearing the input)
-  if (data.password !== data.confirmPassword) {
-    return {
-      error: "Passwords do not match",
-      success: false,
-      data,
-      status: 400,
-      resetKey: Date.now(),
-    };
-  }
-
   // Include all initial user data in metadata to insert them into database
   const { error } = await supabase.auth.signUp({
     email: data.email,
