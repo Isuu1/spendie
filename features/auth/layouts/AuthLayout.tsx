@@ -1,0 +1,22 @@
+"use client";
+
+import React from "react";
+//Styles
+import styles from "./AuthLayout.module.scss";
+import { usePathname } from "next/navigation";
+import AuthNav from "../components/AuthNav";
+
+const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+  const pathname = usePathname();
+  return (
+    <div className={styles.authLayout}>
+      <div className={styles.innerWrapper}>
+        {pathname !== "/signup/success" && <AuthNav />}
+        {children}
+      </div>
+      <div className={styles.image}></div>
+    </div>
+  );
+};
+
+export default AuthLayout;

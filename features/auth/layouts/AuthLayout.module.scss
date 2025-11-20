@@ -1,0 +1,27 @@
+.authLayout {
+  width: 100%;
+  min-height: 100vh;
+  .image {
+    display: none;
+  }
+  .innerWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .authLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    .image {
+      background: #973a13;
+      display: block;
+    }
+  }
+}

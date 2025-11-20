@@ -1,13 +1,5 @@
-import AuthNav from "@/features/auth/components/AuthNav";
+import AuthLayout from "@/features/auth/layouts/AuthLayout";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="auth-layout">
-      <div className="inner-wrapper">
-        <AuthNav />
-        {children}
-      </div>
-      <div className="image"></div>
-    </div>
-  );
+  return <AuthLayout>{children}</AuthLayout>;
 }
