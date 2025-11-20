@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     // Run middleware on all routes except:
-    // '/', '/login', and Next.js/static asset routes
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    // '/', '/login', 'signup', 'auth' and Next.js/static asset routes
+    "/((?!api/auth|_next|favicon.ico|login|signup|auth|$).*)",
   ],
 };

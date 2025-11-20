@@ -2,6 +2,7 @@
 
 import { createClient } from "@/supabase/server";
 import { SignupFormState } from "../../types/forms";
+import { signupFormSchema } from "../../schemas/forms";
 
 export async function signup(prevState: SignupFormState, formData: FormData) {
   const supabase = await createClient();
@@ -9,28 +10,16 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
   //Form data from frontend form
   const data = {
     email: formData.get("email") as string,
-    username: formData.get("username") as string,
     password: formData.get("password") as string,
     confirmPassword: formData.get("confirmPassword") as string,
   };
 
-  // const validateSignupData = signupSchema.safeParse(data);
-
-  // //Return data along with error message to to able to set email as default value (prevent clearing the input)
-  // if (!validateSignupData.success) {
-  //   return {
-  //     error: validateSignupData.error.format(),
-  //     success: false,
-  //     data,
-  //     status: 400,
-  //     resetKey: Date.now(),
-  //   };
-  // }
+  const validateSignupData = signupFormSchema.safeParse(data);
 
   //Return data along with error message to to able to set email as default value (prevent clearing the input)
-  if (data.password !== data.confirmPassword) {
+  if (!validateSignupData.success) {
     return {
-      error: "Passwords do not match",
+      error: "Invalid form data. Please check your inputs.",
       success: false,
       data,
       status: 400,
@@ -42,13 +31,7 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
   const { error } = await supabase.auth.signUp({
     email: data.email,
     password: data.password,
-    options: {
-      data: {
-        email: data.email,
-        username: data.username,
-        avatar: "",
-      },
-    },
+    options: {},
   });
 
   if (error) {

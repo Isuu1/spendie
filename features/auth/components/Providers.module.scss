@@ -29,14 +29,23 @@
       z-index: -1;
     }
   }
-  button {
-    width: 100%;
-    justify-content: center;
-  }
-  .googleLoginButton {
-    background: #034086;
-    &:hover {
-      background: #023978;
+  .providers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 1.5rem;
+    gap: 2rem;
+    .provider {
+      cursor: pointer;
+      background: var(--color-bg-tile);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 2rem;
+      border-radius: var(--border-radius-l);
+      transition: background 0.25s ease;
+      &:hover {
+        background: #2a2a2a;
+      }
     }
   }
 }
