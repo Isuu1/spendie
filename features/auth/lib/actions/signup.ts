@@ -18,7 +18,6 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
 
   //Return data along with error message to to able to set email as default value (prevent clearing the input)
   if (!validateSignupData.success) {
-    console.log("Validation errors:", validateSignupData.error.format());
     return {
       error: "Invalid form data. Please check your inputs.",
       success: false,
@@ -32,12 +31,7 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
   const { error } = await supabase.auth.signUp({
     email: data.email,
     password: data.password,
-    options: {
-      data: {
-        email: data.email,
-        avatar: "",
-      },
-    },
+    options: {},
   });
 
   if (error) {
