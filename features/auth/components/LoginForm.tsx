@@ -77,7 +77,6 @@ const LoginForm = () => {
   return (
     <div className={styles.loginFormContainer}>
       <div className={styles.loginForm}>
-        <h1 className={styles.logo}>Spendie.</h1>
         <h3 className={styles.subtitle}>
           Manage your finances, track payments, and pick up right where you left
           off.

@@ -70,7 +70,6 @@ const SignupForm = () => {
 
   return (
     <div className={styles.signupForm}>
-      <h1 className={styles.logo}>Spendie.</h1>
       <h3 className={styles.subtitle}>
         Create your account and start managing money with confidence.
       </h3>
