@@ -2,7 +2,6 @@
 
 import SignupSuccess from "@/features/auth/components/SignupSuccess";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 
 export default function Page() {
   const params = useSearchParams();
@@ -10,9 +9,7 @@ export default function Page() {
 
   return (
     <>
-      <Suspense>
-        <SignupSuccess email={email} />
-      </Suspense>
+      <SignupSuccess email={email} />
     </>
   );
 }
