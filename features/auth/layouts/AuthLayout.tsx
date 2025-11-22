@@ -15,7 +15,8 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
         <h1 className={styles.logo}>
           <Link href="/">Spendie.</Link>
         </h1>
-        {pathname !== "/signup/success" && <AuthNav />}
+        {pathname !== "/signup/success" &&
+          pathname !== "/signup/account-confirmed" && <AuthNav />}
         {children}
       </div>
       <div className={styles.image}></div>

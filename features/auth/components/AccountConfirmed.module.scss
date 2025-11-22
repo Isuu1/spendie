@@ -1,0 +1,23 @@
+.accountConfirmed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 0 2rem;
+  text-align: center;
+  .successImage {
+    position: relative !important;
+    width: 100px !important;
+  }
+  .loginButton {
+    background: var(--color-action-active);
+    padding: 0.5rem 0.7rem;
+    font-size: 0.9rem;
+    border-radius: var(--border-radius-m);
+    transition: background 0.2s ease;
+    &:hover {
+      background: var(--color-action-active-hover);
+    }
+  }
+}

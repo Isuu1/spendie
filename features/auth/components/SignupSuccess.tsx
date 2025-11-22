@@ -6,6 +6,8 @@ import Button from "@/shared/components/ui/Button";
 import { MdEmail } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
 import { getEmailProviderUrl } from "../lib/utils/getEmailProvider";
+import success from "@/public/images/success.svg";
+import Image from "next/image";
 
 interface SignupSuccessProps {
   email?: string | null;
@@ -19,11 +21,17 @@ const SignupSuccess = ({ email }: SignupSuccessProps) => {
   };
   return (
     <div className={styles.signupSuccess}>
+      <Image
+        src={success}
+        alt="Account Confirmed"
+        className={styles.successImage}
+        fill
+      />
       <h2>You’re almost there!</h2>
-      <h3>
+      <p>
         Check your email and click the confirmation link to finish setting up
         your Spendie account.
-      </h3>
+      </p>
       <Button
         text="Go to mailbox"
         variant="primary"

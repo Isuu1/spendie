@@ -6,6 +6,10 @@
   gap: 2rem;
   padding: 0 2rem;
   text-align: center;
+  .successImage {
+    position: relative !important;
+    width: 100px !important;
+  }
   .resend {
     display: flex;
     align-items: center;
