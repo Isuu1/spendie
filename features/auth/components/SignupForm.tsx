@@ -64,13 +64,12 @@ const SignupForm = () => {
       toast.error(`Error: ${state.error}`, toastStyle);
     }
     if (state.success) {
-      router.push("/signup/success");
+      router.push(`/signup/success?email=${formData.email}`);
     }
-  }, [state, router]);
+  }, [state, router, formData.email]);
 
   return (
     <div className={styles.signupForm}>
-      <h1 className={styles.logo}>Spendie.</h1>
       <h3 className={styles.subtitle}>
         Create your account and start managing money with confidence.
       </h3>

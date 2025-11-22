@@ -1,8 +1,15 @@
+"use client";
+
+import SignupSuccess from "@/features/auth/components/SignupSuccess";
+import { useSearchParams } from "next/navigation";
+
 export default function Page() {
+  const params = useSearchParams();
+  const email = params.get("email");
+
   return (
-    <div>
-      <h1>Signup success!</h1>
-      <p>Please check your email to confirm your account.</p>
-    </div>
+    <>
+      <SignupSuccess email={email} />
+    </>
   );
 }
