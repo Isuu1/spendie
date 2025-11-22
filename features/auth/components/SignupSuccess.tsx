@@ -8,12 +8,12 @@ import { IoSend } from "react-icons/io5";
 import { getEmailProviderUrl } from "../lib/utils/getEmailProvider";
 import success from "@/public/images/success.svg";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 
-const SignupSuccess = () => {
-  const params = useSearchParams();
-  const email = params.get("email");
+interface SignupSuccessProps {
+  email?: string | null;
+}
 
+const SignupSuccess = ({ email }: SignupSuccessProps) => {
   const emailUrl = getEmailProviderUrl(email || "");
 
   const handleGoToMailbox = () => {
