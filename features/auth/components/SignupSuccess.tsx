@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 //Styles
 import styles from "./SignupSuccess.module.scss";
@@ -8,12 +10,16 @@ import { IoSend } from "react-icons/io5";
 import { getEmailProviderUrl } from "../lib/utils/getEmailProvider";
 import success from "@/public/images/success.svg";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
-interface SignupSuccessProps {
-  email?: string | null;
-}
+// interface SignupSuccessProps {
+//   email?: string | null;
+// }
 
-const SignupSuccess = ({ email }: SignupSuccessProps) => {
+const SignupSuccess = () => {
+  const params = useSearchParams();
+  const email = params.get("email");
+
   const emailUrl = getEmailProviderUrl(email || "");
 
   const handleGoToMailbox = () => {
