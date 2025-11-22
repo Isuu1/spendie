@@ -64,9 +64,9 @@ const SignupForm = () => {
       toast.error(`Error: ${state.error}`, toastStyle);
     }
     if (state.success) {
-      router.push("/signup/success");
+      router.push(`/signup/success?email=${formData.email}`);
     }
-  }, [state, router]);
+  }, [state, router, formData.email]);
 
   return (
     <div className={styles.signupForm}>
