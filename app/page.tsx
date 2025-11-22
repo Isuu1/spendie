@@ -1,9 +1,7 @@
 import Header from "@/features/landing-page/components/Header";
 import HeroSection from "@/features/landing-page/components/HeroSection";
 import { createClient } from "@/supabase/server";
-//import Image from "next/image";
 import { redirect } from "next/navigation";
-//import bg from "@/public/images/step_background.svg";
 import Features from "@/features/landing-page/components/Features";
 import Footer from "@/features/landing-page/components/Footer";
 import PaymentsFeature from "@/features/landing-page/components/PaymentsFeature";
