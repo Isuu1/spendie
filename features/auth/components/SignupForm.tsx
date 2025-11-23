@@ -1,27 +1,29 @@
 "use client";
 import React, { useActionState, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 //Types
 import { SignupFormState } from "../types/forms";
 //Actions
 import { signup } from "../lib/actions/signup";
 //Styles
 import styles from "./SignupForm.module.scss";
+import { toastStyle } from "@/shared/styles/toastStyle";
 //Components
 import Button from "@/shared/components/ui/Button";
 import Providers from "./Providers";
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 //Icons
-import { IoSend } from "react-icons/io5";
+import { FiLogIn } from "react-icons/fi";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+//Hooks
 import { useForm } from "@/shared/hooks/useForm";
+//Schemas
 import { signupFormSchema } from "../schemas/forms";
-import toast from "react-hot-toast";
-import { toastStyle } from "@/shared/styles/toastStyle";
-import { useRouter } from "next/navigation";
 
 const initialState: SignupFormState = {
   error: null,
@@ -70,9 +72,9 @@ const SignupForm = () => {
 
   return (
     <div className={styles.signupForm}>
-      <h3 className={styles.subtitle}>
+      <p className={styles.subtitle}>
         Create your account and start managing money with confidence.
-      </h3>
+      </p>
       <Form
         layout="vertical"
         action={formAction}
@@ -124,7 +126,8 @@ const SignupForm = () => {
           size="large"
           variant="primary"
           type="submit"
-          icon={<IoSend />}
+          icon={<FiLogIn />}
+          iconPosition="left"
           disabled={isPending}
         />
         <Providers />

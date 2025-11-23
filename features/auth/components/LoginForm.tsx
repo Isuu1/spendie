@@ -1,6 +1,7 @@
 "use client";
 import React, { useActionState, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 //Types
 import { LoginFormState } from "../types/forms";
 //Actions
@@ -20,10 +21,9 @@ import { loginFormSchema } from "../schemas/forms";
 //Icons
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { IoSend } from "react-icons/io5";
+import { FiLogIn } from "react-icons/fi";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { useRouter } from "next/navigation";
 
 const initialState: LoginFormState = {
   error: null,
@@ -77,10 +77,10 @@ const LoginForm = () => {
   return (
     <div className={styles.loginFormContainer}>
       <div className={styles.loginForm}>
-        <h3 className={styles.subtitle}>
+        <p className={styles.subtitle}>
           Manage your finances, track payments, and pick up right where you left
           off.
-        </h3>
+        </p>
         <Form
           action={formAction}
           layout="vertical"
@@ -119,11 +119,12 @@ const LoginForm = () => {
           />
           <Button
             className={styles.loginButton}
-            text={isPending ? "Logging in..." : "Login"}
+            text={isPending ? "Signing in..." : "Sign In"}
             size="large"
             variant="primary"
             type="submit"
-            icon={<IoSend />}
+            icon={<FiLogIn />}
+            iconPosition="left"
             disabled={isPending}
           />
           <Providers />
