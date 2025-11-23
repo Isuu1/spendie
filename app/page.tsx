@@ -1,22 +1,20 @@
+import { redirect } from "next/navigation";
+//Components
 import Header from "@/features/landing-page/components/Header";
 import HeroSection from "@/features/landing-page/components/HeroSection";
-// import { createClient } from "@/supabase/server";
-// import { redirect } from "next/navigation";
 import Features from "@/features/landing-page/components/Features";
 import Footer from "@/features/landing-page/components/Footer";
 import PaymentsFeature from "@/features/landing-page/components/PaymentsFeature";
 import DashboardFeature from "@/features/landing-page/components/DashboardFeature";
+//Api
+import { getUserServer } from "@/features/user/api/getUserServer";
 
 export default async function Home() {
-  // const supabase = await createClient();
+  const { user, error } = await getUserServer();
 
-  // const { data: user } = await supabase.auth.getUser();
-
-  // console.log("User on home page:", user);
-
-  // if (user) {
-  //   redirect("/dashboard");
-  // }
+  if (user && !error) {
+    redirect("/dashboard");
+  }
   return (
     <div className="landing-page">
       <Header />

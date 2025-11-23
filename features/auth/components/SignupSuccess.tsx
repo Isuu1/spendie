@@ -1,20 +1,18 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 //Styles
 import styles from "./SignupSuccess.module.scss";
 import Button from "@/shared/components/ui/Button";
 //Icons
 import { MdEmail } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
+//Utils
 import { getEmailProviderUrl } from "../lib/utils/getEmailProvider";
+//Assets
 import success from "@/public/images/success.svg";
-import Image from "next/image";
-import { useSearchParams } from "next/navigation";
-
-// interface SignupSuccessProps {
-//   email?: string | null;
-// }
 
 const SignupSuccess = () => {
   const params = useSearchParams();
