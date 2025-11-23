@@ -6,7 +6,7 @@
   .loginOptions {
     position: relative;
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--color-text-secondary);
     &::before {
       content: "";
@@ -32,8 +32,8 @@
   .providers {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    font-size: 1.5rem;
-    gap: 2rem;
+    font-size: 1.3rem;
+    gap: 3rem;
     .provider {
       cursor: pointer;
       background: var(--color-bg-tile);
