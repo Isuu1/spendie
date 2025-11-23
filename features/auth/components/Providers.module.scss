@@ -8,11 +8,12 @@
     text-align: center;
     font-size: 0.8rem;
     color: var(--color-text-secondary);
+    margin-top: 1rem;
     &::before {
       content: "";
       position: absolute;
       top: 50%;
-      left: 0;
+      left: 1rem;
       width: 40%;
       height: 1px;
       background-color: var(--color-text-secondary);
@@ -22,7 +23,7 @@
       content: "";
       position: absolute;
       top: 50%;
-      right: 0;
+      right: 1rem;
       width: 40%;
       height: 1px;
       background-color: var(--color-text-secondary);
@@ -40,7 +41,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem 2rem;
+      padding: 1rem 1rem;
       border-radius: var(--border-radius-l);
       transition: background 0.25s ease;
       &:hover {
