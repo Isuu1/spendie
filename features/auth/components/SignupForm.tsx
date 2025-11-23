@@ -72,6 +72,7 @@ const SignupForm = () => {
 
   return (
     <div className={styles.signupForm}>
+      <h2>Create Spendie account</h2>
       <p className={styles.subtitle}>
         Create your account and start managing money with confidence.
       </p>
