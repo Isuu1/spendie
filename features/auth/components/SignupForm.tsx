@@ -84,6 +84,7 @@ const SignupForm = () => {
           label="Email"
           id="email"
           type="text"
+          placeholder="Enter your email"
           icon={<MdEmail />}
           errors={errors.email}
           value={formData.email}
@@ -92,6 +93,7 @@ const SignupForm = () => {
         <Input
           label="Password"
           id="password"
+          placeholder="Enter your password"
           type={showPassword ? "text" : "password"}
           icon={<RiLockPasswordFill />}
           errors={errors.password}
@@ -114,6 +116,7 @@ const SignupForm = () => {
         <Input
           label="Confirm Password"
           id="confirmPassword"
+          placeholder="Re-enter your password"
           type={showPassword ? "text" : "password"}
           icon={<RiLockPasswordFill />}
           errors={errors.confirmPassword}

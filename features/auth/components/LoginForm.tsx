@@ -90,6 +90,7 @@ const LoginForm = () => {
             type="email"
             id="email"
             label="Email"
+            placeholder="Enter your email"
             icon={<MdEmail />}
             errors={errors.email}
             value={formData.email}
@@ -99,6 +100,7 @@ const LoginForm = () => {
             type={showPassword ? "text" : "password"}
             id="password"
             label="Password"
+            placeholder="Enter your password"
             icon={<RiLockPasswordFill />}
             errors={errors.password}
             value={formData.password}
