@@ -19,7 +19,6 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
           pathname !== "/signup/account-confirmed" && <AuthNav />}
         {children}
       </div>
-      <div className={styles.image}></div>
     </div>
   );
 };

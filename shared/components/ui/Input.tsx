@@ -10,6 +10,7 @@ interface InputProps {
   id: string;
   type: "text" | "number" | "email" | "password";
   label?: string;
+  placeholder?: string;
   errors?: string[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | void;
   defaultValue?: string | number;
@@ -22,6 +23,7 @@ const Input: React.FC<InputProps> = ({
   id,
   type,
   label,
+  placeholder,
   errors,
   onChange,
   defaultValue,
@@ -44,6 +46,7 @@ const Input: React.FC<InputProps> = ({
               id={id}
               name={id}
               type={type}
+              placeholder={placeholder}
               onChange={onChange}
               defaultValue={defaultValue}
               value={

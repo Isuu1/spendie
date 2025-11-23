@@ -2,16 +2,17 @@
   margin-right: auto;
   color: rgb(255, 255, 255);
   background: #af0000ff;
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 0.5rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  padding: 0.3rem 0.5rem;
   border-radius: var(--border-radius-m);
+  line-height: 1.5rem;
   .errorMessage {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.3rem;
     .icon {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
     }
   }
 }

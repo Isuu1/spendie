@@ -18,10 +18,10 @@ const AuthNav = () => {
         transition={{ type: "spring", stiffness: 700, damping: 30 }}
       ></motion.span>
       <li className={styles.item} onClick={() => router.push("/login")}>
-        Login
+        Sign In
       </li>
       <li className={styles.item} onClick={() => router.push("/signup")}>
-        Signup
+        Sign Up
       </li>
     </ul>
   );
