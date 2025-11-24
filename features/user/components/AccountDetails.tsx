@@ -14,8 +14,6 @@ import { useUserClient } from "../hooks/useUserClient";
 const AccountDetails: React.FC = () => {
   const { data: user, error } = useUserClient();
 
-  console.log("Fetched user:", user, error);
-
   if (error || !user) {
     return (
       <>
@@ -32,7 +30,7 @@ const AccountDetails: React.FC = () => {
     <div className={styles.accountDetails}>
       <section className={styles.section}>
         <h3>Profile picture</h3>
-        <ChangeAvatarForm />
+        <ChangeAvatarForm user={user} />
       </section>
       <section className={styles.section}>
         <h3>Account details</h3>
