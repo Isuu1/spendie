@@ -2,6 +2,7 @@
 
 import { createClient } from "@/supabase/client";
 import { useQuery } from "@tanstack/react-query";
+import { UserProfile } from "../types/user";
 
 export function useUserClient() {
   const supabase = createClient();
@@ -26,7 +27,7 @@ export function useUserClient() {
         return null;
       }
 
-      return userProfile;
+      return userProfile as UserProfile;
     },
   });
 }

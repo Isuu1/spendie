@@ -1,0 +1,37 @@
+.userLayout {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 1em;
+  margin-top: 1rem;
+  flex: 1 0;
+  .menu {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    padding-right: 2.5rem;
+    .item {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      white-space: nowrap;
+      padding: 0.5rem 0.8rem;
+      border-radius: var(--border-radius-m);
+      font-size: 0.9rem;
+      .icon {
+        font-size: 1.05rem;
+      }
+      &.active {
+        background: var(--color-action-active);
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .userLayout {
+    grid-template-columns: auto 1fr;
+    .menu {
+      flex-direction: column;
+    }
+  }
+}

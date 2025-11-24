@@ -7,14 +7,21 @@ import styles from "./UserProfileCard.module.scss";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { FaSignOutAlt, FaUser } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
-import { UserProfile } from "../types/user";
+import { useUserClient } from "../hooks/useUserClient";
+import PopUp from "@/shared/components/PopUp";
+import { AnimatePresence } from "motion/react";
+import Link from "next/link";
 
-interface UserProfileCardProps {
-  user: UserProfile | null;
-}
-
-const UserProfileCard: React.FC<UserProfileCardProps> = ({ user }) => {
+const UserProfileCard: React.FC = () => {
   const [expanded, setExpanded] = React.useState(false);
+
+  const { data: user, error } = useUserClient();
+
+  console.log("UserProfileCard user:", user, "error:", error);
+
+  if (error) {
+    return <div className={styles.userProfile}>Error loading user data</div>;
+  }
 
   return (
     <div
@@ -36,26 +43,31 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ user }) => {
           <RiArrowDownSLine />
         </div>
       </div>
-      <ul className={styles.userProfileMenu}>
-        <li
-          className={styles.item}
-          //onClick={() => handleMenuItemClick("/user/account-details")}
-        >
-          <FaUser />
-          <span>Account details</span>
-        </li>
-        <li
-          className={styles.item}
-          //onClick={() => handleMenuItemClick("/user/account-settings")}
-        >
-          <IoSettings />
-          <span>Settings</span>
-        </li>
-        <li className={styles.item}>
-          <FaSignOutAlt />
-          <span>Logout</span>
-        </li>
-      </ul>
+      <AnimatePresence>
+        {expanded && (
+          <PopUp>
+            <ul className={styles.userProfileMenu}>
+              <Link href="/user/account-details">
+                <li className={styles.item}>
+                  <FaUser />
+                  <span>Account details</span>
+                </li>
+              </Link>
+              <li
+                className={styles.item}
+                //onClick={() => handleMenuItemClick("/user/account-settings")}
+              >
+                <IoSettings />
+                <span>Settings</span>
+              </li>
+              <li className={styles.item}>
+                <FaSignOutAlt />
+                <span>Logout</span>
+              </li>
+            </ul>
+          </PopUp>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
