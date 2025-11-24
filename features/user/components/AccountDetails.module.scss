@@ -1,35 +1,16 @@
 .accountDetails {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  section {
+  gap: 4rem;
+  background: var(--color-bg-tile);
+  padding: 2rem;
+  border-radius: var(--border-radius-l);
+  .section {
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    &:first-child {
-      margin-bottom: 1rem;
-      &::after {
-        bottom: -2rem;
-      }
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: -1rem;
-      left: 0;
-      height: 1px;
-      width: 100%;
-      background-color: rgba(109, 109, 109, 0.233);
-    }
-    // .separator {
-    //   position: absolute;
-    //   bottom: -1rem;
-    //   left: 0;
-    //   height: 2px;
-    //   width: 100%;
-    //   background-color: rgba(109, 109, 109, 0.2);
-    // }
+    max-width: 700px;
   }
   .avatarContainer {
     position: relative;
@@ -51,9 +32,3 @@
     gap: 1rem;
   }
 }
-
-// @media (min-width: 768px) {
-//   .accountDetails {
-//     flex-direction: row;
-//   }
-// }

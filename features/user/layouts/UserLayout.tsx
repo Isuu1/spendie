@@ -28,16 +28,16 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
             <span>Account details</span>
           </li>
         </Link>
-        <Link href="/user/account-settings">
+        <Link href="/user/dashboard-settings">
           <li
             className={clsx(styles.item, {
-              [styles.active]: pathname.includes("settings"),
+              [styles.active]: pathname.includes("dashboard-settings"),
             })}
           >
             <i className={styles.icon}>
               <IoSettings />
             </i>
-            <span>Settings</span>
+            <span>Dashboard settings</span>
           </li>
         </Link>
       </ul>

@@ -30,15 +30,15 @@ const AccountDetails: React.FC = () => {
 
   return (
     <div className={styles.accountDetails}>
-      <section>
+      <section className={styles.section}>
         <h3>Profile picture</h3>
         <ChangeAvatarForm />
       </section>
-      <section>
+      <section className={styles.section}>
         <h3>Account details</h3>
         <ChangeDetailsForm user={user} />
       </section>
-      <section>
+      <section className={styles.section}>
         <h3>Password</h3>
         <ChangePasswordForm user={user} />
       </section>
