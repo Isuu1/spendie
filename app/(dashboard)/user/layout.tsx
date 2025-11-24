@@ -4,9 +4,7 @@ import BackButton from "@/shared/components/BackButton";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <div className="flex-row">
-        <BackButton text="Settings" />
-      </div>
+      <BackButton text="Settings" />
       <UserLayout>{children}</UserLayout>
     </>
   );

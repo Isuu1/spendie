@@ -3,7 +3,11 @@ import React from "react";
 import styles from "./DashboardSettings.module.scss";
 
 const DashboardSettings = () => {
-  return <div className={styles.dashboardSettings}>DashboardSettings</div>;
+  return (
+    <div className={styles.dashboardSettings}>
+      <h3>Dashboard panels</h3>
+    </div>
+  );
 };
 
 export default DashboardSettings;

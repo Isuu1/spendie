@@ -47,7 +47,7 @@ export default function Sidebar() {
       href: "/recurring-payments",
       icon: <FaRepeat />,
     },
-    { name: "Settings", href: "/user/account-settings", icon: <IoSettings /> },
+    { name: "Settings", href: "/user/account-details", icon: <IoSettings /> },
   ];
 
   const handleSignOut = async () => {
@@ -70,7 +70,13 @@ export default function Sidebar() {
           <li key={item.name}>
             <Link
               href={item.href}
-              className={`${styles.item} ${pathname === item.href ? styles.active : ""}`}
+              className={clsx(
+                styles.item,
+                pathname.startsWith("/user") && item.href.startsWith("/user")
+                  ? styles.active
+                  : "",
+                pathname === item.href ? styles.active : ""
+              )}
             >
               <i className={styles.icon}>{item.icon}</i>
               <span className={styles.label}>{item.name}</span>
