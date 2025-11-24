@@ -7,14 +7,16 @@ import styles from "./UserProfileCard.module.scss";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { FaSignOutAlt, FaUser } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
-import { UserProfile } from "../types/user";
+import { useUserClient } from "../hooks/useUserClient";
 
-interface UserProfileCardProps {
-  user: UserProfile | null;
-}
-
-const UserProfileCard: React.FC<UserProfileCardProps> = ({ user }) => {
+const UserProfileCard: React.FC = () => {
   const [expanded, setExpanded] = React.useState(false);
+
+  const { data: user, error } = useUserClient();
+
+  if (error) {
+    return <div className={styles.userProfile}>Error loading user data</div>;
+  }
 
   return (
     <div
