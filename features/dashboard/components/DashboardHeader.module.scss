@@ -1,7 +1,4 @@
 .header {
-  --color-avatar-border: rgba(233, 233, 233, 0.671);
-  position: relative;
-  z-index: 96;
   grid-area: header;
   display: flex;
   align-items: center;
@@ -9,21 +6,23 @@
   gap: 1rem;
   background: var(--color-bg-main);
   padding: 1rem 0.5rem 1rem 0;
-  margin-left: 1rem;
-  min-height: 70px;
   .notificationsIcon {
-    margin-left: auto;
+    //margin-left: auto;
     position: relative;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    padding: 0.4rem;
+    background: var(--color-bg-tile);
+    border-radius: var(--border-radius-m);
+    color: var(--color-text-secondary);
     cursor: pointer;
     .counter {
       position: absolute;
-      bottom: -7px;
+      bottom: -4px;
       right: -6px;
       font-size: 0.8rem;
       background-color: var(--color-text-active);
       border-radius: 50%;
-      width: 14px;
+      width: 10px;
       aspect-ratio: 1/1;
     }
   }
