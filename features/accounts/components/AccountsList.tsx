@@ -12,12 +12,17 @@ import { FaArrowLeft } from "react-icons/fa";
 import { generateAccountBackground } from "../utils/generateAccountBackground";
 //Types
 import { Account } from "@/features/accounts/types/account";
+//Hooks
+import { useUserClient } from "@/features/user/hooks/useUserClient";
+//Components
+import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 
 interface AccountsListProps {
   accounts: Account[];
 }
 
 const AccountsList: React.FC<AccountsListProps> = ({ accounts }) => {
+  const { data: user, error } = useUserClient();
   const [emblaRef, emblaApi] = useEmblaCarousel();
 
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(false);
@@ -42,6 +47,18 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts }) => {
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
+
+  if (error) {
+    console.error("Error fetching user data:", error);
+  }
+
+  if (accounts.length === 0)
+    return (
+      <div className={styles.noAccounts}>
+        <p>You don`t have any linked accounts yet.</p>
+        <PlaidLink userId={user?.id ?? ""} />
+      </div>
+    );
 
   return (
     <div ref={emblaRef} className={styles.emblaContainer}>
