@@ -7,9 +7,13 @@ import { PiBankFill } from "react-icons/pi";
 
 interface PlaidLinkProps {
   userId: string; // Pass the authenticated user ID
+  variant?: "primary" | "secondary";
 }
 
-const PlaidLink: React.FC<PlaidLinkProps> = ({ userId }) => {
+const PlaidLink: React.FC<PlaidLinkProps> = ({
+  userId,
+  variant = "primary",
+}) => {
   const [linkToken, setLinkToken] = useState<string | null>(null);
 
   // Fetch the link token from your API when the component mounts
@@ -75,7 +79,7 @@ const PlaidLink: React.FC<PlaidLinkProps> = ({ userId }) => {
     // </button>
     <Button
       text="Connect bank account"
-      variant="primary"
+      variant={variant}
       size="medium"
       onClick={() => open()}
       disabled={!ready || !linkToken}

@@ -8,9 +8,13 @@ import Button from "@/shared/components/ui/Button";
 import { MdSpaceDashboard } from "react-icons/md";
 import DashboardPanelsMenu from "./DashboardPanelsMenu";
 import { AnimatePresence } from "motion/react";
+import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
+import { useUserClient } from "@/features/user/hooks/useUserClient";
 
 const DashboardOptions = () => {
   const [openPanelsMenu, setOpenPanelsMenu] = React.useState(false);
+
+  const { data: user } = useUserClient();
 
   return (
     <div className={styles.dashboardOptions}>
@@ -23,6 +27,7 @@ const DashboardOptions = () => {
         iconPosition="left"
         onClick={() => setOpenPanelsMenu(!openPanelsMenu)}
       />
+      <PlaidLink userId={user?.id ?? ""} variant="secondary" />
       <AnimatePresence>
         {openPanelsMenu && (
           <DashboardPanelsMenu onClose={() => setOpenPanelsMenu(false)} />
