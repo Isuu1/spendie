@@ -65,6 +65,7 @@ export default function Sidebar() {
 
   return (
     <div className={clsx(styles.sidebar, collapsed ? "" : styles.expanded)}>
+      <h2 className={styles.logo}>Spendie.</h2>
       <ul className={styles.menu}>
         {sidebarItems.map((item) => (
           <li key={item.name}>
