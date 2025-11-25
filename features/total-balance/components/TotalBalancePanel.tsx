@@ -3,16 +3,15 @@ import React from "react";
 import styles from "./TotalBalancePanel.module.scss";
 //Components
 import FutureBalance from "./FutureBalance";
-import ErrorMessage from "@/shared/components/ErrorMessage";
+import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 //Api
 import { useAccountsClient } from "@/features/accounts/hooks/useAccountsClient";
-import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 
 const TotalBalancePanel: React.FC = () => {
   const { data, error, isLoading } = useAccountsClient();
 
   if (error) {
-    return <ErrorMessage variant="panel" message={error.message} />;
+    console.error("Error fetching accounts data:", error);
   }
 
   if (isLoading) {
@@ -31,10 +30,7 @@ const TotalBalancePanel: React.FC = () => {
     <div className={styles.totalBalanceTile}>
       <h1 className={styles.balance}>£{totalBalance ?? 0}</h1>
 
-      <FutureBalance
-        totalBalance={totalBalance}
-        recurringPaymentsError={error}
-      />
+      <FutureBalance totalBalance={totalBalance} />
     </div>
   );
 };

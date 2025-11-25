@@ -12,32 +12,18 @@ import { useTransactionsClient } from "../hooks/useTransactionsClient";
 //Types
 import { Transaction } from "plaid";
 //Components
-import ErrorMessage from "@/shared/components/ErrorMessage";
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 
 const TransactionsPanel: React.FC = () => {
-  const {
-    isLoading,
-    data: transactions,
-    error,
-    refetch,
-  } = useTransactionsClient();
+  const { isLoading, data: transactions } = useTransactionsClient();
 
   if (isLoading) {
     return <DashboardPanelLoader height={467} />;
   }
-  if (error)
-    return (
-      <ErrorMessage
-        onReload={refetch}
-        variant="panel"
-        message="Failed to load recent transactions."
-      />
-    );
 
   return (
     <div className={styles.transactionsTile}>
-      {transactions?.length === 0 && !error && (
+      {transactions?.length === 0 && (
         <p className={styles.noTransactions}>No recent transactions found.</p>
       )}
 

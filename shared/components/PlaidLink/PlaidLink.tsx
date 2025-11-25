@@ -2,12 +2,18 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { usePlaidLink } from "react-plaid-link";
+import Button from "../ui/Button";
+import { PiBankFill } from "react-icons/pi";
 
 interface PlaidLinkProps {
   userId: string; // Pass the authenticated user ID
+  variant?: "primary" | "secondary";
 }
 
-const PlaidLink: React.FC<PlaidLinkProps> = ({ userId }) => {
+const PlaidLink: React.FC<PlaidLinkProps> = ({
+  userId,
+  variant = "primary",
+}) => {
   const [linkToken, setLinkToken] = useState<string | null>(null);
 
   // Fetch the link token from your API when the component mounts
@@ -68,9 +74,18 @@ const PlaidLink: React.FC<PlaidLinkProps> = ({ userId }) => {
   const { open, ready } = usePlaidLink(config);
 
   return (
-    <button onClick={() => open()} disabled={!ready || !linkToken}>
-      Connect Bank Account
-    </button>
+    // <button onClick={() => open()} disabled={!ready || !linkToken}>
+    //   Connect Bank Accountdsad
+    // </button>
+    <Button
+      text="Connect bank account"
+      variant={variant}
+      size="medium"
+      onClick={() => open()}
+      disabled={!ready || !linkToken}
+      icon={<PiBankFill />}
+      iconPosition="left"
+    />
   );
 };
 

@@ -15,7 +15,6 @@ import { populateRecurringPayments } from "@/features/recurring-payments/lib/uti
 //Components
 import SelectMode from "@/features/total-balance/components/SelectMode";
 import PaymentsSummary from "./PaymentsSummary";
-import ErrorMessage from "@/shared/components/ErrorMessage";
 import Modal from "@/shared/components/Modal";
 import PopulatedRecurringPaymentsList from "@/features/recurring-payments/components/PopulatedRecurringPaymentsList";
 //Animations
@@ -24,7 +23,7 @@ import { useRecurringPaymentsClient } from "@/features/recurring-payments/hooks/
 import { useRecurringPaymentsHistoryClient } from "@/features/recurring-payments/hooks/useRecurringPaymentsHistoryClient";
 
 interface FutureBalanceProps {
-  recurringPaymentsError: string | null;
+  //recurringPaymentsError: string | null;
   totalBalance: number;
 }
 
@@ -44,7 +43,7 @@ type Mode = "endOfMonth" | "specificDate";
 
 const FutureBalance: React.FC<FutureBalanceProps> = ({
   totalBalance,
-  recurringPaymentsError,
+  //recurringPaymentsError,
 }) => {
   //States
   const [mode, setMode] = useState<Mode>("endOfMonth");
@@ -105,15 +104,13 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
         onDateSelect={setDateSelected}
         onRangeSelect={setMode}
       />
-      {!recurringPaymentsError ? (
-        <PaymentsSummary
-          paymentsTillDate={paymentsTillDate}
-          type={showUpcomingChangeDetails}
-          toggleDetails={handleToggleDetails}
-        />
-      ) : (
-        <ErrorMessage variant="panel" message={recurringPaymentsError} />
-      )}
+
+      <PaymentsSummary
+        paymentsTillDate={paymentsTillDate}
+        type={showUpcomingChangeDetails}
+        toggleDetails={handleToggleDetails}
+      />
+
       <AnimatePresence>
         {showUpcomingChangeDetails && (
           <Modal onClose={() => handleToggleDetails(null)}>
