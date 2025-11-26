@@ -5,66 +5,33 @@ import moment, { Moment } from "moment";
 import Link from "next/link";
 //Styles
 import styles from "./FutureBalance.module.scss";
-//Types
-import {
-  RecurringPayment,
-  //RecurringPaymentHistory,
-} from "@/features/recurring-payments/types/recurring-payment";
 //Utils
 import { populateRecurringPayments } from "@/features/recurring-payments/lib/utils/populateRecurringPayments";
 //Components
-import SelectMode from "@/features/total-balance/components/SelectMode";
-import PaymentsSummary from "./PaymentsSummary";
+import SelectMode from "@/features/future-balance/components/SelectMode";
+import PaymentsSummary from "@/features/future-balance/components/PaymentsSummary";
 import Modal from "@/shared/components/Modal";
 import PopulatedRecurringPaymentsList from "@/features/recurring-payments/components/PopulatedRecurringPaymentsList";
 //Animations
 import { AnimatePresence } from "motion/react";
 import { useRecurringPaymentsClient } from "@/features/recurring-payments/hooks/useRecurringPaymentsClient";
 import { useRecurringPaymentsHistoryClient } from "@/features/recurring-payments/hooks/useRecurringPaymentsHistoryClient";
+import { calculateTotals } from "../utils/calculateTotals";
 
 interface FutureBalanceProps {
-  //recurringPaymentsError: string | null;
   totalBalance: number;
 }
 
-const calculateTotals = (payments: RecurringPayment[]) => {
-  const income = payments
-    .filter((p) => p.type.toLowerCase() === "income")
-    .reduce((sum, p) => sum + p.amount, 0);
-
-  const expense = payments
-    .filter((p) => p.type.toLowerCase() === "expense")
-    .reduce((sum, p) => sum + p.amount, 0);
-
-  return { income, expense };
-};
-
-type Mode = "endOfMonth" | "specificDate";
-
-const FutureBalance: React.FC<FutureBalanceProps> = ({
-  totalBalance,
-  //recurringPaymentsError,
-}) => {
-  //States
-  const [mode, setMode] = useState<Mode>("endOfMonth");
+const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
+  const [mode, setMode] = useState<"endOfMonth" | "specificDate">("endOfMonth");
   const [dateSelected, setDateSelected] = useState<Moment | null>(null);
   const [showUpcomingChangeDetails, setShowUpcomingChangeDetails] = useState<
     "income" | "expense" | null
   >(null);
 
-  const {
-    data: recurringPayments,
-    // isLoading,
-    // error,
-  } = useRecurringPaymentsClient();
-  const {
-    data: paymentsHistory,
-    //isLoading,
-    //error,
-  } = useRecurringPaymentsHistoryClient();
-  console.log("Recurring Payments Data:", recurringPayments);
+  const { data: recurringPayments } = useRecurringPaymentsClient();
+  const { data: paymentsHistory } = useRecurringPaymentsHistoryClient();
 
-  //Payments filtering
   const specificDate =
     mode === "endOfMonth" ? moment().endOf("month") : dateSelected;
 
@@ -78,6 +45,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
     [specificDate, recurringPayments, paymentsHistory]
   );
 
+  //Calculate income and expense from populated payments
   const { income, expense } = useMemo(
     () => calculateTotals(paymentsTillDate),
     [paymentsTillDate]
@@ -100,9 +68,9 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({
     <div className={styles.futureBalance}>
       <SelectMode
         mode={mode}
+        selectMode={setMode}
         dateSelected={dateSelected}
         onDateSelect={setDateSelected}
-        onRangeSelect={setMode}
       />
 
       <PaymentsSummary

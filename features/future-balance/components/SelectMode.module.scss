@@ -32,31 +32,18 @@
       color: var(--color-text-secondary);
     }
   }
-  .options {
-    z-index: 6;
-    position: absolute;
-    top: 38px;
-    right: 0;
-    font-size: 0.85rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    background: var(--color-bg-secondary);
-    color: var(--color-text-primary);
-    border-radius: 10px;
-    width: fit-content;
-    line-height: 1.3rem;
-    padding: 0.7rem;
-    .option {
-      padding: 0.3rem 0.6rem;
-      gap: 0.3rem;
-      cursor: pointer;
-    }
-    .activeOption {
-      background: var(--color-action-active);
-      border-radius: 7px;
-    }
+
+  .option {
+    //padding: 0.3rem 0.6rem;
+    gap: 0.3rem;
+    cursor: pointer;
   }
+  .activeOption {
+    // background: var(--color-action-active);
+    color: var(--color-action-active);
+    border-radius: 7px;
+  }
+
   .dateSelected {
     right: 70px;
   }

@@ -2,7 +2,7 @@ import React from "react";
 //Styles
 import styles from "./TotalBalancePanel.module.scss";
 //Components
-import FutureBalance from "./FutureBalance";
+import FutureBalance from "../../future-balance/components/FutureBalance";
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 //Api
 import { useAccountsClient } from "@/features/accounts/hooks/useAccountsClient";
