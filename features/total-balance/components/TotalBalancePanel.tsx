@@ -6,9 +6,15 @@ import FutureBalance from "../../future-balance/components/FutureBalance";
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 //Api
 import { useAccountsClient } from "@/features/accounts/hooks/useAccountsClient";
+import Switcher from "@/shared/components/ui/Switcher";
+import { AnimatePresence } from "motion/react";
 
 const TotalBalancePanel: React.FC = () => {
   const { data, error, isLoading } = useAccountsClient();
+
+  const [futureBalanceVisible, setFutureBalanceVisible] = React.useState(true);
+
+  console.log("active", futureBalanceVisible);
 
   if (error) {
     console.error("Error fetching accounts data:", error);
@@ -29,8 +35,25 @@ const TotalBalancePanel: React.FC = () => {
   return (
     <div className={styles.totalBalanceTile}>
       <h1 className={styles.balance}>£{totalBalance ?? 0}</h1>
-
-      <FutureBalance totalBalance={totalBalance} />
+      <div className={styles.switcherContainer}>
+        <p>
+          {futureBalanceVisible
+            ? "Collapse upcoming changes"
+            : "Expand upcoming changes"}
+        </p>
+        <Switcher
+          value={!futureBalanceVisible}
+          onChange={() => setFutureBalanceVisible(!futureBalanceVisible)}
+        />
+      </div>
+      <AnimatePresence initial={false}>
+        {futureBalanceVisible && (
+          <FutureBalance
+            active={futureBalanceVisible}
+            totalBalance={totalBalance}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
