@@ -7,6 +7,13 @@
     gap: 0.5rem;
     align-items: center;
   }
+  .switcherContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
   .upcomingChanges {
     font-size: 0.9rem;
     display: flex;

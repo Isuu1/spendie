@@ -1,6 +1,5 @@
 import moment from "moment";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-
+import React, { useMemo, useRef, useState } from "react";
 //Styles
 import styles from "./SelectMode.module.scss";
 //Icons
@@ -12,29 +11,23 @@ import Button from "@/shared/components/ui/Button";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 //Animations
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence } from "motion/react";
+//Hooks
+import { useClickOutside } from "@/shared/hooks/useClickOutside";
+import PopUp from "@/shared/components/PopUp";
 
 interface SelectProps {
   mode: "endOfMonth" | "specificDate";
+  selectMode: (range: "endOfMonth" | "specificDate") => void;
   dateSelected: moment.Moment | null;
   onDateSelect: (date: moment.Moment | null) => void;
-  onRangeSelect: (range: "endOfMonth" | "specificDate") => void;
 }
-
-type Mode = "endOfMonth" | "specificDate";
-
-const selectModeOptionsVariants = {
-  hidden: { opacity: 0, y: -10 },
-  visible: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -10 },
-  transition: { duration: 0.15 },
-};
 
 const Select: React.FC<SelectProps> = ({
   mode,
+  selectMode,
   dateSelected,
   onDateSelect,
-  onRangeSelect,
 }) => {
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
@@ -42,8 +35,8 @@ const Select: React.FC<SelectProps> = ({
   const optionsRef = useRef<HTMLDivElement>(null);
 
   //Range selection
-  const handleSelectRange = (range: Mode) => {
-    onRangeSelect(range);
+  const handleSelectRange = (range: "endOfMonth" | "specificDate") => {
+    selectMode(range);
     if (range === "specificDate" && !dateSelected) {
       setOpenDatePicker(true);
     }
@@ -56,19 +49,7 @@ const Select: React.FC<SelectProps> = ({
     return "Specific date";
   }, [mode, dateSelected]);
 
-  //Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        optionsRef.current &&
-        !optionsRef.current.contains(event.target as Node)
-      ) {
-        setShowOptions(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  useClickOutside(optionsRef, () => setShowOptions(false));
 
   return (
     <div className={styles.selectContainer}>
@@ -113,14 +94,7 @@ const Select: React.FC<SelectProps> = ({
       )}
       <AnimatePresence>
         {showOptions && (
-          <motion.div
-            className={`${styles.options} ${dateSelected && mode === "specificDate" ? styles.dateSelected : ""}`}
-            ref={optionsRef}
-            variants={selectModeOptionsVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
+          <PopUp top={50} right={0} popupRef={optionsRef}>
             <p
               className={`${styles.option} ${
                 mode === "endOfMonth" ? styles.activeOption : undefined
@@ -139,7 +113,7 @@ const Select: React.FC<SelectProps> = ({
                 ? dateSelected.format("DD MM YYYY")
                 : "Specific date"}
             </p>
-          </motion.div>
+          </PopUp>
         )}
       </AnimatePresence>
     </div>

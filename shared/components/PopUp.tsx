@@ -3,6 +3,7 @@
 import React from "react";
 import styles from "./PopUp.module.scss";
 import { motion } from "motion/react";
+import clsx from "clsx";
 
 const panelMenuVariants = {
   hidden: { opacity: 0 },
@@ -11,14 +12,32 @@ const panelMenuVariants = {
   transition: { duration: 0.15 },
 };
 
-const PopUp = ({ children }: { children: React.ReactNode }) => {
+interface PopUpProps {
+  children: React.ReactNode;
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
+  popupRef?: React.RefObject<HTMLDivElement | null>;
+}
+
+const PopUp = ({
+  children,
+  top,
+  right,
+  bottom,
+  left,
+  popupRef,
+}: PopUpProps) => {
   return (
     <motion.div
       variants={panelMenuVariants}
       initial="hidden"
       animate="visible"
       exit="exit"
-      className={styles.popUp}
+      className={clsx(styles.popUp)}
+      style={{ top: top, right: right, bottom: bottom, left: left }}
+      ref={popupRef}
     >
       {children}
     </motion.div>
