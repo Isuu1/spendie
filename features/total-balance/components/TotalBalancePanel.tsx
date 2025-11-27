@@ -34,6 +34,7 @@ const TotalBalancePanel: React.FC = () => {
 
   return (
     <div className={styles.totalBalanceTile}>
+      <h3>Total Balance</h3>
       <h1 className={styles.balance}>£{totalBalance ?? 0}</h1>
       <div className={styles.switcherContainer}>
         <p>
