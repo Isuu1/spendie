@@ -27,3 +27,12 @@
     }
   }
 }
+
+@media (max-width: 550px) {
+  .layout {
+    grid-template-columns: 1fr;
+    .innerWrapper {
+      padding: 0.5rem;
+    }
+  }
+}

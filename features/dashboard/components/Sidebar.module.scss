@@ -97,28 +97,9 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 550px) {
   //Mobile sidebar
   .sidebar {
-    &.expanded {
-      position: absolute !important;
-      width: auto;
-      max-width: 62px;
-      &:hover {
-        max-width: 250px;
-        .menu .item .label {
-          opacity: 1;
-        }
-      }
-      .menu .item .label {
-        opacity: 0;
-      }
-      .menu .sidebarSwitch {
-        opacity: 0;
-      }
-    }
-    .menu .sidebarSwitch {
-      display: none;
-    }
+    display: none;
   }
 }
