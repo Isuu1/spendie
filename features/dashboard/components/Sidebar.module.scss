@@ -1,4 +1,6 @@
 .sidebar {
+  z-index: 97;
+  position: absolute;
   background: var(--color-bg-main);
   max-width: 62px;
   transition: max-width 0.15s ease;
@@ -96,10 +98,8 @@
 }
 
 @media (max-width: 768px) {
-  //Make sidebar absolute on mobile to overlay content
+  //Mobile sidebar
   .sidebar {
-    z-index: 97;
-    position: absolute !important;
     &.expanded {
       position: absolute !important;
       width: auto;
