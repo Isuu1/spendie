@@ -22,11 +22,12 @@ import Switcher from "@/shared/components/ui/Switcher";
 import { toastStyle } from "@/shared/styles/toastStyle";
 //Animations
 import { AnimatePresence } from "motion/react";
+import { useLocalStorage } from "@/shared/hooks/useLocalStorage";
 
 export default function Sidebar() {
   const [signoutClicked, setSignoutClicked] = useState(false);
 
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useLocalStorage("sidebar-collapsed", false);
 
   const pathname = usePathname();
 
