@@ -27,7 +27,7 @@ import { useLocalStorage } from "@/shared/hooks/useLocalStorage";
 export default function Sidebar() {
   const [signoutClicked, setSignoutClicked] = useState(false);
 
-  const [collapsed, setCollapsed] = useLocalStorage("sidebar-collapsed", false);
+  const [collapsed, setCollapsed] = useLocalStorage("sidebar-collapsed", true);
 
   const pathname = usePathname();
 
