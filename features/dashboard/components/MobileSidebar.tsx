@@ -1,20 +1,22 @@
 import React, { useRef, useState } from "react";
-//Styles
-import styles from "./MobileSidebar.module.scss";
-//Icons
-import { FaSignOutAlt } from "react-icons/fa";
-import { IoClose } from "react-icons/io5";
-
-//Components
-import ConfirmAction from "@/shared/components/ConfirmAction";
-import { AnimatePresence, motion } from "motion/react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import clsx from "clsx";
-import { sidebarItems } from "../config/sidebarItems";
-import { toastStyle } from "@/shared/styles/toastStyle";
 import { createClient } from "@/supabase/client";
 import { toast } from "react-hot-toast";
+//Styles
+import styles from "./MobileSidebar.module.scss";
+import { toastStyle } from "@/shared/styles/toastStyle";
+//Icons
+import { FaSignOutAlt } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+//Components
+import ConfirmAction from "@/shared/components/ConfirmAction";
+//Animations
+import { AnimatePresence, motion } from "motion/react";
+//Config
+import { sidebarItems } from "../config/sidebarItems";
+//Hooks
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
 
 interface MobileSidebarProps {

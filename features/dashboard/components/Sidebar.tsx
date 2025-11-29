@@ -17,7 +17,9 @@ import Switcher from "@/shared/components/ui/Switcher";
 import { toastStyle } from "@/shared/styles/toastStyle";
 //Animations
 import { AnimatePresence } from "motion/react";
+//Hooks
 import { useLocalStorage } from "@/shared/hooks/useLocalStorage";
+//Config
 import { sidebarItems } from "../config/sidebarItems";
 
 export default function Sidebar() {
