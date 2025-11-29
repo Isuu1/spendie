@@ -6,8 +6,7 @@
   gap: 1rem;
   background: var(--color-bg-main);
   padding: 1rem 0.5rem 1rem 0;
-  .notificationsIcon {
-    //margin-left: auto;
+  .icon {
     position: relative;
     font-size: 1.2rem;
     padding: 0.4rem;
@@ -15,6 +14,11 @@
     border-radius: var(--border-radius-m);
     color: var(--color-text-secondary);
     cursor: pointer;
+  }
+  .menuIcon {
+    margin-right: auto;
+  }
+  .notificationsIcon {
     .counter {
       position: absolute;
       bottom: -4px;
