@@ -1,12 +1,15 @@
 @use "@/shared/styles/mixins/inputs" as inputs;
 
 .noLabel {
-  grid-template-columns: 150px !important;
+  grid-template-columns: auto !important;
 }
 
 .inputContainer {
   cursor: pointer;
   @include inputs.inputSkeleton;
+  .selectInputField {
+    gap: 0.5rem;
+  }
   .dropdownIcon {
     font-size: 1.1rem;
     transition: all 0.2s ease;

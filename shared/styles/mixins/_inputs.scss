@@ -1,7 +1,7 @@
 //Main input container
 @mixin inputContainer {
   color: var(--color-input-text);
-  width: 100%;
+  width: auto;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto;
