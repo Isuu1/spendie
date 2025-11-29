@@ -14,6 +14,10 @@
     border-radius: var(--border-radius-m);
     color: var(--color-text-secondary);
     cursor: pointer;
+    transition: background 0.25s ease;
+    &:hover {
+      background: #414141;
+    }
   }
   .menuIcon {
     margin-right: auto;

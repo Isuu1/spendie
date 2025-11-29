@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import clsx from "clsx";
 //Icons
 import { IoNotifications } from "react-icons/io5";
 import { TiThMenu } from "react-icons/ti";
@@ -8,13 +9,25 @@ import { TiThMenu } from "react-icons/ti";
 import styles from "./DashboardHeader.module.scss";
 //Components
 import UserProfileCard from "@/features/user/components/UserProfileCard";
-import clsx from "clsx";
+import MobileSidebar from "./MobileSidebar";
+//Animations
+import { AnimatePresence } from "motion/react";
 
 const DashboardHeader = () => {
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
   return (
     <>
+      <AnimatePresence>
+        {mobileSidebarOpen && (
+          <MobileSidebar onClose={() => setMobileSidebarOpen(false)} />
+        )}
+      </AnimatePresence>
       <div className={styles.header}>
-        <i className={clsx(styles.icon, styles.menuIcon)}>
+        <i
+          className={clsx(styles.icon, styles.menuIcon)}
+          onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+        >
           <TiThMenu />
         </i>
         <i className={clsx(styles.icon, styles.notificationsIcon)}>

@@ -1,0 +1,80 @@
+.sidebar {
+  z-index: 97;
+  position: fixed;
+  background: var(--color-bg-main);
+  padding: 1rem;
+  height: 100%;
+  font-size: 0.9rem;
+  .logo {
+    color: var(--color-action-active);
+  }
+  .closeButton {
+    position: absolute;
+    top: 0.7rem;
+    right: 1rem;
+    font-size: 1.2rem;
+    padding: 0.4rem;
+    background: var(--color-bg-tile);
+    border-radius: var(--border-radius-m);
+    color: var(--color-text-secondary);
+    border: none;
+    transition: background 0.25s ease;
+    cursor: pointer;
+    &:hover {
+      background: #414141;
+    }
+  }
+  .menu {
+    z-index: 4;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    list-style: none;
+    height: 100%;
+    margin-top: 2rem;
+    .settings {
+      margin-top: auto;
+    }
+    .logout {
+      color: var(--color-action-active) !important;
+      &:hover {
+        color: var(--color-action-active-hover) !important;
+      }
+    }
+    .item {
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      white-space: nowrap;
+      color: var(--color-text-secondary);
+      transition: color 0.25s ease;
+      padding: 0.3rem;
+      &.active {
+        color: var(--color-text-primary);
+        background: var(--color-action-active);
+        border-radius: 10px;
+        &:hover {
+          color: var(--color-text-primary);
+        }
+      }
+      .settings {
+        margin-top: auto;
+      }
+      &:hover {
+        color: var(--color-action-hover);
+      }
+      .icon {
+        flex-shrink: 0;
+        display: block;
+        font-size: 1.2rem;
+      }
+      .label {
+        pointer-events: none;
+        transition: 0.15s opacity ease;
+      }
+    }
+  }
+}
