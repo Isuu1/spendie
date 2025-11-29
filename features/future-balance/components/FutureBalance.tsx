@@ -7,16 +7,17 @@ import Link from "next/link";
 import styles from "./FutureBalance.module.scss";
 //Utils
 import { populateRecurringPayments } from "@/features/recurring-payments/lib/utils/populateRecurringPayments";
+import { calculateTotals } from "../utils/calculateTotals";
 //Components
 import SelectMode from "@/features/future-balance/components/SelectMode";
 import PaymentsSummary from "@/features/future-balance/components/PaymentsSummary";
 import Modal from "@/shared/components/Modal";
 import PopulatedRecurringPaymentsList from "@/features/recurring-payments/components/PopulatedRecurringPaymentsList";
 //Animations
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence } from "motion/react";
+//Api
 import { useRecurringPaymentsClient } from "@/features/recurring-payments/hooks/useRecurringPaymentsClient";
 import { useRecurringPaymentsHistoryClient } from "@/features/recurring-payments/hooks/useRecurringPaymentsHistoryClient";
-import { calculateTotals } from "../utils/calculateTotals";
 
 interface FutureBalanceProps {
   totalBalance: number;
@@ -66,14 +67,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
   };
 
   return (
-    <motion.div
-      className={styles.futureBalance}
-      initial={{ height: 0 }}
-      animate={{ height: "auto" }}
-      exit={{ height: 0 }}
-      transition={{ duration: 2 }}
-      layout
-    >
+    <div className={styles.futureBalance}>
       <SelectMode
         mode={mode}
         selectMode={setMode}
@@ -103,7 +97,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
         <h3>Balance after payments</h3>
         <h2 className={styles.value}>£{futureBalance.toFixed(2)}</h2>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

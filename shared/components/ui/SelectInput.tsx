@@ -60,7 +60,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
       <div className={styles.fieldWrapper}>
         <div className={styles.inputFieldWrapper}>
           <span
-            className={`${styles.inputField} ${icon ? styles.withIcon : ""}`}
+            className={`${styles.inputField} ${styles.selectInputField} ${icon ? styles.withIcon : ""}`}
             onClick={() => setShowOptions(!showOptions)}
             ref={selectRef}
           >
