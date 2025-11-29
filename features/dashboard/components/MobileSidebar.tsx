@@ -1,35 +1,36 @@
-"use client";
-
-import { useState } from "react";
-import Link from "next/link";
+import React, { useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 import clsx from "clsx";
 import { createClient } from "@/supabase/client";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 //Styles
-import styles from "./Sidebar.module.scss";
+import styles from "./MobileSidebar.module.scss";
+import { toastStyle } from "@/shared/styles/toastStyle";
 //Icons
 import { FaSignOutAlt } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 //Components
 import ConfirmAction from "@/shared/components/ConfirmAction";
-import Switcher from "@/shared/components/ui/Switcher";
-//Styles
-import { toastStyle } from "@/shared/styles/toastStyle";
 //Animations
-import { AnimatePresence } from "motion/react";
-//Hooks
-import { useLocalStorage } from "@/shared/hooks/useLocalStorage";
+import { AnimatePresence, motion } from "motion/react";
 //Config
 import { sidebarItems } from "../config/sidebarItems";
+//Hooks
+import { useClickOutside } from "@/shared/hooks/useClickOutside";
 
-export default function Sidebar() {
+interface MobileSidebarProps {
+  onClose: () => void;
+}
+
+const MobileSidebar = ({ onClose }: MobileSidebarProps) => {
   const [signoutClicked, setSignoutClicked] = useState(false);
-
-  const [collapsed, setCollapsed] = useLocalStorage("sidebar-collapsed", true);
 
   const pathname = usePathname();
 
   const router = useRouter();
+
+  const mobileSidebarRef = useRef<HTMLDivElement>(null);
 
   const supabase = createClient();
 
@@ -42,13 +43,21 @@ export default function Sidebar() {
     router.push("/");
   };
 
-  const handleSidebarToggle = () => {
-    setCollapsed(!collapsed);
-  };
+  useClickOutside(mobileSidebarRef, onClose);
 
   return (
-    <div className={clsx(styles.sidebar, collapsed ? "" : styles.expanded)}>
+    <motion.div
+      className={styles.sidebar}
+      ref={mobileSidebarRef}
+      initial={{ x: "-100%" }}
+      animate={{ x: 0 }}
+      exit={{ x: "-100%" }}
+      transition={{ type: "tween", duration: 0.15 }}
+    >
       <h2 className={styles.logo}>Spendie.</h2>
+      <i className={styles.closeButton} onClick={onClose}>
+        <IoClose />
+      </i>
       <ul className={styles.menu}>
         {sidebarItems.map((item) => (
           <li key={item.name}>
@@ -67,10 +76,6 @@ export default function Sidebar() {
             </Link>
           </li>
         ))}
-        <li className={styles.sidebarSwitch}>
-          <Switcher value={collapsed} onChange={handleSidebarToggle} />
-        </li>
-
         <li
           className={`${styles.item} ${styles.logout}`}
           onClick={() => setSignoutClicked(true)}
@@ -90,6 +95,8 @@ export default function Sidebar() {
           />
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
-}
+};
+
+export default MobileSidebar;

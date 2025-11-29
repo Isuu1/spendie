@@ -5,9 +5,8 @@
   justify-content: flex-end;
   gap: 1rem;
   background: var(--color-bg-main);
-  padding: 1rem 0.5rem 1rem 0;
-  .notificationsIcon {
-    //margin-left: auto;
+  padding: 1rem 0.5rem;
+  .icon {
     position: relative;
     font-size: 1.2rem;
     padding: 0.4rem;
@@ -15,6 +14,18 @@
     border-radius: var(--border-radius-m);
     color: var(--color-text-secondary);
     cursor: pointer;
+    transition: background 0.25s ease;
+    &:hover {
+      background: #414141;
+    }
+  }
+  .menuIcon {
+    margin-right: auto;
+    @media (min-width: 550px) {
+      display: none;
+    }
+  }
+  .notificationsIcon {
     .counter {
       position: absolute;
       bottom: -4px;
