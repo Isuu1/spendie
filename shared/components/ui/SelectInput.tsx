@@ -4,7 +4,9 @@ import styles from "./SelectInput.module.scss";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
+//Icons
 import { TbArrowBigDownLineFilled } from "react-icons/tb";
+import { TiTick } from "react-icons/ti";
 
 interface SelectInputProps {
   id: string;
@@ -88,6 +90,11 @@ const SelectInput: React.FC<SelectInputProps> = ({
                     className={`${styles.option} ${value === option ? styles.active : ""}`}
                   >
                     {option}
+                    {value === option && (
+                      <i className={styles.activeIcon}>
+                        <TiTick />
+                      </i>
+                    )}
                   </li>
                 ))}
               </motion.ul>
