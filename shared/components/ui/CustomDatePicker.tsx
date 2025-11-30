@@ -12,7 +12,7 @@ import { useClickOutside } from "@/shared/hooks/useClickOutside";
 interface CustomDatePickerProps {
   onChange?: (option: string) => void;
   onClose?: () => void;
-  value?: string;
+  value?: string | null;
 }
 
 const datePickerVariants = {

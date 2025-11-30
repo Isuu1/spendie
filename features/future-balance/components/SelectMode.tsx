@@ -3,18 +3,21 @@ import React, { useMemo, useRef, useState } from "react";
 //Styles
 import styles from "./SelectMode.module.scss";
 //Icons
-import { IoMdArrowDropdown } from "react-icons/io";
 import { MdEditDocument } from "react-icons/md";
+import { TbArrowBigDownLineFilled } from "react-icons/tb";
+import { TiTick } from "react-icons/ti";
 //Components
 import Button from "@/shared/components/ui/Button";
+import PopUp from "@/shared/components/PopUp";
 //Datepicker
-import DatePicker from "react-datepicker";
+//import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 //Animations
 import { AnimatePresence } from "motion/react";
 //Hooks
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
-import PopUp from "@/shared/components/PopUp";
+import CustomDatePicker from "@/shared/components/ui/CustomDatePicker";
+import clsx from "clsx";
 
 interface SelectProps {
   mode: "endOfMonth" | "specificDate";
@@ -57,21 +60,28 @@ const Select: React.FC<SelectProps> = ({
 
       <div className={styles.select}>
         {openDatePicker && (
-          <DatePicker
-            onSelect={() => {
-              setOpenDatePicker(false);
+          // <DatePicker
+          //   onSelect={() => {
+          //     setOpenDatePicker(false);
+          //   }}
+          //   onChange={(date) => {
+          //     if (date) {
+          //       console.log("Date in date picker", date);
+          //       onDateSelect(moment(date));
+          //     }
+          //   }}
+          //   dateFormat="yyyy-MM-dd"
+          //   minDate={moment().toDate()}
+          //   inline
+          //   onClickOutside={() => setOpenDatePicker(false)}
+          //   calendarClassName={styles.datePicker}
+          // />
+          <CustomDatePicker
+            value={dateSelected ? dateSelected.toISOString() : null}
+            onChange={(val) => {
+              onDateSelect(val ? moment(val) : null);
             }}
-            onChange={(date) => {
-              if (date) {
-                console.log("Date in date picker", date);
-                onDateSelect(moment(date));
-              }
-            }}
-            dateFormat="yyyy-MM-dd"
-            minDate={moment().toDate()}
-            inline
-            onClickOutside={() => setOpenDatePicker(false)}
-            calendarClassName={styles.datePicker}
+            onClose={() => setOpenDatePicker(false)}
           />
         )}
         <p
@@ -79,43 +89,54 @@ const Select: React.FC<SelectProps> = ({
           onClick={() => setShowOptions(!showOptions)}
         >
           {selectedOptionLabel}
-
-          <IoMdArrowDropdown />
+          <i
+            className={clsx(styles.dropdownIcon, {
+              [styles.dropdownOpen]: showOptions,
+            })}
+          >
+            <TbArrowBigDownLineFilled />
+          </i>
         </p>
+        <AnimatePresence>
+          {showOptions && (
+            <PopUp top={50} right={0} popupRef={optionsRef}>
+              <p
+                className={`${styles.option} ${
+                  mode === "endOfMonth" ? styles.activeOption : undefined
+                }`}
+                onClick={() => handleSelectRange("endOfMonth")}
+              >
+                End of the month
+                {mode === "endOfMonth" && (
+                  <TiTick className={styles.tickIcon} />
+                )}
+              </p>
+              <p
+                className={`${styles.option} ${
+                  mode === "specificDate" ? styles.activeOption : undefined
+                }`}
+                onClick={() => handleSelectRange("specificDate")}
+              >
+                {dateSelected
+                  ? dateSelected.format("DD MMM YYYY")
+                  : "Specific date"}
+                {mode === "specificDate" && (
+                  <TiTick className={styles.tickIcon} />
+                )}
+              </p>
+            </PopUp>
+          )}
+        </AnimatePresence>
       </div>
       {dateSelected && mode === "specificDate" && (
         <Button
-          //text="Change"
+          className={styles.editButton}
           icon={<MdEditDocument />}
-          variant="primary"
-          size="small"
+          variant="secondary"
+          size="medium"
           onClick={() => setOpenDatePicker(true)}
         />
       )}
-      <AnimatePresence>
-        {showOptions && (
-          <PopUp top={50} right={0} popupRef={optionsRef}>
-            <p
-              className={`${styles.option} ${
-                mode === "endOfMonth" ? styles.activeOption : undefined
-              }`}
-              onClick={() => handleSelectRange("endOfMonth")}
-            >
-              End of the month
-            </p>
-            <p
-              className={`${styles.option} ${
-                mode === "specificDate" ? styles.activeOption : undefined
-              }`}
-              onClick={() => handleSelectRange("specificDate")}
-            >
-              {dateSelected
-                ? dateSelected.format("DD MM YYYY")
-                : "Specific date"}
-            </p>
-          </PopUp>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

@@ -5,13 +5,17 @@
   gap: 0.5rem;
   align-items: center;
   width: 100%;
-  background: var(--color-bg-secondary);
-  padding: 0.5rem 0.5rem 0.5rem 0.7rem;
-  border-radius: 10px;
+  //background: var(--color-bg-secondary);
+  //padding: 0.3rem 0.5rem;
+  border-radius: var(--border-radius-l);
+  .editButton {
+    height: 100%;
+    font-size: 1rem;
+  }
   .select {
     position: relative;
-    background: var(--color-bg-tile);
-    border-radius: 10px;
+    background: var(--color-input-bg);
+    border-radius: var(--border-radius-m);
     cursor: pointer;
     margin-left: auto;
     .datePicker {
@@ -29,7 +33,14 @@
       gap: 0.4rem;
       padding: 0.5rem 0.5rem 0.5rem 1em;
       white-space: nowrap;
-      color: var(--color-text-secondary);
+      color: var(--color-text-primary);
+      .dropdownIcon {
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+      }
+      .dropdownOpen {
+        transform: rotate(180deg);
+      }
     }
   }
 
@@ -37,12 +48,22 @@
     //padding: 0.3rem 0.6rem;
     gap: 0.3rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: color 0.2s;
+    &:hover {
+      color: var(--color-action-active);
+    }
   }
-  .activeOption {
-    // background: var(--color-action-active);
-    color: var(--color-action-active);
-    border-radius: 7px;
+  .tickIcon {
+    font-size: 1.2rem;
   }
+  // .activeOption {
+  //   // background: var(--color-action-active);
+  //   color: var(--color-action-active);
+  //   border-radius: 7px;
+  // }
 
   .dateSelected {
     right: 70px;
