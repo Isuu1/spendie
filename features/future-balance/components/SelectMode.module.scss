@@ -5,12 +5,14 @@
   gap: 0.5rem;
   align-items: center;
   width: 100%;
-  //background: var(--color-bg-secondary);
-  //padding: 0.3rem 0.5rem;
   border-radius: var(--border-radius-l);
   .editButton {
     height: 100%;
     font-size: 1rem;
+    background: var(--color-input-bg);
+    &:hover {
+      background: #414141;
+    }
   }
   .select {
     position: relative;

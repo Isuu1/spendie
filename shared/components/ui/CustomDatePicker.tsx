@@ -13,6 +13,9 @@ interface CustomDatePickerProps {
   onChange?: (option: string) => void;
   onClose?: () => void;
   value?: string | null;
+  top?: number;
+  left?: number;
+  right?: number;
 }
 
 const datePickerVariants = {
@@ -26,6 +29,9 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   onChange,
   onClose,
   value,
+  top,
+  left,
+  right,
 }) => {
   const datePickerRef = useRef<HTMLDivElement>(null);
 
@@ -37,6 +43,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
     <motion.div
       ref={datePickerRef}
       className={styles.datePickerWrapper}
+      style={{ top: top, left: left, right: right }}
       variants={datePickerVariants}
       initial="hidden"
       animate="visible"
