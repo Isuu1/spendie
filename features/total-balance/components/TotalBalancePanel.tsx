@@ -46,12 +46,7 @@ const TotalBalancePanel: React.FC = () => {
       <h1 className={styles.balance}>£{totalBalance ?? 0}</h1>
 
       <AnimatePresence initial={false}>
-        {futureBalanceVisible && (
-          <FutureBalance
-            active={futureBalanceVisible}
-            totalBalance={totalBalance}
-          />
-        )}
+        {futureBalanceVisible && <FutureBalance totalBalance={totalBalance} />}
       </AnimatePresence>
     </div>
   );

@@ -42,6 +42,7 @@
       align-items: center;
       justify-content: space-between;
       transition: 0.2s all ease;
+      white-space: nowrap;
       &:hover {
         background: var(--color-action-active);
         color: var(--color-text-on-accent);

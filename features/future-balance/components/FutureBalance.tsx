@@ -14,37 +14,41 @@ import PaymentsSummary from "@/features/future-balance/components/PaymentsSummar
 import Modal from "@/shared/components/Modal";
 import PopulatedRecurringPaymentsList from "@/features/recurring-payments/components/PopulatedRecurringPaymentsList";
 //Animations
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 //Api
 import { useRecurringPaymentsClient } from "@/features/recurring-payments/hooks/useRecurringPaymentsClient";
 import { useRecurringPaymentsHistoryClient } from "@/features/recurring-payments/hooks/useRecurringPaymentsHistoryClient";
 
 interface FutureBalanceProps {
   totalBalance: number;
-  active: boolean;
 }
 
+type PaymentType = "income" | "expense";
+type ModeType = "endOfMonth" | "specificDate";
+
 const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
-  const [mode, setMode] = useState<"endOfMonth" | "specificDate">("endOfMonth");
+  const [mode, setMode] = useState<ModeType>("endOfMonth");
   const [dateSelected, setDateSelected] = useState<Moment | null>(null);
-  const [showUpcomingChangeDetails, setShowUpcomingChangeDetails] = useState<
-    "income" | "expense" | null
-  >(null);
+  const [showPaymentsDetails, setShowPaymentsDetails] =
+    useState<PaymentType | null>(null);
 
   const { data: recurringPayments } = useRecurringPaymentsClient();
   const { data: paymentsHistory } = useRecurringPaymentsHistoryClient();
 
-  const specificDate =
-    mode === "endOfMonth" ? moment().endOf("month") : dateSelected;
+  const targetDate = useMemo(() => {
+    return mode === "endOfMonth"
+      ? moment().endOf("month")
+      : dateSelected || moment();
+  }, [mode, dateSelected]);
 
   const paymentsTillDate = useMemo(
     () =>
       populateRecurringPayments(
-        specificDate || moment().endOf("month"),
+        targetDate,
         recurringPayments || [],
         paymentsHistory || []
       ),
-    [specificDate, recurringPayments, paymentsHistory]
+    [targetDate, recurringPayments, paymentsHistory]
   );
 
   //Calculate income and expense from populated payments
@@ -59,15 +63,21 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
   );
 
   const handleToggleDetails = (type: "income" | "expense" | null) => {
-    if (showUpcomingChangeDetails === type) {
-      setShowUpcomingChangeDetails(null);
+    if (showPaymentsDetails === type) {
+      setShowPaymentsDetails(null);
     } else {
-      setShowUpcomingChangeDetails(type);
+      setShowPaymentsDetails(type);
     }
   };
 
   return (
-    <div className={styles.futureBalance}>
+    <motion.div
+      className={styles.futureBalance}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.15 }}
+    >
       <SelectMode
         mode={mode}
         selectMode={setMode}
@@ -77,15 +87,15 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
 
       <PaymentsSummary
         paymentsTillDate={paymentsTillDate}
-        type={showUpcomingChangeDetails}
+        type={showPaymentsDetails}
         toggleDetails={handleToggleDetails}
       />
 
       <AnimatePresence>
-        {showUpcomingChangeDetails && (
+        {showPaymentsDetails && (
           <Modal onClose={() => handleToggleDetails(null)}>
             <PopulatedRecurringPaymentsList
-              type={showUpcomingChangeDetails}
+              type={showPaymentsDetails}
               toggleDetails={handleToggleDetails}
               paymentsTillDate={paymentsTillDate}
             />
@@ -97,7 +107,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
         <h3>Balance after payments</h3>
         <h2 className={styles.value}>£{futureBalance.toFixed(2)}</h2>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
