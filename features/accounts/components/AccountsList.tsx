@@ -6,8 +6,10 @@ import useEmblaCarousel from "embla-carousel-react";
 import styles from "./AccountsList.module.scss";
 import { EmblaCarouselType } from "embla-carousel";
 //Icons
-import { FaArrowRight } from "react-icons/fa";
-import { FaArrowLeft } from "react-icons/fa";
+import { IoIosArrowForward } from "react-icons/io";
+
+import { IoIosArrowBack } from "react-icons/io";
+
 //Utils
 import { generateAccountBackground } from "../utils/generateAccountBackground";
 //Types
@@ -71,35 +73,38 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts }) => {
               background: generateAccountBackground(account.subtype ?? ""),
             }}
           >
-            <div className={styles.details}>
-              <h4>{account.official_name}</h4>
-              <p className={styles.type}>{account.subtype}</p>
-              <p>**** **** **** {account.mask}</p>
+            <div className={styles.innerWrapper}>
+              <div className={styles.details}>
+                <h4>{account.official_name}</h4>
+                <p className={styles.type}>{account.subtype}</p>
+                <p>**** **** **** {account.mask}</p>
+              </div>
+              <p className={styles.balance}>
+                <span>Balance</span>
+                <span>£{account.balances.current}</span>
+              </p>
             </div>
-            <p className={styles.balance}>
-              <span>Current balance</span>
-              <span>£{account.balances.current}</span>
-            </p>
+
             <div className={styles.shape}></div>
           </div>
         ))}
       </div>
       <div
-        className={`${styles.buttons} 
-    ${!prevBtnDisabled ? `${styles.blur} ${styles.left}` : ""} 
+        className={`${styles.buttons}
+    ${!prevBtnDisabled ? `${styles.blur} ${styles.left}` : ""}
     ${!nextBtnDisabled ? `${styles.blur} ${styles.right}` : ""}`}
       >
         <button
           className={`${prevBtnDisabled ? styles.disabled : ""} ${styles.button}`}
           onClick={scrollPrev}
         >
-          <FaArrowLeft />
+          <IoIosArrowBack />
         </button>
         <button
           className={`${nextBtnDisabled ? styles.disabled : ""} ${styles.button}`}
           onClick={scrollNext}
         >
-          <FaArrowRight />
+          <IoIosArrowForward />
         </button>
       </div>
     </div>

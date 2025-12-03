@@ -14,6 +14,7 @@ const AccountsPanel: React.FC = () => {
 
   return (
     <>
+      <h3>Accounts</h3>
       <AccountsList accounts={accounts || []} />
     </>
   );
