@@ -17,8 +17,11 @@ const AccountsPanel: React.FC = () => {
 
   return (
     <>
-      <h3>Accounts</h3>
-      <AccountsListButtons emblaApi={emblaApi || null} />
+      <div className="flex-row-space-between">
+        <h3>Accounts</h3>
+        <AccountsListButtons emblaApi={emblaApi || null} />
+      </div>
+
       <AccountsList accounts={accounts || []} emblaRef={emblaRef} />
     </>
   );

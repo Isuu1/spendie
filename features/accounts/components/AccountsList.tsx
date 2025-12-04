@@ -50,7 +50,6 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts, emblaRef }) => {
                 <p>**** **** **** {account.mask}</p>
               </div>
               <p className={styles.balance}>
-                <span>Balance</span>
                 <span>£{account.balances.current}</span>
               </p>
             </div>
