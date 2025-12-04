@@ -4,9 +4,12 @@ import AccountsList from "./AccountsList";
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 //Hooks
 import { useAccountsClient } from "../hooks/useAccountsClient";
+import AccountsListButtons from "./AccountsListButtons";
+import useEmblaCarousel from "embla-carousel-react";
 
 const AccountsPanel: React.FC = () => {
   const { data: accounts, isLoading } = useAccountsClient();
+  const [emblaRef, emblaApi] = useEmblaCarousel();
 
   if (isLoading) {
     return <DashboardPanelLoader height={215} />;
@@ -15,7 +18,8 @@ const AccountsPanel: React.FC = () => {
   return (
     <>
       <h3>Accounts</h3>
-      <AccountsList accounts={accounts || []} />
+      <AccountsListButtons emblaApi={emblaApi || null} />
+      <AccountsList accounts={accounts || []} emblaRef={emblaRef} />
     </>
   );
 };
