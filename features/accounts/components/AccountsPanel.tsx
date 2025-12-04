@@ -2,9 +2,9 @@ import React from "react";
 //Components
 import AccountsList from "./AccountsList";
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
+import AccountsListButtons from "./AccountsListButtons";
 //Hooks
 import { useAccountsClient } from "../hooks/useAccountsClient";
-import AccountsListButtons from "./AccountsListButtons";
 import useEmblaCarousel from "embla-carousel-react";
 
 const AccountsPanel: React.FC = () => {

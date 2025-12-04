@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 //Styles
 import styles from "./AccountsList.module.scss";
