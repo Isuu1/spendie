@@ -4,8 +4,10 @@ import styles from "./AccountsListButtons.module.scss";
 //Types
 import { EmblaCarouselType } from "embla-carousel";
 //Icons
-import { IoIosArrowForward } from "react-icons/io";
-import { IoIosArrowBack } from "react-icons/io";
+// import { IoIosArrowForward } from "react-icons/io";
+// import { IoIosArrowBack } from "react-icons/io";
+import { TbArrowBigRightLinesFilled } from "react-icons/tb";
+import { TbArrowBigLeftLinesFilled } from "react-icons/tb";
 
 interface AccountsListButtonsProps {
   emblaApi: EmblaCarouselType | null;
@@ -36,22 +38,18 @@ const AccountsListButtons = ({ emblaApi }: AccountsListButtonsProps) => {
   }, [emblaApi]);
 
   return (
-    <div
-      className={`${styles.buttons}
-        ${!prevBtnDisabled ? `${styles.left}` : ""}
-        ${!nextBtnDisabled ? `${styles.right}` : ""}`}
-    >
+    <div className={styles.buttons}>
       <button
         className={`${styles.button} ${prevBtnDisabled ? styles.disabled : ""}`}
         onClick={scrollPrev}
       >
-        <IoIosArrowBack />
+        <TbArrowBigLeftLinesFilled />
       </button>
       <button
         className={`${nextBtnDisabled ? styles.disabled : ""} ${styles.button}`}
         onClick={scrollNext}
       >
-        <IoIosArrowForward />
+        <TbArrowBigRightLinesFilled />
       </button>
     </div>
   );
