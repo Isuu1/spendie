@@ -7,15 +7,15 @@
     gap: 0.8rem;
     touch-action: pan-y pinch-zoom;
     .account {
+      z-index: 1;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
       flex: 0 0 70%;
       overflow: hidden;
-      top: 0;
-      left: 0;
       width: 100%;
-      z-index: 1;
       border-radius: var(--border-radius-m);
-      overflow: hidden;
       padding: 1.3rem;
       user-select: none;
       .icon {
@@ -27,21 +27,18 @@
           width: 30px;
         }
       }
+      .name {
+        margin-bottom: 1.3rem;
+      }
       .details {
         z-index: 1;
         position: relative;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.7rem;
+        gap: 0.3rem;
         border-radius: 10px;
-        font-size: 0.9rem;
-        p {
-          font-size: 0.8rem;
-        }
-        .name {
-          margin-bottom: 1rem;
-        }
+        font-size: 0.8rem;
         .type {
           text-transform: capitalize;
           color: #a3a3a3;
@@ -54,12 +51,6 @@
         align-items: center;
         justify-content: space-between;
         font-weight: 600;
-        margin-top: 0.5rem;
-        span {
-          &:last-child {
-            font-size: 1.2rem;
-          }
-        }
       }
     }
     .shape {

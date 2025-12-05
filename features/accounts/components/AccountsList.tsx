@@ -48,14 +48,13 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts, emblaRef }) => {
             <i className={styles.icon}>
               <BsCreditCard2FrontFill />
             </i>
+            <h4 className={styles.name}>{account.official_name}</h4>
             <div className={styles.details}>
-              <h4 className={styles.name}>{account.official_name}</h4>
               <p className={styles.type}>{account.subtype}</p>
               <p>**** **** **** {account.mask}</p>
             </div>
-            <p className={styles.balance}>
-              <span>£{account.balances.current}</span>
-            </p>
+
+            <h3 className={styles.balance}>£{account.balances.current}</h3>
 
             <div className={styles.shape}></div>
           </div>
