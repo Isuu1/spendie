@@ -10,7 +10,10 @@ import Link from "next/link";
 
 const AccountsPanel: React.FC = () => {
   const { data: accounts, isLoading } = useAccountsClient();
-  const [emblaRef, emblaApi] = useEmblaCarousel();
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    dragFree: true,
+    containScroll: "trimSnaps",
+  });
 
   if (isLoading) {
     return <DashboardPanelLoader height={215} />;

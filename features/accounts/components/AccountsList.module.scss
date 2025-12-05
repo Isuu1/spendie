@@ -16,8 +16,8 @@
       z-index: 1;
       border-radius: var(--border-radius-m);
       overflow: hidden;
-      box-shadow: var(--box-shadow-default);
       padding: 1.3rem;
+      user-select: none;
       .icon {
         position: absolute;
         bottom: 1rem;
