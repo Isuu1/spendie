@@ -7,25 +7,32 @@ import AccountsListButtons from "./AccountsListButtons";
 import { useAccountsClient } from "../hooks/useAccountsClient";
 import useEmblaCarousel from "embla-carousel-react";
 import Link from "next/link";
+//Styles
+import styles from "./AccountsPanel.module.scss";
 
 const AccountsPanel: React.FC = () => {
   const { data: accounts, isLoading } = useAccountsClient();
-  const [emblaRef, emblaApi] = useEmblaCarousel();
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    dragFree: true,
+    containScroll: "trimSnaps",
+  });
 
   if (isLoading) {
     return <DashboardPanelLoader height={215} />;
   }
 
   return (
-    <>
-      <div className="flex-row-space-between">
+    <div className={styles.accountsPanel}>
+      <div className={styles.header}>
         <h3>Accounts</h3>
         <AccountsListButtons emblaApi={emblaApi || null} />
       </div>
 
       <AccountsList accounts={accounts || []} emblaRef={emblaRef} />
-      <Link href="/user/accounts">Manage accounts</Link>
-    </>
+      <Link className={styles.manageAccounts} href="/user/accounts">
+        Manage accounts
+      </Link>
+    </div>
   );
 };
 
