@@ -6,6 +6,7 @@ import AccountsListButtons from "./AccountsListButtons";
 //Hooks
 import { useAccountsClient } from "../hooks/useAccountsClient";
 import useEmblaCarousel from "embla-carousel-react";
+import Link from "next/link";
 
 const AccountsPanel: React.FC = () => {
   const { data: accounts, isLoading } = useAccountsClient();
@@ -23,6 +24,7 @@ const AccountsPanel: React.FC = () => {
       </div>
 
       <AccountsList accounts={accounts || []} emblaRef={emblaRef} />
+      <Link href="/user/accounts">Manage accounts</Link>
     </>
   );
 };

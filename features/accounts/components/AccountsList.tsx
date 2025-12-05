@@ -12,8 +12,6 @@ import { useUserClient } from "@/features/user/hooks/useUserClient";
 //Components
 import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 //Icons
-// import { FaCcVisa } from "react-icons/fa6";
-// import { SiMastercard } from "react-icons/si";
 import { BsCreditCard2FrontFill } from "react-icons/bs";
 
 interface AccountsListProps {
