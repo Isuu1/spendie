@@ -1,0 +1,23 @@
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0;
+  .button {
+    cursor: pointer;
+    z-index: 10;
+    position: relative;
+    background: transparent;
+    border: 0;
+    font-size: 1.2rem;
+    border-radius: 50%;
+    svg {
+      display: block;
+      color: var(--color-text-primary);
+    }
+  }
+  .disabled {
+    opacity: 0;
+  }
+}
