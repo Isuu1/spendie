@@ -86,7 +86,7 @@ export default async function Layout({
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <div>
+    <div style={{ height: "100vh" }}>
       <QueryProvider state={dehydratedState}>
         <div id="confirm-action-root"></div>
         <div id="modal-root"></div>
