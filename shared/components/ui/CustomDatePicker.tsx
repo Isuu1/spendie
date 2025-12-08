@@ -49,21 +49,23 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
       animate="visible"
       exit="exit"
     >
-      <DatePicker
-        selected={value ? new Date(value) : null}
-        onChange={(date) => {
-          if (date) {
-            onChange?.(date.toISOString());
-          }
-        }}
-        inline
-        calendarClassName={styles.datePicker}
-        minDate={moment().toDate()}
-        onSelect={() => {
-          onClose?.();
-        }}
-        formatWeekDay={(nameOfDay) => moment(nameOfDay, "dd").format("ddd")}
-      />
+      <div className={styles.datePicker}>
+        <DatePicker
+          selected={value ? new Date(value) : null}
+          onChange={(date) => {
+            if (date) {
+              onChange?.(date.toISOString());
+            }
+          }}
+          inline
+          //calendarClassName={styles.datePicker}
+          minDate={moment().toDate()}
+          onSelect={() => {
+            onClose?.();
+          }}
+          formatWeekDay={(nameOfDay) => moment(nameOfDay, "dd").format("ddd")}
+        />
+      </div>
     </motion.div>
   );
 };
