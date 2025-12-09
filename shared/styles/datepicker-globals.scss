@@ -41,8 +41,9 @@
     color: var(--color-text-primary);
     border-radius: var(--border-radius-s);
     margin: 0.4rem 0.5rem;
+    transition: background 0.2s ease-in-out;
     &:hover {
-      background: var(--color-action-active-hover);
+      background: var(--color-action-active-hover) !important;
     }
     &--keyboard-selected {
       //background: var(--color-action-active);
@@ -61,6 +62,7 @@
       }
     }
     &--disabled {
+      cursor: not-allowed !important;
       opacity: 0.3;
       pointer-events: none;
       &:hover {
