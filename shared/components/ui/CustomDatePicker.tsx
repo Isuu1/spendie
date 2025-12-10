@@ -39,6 +39,11 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
 
   console.log("Rendering CustomDatePicker with value:", value);
 
+  const YEARS = Array.from(
+    { length: 10 },
+    (_, i) => new Date().getFullYear() + i
+  );
+
   return (
     <motion.div
       ref={datePickerRef}
@@ -64,6 +69,59 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
             onClose?.();
           }}
           formatWeekDay={(nameOfDay) => moment(nameOfDay, "dd").format("ddd")}
+          renderCustomHeader={({
+            date,
+            changeYear,
+            changeMonth,
+            decreaseMonth,
+            increaseMonth,
+            prevMonthButtonDisabled,
+            nextMonthButtonDisabled,
+          }) => (
+            <div className={styles.header}>
+              {/* Month navigation */}
+              <button
+                onClick={decreaseMonth}
+                disabled={prevMonthButtonDisabled}
+                className={styles.navBtn}
+              >
+                ‹
+              </button>
+
+              {/* Month + Year */}
+              <div className={styles.selects}>
+                <select
+                  value={moment(date).month()}
+                  onChange={(e) => changeMonth(Number(e.target.value))}
+                >
+                  {moment.months().map((month, i) => (
+                    <option key={month} value={i}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={moment(date).year()}
+                  onChange={(e) => changeYear(Number(e.target.value))}
+                >
+                  {YEARS.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <button
+                onClick={increaseMonth}
+                disabled={nextMonthButtonDisabled}
+                className={styles.navBtn}
+              >
+                ›
+              </button>
+            </div>
+          )}
         />
       </div>
     </motion.div>
