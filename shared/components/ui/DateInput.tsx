@@ -6,7 +6,7 @@ import InputError from "../InputError";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
 //Components
-import CustomDatePicker from "./CustomDatePicker";
+import CustomDatePicker from "../CustomDatepicker/CustomDatepicker";
 //Icons
 import { TbArrowBigDownLineFilled } from "react-icons/tb";
 

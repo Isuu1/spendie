@@ -3,7 +3,7 @@ import moment from "moment";
 //Animations
 import { motion } from "motion/react";
 //Styles
-import styles from "./CustomDatePicker.module.scss";
+import styles from "./CustomDatepicker.module.scss";
 //DatePicker
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

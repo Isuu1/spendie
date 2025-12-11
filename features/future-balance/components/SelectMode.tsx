@@ -3,7 +3,7 @@ import React, { useMemo, useState } from "react";
 //Styles
 import styles from "./SelectMode.module.scss";
 //Components
-import CustomDatePicker from "@/shared/components/ui/CustomDatePicker";
+import CustomDatePicker from "@/shared/components/CustomDatepicker/CustomDatepicker";
 import SelectInput from "@/shared/components/ui/SelectInput";
 import Button from "@/shared/components/ui/Button";
 //Icons

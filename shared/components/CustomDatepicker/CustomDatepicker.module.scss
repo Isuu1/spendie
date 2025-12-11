@@ -1,0 +1,11 @@
+.datePickerWrapper {
+  z-index: 99;
+  position: absolute;
+  top: 50px;
+  border-radius: var(--border-radius-l);
+  box-shadow: var(--box-shadow-default);
+  background: var(--color-bg-tile);
+  overflow: hidden;
+  transform-origin: top center;
+  padding: 0.7rem;
+}
