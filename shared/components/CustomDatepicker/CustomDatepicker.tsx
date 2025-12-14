@@ -8,6 +8,7 @@ import styles from "./CustomDatepicker.module.scss";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
+import CustomDatepickerHeader from "./CustomDatepickerHeader";
 
 interface CustomDatePickerProps {
   onChange?: (option: string) => void;
@@ -63,7 +64,6 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
             }
           }}
           inline
-          //calendarClassName={styles.datePicker}
           minDate={moment().toDate()}
           onSelect={() => {
             onClose?.();
@@ -78,49 +78,16 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
             prevMonthButtonDisabled,
             nextMonthButtonDisabled,
           }) => (
-            <div className={styles.header}>
-              {/* Month navigation */}
-              <button
-                onClick={decreaseMonth}
-                disabled={prevMonthButtonDisabled}
-                className={styles.navBtn}
-              >
-                ‹
-              </button>
-
-              {/* Month + Year */}
-              <div className={styles.selects}>
-                <select
-                  value={moment(date).month()}
-                  onChange={(e) => changeMonth(Number(e.target.value))}
-                >
-                  {moment.months().map((month, i) => (
-                    <option key={month} value={i}>
-                      {month}
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  value={moment(date).year()}
-                  onChange={(e) => changeYear(Number(e.target.value))}
-                >
-                  {YEARS.map((year) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <button
-                onClick={increaseMonth}
-                disabled={nextMonthButtonDisabled}
-                className={styles.navBtn}
-              >
-                ›
-              </button>
-            </div>
+            <CustomDatepickerHeader
+              date={date}
+              changeYear={changeYear}
+              changeMonth={changeMonth}
+              decreaseMonth={decreaseMonth}
+              increaseMonth={increaseMonth}
+              prevMonthButtonDisabled={prevMonthButtonDisabled}
+              nextMonthButtonDisabled={nextMonthButtonDisabled}
+              YEARS={YEARS}
+            />
           )}
         />
       </div>
