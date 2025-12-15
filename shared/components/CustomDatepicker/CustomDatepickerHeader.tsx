@@ -1,6 +1,10 @@
 //Styles
 import styles from "./CustomDatepickerHeader.module.scss";
 import moment from "moment";
+//Icons
+import { TbArrowBigRightLinesFilled } from "react-icons/tb";
+import { TbArrowBigLeftLinesFilled } from "react-icons/tb";
+import SelectInput from "../ui/SelectInput";
 
 interface CustomDatepickerHeaderProps {
   date: Date;
@@ -23,6 +27,7 @@ const CustomDatepickerHeader = ({
   nextMonthButtonDisabled,
   YEARS,
 }: CustomDatepickerHeaderProps) => {
+  console.log("date in header:", moment(date).format("MMMM"));
   return (
     <div className={styles.header}>
       {/* Month navigation */}
@@ -31,21 +36,16 @@ const CustomDatepickerHeader = ({
         disabled={prevMonthButtonDisabled}
         className={styles.navBtn}
       >
-        ‹
+        <TbArrowBigLeftLinesFilled />
       </button>
 
-      {/* Month + Year */}
       <div className={styles.selects}>
-        <select
-          value={moment(date).month()}
-          onChange={(e) => changeMonth(Number(e.target.value))}
-        >
-          {moment.months().map((month, i) => (
-            <option key={month} value={i}>
-              {month}
-            </option>
-          ))}
-        </select>
+        <SelectInput
+          id="select"
+          selectOptions={moment.months()}
+          value={moment(date).format("MMMM")}
+          onChange={(value) => changeMonth(Number(value))}
+        />
 
         <select
           value={moment(date).year()}
@@ -64,7 +64,7 @@ const CustomDatepickerHeader = ({
         disabled={nextMonthButtonDisabled}
         className={styles.navBtn}
       >
-        ›
+        <TbArrowBigRightLinesFilled />
       </button>
     </div>
   );
