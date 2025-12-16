@@ -28,7 +28,6 @@ const CustomDatepickerHeader = ({
   nextMonthButtonDisabled,
   YEARS,
 }: CustomDatepickerHeaderProps) => {
-  console.log("date in header:", moment(date).format("MMMM"));
   return (
     <div className={styles.header}>
       <button
