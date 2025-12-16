@@ -6,6 +6,7 @@ import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 import { TbArrowBigLeftLinesFilled } from "react-icons/tb";
 //Components
 import SelectInput from "../ui/SelectInput";
+//import { useState } from "react";
 
 interface CustomDatepickerHeaderProps {
   date: Date;
@@ -28,6 +29,8 @@ const CustomDatepickerHeader = ({
   nextMonthButtonDisabled,
   YEARS,
 }: CustomDatepickerHeaderProps) => {
+  //const [yearPageOffset, setYearPageOffset] = useState(0);
+
   return (
     <div className={styles.header}>
       <button
