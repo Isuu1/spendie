@@ -30,13 +30,6 @@ const Select: React.FC<SelectProps> = ({
     dateSelected ? dateSelected.format("DD MMM YYYY") : "Specific date",
   ];
 
-  console.log(
-    "Rendering SelectMode with mode:",
-    mode,
-    "and dateSelected:",
-    dateSelected
-  );
-
   const handleSelect = (value: string) => {
     if (value === "End of the month") {
       selectMode("endOfMonth");
