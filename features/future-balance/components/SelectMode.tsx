@@ -8,6 +8,7 @@ import SelectInput from "@/shared/components/ui/SelectInput";
 import Button from "@/shared/components/ui/Button";
 //Icons
 import { MdEditDocument } from "react-icons/md";
+import { AnimatePresence } from "motion/react";
 
 interface SelectProps {
   mode: "endOfMonth" | "specificDate";
@@ -72,17 +73,19 @@ const Select: React.FC<SelectProps> = ({
           onClick={() => setOpenDatePicker(true)}
         />
       )}
-      {openDatePicker && (
-        <CustomDatePicker
-          value={dateSelected ? dateSelected.toISOString() : null}
-          onChange={(val) => {
-            onDateSelect(val ? moment(val) : null);
-          }}
-          onClose={() => setOpenDatePicker(false)}
-          top={50}
-          right={0}
-        />
-      )}
+      <AnimatePresence>
+        {openDatePicker && (
+          <CustomDatePicker
+            value={dateSelected ? dateSelected.toISOString() : null}
+            onChange={(val) => {
+              onDateSelect(val ? moment(val) : null);
+            }}
+            onClose={() => setOpenDatePicker(false)}
+            top={50}
+            right={0}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
