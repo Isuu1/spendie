@@ -1,6 +1,12 @@
+import moment from "moment";
 //Styles
 import styles from "./CustomDatepickerHeader.module.scss";
-import moment from "moment";
+//Icons
+import { TbArrowBigRightLinesFilled } from "react-icons/tb";
+import { TbArrowBigLeftLinesFilled } from "react-icons/tb";
+//Components
+import SelectInput from "../ui/SelectInput";
+//import { useState } from "react";
 
 interface CustomDatepickerHeaderProps {
   date: Date;
@@ -23,40 +29,33 @@ const CustomDatepickerHeader = ({
   nextMonthButtonDisabled,
   YEARS,
 }: CustomDatepickerHeaderProps) => {
+  //const [yearPageOffset, setYearPageOffset] = useState(0);
+
   return (
     <div className={styles.header}>
-      {/* Month navigation */}
       <button
         onClick={decreaseMonth}
         disabled={prevMonthButtonDisabled}
         className={styles.navBtn}
       >
-        ‹
+        <TbArrowBigLeftLinesFilled />
       </button>
 
-      {/* Month + Year */}
       <div className={styles.selects}>
-        <select
-          value={moment(date).month()}
-          onChange={(e) => changeMonth(Number(e.target.value))}
-        >
-          {moment.months().map((month, i) => (
-            <option key={month} value={i}>
-              {month}
-            </option>
-          ))}
-        </select>
-
-        <select
-          value={moment(date).year()}
-          onChange={(e) => changeYear(Number(e.target.value))}
-        >
-          {YEARS.map((year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
+        <SelectInput
+          id="select"
+          selectOptions={moment.months()}
+          value={moment(date).format("MMMM")}
+          onChange={(value) =>
+            changeMonth(moment.months().indexOf(value.toString()))
+          }
+        />
+        <SelectInput
+          id="year-select"
+          selectOptions={YEARS.map((year) => year.toString())}
+          value={moment(date).year().toString()}
+          onChange={(value) => changeYear(Number(value))}
+        />
       </div>
 
       <button
@@ -64,7 +63,7 @@ const CustomDatepickerHeader = ({
         disabled={nextMonthButtonDisabled}
         className={styles.navBtn}
       >
-        ›
+        <TbArrowBigRightLinesFilled />
       </button>
     </div>
   );

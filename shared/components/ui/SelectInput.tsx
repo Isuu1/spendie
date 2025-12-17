@@ -36,6 +36,14 @@ const SelectInput: React.FC<SelectInputProps> = ({
 
   const selectRef = useRef<HTMLDivElement>(null);
 
+  const getColumnCount = (length: number) => {
+    if (length > 14) return 3;
+    if (length > 7) return 2;
+    return 1;
+  };
+
+  const columns = getColumnCount(selectOptions?.length || 0);
+
   const handleOptionClick = (option: string) => {
     onChange?.(option);
     setShowOptions(false);
@@ -82,6 +90,9 @@ const SelectInput: React.FC<SelectInputProps> = ({
                 initial="hidden"
                 animate="visible"
                 exit="exit"
+                style={{
+                  gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+                }}
               >
                 {selectOptions?.map((option, index) => (
                   <li

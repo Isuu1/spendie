@@ -19,6 +19,7 @@ interface PopUpProps {
   bottom?: number;
   left?: number;
   popupRef?: React.RefObject<HTMLDivElement | null>;
+  inheritBackground?: boolean;
 }
 
 const PopUp = ({
@@ -28,6 +29,7 @@ const PopUp = ({
   bottom,
   left,
   popupRef,
+  inheritBackground = false,
 }: PopUpProps) => {
   return (
     <motion.div
@@ -35,7 +37,9 @@ const PopUp = ({
       initial="hidden"
       animate="visible"
       exit="exit"
-      className={clsx(styles.popUp)}
+      className={clsx(styles.popUp, {
+        [styles.inheritBackground]: inheritBackground,
+      })}
       style={{ top: top, right: right, bottom: bottom, left: left }}
       ref={popupRef}
     >

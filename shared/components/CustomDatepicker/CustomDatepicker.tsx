@@ -1,14 +1,17 @@
+"use client";
+
 import React, { useRef } from "react";
 import moment from "moment";
-//Animations
-import { motion } from "motion/react";
 //Styles
 import styles from "./CustomDatepicker.module.scss";
 //DatePicker
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+//Hooks
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
+//Components
 import CustomDatepickerHeader from "./CustomDatepickerHeader";
+import PopUp from "../PopUp";
 
 interface CustomDatePickerProps {
   onChange?: (option: string) => void;
@@ -18,13 +21,6 @@ interface CustomDatePickerProps {
   left?: number;
   right?: number;
 }
-
-const datePickerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-  transition: { duration: 0.1 },
-};
 
 const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   onChange,
@@ -38,23 +34,13 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
 
   useClickOutside(datePickerRef, () => onClose?.());
 
-  console.log("Rendering CustomDatePicker with value:", value);
-
   const YEARS = Array.from(
     { length: 10 },
     (_, i) => new Date().getFullYear() + i
   );
 
   return (
-    <motion.div
-      ref={datePickerRef}
-      className={styles.datePickerWrapper}
-      style={{ top: top, left: left, right: right }}
-      variants={datePickerVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-    >
+    <PopUp popupRef={datePickerRef} top={top} left={left} right={right}>
       <div className={styles.datePicker}>
         <DatePicker
           selected={value ? new Date(value) : null}
@@ -91,7 +77,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
           )}
         />
       </div>
-    </motion.div>
+    </PopUp>
   );
 };
 
