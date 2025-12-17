@@ -2,7 +2,7 @@
   z-index: 10;
   position: absolute;
   top: 80px;
-  background: inherit;
+  background: var(--color-bg-tile);
   padding: 1rem;
   list-style: none;
   display: flex;
@@ -13,4 +13,8 @@
   font-size: 0.9rem;
   color: var(--color-text-primary);
   box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.inheritBackground {
+  background: inherit;
 }
