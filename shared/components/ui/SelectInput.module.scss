@@ -30,14 +30,14 @@
     padding: 0.5rem;
     display: grid;
     cursor: pointer;
-    border-radius: var(--border-radius-l);
+    border-radius: var(--border-radius-m);
     box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
     width: max-content;
     .option {
       padding: 0.5rem;
       border-radius: var(--border-radius-m);
       display: flex;
-      gap: 0.6rem;
+      gap: 0.3rem;
       align-items: center;
       justify-content: space-between;
       transition: 0.2s all ease;
@@ -48,7 +48,7 @@
       }
     }
     .activeIcon {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
   }
 }
