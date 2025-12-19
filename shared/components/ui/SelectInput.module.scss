@@ -18,38 +18,21 @@
     transform: rotate(180deg);
   }
   .selectOptions {
-    //transform-origin: top;
-    // z-index: 6;
-    // position: absolute;
-    // top: 45px;
-    // left: 0;
-    // right: 0;
-    //background: var(--color-input-bg);
-    font-size: var(--input-font-size);
+    font-size: calc(var(--input-font-size) + 0.05rem);
     list-style: none;
-    //padding: 0.5rem;
     display: grid;
-    gap: 0.5rem;
-    //border-radius: var(--border-radius-m);
-    //box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
+    gap: 0.8rem;
     width: max-content;
+    padding: 0.2rem;
     .optionsHeader {
       grid-column: 1 / -1;
       border-bottom: 1px solid var(--border-muted);
     }
     .option {
       cursor: pointer;
-      padding: 0.3rem;
-      border-radius: var(--border-radius-m);
-      display: flex;
-      //gap: 0.3rem;
-      align-items: center;
-      justify-content: space-between;
-      transition: 0.2s all ease;
+      transition: 0.2s color ease;
       white-space: nowrap;
       &:hover {
-        // background: var(--color-action-active);
-        // color: var(--color-text-on-accent);
         color: var(--color-action-active);
       }
       &.active {
