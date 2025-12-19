@@ -34,11 +34,6 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
 
   useClickOutside(datePickerRef, () => onClose?.());
 
-  const YEARS = Array.from(
-    { length: 10 },
-    (_, i) => new Date().getFullYear() + i
-  );
-
   return (
     <PopUp popupRef={datePickerRef} top={top} left={left} right={right}>
       <div className={styles.datePicker}>
@@ -72,7 +67,6 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
               increaseMonth={increaseMonth}
               prevMonthButtonDisabled={prevMonthButtonDisabled}
               nextMonthButtonDisabled={nextMonthButtonDisabled}
-              YEARS={YEARS}
             />
           )}
         />

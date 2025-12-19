@@ -6,28 +6,24 @@ import { AnimatePresence, motion } from "motion/react";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
 //Icons
 import { TbArrowBigDownLineFilled } from "react-icons/tb";
-import { TiTick } from "react-icons/ti";
+//Components
+import PopUp from "../PopUp";
 
 interface SelectInputProps {
   id: string;
   label?: string;
   value?: string;
   selectOptions?: readonly string[];
+  optionsHeader?: React.ReactNode;
   onChange?: (option: string) => void;
   icon?: React.ReactNode;
 }
-
-const selectModeOptionsVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-  transition: { duration: 0.15 },
-};
 
 const SelectInput: React.FC<SelectInputProps> = ({
   id,
   label,
   selectOptions,
+  optionsHeader,
   value,
   onChange,
   icon,
@@ -72,7 +68,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
           <span
             className={`${styles.inputField} ${styles.selectInputField} ${icon ? styles.withIcon : ""}`}
             onClick={() => setShowOptions(!showOptions)}
-            ref={selectRef}
+            // ref={selectRef}
           >
             {icon && <i className={styles.icon}>{icon}</i>}
             {value || selectOptions?.[0]}
@@ -82,36 +78,34 @@ const SelectInput: React.FC<SelectInputProps> = ({
               <TbArrowBigDownLineFilled />
             </motion.i>
           </span>
-          <AnimatePresence>
-            {showOptions && (
-              <motion.ul
-                className={styles.selectOptions}
-                variants={selectModeOptionsVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                style={{
-                  gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-                }}
-              >
-                {selectOptions?.map((option, index) => (
-                  <li
-                    key={index}
-                    onClick={() => handleOptionClick(option)}
-                    className={`${styles.option} ${value === option ? styles.active : ""}`}
-                  >
-                    {option}
-                    {value === option && (
-                      <i className={styles.activeIcon}>
-                        <TiTick />
-                      </i>
-                    )}
-                  </li>
-                ))}
-              </motion.ul>
-            )}
-          </AnimatePresence>
         </div>
+        <AnimatePresence>
+          {showOptions && (
+            <PopUp popupRef={selectRef} top={40} right={0}>
+              <div ref={selectRef}>
+                <ul
+                  style={{
+                    gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+                  }}
+                  className={styles.selectOptions}
+                >
+                  {optionsHeader && (
+                    <li className={styles.optionsHeader}>{optionsHeader}</li>
+                  )}
+                  {selectOptions?.map((option, index) => (
+                    <li
+                      key={index}
+                      onClick={() => handleOptionClick(option)}
+                      className={`${styles.option} ${value === option ? styles.active : ""}`}
+                    >
+                      {option}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </PopUp>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

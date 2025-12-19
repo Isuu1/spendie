@@ -6,7 +6,7 @@ import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 import { TbArrowBigLeftLinesFilled } from "react-icons/tb";
 //Components
 import SelectInput from "../ui/SelectInput";
-//import { useState } from "react";
+import { useState } from "react";
 
 interface CustomDatepickerHeaderProps {
   date: Date;
@@ -16,7 +16,6 @@ interface CustomDatepickerHeaderProps {
   increaseMonth: () => void;
   prevMonthButtonDisabled: boolean;
   nextMonthButtonDisabled: boolean;
-  YEARS: number[];
 }
 
 const CustomDatepickerHeader = ({
@@ -27,9 +26,13 @@ const CustomDatepickerHeader = ({
   increaseMonth,
   prevMonthButtonDisabled,
   nextMonthButtonDisabled,
-  YEARS,
 }: CustomDatepickerHeaderProps) => {
-  //const [yearPageOffset, setYearPageOffset] = useState(0);
+  //Current page offset for years pagination
+  const [yearPageOffset, setYearPageOffset] = useState(0);
+
+  const baseYear = moment().year() + yearPageOffset * 10;
+
+  const years = Array.from({ length: 10 }, (_, i) => baseYear + i);
 
   return (
     <div className={styles.header}>
@@ -52,9 +55,22 @@ const CustomDatepickerHeader = ({
         />
         <SelectInput
           id="year-select"
-          selectOptions={YEARS.map((year) => year.toString())}
+          selectOptions={years.map((year) => year.toString())}
           value={moment(date).year().toString()}
           onChange={(value) => changeYear(Number(value))}
+          optionsHeader={
+            <div className={styles.yearHeader}>
+              <button onClick={() => setYearPageOffset(yearPageOffset - 1)}>
+                <TbArrowBigLeftLinesFilled className={styles.icon} />
+              </button>
+              <span>
+                {years[0]} – {years[years.length - 1]}
+              </span>
+              <button onClick={() => setYearPageOffset(yearPageOffset + 1)}>
+                <TbArrowBigRightLinesFilled className={styles.icon} />
+              </button>
+            </div>
+          }
         />
       </div>
 
