@@ -17,5 +17,15 @@
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    .yearHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
+      font-weight: bold;
+      .icon {
+        font-size: 1.2rem;
+      }
+    }
   }
 }
