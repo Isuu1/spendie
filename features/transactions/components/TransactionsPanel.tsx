@@ -23,6 +23,9 @@ const TransactionsPanel: React.FC = () => {
 
   return (
     <div className={styles.transactionsTile}>
+      <div className={styles.header}>
+        <h3>Transactions</h3>
+      </div>
       {transactions?.length === 0 && (
         <p className={styles.noTransactions}>No recent transactions found.</p>
       )}
@@ -48,7 +51,7 @@ const TransactionsPanel: React.FC = () => {
             <p className={styles.category}>
               {displayTransactionCategory(
                 transaction?.personal_finance_category?.primary ??
-                  "Uncategorized"
+                  "Uncategorized",
               )}
             </p>
           </div>
