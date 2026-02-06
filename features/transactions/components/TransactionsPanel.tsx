@@ -22,7 +22,7 @@ const TransactionsPanel: React.FC = () => {
   }
 
   return (
-    <div className={styles.transactionsTile}>
+    <div className={styles.transactionsPanel}>
       <div className={styles.header}>
         <h3>Transactions</h3>
       </div>
