@@ -31,9 +31,11 @@ const AccountsPanel: React.FC = () => {
       </div>
 
       <AccountsList accounts={accounts || []} emblaRef={emblaRef} />
-      <Link className={styles.manageAccounts} href="/user/accounts">
-        Manage accounts
-      </Link>
+      {accounts.length > 0 && (
+        <Link className={styles.manageAccounts} href="/user/accounts">
+          Manage accounts
+        </Link>
+      )}
     </div>
   );
 };
