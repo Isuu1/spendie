@@ -9,13 +9,12 @@ export default async function Page() {
   //No error handling needed here as it is handled in the grid component to show the most of the UI
 
   return (
-    <div className="page">
-      <h2>Recurring payments</h2>
+    <>
       <RecurringPaymentsGrid
         recurringPayments={recurringPayments || []}
         paymentsHistory={paymentsHistory || []}
         error={error || historyError}
       />
-    </div>
+    </>
   );
 }
