@@ -54,48 +54,5 @@
         }
       }
     }
-    .gridItem {
-      display: grid;
-      grid-template-columns: subgrid; //Use parent grid columns
-      grid-column: 1 / -1; //Span all columns
-      align-items: center;
-      padding: 1rem 0.7rem;
-      background: var(--color-bg-tile);
-      border-radius: 12px;
-      font-size: 1rem;
-      p {
-        font-size: 0.95rem;
-      }
-      .details {
-        display: flex;
-        flex-direction: column;
-        gap: 0.6rem;
-        .name {
-          font-weight: bold;
-          font-size: 1rem;
-        }
-        .date {
-          color: var(--color-text-secondary);
-        }
-      }
-      .frequency {
-        color: var(--color-text-secondary);
-        text-transform: capitalize;
-      }
-      .type {
-        display: flex;
-        align-items: center;
-        gap: 0.1rem;
-        font-weight: bold;
-      }
-      .income {
-        color: #41b300;
-        //background: #42b30059;
-      }
-      .expense {
-        color: #ff0000;
-        //background: #ff000059;
-      }
-    }
   }
 }

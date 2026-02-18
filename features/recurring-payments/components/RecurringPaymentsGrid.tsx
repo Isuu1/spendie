@@ -11,9 +11,8 @@ import { MdOutlineAddCard } from "react-icons/md";
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import SelectInput from "@/shared/components/ui/SelectInput";
-import RecurringPaymentMenu from "./RecurringPaymentMenu";
 import ErrorMessage from "@/shared/components/ErrorMessage";
-import PaymentStatus from "./PaymentStatus";
+import RecurringPaymentItem from "./RecurringPaymentItem";
 //Utils
 import { populateRecurringPayments } from "../lib/utils/populateRecurringPayments";
 //Hooks
@@ -40,10 +39,6 @@ const RecurringPaymentsGrid: React.FC = () => {
       ),
     [recurringPayments, recurringPaymentsHistory],
   );
-
-  const formatedDate = (dateStr: string) => {
-    return moment(dateStr).format("Do MMMM YYYY");
-  };
 
   return (
     <div className={styles.gridContainer}>
@@ -77,28 +72,11 @@ const RecurringPaymentsGrid: React.FC = () => {
           );
 
           return (
-            <div key={payment.id} className={styles.gridItem}>
-              <div className={styles.details}>
-                <p className={styles.name}>{payment.name}</p>
-
-                {populatedPayment && (
-                  <>
-                    <p className={styles.date}>
-                      Next payment:{" "}
-                      {formatedDate(populatedPayment.next_payment_date)}
-                    </p>
-                    <PaymentStatus payment={populatedPayment} />
-                  </>
-                )}
-              </div>
-              <p className={styles.frequency}>{payment.repeat}</p>
-              <div
-                className={`${styles.type} ${payment.type === "Income" ? styles.income : styles.expense}`}
-              >
-                <p>£{payment.amount}</p>
-              </div>
-              <RecurringPaymentMenu payment={payment} />
-            </div>
+            <RecurringPaymentItem
+              key={payment.id}
+              payment={payment}
+              populatedPayment={populatedPayment}
+            />
           );
         })}
       </div>
