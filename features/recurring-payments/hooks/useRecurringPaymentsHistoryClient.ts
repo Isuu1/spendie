@@ -6,14 +6,13 @@ import { RecurringPaymentHistory } from "../types/recurring-payment";
 export function useRecurringPaymentsHistoryClient() {
   const supabase = createClient();
   return useQuery({
-    queryKey: ["recurringPayments"],
+    queryKey: ["paymentsHistory"],
     queryFn: async () => {
       const { data: authUser, error: authError } =
         await supabase.auth.getUser();
 
       if (authError || !authUser?.user) {
-        console.error("Error fetching user:", authError);
-        return;
+        throw new Error("User not authenticated");
       }
 
       const { data, error: recurringPaymentsHistoryError } = await supabase
@@ -23,14 +22,10 @@ export function useRecurringPaymentsHistoryClient() {
         .order("paid_date", { ascending: true });
 
       if (recurringPaymentsHistoryError) {
-        console.error(
-          "Error fetching recurring payments:",
-          recurringPaymentsHistoryError
-        );
-        return;
+        throw new Error("Failed to fetch recurring payments history");
       }
 
-      return data as RecurringPaymentHistory[];
+      return (data ?? []) as RecurringPaymentHistory[];
     },
   });
 }

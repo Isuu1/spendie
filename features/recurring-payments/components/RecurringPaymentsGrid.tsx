@@ -8,10 +8,7 @@ import styles from "./RecurringPaymentsGrid.module.scss";
 //Icons
 import { MdOutlineAddCard } from "react-icons/md";
 //Types
-import {
-  RecurringPayment,
-  RecurringPaymentHistory,
-} from "@/features/recurring-payments/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import SelectInput from "@/shared/components/ui/SelectInput";
 import RecurringPaymentMenu from "./RecurringPaymentMenu";
@@ -19,18 +16,19 @@ import ErrorMessage from "@/shared/components/ErrorMessage";
 import PaymentStatus from "./PaymentStatus";
 //Utils
 import { populateRecurringPayments } from "../lib/utils/populateRecurringPayments";
+//Hooks
+import { useRecurringPaymentsClient } from "../hooks/useRecurringPaymentsClient";
+import { useRecurringPaymentsHistoryClient } from "../hooks/useRecurringPaymentsHistoryClient";
 
-interface RecurringPaymentsGridProps {
-  recurringPayments: RecurringPayment[];
-  paymentsHistory: RecurringPaymentHistory[];
-  error?: string | null;
-}
+const RecurringPaymentsGrid: React.FC = () => {
+  const { data: recurringPayments = [], error: recurringPaymentsError } =
+    useRecurringPaymentsClient();
 
-const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
-  recurringPayments,
-  paymentsHistory,
-  error,
-}) => {
+  const {
+    data: recurringPaymentsHistory = [],
+    error: recurringPaymentsHistoryError,
+  } = useRecurringPaymentsHistoryClient();
+
   const hasPayments = recurringPayments.length > 0;
 
   const populatedPayments = useMemo(
@@ -38,9 +36,9 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
       populateRecurringPayments(
         moment().endOf("year"),
         recurringPayments,
-        paymentsHistory
+        recurringPaymentsHistory,
       ),
-    [recurringPayments, paymentsHistory]
+    [recurringPayments, recurringPaymentsHistory],
   );
 
   const formatedDate = (dateStr: string) => {
@@ -75,7 +73,7 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
 
         {recurringPayments.map((payment: RecurringPayment) => {
           const populatedPayment = populatedPayments.find(
-            (p) => p.id === payment.id
+            (p) => p.id === payment.id,
           );
 
           return (
@@ -105,14 +103,21 @@ const RecurringPaymentsGrid: React.FC<RecurringPaymentsGridProps> = ({
         })}
       </div>
 
-      {error && (
+      {recurringPaymentsError && (
         <ErrorMessage
           variant="panel"
           message="Failed to load recurring payments."
         />
       )}
 
-      {!hasPayments && !error && (
+      {recurringPaymentsHistoryError && (
+        <ErrorMessage
+          variant="panel"
+          message="Failed to load recurring payments history."
+        />
+      )}
+
+      {!hasPayments && (
         <p className={styles.noPayments}>No recurring payments found.</p>
       )}
     </div>

@@ -12,8 +12,7 @@ export function useRecurringPaymentsClient() {
         await supabase.auth.getUser();
 
       if (authError || !authUser?.user) {
-        console.error("Error fetching user:", authError);
-        return;
+        throw new Error("User not authenticated");
       }
 
       const { data, error: recurringPaymentsError } = await supabase
@@ -23,14 +22,10 @@ export function useRecurringPaymentsClient() {
         .order("first_payment_date", { ascending: true });
 
       if (recurringPaymentsError) {
-        console.error(
-          "Error fetching recurring payments:",
-          recurringPaymentsError
-        );
-        return;
+        throw new Error("Failed to fetch recurring payments");
       }
 
-      return data as RecurringPayment[];
+      return (data ?? []) as RecurringPayment[];
     },
   });
 }
