@@ -63,7 +63,6 @@ const RecurringPaymentsGrid: React.FC = () => {
           <li>Details</li>
           <li>Frequency</li>
           <li>Amount</li>
-          <li>Actions</li>
         </ul>
 
         {recurringPayments.map((payment: RecurringPayment) => {
