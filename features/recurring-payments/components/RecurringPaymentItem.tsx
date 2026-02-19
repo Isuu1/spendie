@@ -1,13 +1,21 @@
+"use client";
+
 import React from "react";
+import moment from "moment";
 //Styles
 import styles from "./RecurringPaymentItem.module.scss";
+//Types
 import {
   PopulatedRecurringPayment,
   RecurringPayment,
 } from "../types/recurring-payment";
+//Components
 import PaymentStatus from "./PaymentStatus";
-import moment from "moment";
 import RecurringPaymentMenu from "./RecurringPaymentMenu";
+import Modal from "@/shared/components/Modal";
+import RecurringPaymentsHistory from "./RecurringPaymentsHistory";
+//Animations
+import { AnimatePresence } from "motion/react";
 
 interface RecurringPaymentItemProps {
   payment: RecurringPayment;
@@ -18,6 +26,8 @@ const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   payment,
   populatedPayment,
 }) => {
+  const [openHistory, setOpenHistory] = React.useState(false);
+
   const formatedDate = (dateStr: string) => {
     return moment(dateStr).format("Do MMMM YYYY");
   };
@@ -35,6 +45,13 @@ const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
             <PaymentStatus payment={populatedPayment} />
           </>
         )}
+
+        <p
+          className={styles.paymentHistory}
+          onClick={() => setOpenHistory(!openHistory)}
+        >
+          View history
+        </p>
       </div>
       <p className={styles.frequency}>{payment.repeat}</p>
       <div
@@ -43,6 +60,13 @@ const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
         <p>£{payment.amount}</p>
       </div>
       <RecurringPaymentMenu payment={payment} />
+      <AnimatePresence>
+        {openHistory && (
+          <Modal onClose={() => setOpenHistory(false)}>
+            <RecurringPaymentsHistory payment={payment} />
+          </Modal>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
