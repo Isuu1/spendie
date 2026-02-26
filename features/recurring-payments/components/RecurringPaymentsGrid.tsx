@@ -61,12 +61,6 @@ const RecurringPaymentsGrid: React.FC = () => {
       </div>
 
       <div className={styles.paymentsGrid}>
-        {/* <ul className={styles.gridHeader}>
-          <li>Details</li>
-          <li>Frequency</li>
-          <li>Amount</li>
-        </ul> */}
-
         {recurringPayments.map((payment) => {
           const populatedPayment = populatedPaymentsMap.get(payment.id);
 
