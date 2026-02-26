@@ -16,10 +16,11 @@ import Modal from "@/shared/components/Modal";
 import RecurringPaymentsHistory from "./RecurringPaymentsHistory";
 //Animations
 import { AnimatePresence } from "motion/react";
+import clsx from "clsx";
 
 interface RecurringPaymentItemProps {
   payment: RecurringPayment;
-  populatedPayment?: PopulatedRecurringPayment;
+  populatedPayment: PopulatedRecurringPayment;
 }
 
 const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
@@ -34,32 +35,50 @@ const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
 
   return (
     <div key={payment.id} className={styles.gridItem}>
-      <div className={styles.details}>
-        <p className={styles.name}>{payment.name}</p>
+      {/* <div className={styles.details}> */}
+      <div className={styles.name}>
+        {/* <span>Name</span> */}
+        <span>{payment.name}</span>
+        <RecurringPaymentMenu payment={payment} />
+      </div>
 
-        {populatedPayment && (
-          <>
-            <p className={styles.date}>
-              Next payment: {formatedDate(populatedPayment.next_payment_date)}
-            </p>
-            <PaymentStatus payment={populatedPayment} />
-          </>
-        )}
+      <div className={styles.separator}></div>
 
-        <p
-          className={styles.paymentHistory}
-          onClick={() => setOpenHistory(!openHistory)}
+      {populatedPayment && (
+        <>
+          <div className={styles.date}>
+            <span>Next payment</span>
+            <span>{formatedDate(populatedPayment.next_payment_date)}</span>
+          </div>
+        </>
+      )}
+      <div className={styles.paymentStatus}>
+        <PaymentStatus payment={populatedPayment} />
+      </div>
+
+      {/* </div> */}
+      <div className={styles.frequency}>
+        <span>Repeat</span>
+        <span>{payment.repeat}</span>
+      </div>
+      <div className={styles.amount}>
+        <span>Amount</span>
+        <span
+          className={clsx({
+            [styles.income]: payment.type === "Income",
+            [styles.expense]: payment.type === "Expense",
+          })}
         >
-          View history
-        </p>
+          £{payment.amount}
+        </span>
       </div>
-      <p className={styles.frequency}>{payment.repeat}</p>
-      <div
-        className={`${styles.type} ${payment.type === "Income" ? styles.income : styles.expense}`}
+      <p
+        className={styles.paymentHistory}
+        onClick={() => setOpenHistory(!openHistory)}
       >
-        <p>£{payment.amount}</p>
-      </div>
-      <RecurringPaymentMenu payment={payment} />
+        View payment history
+      </p>
+
       <AnimatePresence>
         {openHistory && (
           <Modal onClose={() => setOpenHistory(false)}>

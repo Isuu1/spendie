@@ -7,8 +7,6 @@ import moment from "moment";
 import styles from "./RecurringPaymentsGrid.module.scss";
 //Icons
 import { MdOutlineAddCard } from "react-icons/md";
-//Types
-import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import SelectInput from "@/shared/components/ui/SelectInput";
 import ErrorMessage from "@/shared/components/ErrorMessage";
@@ -40,6 +38,10 @@ const RecurringPaymentsGrid: React.FC = () => {
     [recurringPayments, recurringPaymentsHistory],
   );
 
+  const populatedPaymentsMap = useMemo(() => {
+    return new Map(populatedPayments.map((p) => [p.id, p]));
+  }, [populatedPayments]);
+
   return (
     <div className={styles.gridContainer}>
       <div className={styles.optionsBar}>
@@ -59,16 +61,16 @@ const RecurringPaymentsGrid: React.FC = () => {
       </div>
 
       <div className={styles.paymentsGrid}>
-        <ul className={styles.gridHeader}>
+        {/* <ul className={styles.gridHeader}>
           <li>Details</li>
           <li>Frequency</li>
           <li>Amount</li>
-        </ul>
+        </ul> */}
 
-        {recurringPayments.map((payment: RecurringPayment) => {
-          const populatedPayment = populatedPayments.find(
-            (p) => p.id === payment.id,
-          );
+        {recurringPayments.map((payment) => {
+          const populatedPayment = populatedPaymentsMap.get(payment.id);
+
+          if (!populatedPayment) return null; //safe guard
 
           return (
             <RecurringPaymentItem
