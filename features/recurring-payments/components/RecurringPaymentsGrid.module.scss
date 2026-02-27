@@ -18,10 +18,10 @@
       background: var(--color-action-active);
       padding: 0.5rem 0.7rem;
       border-radius: var(--border-radius-m);
-      font-weight: 600;
+      font-weight: 500;
       transition: background 0.2s ease-in-out;
       .icon {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
       }
       &:hover {
         background: var(--color-action-active-hover);

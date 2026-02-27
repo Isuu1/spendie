@@ -25,7 +25,7 @@ const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   const [openHistory, setOpenHistory] = React.useState(false);
 
   const formatedDate = (dateStr: string) => {
-    return dayjs(dateStr).format("Do MMMM YYYY");
+    return dayjs(dateStr).format("D MMMM YYYY");
   };
 
   return (

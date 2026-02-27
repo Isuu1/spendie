@@ -24,12 +24,14 @@
     justify-content: space-between;
     align-items: center;
     span:nth-child(1) {
+      font-size: 1rem;
       font-weight: bold;
     }
   }
   .date {
     display: flex;
     justify-content: space-between;
+    margin-top: 0.5rem;
     span:nth-child(1) {
       color: var(--color-text-secondary);
     }
