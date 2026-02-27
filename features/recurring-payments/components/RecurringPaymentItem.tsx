@@ -1,14 +1,12 @@
 "use client";
 
 import React from "react";
-import moment from "moment";
+import dayjs from "dayjs";
+import clsx from "clsx";
 //Styles
 import styles from "./RecurringPaymentItem.module.scss";
 //Types
-import {
-  PopulatedRecurringPayment,
-  RecurringPayment,
-} from "../types/recurring-payment";
+import { RecurringPayment } from "../types/recurring-payment";
 //Components
 import PaymentStatus from "./PaymentStatus";
 import RecurringPaymentMenu from "./RecurringPaymentMenu";
@@ -16,21 +14,20 @@ import Modal from "@/shared/components/Modal";
 import RecurringPaymentsHistory from "./RecurringPaymentsHistory";
 //Animations
 import { AnimatePresence } from "motion/react";
-import clsx from "clsx";
 
 interface RecurringPaymentItemProps {
   payment: RecurringPayment;
-  populatedPayment: PopulatedRecurringPayment;
+  //populatedPayment: PopulatedRecurringPayment;
 }
 
 const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   payment,
-  populatedPayment,
+  //populatedPayment,
 }) => {
   const [openHistory, setOpenHistory] = React.useState(false);
 
   const formatedDate = (dateStr: string) => {
-    return moment(dateStr).format("Do MMMM YYYY");
+    return dayjs(dateStr).format("Do MMMM YYYY");
   };
 
   return (
@@ -44,16 +41,21 @@ const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
 
       <div className={styles.separator}></div>
 
-      {populatedPayment && (
+      {/* {populatedPayment && (
         <>
           <div className={styles.date}>
             <span>Next payment</span>
-            <span>{formatedDate(populatedPayment.next_payment_date)}</span>
+            <span>{formatedDate(payment.next_payment_date)}</span>
           </div>
         </>
-      )}
+      )} */}
+      <div className={styles.date}>
+        <span>Next payment</span>
+        <span>{formatedDate(payment.next_payment_date)}</span>
+      </div>
+
       <div className={styles.paymentStatus}>
-        <PaymentStatus payment={populatedPayment} />
+        <PaymentStatus payment={payment} />
       </div>
 
       {/* </div> */}

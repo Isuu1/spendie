@@ -6,12 +6,12 @@ import {
   RecurringPaymentFormState,
   Repeat,
 } from "@/features/recurring-payments/types/forms";
-import moment from "moment";
 import { recurringPaymentSchema } from "../../schemas/forms";
+import dayjs from "dayjs";
 
 export async function addRecurringPayment(
   prevState: RecurringPaymentFormState,
-  formData: FormData
+  formData: FormData,
 ) {
   const supabase = await createClient();
 
@@ -44,10 +44,21 @@ export async function addRecurringPayment(
     throw new Error("Failed to fetch user");
   }
 
+  const nextPaymentDate = () => {
+    if (data.repeat.toLowerCase() === "monthly") {
+      return dayjs(data.first_payment_date)
+        .add(1, "month")
+        .format("YYYY-MM-DD");
+    } else if (data.repeat.toLowerCase() === "weekly") {
+      return dayjs(data.first_payment_date).add(1, "week").format("YYYY-MM-DD");
+    }
+  };
+
   // Create the new payment object with user_id
   const newPayment = {
     user_id: user.user.id,
-    add_payment_date: moment().format("YYYY-MM-DD"),
+    add_payment_date: dayjs().format("YYYY-MM-DD"),
+    next_payment_date: nextPaymentDate(),
     ...data,
   };
 
