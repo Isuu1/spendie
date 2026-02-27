@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 //Types
 import { RecurringPayment } from "../types/recurring-payment";
 //Styles
@@ -12,14 +11,21 @@ const PaymentStatus = ({ payment }: { payment: RecurringPayment }) => {
   const paymentDate = dayjs(payment.next_payment_date);
   const daysDiff = paymentDate.diff(today, "days");
 
-  const status = paymentDate.isBefore(today, "day") ? "late" : "upcoming";
+  const daysDifference = () => {
+    if (daysDiff === 0) {
+      return "Due today";
+    }
+    if (daysDiff > 0) {
+      return `Due in ${daysDiff} day(s)`;
+    }
+    if (daysDiff < 0) {
+      return `Late by ${Math.abs(daysDiff)} day(s)`;
+    }
+  };
 
   return (
     <div className={styles.statusWrapper}>
-      <span className={styles.status}>
-        {status === "late" && `Late by ${Math.abs(daysDiff)} day(s)`}
-        {status === "upcoming" && `Due in ${daysDiff} day(s)`}
-      </span>
+      <span className={styles.status}>{daysDifference()}</span>
     </div>
   );
 };

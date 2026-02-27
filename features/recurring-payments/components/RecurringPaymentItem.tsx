@@ -17,12 +17,10 @@ import { AnimatePresence } from "motion/react";
 
 interface RecurringPaymentItemProps {
   payment: RecurringPayment;
-  //populatedPayment: PopulatedRecurringPayment;
 }
 
 const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   payment,
-  //populatedPayment,
 }) => {
   const [openHistory, setOpenHistory] = React.useState(false);
 
@@ -32,23 +30,13 @@ const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
 
   return (
     <div key={payment.id} className={styles.gridItem}>
-      {/* <div className={styles.details}> */}
       <div className={styles.name}>
-        {/* <span>Name</span> */}
         <span>{payment.name}</span>
         <RecurringPaymentMenu payment={payment} />
       </div>
 
       <div className={styles.separator}></div>
 
-      {/* {populatedPayment && (
-        <>
-          <div className={styles.date}>
-            <span>Next payment</span>
-            <span>{formatedDate(payment.next_payment_date)}</span>
-          </div>
-        </>
-      )} */}
       <div className={styles.date}>
         <span>Next payment</span>
         <span>{formatedDate(payment.next_payment_date)}</span>
@@ -58,7 +46,6 @@ const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
         <PaymentStatus payment={payment} />
       </div>
 
-      {/* </div> */}
       <div className={styles.frequency}>
         <span>Repeat</span>
         <span>{payment.repeat}</span>

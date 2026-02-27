@@ -1,9 +1,9 @@
 "use server";
 
 import { createClient } from "@/supabase/server";
-import moment from "moment";
 import { PopulatedRecurringPayment } from "../../types/recurring-payment";
 import { revalidatePath } from "next/cache";
+import dayjs from "dayjs";
 
 type MarkAsPaidResult = {
   success: boolean;
@@ -12,12 +12,12 @@ type MarkAsPaidResult = {
 };
 
 export async function markAsPaid(
-  payment: PopulatedRecurringPayment
+  payment: PopulatedRecurringPayment,
 ): Promise<MarkAsPaidResult> {
   const supabase = await createClient();
 
   try {
-    const paidDate = moment().format("YYYY-MM-DD");
+    const paidDate = dayjs().format("YYYY-MM-DD");
 
     //Get user ID from supabase auth
     const user = await supabase.auth.getUser();
@@ -28,6 +28,38 @@ export async function markAsPaid(
         message: "User not authenticated",
       };
     }
+
+    const nextPaymentDate = () => {
+      if (payment.repeat.toLowerCase() === "monthly") {
+        return dayjs(payment.first_payment_date)
+          .add(1, "month")
+          .format("YYYY-MM-DD");
+      } else if (payment.repeat.toLowerCase() === "weekly") {
+        return dayjs(payment.first_payment_date)
+          .add(1, "week")
+          .format("YYYY-MM-DD");
+      }
+    };
+
+    //Update next payment date in recurring_payments table
+    const { error: updateError } = await supabase
+      .from("recurring_payments")
+      .update({
+        next_payment_date: nextPaymentDate(),
+      })
+      .eq("id", payment.id)
+      .eq("user_id", user.data.user.id);
+
+    if (updateError) {
+      console.error("Error updating next payment date:", updateError);
+      return {
+        success: false,
+        error:
+          "There was an error marking the payment as paid. Please try again.",
+        message: "Failed to update next payment date",
+      };
+    }
+
     //Add entry to recurring_payments_history
     const { error: historyError } = await supabase
       .from("recurring_payments_history")
