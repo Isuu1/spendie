@@ -12,10 +12,25 @@ import ErrorMessage from "@/shared/components/ErrorMessage";
 import RecurringPaymentItem from "./RecurringPaymentItem";
 //Hooks
 import { useRecurringPaymentsClient } from "../hooks/useRecurringPaymentsClient";
+import { sortRecurringPayments } from "../lib/utils/sortRecurringPayments";
+
+const sortingOptions = ["Date", "Amount", "Name"] as const;
+
+type SortOption = (typeof sortingOptions)[number];
 
 const RecurringPaymentsGrid: React.FC = () => {
   const { data: recurringPayments = [], error: recurringPaymentsError } =
     useRecurringPaymentsClient();
+
+  const [sortOption, setSortOption] = React.useState<SortOption>("Date");
+
+  const handleSortingChange = (value: SortOption) => {
+    setSortOption(value);
+  };
+
+  const sortedPayments = React.useMemo(() => {
+    return sortRecurringPayments(recurringPayments, sortOption);
+  }, [recurringPayments, sortOption]);
 
   const hasPayments = recurringPayments.length > 0;
 
@@ -33,7 +48,12 @@ const RecurringPaymentsGrid: React.FC = () => {
         </Link>
         <div className={styles.sorting}>
           <span>Sort by</span>
-          <SelectInput id="sort" selectOptions={["Date", "Amount", "Name"]} />
+          <SelectInput
+            id="sort"
+            selectOptions={sortingOptions}
+            value={sortOption}
+            onChange={(value) => handleSortingChange(value as SortOption)}
+          />
         </div>
       </div>
 
@@ -45,7 +65,7 @@ const RecurringPaymentsGrid: React.FC = () => {
       )}
 
       <div className={styles.paymentsGrid}>
-        {recurringPayments.map((payment) => {
+        {sortedPayments.map((payment) => {
           return <RecurringPaymentItem key={payment.id} payment={payment} />;
         })}
       </div>
