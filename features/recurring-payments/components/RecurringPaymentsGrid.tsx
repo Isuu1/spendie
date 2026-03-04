@@ -12,6 +12,7 @@ import ErrorMessage from "@/shared/components/ErrorMessage";
 import RecurringPaymentItem from "./RecurringPaymentItem";
 //Hooks
 import { useRecurringPaymentsClient } from "../hooks/useRecurringPaymentsClient";
+//Utils
 import { sortRecurringPayments } from "../lib/utils/sortRecurringPayments";
 
 const sortingOptions = ["Date", "Amount", "Name"] as const;
@@ -19,8 +20,7 @@ const sortingOptions = ["Date", "Amount", "Name"] as const;
 type SortOption = (typeof sortingOptions)[number];
 
 const RecurringPaymentsGrid: React.FC = () => {
-  const { data: recurringPayments = [], error: recurringPaymentsError } =
-    useRecurringPaymentsClient();
+  const { data = [], error } = useRecurringPaymentsClient();
 
   const [sortOption, setSortOption] = React.useState<SortOption>("Date");
 
@@ -29,10 +29,18 @@ const RecurringPaymentsGrid: React.FC = () => {
   };
 
   const sortedPayments = React.useMemo(() => {
-    return sortRecurringPayments(recurringPayments, sortOption);
-  }, [recurringPayments, sortOption]);
+    return sortRecurringPayments(data, sortOption);
+  }, [data, sortOption]);
 
-  const hasPayments = recurringPayments.length > 0;
+  const hasPayments = data.length > 0;
+
+  if (error)
+    return (
+      <ErrorMessage
+        variant="panel"
+        message="Failed to load recurring payments."
+      />
+    );
 
   return (
     <div className={styles.gridContainer}>
@@ -57,20 +65,13 @@ const RecurringPaymentsGrid: React.FC = () => {
         </div>
       </div>
 
-      {recurringPaymentsError && (
-        <ErrorMessage
-          variant="panel"
-          message="Failed to load recurring payments."
-        />
-      )}
-
       <div className={styles.paymentsGrid}>
         {sortedPayments.map((payment) => {
           return <RecurringPaymentItem key={payment.id} payment={payment} />;
         })}
       </div>
 
-      {!hasPayments && !recurringPaymentsError && (
+      {!hasPayments && !error && (
         <p className={styles.noPayments}>No recurring payments found.</p>
       )}
     </div>
