@@ -1,4 +1,3 @@
-import moment from "moment";
 import React, { useMemo, useState } from "react";
 //Styles
 import styles from "./SelectMode.module.scss";
@@ -9,12 +8,13 @@ import Button from "@/shared/components/ui/Button";
 //Icons
 import { MdEditDocument } from "react-icons/md";
 import { AnimatePresence } from "motion/react";
+import dayjs, { Dayjs } from "dayjs";
 
 interface SelectProps {
   mode: "endOfMonth" | "specificDate";
   selectMode: (range: "endOfMonth" | "specificDate") => void;
-  dateSelected: moment.Moment | null;
-  onDateSelect: (date: moment.Moment | null) => void;
+  dateSelected: Dayjs | null;
+  onDateSelect: (date: Dayjs | null) => void;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -71,7 +71,7 @@ const Select: React.FC<SelectProps> = ({
           <CustomDatePicker
             value={dateSelected ? dateSelected.toISOString() : null}
             onChange={(val) => {
-              onDateSelect(val ? moment(val) : null);
+              onDateSelect(val ? dayjs(val) : null);
             }}
             onClose={() => setOpenDatePicker(false)}
             top={50}

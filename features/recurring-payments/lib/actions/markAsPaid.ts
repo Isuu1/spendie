@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/supabase/server";
-import { PopulatedRecurringPayment } from "../../types/recurring-payment";
+import { RecurringPayment } from "../../types/recurring-payment";
 import { revalidatePath } from "next/cache";
 import dayjs from "dayjs";
 
@@ -12,7 +12,7 @@ type MarkAsPaidResult = {
 };
 
 export async function markAsPaid(
-  payment: PopulatedRecurringPayment,
+  payment: RecurringPayment,
 ): Promise<MarkAsPaidResult> {
   const supabase = await createClient();
 
@@ -30,15 +30,17 @@ export async function markAsPaid(
     }
 
     const nextPaymentDate = () => {
+      const current = dayjs(payment.next_payment_date);
+
       if (payment.repeat.toLowerCase() === "monthly") {
-        return dayjs(payment.first_payment_date)
-          .add(1, "month")
-          .format("YYYY-MM-DD");
-      } else if (payment.repeat.toLowerCase() === "weekly") {
-        return dayjs(payment.first_payment_date)
-          .add(1, "week")
-          .format("YYYY-MM-DD");
+        return current.add(1, "month").format("YYYY-MM-DD");
       }
+
+      if (payment.repeat.toLowerCase() === "weekly") {
+        return current.add(1, "week").format("YYYY-MM-DD");
+      }
+
+      return current.format("YYYY-MM-DD");
     };
 
     //Update next payment date in recurring_payments table

@@ -7,7 +7,7 @@ import styles from "./PopulatedRecurringPaymentsList.module.scss";
 //Animations
 import { motion } from "motion/react";
 //Types
-import { PopulatedRecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import Pagination from "@/shared/components/Pagination";
 import PopulatedRecurringPaymentItem from "./PopulatedRecurringPaymentItem";
@@ -15,7 +15,7 @@ import PopulatedRecurringPaymentItem from "./PopulatedRecurringPaymentItem";
 interface PopulatedRecurringPaymentsListProps {
   type: "income" | "expense";
   toggleDetails: (type: "income" | "expense" | null) => void;
-  paymentsTillDate: PopulatedRecurringPayment[];
+  paymentsTillDate: RecurringPayment[];
 }
 
 const activeIndicatorVariants = {
@@ -36,17 +36,17 @@ const PopulatedRecurringPaymentsList: React.FC<
       .sort(
         (a, b) =>
           new Date(a.next_payment_date).getTime() -
-          new Date(b.next_payment_date).getTime()
+          new Date(b.next_payment_date).getTime(),
       ) || [];
 
   const totalPages = Math.ceil(
-    (filteredPayments?.length ?? 1) / ITEMS_PER_PAGE
+    (filteredPayments?.length ?? 1) / ITEMS_PER_PAGE,
   );
 
   const startIndex = (page - 1) * ITEMS_PER_PAGE;
   const currentItems = filteredPayments.slice(
     startIndex,
-    startIndex + ITEMS_PER_PAGE
+    startIndex + ITEMS_PER_PAGE,
   );
 
   useEffect(() => setPage(1), [type]);

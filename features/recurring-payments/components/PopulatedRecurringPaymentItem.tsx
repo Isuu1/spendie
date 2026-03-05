@@ -7,7 +7,7 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 //Icons
 import { FaRepeat } from "react-icons/fa6";
 //Types
-import { PopulatedRecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import PaymentStatus from "@/features/recurring-payments/components/PaymentStatus";
 import Button from "@/shared/components/ui/Button";
@@ -18,7 +18,7 @@ import { motion } from "motion/react";
 import { markAsPaid } from "../lib/actions/markAsPaid";
 
 interface RecurringPaymentItemProps {
-  payment: PopulatedRecurringPayment;
+  payment: RecurringPayment;
 }
 
 const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
@@ -26,7 +26,7 @@ const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
 }) => {
   const [loadingId, setLoadingId] = useState<string | null>(null);
 
-  const handleMarkAsPaid = async (payment: PopulatedRecurringPayment) => {
+  const handleMarkAsPaid = async (payment: RecurringPayment) => {
     setLoadingId(payment.id);
     try {
       const result = await markAsPaid(payment);
