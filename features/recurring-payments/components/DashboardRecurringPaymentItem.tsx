@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import toast from "react-hot-toast";
 //Styles
-import styles from "./PopulatedRecurringPaymentItem.module.scss";
+import styles from "./DashboardRecurringPaymentItem.module.scss";
 import { toastStyle } from "@/shared/styles/toastStyle";
 //Icons
 import { FaRepeat } from "react-icons/fa6";
@@ -21,7 +21,7 @@ interface RecurringPaymentItemProps {
   payment: RecurringPayment;
 }
 
-const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
+const DashboardRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   payment,
 }) => {
   const [loadingId, setLoadingId] = useState<string | null>(null);
@@ -88,4 +88,4 @@ const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   );
 };
 
-export default PopulatedRecurringPaymentItem;
+export default DashboardRecurringPaymentItem;

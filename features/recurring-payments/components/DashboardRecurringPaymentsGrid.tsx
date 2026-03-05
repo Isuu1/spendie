@@ -10,7 +10,7 @@ import { motion } from "motion/react";
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import Pagination from "@/shared/components/Pagination";
-import PopulatedRecurringPaymentItem from "./PopulatedRecurringPaymentItem";
+import DashboardRecurringPaymentItem from "./DashboardRecurringPaymentItem";
 
 interface DashboardRecurringPaymentsGridProps {
   type: "income" | "expense";
@@ -69,7 +69,7 @@ const DashboardRecurringPaymentsGrid: React.FC<
 
       <div className={`${styles.paymentsList} `}>
         {currentItems?.map((payment) => (
-          <PopulatedRecurringPaymentItem
+          <DashboardRecurringPaymentItem
             key={`${payment.id}-${payment.next_payment_date}`}
             payment={payment}
           />
