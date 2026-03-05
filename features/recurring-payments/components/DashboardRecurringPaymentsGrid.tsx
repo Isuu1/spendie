@@ -3,7 +3,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 //Styles
-import styles from "./PopulatedRecurringPaymentsList.module.scss";
+import styles from "./DashboardRecurringPaymentsGrid.module.scss";
 //Animations
 import { motion } from "motion/react";
 //Types
@@ -12,10 +12,10 @@ import { RecurringPayment } from "@/features/recurring-payments/types/recurring-
 import Pagination from "@/shared/components/Pagination";
 import PopulatedRecurringPaymentItem from "./PopulatedRecurringPaymentItem";
 
-interface PopulatedRecurringPaymentsListProps {
+interface DashboardRecurringPaymentsGridProps {
   type: "income" | "expense";
   toggleDetails: (type: "income" | "expense" | null) => void;
-  paymentsTillDate: RecurringPayment[];
+  payments: RecurringPayment[];
 }
 
 const activeIndicatorVariants = {
@@ -23,31 +23,19 @@ const activeIndicatorVariants = {
   expense: { x: "100%" },
 };
 
-const PopulatedRecurringPaymentsList: React.FC<
-  PopulatedRecurringPaymentsListProps
-> = ({ type, toggleDetails, paymentsTillDate }) => {
+const DashboardRecurringPaymentsGrid: React.FC<
+  DashboardRecurringPaymentsGridProps
+> = ({ type, toggleDetails, payments }) => {
+  //Pagination state and logic
+
   const ITEMS_PER_PAGE = 3;
 
   const [page, setPage] = useState(1);
 
-  const filteredPayments =
-    paymentsTillDate
-      ?.filter((p) => p.type.toLowerCase() === type)
-      .sort(
-        (a, b) =>
-          new Date(a.next_payment_date).getTime() -
-          new Date(b.next_payment_date).getTime(),
-      ) || [];
-
-  const totalPages = Math.ceil(
-    (filteredPayments?.length ?? 1) / ITEMS_PER_PAGE,
-  );
+  const totalPages = Math.ceil((payments?.length ?? 1) / ITEMS_PER_PAGE);
 
   const startIndex = (page - 1) * ITEMS_PER_PAGE;
-  const currentItems = filteredPayments.slice(
-    startIndex,
-    startIndex + ITEMS_PER_PAGE,
-  );
+  const currentItems = payments.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   useEffect(() => setPage(1), [type]);
 
@@ -63,9 +51,11 @@ const PopulatedRecurringPaymentsList: React.FC<
           initial={false} // Prevent animation on initial render
           transition={{ type: "spring", stiffness: 700, damping: 30 }}
         ></motion.span>
+
         <li className={styles.item} onClick={() => toggleDetails?.("income")}>
           Income
         </li>
+
         <li className={styles.item} onClick={() => toggleDetails?.("expense")}>
           Expense
         </li>
@@ -93,9 +83,9 @@ const PopulatedRecurringPaymentsList: React.FC<
         )}
       </div>
 
-      {filteredPayments.length === 0 && <p>No upcoming payments</p>}
+      {payments.length === 0 && <p>No upcoming payments</p>}
     </>
   );
 };
 
-export default PopulatedRecurringPaymentsList;
+export default DashboardRecurringPaymentsGrid;

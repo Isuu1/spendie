@@ -1,22 +1,19 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
+import React, { useState } from "react";
+import { Dayjs } from "dayjs";
 import Link from "next/link";
 //Styles
 import styles from "./FutureBalance.module.scss";
-//Utils
-import { populateRecurringPayments } from "@/features/recurring-payments/lib/utils/populateRecurringPayments";
-import { calculateTotals } from "../utils/calculateTotals";
 //Components
 import SelectMode from "@/features/future-balance/components/SelectMode";
 import PaymentsSummary from "@/features/future-balance/components/PaymentsSummary";
 import Modal from "@/shared/components/Modal";
-import PopulatedRecurringPaymentsList from "@/features/recurring-payments/components/PopulatedRecurringPaymentsList";
+import DashboardRecurringPaymentsGrid from "@/features/recurring-payments/components/DashboardRecurringPaymentsGrid";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
 //Api
-import { useRecurringPaymentsClient } from "@/features/recurring-payments/hooks/useRecurringPaymentsClient";
+import { useFutureBalance } from "../hooks/useFutureBalance";
 
 interface FutureBalanceProps {
   totalBalance: number;
@@ -27,39 +24,22 @@ type ModeType = "endOfMonth" | "specificDate";
 
 const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
   const [mode, setMode] = useState<ModeType>("endOfMonth");
-  const [dateSelected, setDateSelected] = useState<Dayjs | null>(null);
-  const [showPaymentsDetails, setShowPaymentsDetails] =
-    useState<PaymentType | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+  const [detailsType, setDetailsType] = useState<PaymentType | null>(null);
 
-  const { data: recurringPayments } = useRecurringPaymentsClient();
-
-  const targetDate = useMemo(() => {
-    return mode === "endOfMonth"
-      ? dayjs().endOf("month")
-      : dateSelected || dayjs();
-  }, [mode, dateSelected]);
-
-  const paymentsTillDate = useMemo(
-    () => populateRecurringPayments(targetDate, recurringPayments || []),
-    [targetDate, recurringPayments],
-  );
-
-  //Calculate income and expense from populated payments
-  const { income, expense } = useMemo(
-    () => calculateTotals(paymentsTillDate),
-    [paymentsTillDate],
-  );
-
-  const futureBalance = useMemo(
-    () => totalBalance + income - expense,
-    [totalBalance, income, expense],
-  );
+  const {
+    incomePayments,
+    expensePayments,
+    incomeTotal,
+    expenseTotal,
+    futureBalance,
+  } = useFutureBalance(totalBalance, mode, selectedDate);
 
   const handleToggleDetails = (type: "income" | "expense" | null) => {
-    if (showPaymentsDetails === type) {
-      setShowPaymentsDetails(null);
+    if (detailsType === type) {
+      setDetailsType(null);
     } else {
-      setShowPaymentsDetails(type);
+      setDetailsType(type);
     }
   };
 
@@ -74,23 +54,28 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
       <SelectMode
         mode={mode}
         selectMode={setMode}
-        dateSelected={dateSelected}
-        onDateSelect={setDateSelected}
+        dateSelected={selectedDate}
+        onDateSelect={setSelectedDate}
       />
 
       <PaymentsSummary
-        paymentsTillDate={paymentsTillDate}
-        type={showPaymentsDetails}
-        toggleDetails={handleToggleDetails}
+        incomePayments={incomePayments}
+        expensePayments={expensePayments}
+        incomeTotal={incomeTotal}
+        expenseTotal={expenseTotal}
+        activeType={detailsType}
+        openDetails={handleToggleDetails}
       />
 
       <AnimatePresence>
-        {showPaymentsDetails && (
+        {detailsType && (
           <Modal onClose={() => handleToggleDetails(null)}>
-            <PopulatedRecurringPaymentsList
-              type={showPaymentsDetails}
+            <DashboardRecurringPaymentsGrid
+              type={detailsType}
               toggleDetails={handleToggleDetails}
-              paymentsTillDate={paymentsTillDate}
+              payments={
+                detailsType === "income" ? incomePayments : expensePayments
+              }
             />
             <Link href="/recurring-payments">All payments</Link>
           </Modal>
