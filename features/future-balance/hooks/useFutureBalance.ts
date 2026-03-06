@@ -1,8 +1,8 @@
-import { useRecurringPaymentsClient } from "@/features/recurring-payments/hooks/useRecurringPaymentsClient";
 import { populateRecurringPayments } from "@/features/recurring-payments/lib/utils/populateRecurringPayments";
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo } from "react";
 import { calculateTotals } from "../utils/calculateTotals";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 
 type ModeType = "endOfMonth" | "specificDate";
 
@@ -10,9 +10,8 @@ export function useFutureBalance(
   totalBalance: number,
   mode: ModeType,
   selectedDate: Dayjs | null,
+  recurringPayments: RecurringPayment[],
 ) {
-  const { data: recurringPayments = [] } = useRecurringPaymentsClient();
-
   const targetDate = useMemo(() => {
     return mode === "endOfMonth"
       ? dayjs().endOf("month")
