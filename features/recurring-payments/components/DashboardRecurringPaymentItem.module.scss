@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.7rem 0.7rem;
   border-radius: 16px;
   background: var(--color-bg-tile) !important;
   .processingPayment {
@@ -23,17 +23,37 @@
     z-index: 10;
   }
   .paymentItem {
+    // display: grid;
+    // grid-template-columns: 2fr 1fr 1fr;
+    // gap: 1rem;
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    //color: var(--color-text-secondary);
+    .header {
+      display: flex;
+      justify-content: space-between;
+    }
+    .separator {
+      height: 1px;
+      background: #292929;
+      width: 100%;
+      margin: 0.2rem 0;
+    }
     .details {
       display: flex;
       flex-direction: column;
-      gap: 0.2rem;
+      align-items: flex-start;
+      gap: 0.3rem;
+      max-width: 150px;
       .name {
         font-weight: 600;
         font-size: 0.95rem;
+        white-space: wrap;
       }
+      // .name {
+      //   font-weight: 600;
+      //   font-size: 0.95rem;
+      // }
       .repeat {
         font-size: 0.8rem;
         color: var(--color-text-secondary);
@@ -42,9 +62,22 @@
         align-items: center;
       }
     }
+    .date {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.3rem;
+    }
+    .paidButton {
+      margin-left: auto;
+    }
+    .status {
+      margin-left: auto;
+    }
     .amount {
       justify-content: flex-end;
     }
+
     .date,
     .amount {
       font-size: 0.85rem;
@@ -54,14 +87,14 @@
   }
 }
 
-.income {
-  .amount {
-    color: var(--color-text-income);
-  }
-}
+// .income {
+//   .amount {
+//     color: var(--color-text-income);
+//   }
+// }
 
-.expense {
-  .amount {
-    color: var(--color-text-expense);
-  }
-}
+// .expense {
+//   .amount {
+//     color: var(--color-text-expense);
+//   }
+// }
