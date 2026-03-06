@@ -28,7 +28,7 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
 }) => {
   const [showOptions, setShowOptions] = useState(false);
 
-  const optionsRef = useRef<HTMLDivElement>(null);
+  const optionsRef = useRef<HTMLUListElement>(null);
 
   useClickOutside(optionsRef, () => setShowOptions(false));
 
@@ -42,7 +42,7 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
       </i>
       <AnimatePresence>
         {showOptions && (
-          <motion.div
+          <motion.ul
             className={styles.options}
             ref={optionsRef}
             variants={optionsVariants}
@@ -51,7 +51,7 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
             exit="exit"
           >
             {children}
-          </motion.div>
+          </motion.ul>
         )}
       </AnimatePresence>
     </div>

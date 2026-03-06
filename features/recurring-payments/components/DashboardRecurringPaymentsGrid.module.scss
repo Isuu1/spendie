@@ -29,7 +29,7 @@
 
 .labelsBar {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
   width: 100%;
   padding: 0.5rem 0.7rem;
@@ -37,19 +37,25 @@
   font-weight: 600;
   color: var(--color-text-secondary);
   list-style: none;
-  li:last-child {
-    text-align: right;
+  .label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    &:nth-child(2) {
+      justify-self: center;
+    }
+    &:last-child {
+      justify-self: end;
+    }
+  }
+  .activeLabel {
+    color: var(--color-action-active);
   }
 }
 
 .paymentsList {
-  --color-bg-income: rgba(65, 179, 0, 0.1);
-  --color-bg-icon-income: #42b30059;
-  --color-text-income: #41b300;
-  --color-bg-expense: rgba(255, 0, 0, 0.1);
-  --color-bg-icon-expense: #ff000059;
-  --color-text-expense: #ff0000;
-  min-width: 240px;
+  min-width: 300px;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
@@ -62,4 +68,10 @@
   color: var(--color-action-active);
   margin-left: auto;
   font-weight: 700;
+}
+
+@media (min-width: 600px) {
+  .paymentsList {
+    min-width: 400px;
+  }
 }

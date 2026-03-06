@@ -1,5 +1,4 @@
 import EditPaymentForm from "@/features/recurring-payments/components/EditPaymentForm";
-import BackButton from "@/shared/components/BackButton";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 import { createClient } from "@/supabase/server";
 
@@ -29,7 +28,6 @@ export default async function Page({
     console.error("Error fetching payment:", paymentError);
     return (
       <div className="page">
-        <BackButton />
         <ErrorMessage
           variant="panel"
           message="Could not find the recurring payment you are trying to edit."
@@ -39,10 +37,9 @@ export default async function Page({
   }
 
   return (
-    <div className="page">
-      <BackButton />
+    <>
       <h2>Edit recurring payment</h2>
       <EditPaymentForm payment={payment} />
-    </div>
+    </>
   );
 }

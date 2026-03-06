@@ -31,7 +31,7 @@
 
 @media (max-width: 550px) {
   .layout {
-    grid-template-columns: 1fr;
+    display: block;
     .innerWrapper {
       padding: 0.5rem;
     }

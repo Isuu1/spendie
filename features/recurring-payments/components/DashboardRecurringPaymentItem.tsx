@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import moment from "moment";
 import toast from "react-hot-toast";
+import dayjs from "dayjs";
 //Styles
-import styles from "./PopulatedRecurringPaymentItem.module.scss";
+import styles from "./DashboardRecurringPaymentItem.module.scss";
 import { toastStyle } from "@/shared/styles/toastStyle";
-//Icons
-import { FaRepeat } from "react-icons/fa6";
 //Types
-import { PopulatedRecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import PaymentStatus from "@/features/recurring-payments/components/PaymentStatus";
 import Button from "@/shared/components/ui/Button";
@@ -18,15 +16,15 @@ import { motion } from "motion/react";
 import { markAsPaid } from "../lib/actions/markAsPaid";
 
 interface RecurringPaymentItemProps {
-  payment: PopulatedRecurringPayment;
+  payment: RecurringPayment;
 }
 
-const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
+const DashboardRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   payment,
 }) => {
   const [loadingId, setLoadingId] = useState<string | null>(null);
 
-  const handleMarkAsPaid = async (payment: PopulatedRecurringPayment) => {
+  const handleMarkAsPaid = async (payment: RecurringPayment) => {
     setLoadingId(payment.id);
     try {
       const result = await markAsPaid(payment);
@@ -41,6 +39,11 @@ const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
     } catch (error) {
       console.error("Error marking payment as paid:", error);
     }
+    setLoadingId(null);
+  };
+
+  const formatedDate = (dateStr: string) => {
+    return dayjs(dateStr).format("D MMMM YYYY");
   };
 
   return (
@@ -53,7 +56,6 @@ const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
       {loadingId === payment.id && (
         <div className={styles.processingPayment}>
           <LoadingSpinner />
-          <span>Processing...</span>
         </div>
       )}
 
@@ -62,21 +64,19 @@ const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
       >
         <div className={styles.details}>
           <span className={styles.name}>{payment.name ?? "Income"}</span>
-          <span className={styles.repeat}>
-            <FaRepeat /> {payment.repeat}
+          <span className={styles.amount}>
+            {payment.type === "Income" ? "+£" : "-£"}
+            {payment.amount?.toFixed(2) ?? "0.00"}
           </span>
         </div>
-        <span className={styles.date}>
-          {moment(payment.next_payment_date).format("DD MMM `YY")}
-        </span>
-        <span className={styles.amount}>
-          {payment.type === "income" ? "+£" : "-£"}
-          {payment.amount?.toFixed(2) ?? "0.00"}
-        </span>
-      </div>
-      <div className="flex-row-space-between">
-        <PaymentStatus payment={payment} />
+
+        <div className={styles.date}>
+          <span>{formatedDate(payment.next_payment_date)}</span>
+          <PaymentStatus payment={payment} />
+        </div>
+
         <Button
+          className={styles.paidButton}
           text={loadingId === payment.id ? "Processing..." : "Mark as paid"}
           variant="secondary"
           size="small"
@@ -88,4 +88,4 @@ const PopulatedRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   );
 };
 
-export default PopulatedRecurringPaymentItem;
+export default DashboardRecurringPaymentItem;

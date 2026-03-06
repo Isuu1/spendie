@@ -41,14 +41,14 @@ const RecurringPaymentMenu: React.FC<RecurringPaymentMenuProps> = ({
   return (
     <>
       <HamburgerMenu position="right">
-        <li className={`${styles.menuItem}`}>
+        <li className={styles.menuItem}>
           <FaEdit className={styles.icon} />
           <Link href={`/recurring-payments/edit-payment/${payment.id}`}>
             Edit payment
           </Link>
         </li>
         <li
-          className={`${styles.menuItem} ${styles.deleteItem}`}
+          className={styles.menuItem}
           onClick={() => setConfirmDeletePayment(payment.id)}
         >
           <IoTrashBin className={styles.icon} />

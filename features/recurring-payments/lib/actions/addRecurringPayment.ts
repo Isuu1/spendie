@@ -6,12 +6,12 @@ import {
   RecurringPaymentFormState,
   Repeat,
 } from "@/features/recurring-payments/types/forms";
-import moment from "moment";
 import { recurringPaymentSchema } from "../../schemas/forms";
+import dayjs from "dayjs";
 
 export async function addRecurringPayment(
   prevState: RecurringPaymentFormState,
-  formData: FormData
+  formData: FormData,
 ) {
   const supabase = await createClient();
 
@@ -47,7 +47,8 @@ export async function addRecurringPayment(
   // Create the new payment object with user_id
   const newPayment = {
     user_id: user.user.id,
-    add_payment_date: moment().format("YYYY-MM-DD"),
+    add_payment_date: dayjs().format("YYYY-MM-DD"),
+    next_payment_date: data.first_payment_date,
     ...data,
   };
 

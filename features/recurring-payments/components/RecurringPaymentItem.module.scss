@@ -1,0 +1,79 @@
+.gridItem {
+  // display: grid;
+  // grid-template-columns: subgrid; //Use parent grid columns
+  // grid-column: 1 / -1; //Span all columns
+  // align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1rem 0.7rem;
+  background: var(--color-bg-tile);
+  border-radius: var(--border-radius-l);
+  span {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+  }
+  .separator {
+    height: 1px;
+    background: #292929;
+    width: 100%;
+  }
+
+  .name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span:nth-child(1) {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  }
+  .date {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    span:nth-child(1) {
+      color: var(--color-text-secondary);
+    }
+    span:nth-child(2) {
+      font-weight: bold;
+    }
+  }
+  .paymentStatus {
+    margin-left: auto;
+  }
+  .paymentHistory {
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    margin-left: auto;
+  }
+
+  .frequency {
+    display: flex;
+    justify-content: space-between;
+    span:nth-child(1) {
+      color: var(--color-text-secondary);
+    }
+    span:nth-child(2) {
+      font-weight: bold;
+    }
+  }
+  .amount {
+    display: flex;
+    justify-content: space-between;
+    span:nth-child(1) {
+      color: var(--color-text-secondary);
+    }
+    span:nth-child(2) {
+      font-weight: bold;
+    }
+  }
+  .income {
+    color: #41b300;
+    //background: #42b30059;
+  }
+  .expense {
+    color: #ff0000;
+    //background: #ff000059;
+  }
+}
