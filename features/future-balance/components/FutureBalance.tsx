@@ -14,7 +14,7 @@ import DashboardRecurringPaymentsGrid from "@/features/recurring-payments/compon
 import { AnimatePresence, motion } from "motion/react";
 //Api
 import { useFutureBalance } from "../hooks/useFutureBalance";
-import { useRecurringPaymentsClient } from "@/features/recurring-payments/hooks/useRecurringPaymentsClient";
+import { useRecurringPayments } from "@/features/recurring-payments/hooks/useRecurringPayments";
 
 interface FutureBalanceProps {
   totalBalance: number;
@@ -28,7 +28,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [detailsType, setDetailsType] = useState<PaymentType | null>(null);
 
-  const { data = [] } = useRecurringPaymentsClient();
+  const { data = [] } = useRecurringPayments();
 
   const {
     incomePayments,

@@ -11,7 +11,7 @@ import SelectInput from "@/shared/components/ui/SelectInput";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 import RecurringPaymentItem from "./RecurringPaymentItem";
 //Hooks
-import { useRecurringPaymentsClient } from "../hooks/useRecurringPaymentsClient";
+import { useRecurringPayments } from "../hooks/useRecurringPayments";
 //Utils
 import { sortRecurringPayments } from "../lib/utils/sortRecurringPayments";
 
@@ -20,7 +20,7 @@ const sortingOptions = ["Date", "Amount", "Name"] as const;
 type SortOption = (typeof sortingOptions)[number];
 
 const RecurringPaymentsGrid: React.FC = () => {
-  const { data = [], error } = useRecurringPaymentsClient();
+  const { data = [], error } = useRecurringPayments();
 
   const [sortOption, setSortOption] = React.useState<SortOption>("Date");
 
