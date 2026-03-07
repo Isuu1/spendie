@@ -7,5 +7,6 @@ export function useRecurringPayments() {
   return useQuery({
     queryKey: ["recurringPayments"],
     queryFn: getRecurringPaymentsClient,
+    staleTime: 1000 * 60, //1 minute
   });
 }
