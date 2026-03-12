@@ -32,15 +32,15 @@ export default async function Layout({
   const { transactions, error: transactionsError } =
     await getTransactionsServer();
 
-  const { user, error: userError } = await getUserServer();
+  //const { user, error: userError } = await getUserServer();
 
   if (
     //settingsError ||
     //accountsError ||
     //recurringPaymentsError ||
     historyError ||
-    transactionsError ||
-    userError
+    transactionsError
+    //userError
   ) {
     console.error("Error loading dashboard data:", {
       //settingsError,
@@ -48,7 +48,7 @@ export default async function Layout({
       //recurringPaymentsError,
       historyError,
       transactionsError,
-      userError,
+      //userError,
     });
   }
 
@@ -67,6 +67,11 @@ export default async function Layout({
     queryFn: getUserSettingsServer,
   });
 
+  await queryClient.prefetchQuery({
+    queryKey: ["user"],
+    queryFn: getUserServer,
+  });
+
   // Prefill React Query cache
 
   await queryClient.prefetchQuery({
@@ -77,11 +82,6 @@ export default async function Layout({
   await queryClient.prefetchQuery({
     queryKey: ["transactions"],
     queryFn: () => Promise.resolve(transactions),
-  });
-
-  await queryClient.prefetchQuery({
-    queryKey: ["user"],
-    queryFn: () => Promise.resolve(user),
   });
 
   const dehydratedState = dehydrate(queryClient);

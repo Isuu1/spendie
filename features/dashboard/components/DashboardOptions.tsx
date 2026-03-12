@@ -9,13 +9,13 @@ import { MdSpaceDashboard } from "react-icons/md";
 import DashboardPanelsMenu from "./DashboardPanelsMenu";
 import { AnimatePresence } from "motion/react";
 import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
-import { useUserClient } from "@/features/user/hooks/useUserClient";
+import { useUser } from "@/features/user/hooks/useUser";
 import PopUp from "@/shared/components/PopUp";
 
 const DashboardOptions = () => {
   const [openPanelsMenu, setOpenPanelsMenu] = React.useState(false);
 
-  const { data: user } = useUserClient();
+  const { data: user } = useUser();
 
   return (
     <div className={styles.dashboardOptions}>

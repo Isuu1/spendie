@@ -8,7 +8,7 @@ import { generateAccountBackground } from "../utils/generateAccountBackground";
 import { Account } from "@/features/accounts/types/account";
 import { EmblaViewportRefType } from "embla-carousel-react";
 //Hooks
-import { useUserClient } from "@/features/user/hooks/useUserClient";
+import { useUser } from "@/features/user/hooks/useUser";
 //Components
 import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 //Icons
@@ -20,7 +20,7 @@ interface AccountsListProps {
 }
 
 const AccountsList: React.FC<AccountsListProps> = ({ accounts, emblaRef }) => {
-  const { data: user, error } = useUserClient();
+  const { data: user, error } = useUser();
 
   if (error) {
     console.error("Error fetching user data:", error);

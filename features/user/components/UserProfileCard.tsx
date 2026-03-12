@@ -13,7 +13,7 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 import { FaSignOutAlt } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
 //Hooks
-import { useUserClient } from "../hooks/useUserClient";
+import { useUser } from "../hooks/useUser";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
 //Animations
 import { AnimatePresence } from "motion/react";
@@ -31,7 +31,7 @@ const UserProfileCard: React.FC = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [signoutClicked, setSignoutClicked] = React.useState(false);
 
-  const { data: user, error } = useUserClient();
+  const { data: user, error } = useUser();
 
   const supabase = createClient();
 
