@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { usePlaidLink } from "react-plaid-link";
 import Button from "../ui/Button";
 import { PiBankFill } from "react-icons/pi";
+import { useRouter } from "next/navigation";
 
 interface PlaidLinkProps {
   userId: string; // Pass the authenticated user ID
@@ -15,6 +16,8 @@ const PlaidLink: React.FC<PlaidLinkProps> = ({
   variant = "primary",
 }) => {
   const [linkToken, setLinkToken] = useState<string | null>(null);
+
+  const router = useRouter();
 
   // Fetch the link token from your API when the component mounts
   useEffect(() => {
@@ -46,9 +49,10 @@ const PlaidLink: React.FC<PlaidLinkProps> = ({
       } else {
         console.log("Item linked successfully:", data);
         // Optionally trigger a data refresh or redirect
+        router.refresh();
       }
     },
-    [userId] // Include userId in the dependency array
+    [userId, router], // Include userId and router in the dependency array
   );
 
   const onEvent = useCallback((eventName: string, metadata: unknown) => {
@@ -74,9 +78,6 @@ const PlaidLink: React.FC<PlaidLinkProps> = ({
   const { open, ready } = usePlaidLink(config);
 
   return (
-    // <button onClick={() => open()} disabled={!ready || !linkToken}>
-    //   Connect Bank Accountdsad
-    // </button>
     <Button
       text="Connect bank account"
       variant={variant}

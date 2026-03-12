@@ -35,7 +35,10 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts, emblaRef }) => {
     );
 
   return (
-    <div ref={emblaRef} className={styles.emblaContainer}>
+    <div
+      ref={accounts.length > 1 ? emblaRef : null}
+      className={styles.emblaContainer}
+    >
       <div className={styles.accounts}>
         {accounts.map((account) => (
           <div
@@ -48,13 +51,13 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts, emblaRef }) => {
             <i className={styles.icon}>
               <BsCreditCard2FrontFill />
             </i>
-            <h4 className={styles.name}>{account.official_name}</h4>
+            <h4 className={styles.name}>{account.name}</h4>
             <div className={styles.details}>
               <p className={styles.type}>{account.subtype}</p>
               <p>**** **** **** {account.mask}</p>
             </div>
 
-            <h3 className={styles.balance}>£{account.balances.current}</h3>
+            <h3 className={styles.balance}>£{account.current_balance}</h3>
 
             <div className={styles.shape}></div>
           </div>

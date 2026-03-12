@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/supabase/server"; // Assuming you have a Supabase server client utility
 import { ItemPublicTokenExchangeRequest } from "plaid";
 import plaidClient from "@/shared/lib/plaid";
+import { syncPlaidAccounts } from "@/features/accounts/api/syncPlaidAccounts";
 
 export async function POST(request: Request) {
   try {
@@ -10,7 +11,7 @@ export async function POST(request: Request) {
     if (!public_token || !userId) {
       return NextResponse.json(
         { error: "Missing public token or user ID" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -37,16 +38,20 @@ export async function POST(request: Request) {
       console.error("Error saving Plaid item to Supabase:", error);
       return NextResponse.json(
         { error: "Failed to save Plaid item" },
-        { status: 500 }
+        { status: 500 },
       );
     }
+
+    //Accounts will be synced after user connects their bank
+    // Sync accounts immediately after storing the access token
+    await syncPlaidAccounts(userId);
 
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error exchanging public token:", error);
     return NextResponse.json(
       { error: "Failed to exchange public token" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
