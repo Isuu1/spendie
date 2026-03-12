@@ -26,8 +26,8 @@ export default async function Layout({
   // const { accounts, error: accountsError } = await getAccountsServer();
   // const { recurringPayments, error: recurringPaymentsError } =
   //   await getRecurringPaymentsServer();
-  const { paymentsHistory, error: historyError } =
-    await getRecurringPaymentsHistoryServer();
+  // const { paymentsHistory, error: historyError } =
+  //   await getRecurringPaymentsHistoryServer();
 
   const { transactions, error: transactionsError } =
     await getTransactionsServer();
@@ -38,7 +38,7 @@ export default async function Layout({
     //settingsError ||
     //accountsError ||
     //recurringPaymentsError ||
-    historyError ||
+    // historyError ||
     transactionsError
     //userError
   ) {
@@ -46,7 +46,7 @@ export default async function Layout({
       //settingsError,
       //accountsError,
       //recurringPaymentsError,
-      historyError,
+      // historyError,
       transactionsError,
       //userError,
     });
@@ -72,12 +72,12 @@ export default async function Layout({
     queryFn: getUserServer,
   });
 
-  // Prefill React Query cache
-
   await queryClient.prefetchQuery({
     queryKey: ["paymentsHistory"],
-    queryFn: () => Promise.resolve(paymentsHistory),
+    queryFn: getRecurringPaymentsHistoryServer,
   });
+
+  // Prefill React Query cache
 
   await queryClient.prefetchQuery({
     queryKey: ["transactions"],

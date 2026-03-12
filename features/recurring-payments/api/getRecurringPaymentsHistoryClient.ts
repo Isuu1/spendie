@@ -1,10 +1,10 @@
-import { createClient } from "@/supabase/server";
+import { createClient } from "@/supabase/client";
 import { RecurringPaymentHistory } from "../types/recurring-payment";
 
-export async function getRecurringPaymentsHistoryServer(): Promise<
+export async function getRecurringPaymentsHistoryClient(): Promise<
   RecurringPaymentHistory[]
 > {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data: authData } = await supabase.auth.getUser();
 
