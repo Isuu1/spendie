@@ -7,7 +7,7 @@ import { ChangeDetailsFormState } from "../types/forms";
 
 export async function changeUserDetails(
   prevState: ChangeDetailsFormState,
-  formData: FormData
+  formData: FormData,
 ): Promise<ChangeDetailsFormState> {
   const name = formData.get("name") as string;
   const surname = formData.get("surname") as string;
@@ -15,12 +15,11 @@ export async function changeUserDetails(
   const email = formData.get("email") as string;
 
   try {
-    const { user, error } = await getUserServer();
+    const user = await getUserServer();
 
     const supabase = await createClient();
 
-    if (error || !user) {
-      console.error("Error fetching user:", error);
+    if (!user) {
       return { success: false, user: null, error: "Failed to fetch user" };
     }
 
