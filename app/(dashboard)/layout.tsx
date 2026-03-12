@@ -22,7 +22,7 @@ export default async function Layout({
 }) {
   const queryClient = new QueryClient();
 
-  const { settings, error: settingsError } = await getUserSettingsServer();
+  //const { settings, error: settingsError } = await getUserSettingsServer();
   // const { accounts, error: accountsError } = await getAccountsServer();
   // const { recurringPayments, error: recurringPaymentsError } =
   //   await getRecurringPaymentsServer();
@@ -35,7 +35,7 @@ export default async function Layout({
   const { user, error: userError } = await getUserServer();
 
   if (
-    settingsError ||
+    //settingsError ||
     //accountsError ||
     //recurringPaymentsError ||
     historyError ||
@@ -43,7 +43,7 @@ export default async function Layout({
     userError
   ) {
     console.error("Error loading dashboard data:", {
-      settingsError,
+      //settingsError,
       //accountsError,
       //recurringPaymentsError,
       historyError,
@@ -62,11 +62,12 @@ export default async function Layout({
     queryFn: getAccountsServer,
   });
 
-  // Prefill React Query cache
   await queryClient.prefetchQuery({
     queryKey: ["userSettings"],
-    queryFn: () => Promise.resolve(settings),
+    queryFn: getUserSettingsServer,
   });
+
+  // Prefill React Query cache
 
   await queryClient.prefetchQuery({
     queryKey: ["paymentsHistory"],
