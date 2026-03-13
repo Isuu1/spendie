@@ -1,19 +1,14 @@
 import { Toaster } from "react-hot-toast";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { QueryProvider } from "@/shared/providers/QueryProvider";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
 //Components
 import DashboardHeader from "@/features/dashboard/components/DashboardHeader";
 import Sidebar from "@/features/dashboard/components/Sidebar";
 import DashboardLayoutWrapper from "@/features/dashboard/layouts/DashboardLayoutWrapper";
-//Api
-import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer";
-import { getAccountsServer } from "@/features/accounts/api/getAccountsServer";
-import { getRecurringPaymentsServer } from "@/features/recurring-payments/api/getRecurringPaymentsServer";
-import { getRecurringPaymentsHistoryServer } from "@/features/recurring-payments/api/getRecurringPaymentsHistoryServer";
-import { getTransactionsServer } from "@/features/transactions/api/getTransactionsServer";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
-import { QueryProvider } from "@/shared/providers/QueryProvider";
-import { getUserServer } from "@/features/user/api/getUserServer";
+//Config
+import { prefetchDashboard } from "@/features/dashboard/config/prefetchDashboard";
 
 export default async function Layout({
   children,
@@ -22,35 +17,8 @@ export default async function Layout({
 }) {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: ["recurringPayments"],
-    queryFn: getRecurringPaymentsServer,
-  });
-
-  await queryClient.prefetchQuery({
-    queryKey: ["accounts"],
-    queryFn: getAccountsServer,
-  });
-
-  await queryClient.prefetchQuery({
-    queryKey: ["userSettings"],
-    queryFn: getUserSettingsServer,
-  });
-
-  await queryClient.prefetchQuery({
-    queryKey: ["user"],
-    queryFn: getUserServer,
-  });
-
-  await queryClient.prefetchQuery({
-    queryKey: ["paymentsHistory"],
-    queryFn: getRecurringPaymentsHistoryServer,
-  });
-
-  await queryClient.prefetchQuery({
-    queryKey: ["transactions"],
-    queryFn: getTransactionsServer,
-  });
+  // Prefetch all the data for the dashboard on the server side before rendering the page
+  await prefetchDashboard(queryClient);
 
   const dehydratedState = dehydrate(queryClient);
 
