@@ -18,6 +18,7 @@ interface PopUpProps {
   right?: number;
   bottom?: number;
   left?: number;
+  width?: number | string;
   popupRef?: React.RefObject<HTMLDivElement | null>;
   inheritBackground?: boolean;
 }
@@ -28,6 +29,7 @@ const PopUp = ({
   right,
   bottom,
   left,
+  width,
   popupRef,
   inheritBackground = false,
 }: PopUpProps) => {
@@ -40,7 +42,13 @@ const PopUp = ({
       className={clsx(styles.popUp, {
         [styles.inheritBackground]: inheritBackground,
       })}
-      style={{ top: top, right: right, bottom: bottom, left: left }}
+      style={{
+        top: top,
+        right: right,
+        bottom: bottom,
+        left: left,
+        width: width,
+      }}
       ref={popupRef}
     >
       {children}
