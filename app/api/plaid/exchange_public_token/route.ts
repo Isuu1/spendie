@@ -3,6 +3,7 @@ import { createClient } from "@/supabase/server"; // Assuming you have a Supabas
 import { ItemPublicTokenExchangeRequest } from "plaid";
 import plaidClient from "@/shared/lib/plaid";
 import { syncPlaidAccounts } from "@/features/accounts/api/syncPlaidAccounts";
+import { syncPlaidTransactions } from "@/features/transactions/api/syncPlaidTransactions";
 
 export async function POST(request: Request) {
   try {
@@ -45,6 +46,7 @@ export async function POST(request: Request) {
     //Accounts will be synced after user connects their bank
     // Sync accounts immediately after storing the access token
     await syncPlaidAccounts(userId);
+    await syncPlaidTransactions(userId);
 
     return NextResponse.json({ success: true });
   } catch (error) {

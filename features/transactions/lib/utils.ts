@@ -1,13 +1,7 @@
-export const displayTransactionAmount = (amount: number) => {
+export const displayTransactionAmount = (amount: number, currency: string) => {
   return amount > 0
-    ? `-${amount.toLocaleString("en-US", {
-        style: "currency",
-        currency: "GBP",
-      })}`
-    : `+${Math.abs(amount).toLocaleString("en-US", {
-        style: "currency",
-        currency: "GBP",
-      })}`;
+    ? `-${amount} ${currency}`
+    : `+${Math.abs(amount)} ${currency}`;
 };
 
 export const displayTransactionCategory = (category: string) => {

@@ -8,14 +8,15 @@ import {
   displayTransactionCategory,
 } from "../lib/utils";
 //Hooks
-import { useTransactionsClient } from "../hooks/useTransactionsClient";
+import { useTransactions } from "../hooks/useTransactions";
 //Types
-import { Transaction } from "plaid";
+
 //Components
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
+import { Transaction } from "../types/transaction";
 
 const TransactionsPanel: React.FC = () => {
-  const { isLoading, data: transactions } = useTransactionsClient();
+  const { isLoading, data: transactions } = useTransactions();
 
   if (isLoading) {
     return <DashboardPanelLoader height={467} />;
@@ -36,10 +37,7 @@ const TransactionsPanel: React.FC = () => {
           className={styles.transactionItem}
         >
           <Image
-            src={
-              transaction?.personal_finance_category_icon_url ||
-              "/images/transaction-icon.svg"
-            }
+            src={transaction?.image_url || "/images/transaction-icon.svg"}
             alt="transaction-image"
             width={45}
             height={45}
@@ -50,8 +48,7 @@ const TransactionsPanel: React.FC = () => {
             <p className={styles.name}>{transaction.name ?? "Unknown"}</p>
             <p className={styles.category}>
               {displayTransactionCategory(
-                transaction?.personal_finance_category?.primary ??
-                  "Uncategorized",
+                transaction?.category ?? "Uncategorized",
               )}
             </p>
           </div>
@@ -60,7 +57,10 @@ const TransactionsPanel: React.FC = () => {
             <p
               className={`${styles.transactionAmount} ${transaction.amount > 0 ? styles.expense : styles.income}`}
             >
-              {displayTransactionAmount(transaction.amount)}
+              {displayTransactionAmount(
+                transaction.amount,
+                transaction.iso_currency_code,
+              )}
             </p>
             <p className={styles.date}>
               {new Date(transaction.date).toLocaleDateString("en-GB", {
