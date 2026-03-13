@@ -16,7 +16,7 @@ export async function getRecurringPaymentsClient(): Promise<
     .from("recurring_payments")
     .select("*")
     .eq("user_id", authUser.user.id)
-    .order("first_payment_date", { ascending: true });
+    .order("next_payment_date", { ascending: true });
 
   if (error) {
     throw new Error("Could not load recurring payments: " + error.message);

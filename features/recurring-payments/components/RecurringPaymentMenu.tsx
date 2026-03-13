@@ -1,10 +1,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import { toast } from "react-hot-toast";
 //Types
 import { RecurringPayment } from "../types/recurring-payment";
-//Actions
-import { deleteRecurringPayment } from "../lib/actions/delete-recurring-payment";
 //Styles
 import styles from "./RecurringPaymentMenu.module.scss";
 //Animations
@@ -15,6 +12,8 @@ import { IoTrashBin } from "react-icons/io5";
 //Components
 import HamburgerMenu from "@/shared/components/HamburgerMenu";
 import ConfirmAction from "@/shared/components/ConfirmAction";
+//Hooks
+import { useDeletePayment } from "../hooks/useDeletePayment";
 
 interface RecurringPaymentMenuProps {
   payment: RecurringPayment;
@@ -27,14 +26,10 @@ const RecurringPaymentMenu: React.FC<RecurringPaymentMenuProps> = ({
     string | null
   >(null);
 
+  const { mutate } = useDeletePayment();
+
   const handleDeletePayment = async (paymentId: string) => {
-    const result = await deleteRecurringPayment(paymentId);
-    if (result.success) {
-      toast.success("Payment deleted successfully!");
-    }
-    if (result.error) {
-      toast.error(`Failed to delete payment: ${result.error}`);
-    }
+    mutate(paymentId);
     setConfirmDeletePayment(null);
   };
 

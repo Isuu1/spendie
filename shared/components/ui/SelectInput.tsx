@@ -81,7 +81,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
         </div>
         <AnimatePresence>
           {showOptions && (
-            <PopUp popupRef={selectRef} top={40} right={0}>
+            <PopUp popupRef={selectRef} top={40} left={0} width="100%">
               <div ref={selectRef}>
                 <ul
                   style={{

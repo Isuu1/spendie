@@ -10,7 +10,7 @@ export type RecurringPaymentFormState = {
     repeat: Repeat;
     amount: number;
     type: PaymentType;
-    first_payment_date: string;
+    next_payment_date: string;
   };
   success: boolean;
   message: string;
@@ -23,7 +23,7 @@ export const initialRecurringPaymentFormState: RecurringPaymentFormState = {
     repeat: "Monthly",
     type: "Income",
     amount: 0,
-    first_payment_date: "",
+    next_payment_date: "",
   },
   success: false,
   message: "",

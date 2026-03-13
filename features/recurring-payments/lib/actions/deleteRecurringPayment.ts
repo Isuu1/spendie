@@ -14,11 +14,7 @@ export async function deleteRecurringPayment(recurringPaymentId: string) {
 
   if (error) {
     console.error("Error deleting recurring payment:", error);
-    return {
-      success: false,
-      message: "Failed to delete recurring payment",
-      error: error.message,
-    };
+    throw new Error("Failed to delete recurring payment");
   }
 
   //Refresh cached data
@@ -26,6 +22,5 @@ export async function deleteRecurringPayment(recurringPaymentId: string) {
 
   return {
     success: true,
-    message: "Recurring payment deleted successfully",
   };
 }
