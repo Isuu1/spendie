@@ -10,7 +10,7 @@ import { getUserSettingsServer } from "@/features/user/api/getUserSettingsServer
 import { getAccountsServer } from "@/features/accounts/api/getAccountsServer";
 import { getRecurringPaymentsServer } from "@/features/recurring-payments/api/getRecurringPaymentsServer";
 import { getRecurringPaymentsHistoryServer } from "@/features/recurring-payments/api/getRecurringPaymentsHistoryServer";
-import { getTransactionsServer } from "@/features/transactions/api/getTransactionsServer";
+//import { getTransactionsServer } from "@/features/transactions/api/getTransactionsServer";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 import { getUserServer } from "@/features/user/api/getUserServer";
@@ -29,28 +29,28 @@ export default async function Layout({
   // const { paymentsHistory, error: historyError } =
   //   await getRecurringPaymentsHistoryServer();
 
-  const { transactions, error: transactionsError } =
-    await getTransactionsServer();
+  // const { transactions, error: transactionsError } =
+  //   await getTransactionsServer();
 
-  //const { user, error: userError } = await getUserServer();
+  // //const { user, error: userError } = await getUserServer();
 
-  if (
-    //settingsError ||
-    //accountsError ||
-    //recurringPaymentsError ||
-    // historyError ||
-    transactionsError
-    //userError
-  ) {
-    console.error("Error loading dashboard data:", {
-      //settingsError,
-      //accountsError,
-      //recurringPaymentsError,
-      // historyError,
-      transactionsError,
-      //userError,
-    });
-  }
+  // if (
+  //   //settingsError ||
+  //   //accountsError ||
+  //   //recurringPaymentsError ||
+  //   // historyError ||
+  //   transactionsError
+  //   //userError
+  // ) {
+  //   console.error("Error loading dashboard data:", {
+  //     //settingsError,
+  //     //accountsError,
+  //     //recurringPaymentsError,
+  //     // historyError,
+  //     transactionsError,
+  //     //userError,
+  //   });
+  // }
 
   await queryClient.prefetchQuery({
     queryKey: ["recurringPayments"],
@@ -79,10 +79,10 @@ export default async function Layout({
 
   // Prefill React Query cache
 
-  await queryClient.prefetchQuery({
-    queryKey: ["transactions"],
-    queryFn: () => Promise.resolve(transactions),
-  });
+  // await queryClient.prefetchQuery({
+  //   queryKey: ["transactions"],
+  //   queryFn: getTransactionsServer,
+  // });
 
   const dehydratedState = dehydrate(queryClient);
 
