@@ -1,5 +1,6 @@
-import moment from "moment";
 import { useState } from "react";
+import dayjs from "dayjs";
+import localeData from "dayjs/plugin/localeData";
 //Styles
 import styles from "./CustomDatepickerHeader.module.scss";
 //Icons
@@ -7,6 +8,9 @@ import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 import { TbArrowBigLeftLinesFilled } from "react-icons/tb";
 //Components
 import SelectInput from "../ui/SelectInput";
+
+// Extend dayjs with the plugin
+dayjs.extend(localeData);
 
 interface CustomDatepickerHeaderProps {
   date: Date;
@@ -30,7 +34,7 @@ const CustomDatepickerHeader = ({
   //Current page offset for years pagination
   const [yearPageOffset, setYearPageOffset] = useState(0);
 
-  const baseYear = moment().year() + yearPageOffset * 10;
+  const baseYear = dayjs().year() + yearPageOffset * 10;
 
   const years = Array.from({ length: 10 }, (_, i) => baseYear + i);
 
@@ -47,16 +51,16 @@ const CustomDatepickerHeader = ({
       <div className={styles.selects}>
         <SelectInput
           id="select"
-          selectOptions={moment.months()}
-          value={moment(date).format("MMMM")}
+          selectOptions={dayjs.months()}
+          value={dayjs(date).format("MMMM")}
           onChange={(value) =>
-            changeMonth(moment.months().indexOf(value.toString()))
+            changeMonth(dayjs.months().indexOf(value.toString()))
           }
         />
         <SelectInput
           id="year-select"
           selectOptions={years.map((year) => year.toString())}
-          value={moment(date).year().toString()}
+          value={dayjs(date).year().toString()}
           onChange={(value) => changeYear(Number(value))}
           optionsHeader={
             <div className={styles.yearHeader}>

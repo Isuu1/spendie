@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./RecurringPaymentsHistory.module.scss";
 import { useRecurringPaymentsHistory } from "../hooks/useRecurringPaymentsHistory";
 import { RecurringPayment } from "../types/recurring-payment";
-import moment from "moment";
+import dayjs from "dayjs";
 
 interface RecurringPaymentsHistoryProps {
   payment: RecurringPayment;
@@ -36,9 +36,9 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
         </ul>
         {paymentHistory.map((history) => (
           <ul key={history.id} className={styles.historyItem}>
-            <li>{moment(history.paid_date).format("DD MMM `YY")}</li>
+            <li>{dayjs(history.paid_date).format("DD MMM `YY")}</li>
             <li>{history.amount}</li>
-            <li>{moment(history.payment_date).format("DD MMM `YY")}</li>
+            <li>{dayjs(history.payment_date).format("DD MMM `YY")}</li>
           </ul>
         ))}
       </div>
