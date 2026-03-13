@@ -10,9 +10,9 @@ import DashboardFeature from "@/features/landing-page/components/DashboardFeatur
 import { getUserServer } from "@/features/user/api/getUserServer";
 
 export default async function Home() {
-  const { user, error } = await getUserServer();
+  const data = await getUserServer();
 
-  if (user && !error) {
+  if (data) {
     redirect("/dashboard");
   }
   return (

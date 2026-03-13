@@ -4,7 +4,7 @@ import clsx from "clsx";
 import React, { useRef } from "react";
 //Animations
 import { motion } from "motion/react";
-import { useUserSettingsClient } from "@/features/user/hooks/useUserSettingsClient";
+import { useUserSettings } from "@/features/user/hooks/useUserSettings";
 import { useTogglePanelVisibility } from "@/features/user/hooks/useTogglePanelVisibility";
 import { PanelName, panelsLibrary } from "../config/panelsLibrary";
 //Styles
@@ -25,7 +25,7 @@ interface DashboardPanelsMenuProps {
 const DashboardPanelsMenu: React.FC<DashboardPanelsMenuProps> = ({
   onClose,
 }) => {
-  const { data: settings } = useUserSettingsClient();
+  const { data: settings } = useUserSettings();
 
   const { mutate: togglePanel, isPending } = useTogglePanelVisibility();
 

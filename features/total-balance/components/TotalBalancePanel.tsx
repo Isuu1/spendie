@@ -6,30 +6,24 @@ import FutureBalance from "../../future-balance/components/FutureBalance";
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 import SelectInput from "@/shared/components/ui/SelectInput";
 //Api
-import { useAccountsClient } from "@/features/accounts/hooks/useAccountsClient";
+import { useAccounts } from "@/features/accounts/hooks/useAccounts";
 //Animations
 import { AnimatePresence } from "motion/react";
+import { Account } from "@/features/accounts/types/account";
 
 const TotalBalancePanel: React.FC = () => {
-  const { data, error, isLoading } = useAccountsClient();
+  const { data = [], isLoading } = useAccounts();
 
   const [futureBalanceVisible, setFutureBalanceVisible] = React.useState(true);
-
-  if (error) {
-    console.error("Error fetching accounts data:", error);
-  }
 
   if (isLoading) {
     return <DashboardPanelLoader height={218} />;
   }
 
-  const totalBalance = data?.reduce(
-    (sum: number, currentAccount: { balances: { current: number } }) => {
-      const currentBalance = currentAccount.balances.current ?? 0;
-      return sum + currentBalance;
-    },
-    0
-  );
+  const totalBalance = data?.reduce((sum: number, currentAccount: Account) => {
+    const currentBalance = currentAccount.current_balance ?? 0;
+    return sum + currentBalance;
+  }, 0);
 
   return (
     <div className={styles.totalBalanceTile}>

@@ -1,7 +1,7 @@
 import React from "react";
 //Styles
 import styles from "./RecurringPaymentsHistory.module.scss";
-import { useRecurringPaymentsHistoryClient } from "../hooks/useRecurringPaymentsHistoryClient";
+import { useRecurringPaymentsHistory } from "../hooks/useRecurringPaymentsHistory";
 import { RecurringPayment } from "../types/recurring-payment";
 import moment from "moment";
 
@@ -15,7 +15,7 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
   const {
     data: recurringPaymentsHistory = [],
     error: recurringPaymentsHistoryError,
-  } = useRecurringPaymentsHistoryClient();
+  } = useRecurringPaymentsHistory();
 
   const paymentHistory = recurringPaymentsHistory.filter(
     (history) => history.payment_id === payment.id,

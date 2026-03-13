@@ -4,20 +4,20 @@ import React from "react";
 //Styles
 import styles from "./Dashboard.module.scss";
 //Hooks
-import { useUserSettingsClient } from "@/features/user/hooks/useUserSettingsClient";
+import { useUserSettings } from "@/features/user/hooks/useUserSettings";
 //Components
 import PanelWrapper from "./PanelWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 import DashboardOptions from "./DashboardOptions";
+import Button from "@/shared/components/ui/Button";
 //Config
 import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
 import { useTogglePanelVisibility } from "@/features/user/hooks/useTogglePanelVisibility";
-import Button from "@/shared/components/ui/Button";
 
 const Dashboard = () => {
-  const { data: settings, error } = useUserSettingsClient();
+  const { data: settings, error } = useUserSettings();
   const { mutate: togglePanel } = useTogglePanelVisibility();
 
   if (error)

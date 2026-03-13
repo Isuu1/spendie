@@ -8,7 +8,7 @@ import { generateAccountBackground } from "../utils/generateAccountBackground";
 import { Account } from "@/features/accounts/types/account";
 import { EmblaViewportRefType } from "embla-carousel-react";
 //Hooks
-import { useUserClient } from "@/features/user/hooks/useUserClient";
+import { useUser } from "@/features/user/hooks/useUser";
 //Components
 import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 //Icons
@@ -20,7 +20,7 @@ interface AccountsListProps {
 }
 
 const AccountsList: React.FC<AccountsListProps> = ({ accounts, emblaRef }) => {
-  const { data: user, error } = useUserClient();
+  const { data: user, error } = useUser();
 
   if (error) {
     console.error("Error fetching user data:", error);
@@ -35,7 +35,10 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts, emblaRef }) => {
     );
 
   return (
-    <div ref={emblaRef} className={styles.emblaContainer}>
+    <div
+      ref={accounts.length > 1 ? emblaRef : null}
+      className={styles.emblaContainer}
+    >
       <div className={styles.accounts}>
         {accounts.map((account) => (
           <div
@@ -48,13 +51,13 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts, emblaRef }) => {
             <i className={styles.icon}>
               <BsCreditCard2FrontFill />
             </i>
-            <h4 className={styles.name}>{account.official_name}</h4>
+            <h4 className={styles.name}>{account.name}</h4>
             <div className={styles.details}>
               <p className={styles.type}>{account.subtype}</p>
               <p>**** **** **** {account.mask}</p>
             </div>
 
-            <h3 className={styles.balance}>£{account.balances.current}</h3>
+            <h3 className={styles.balance}>£{account.current_balance}</h3>
 
             <div className={styles.shape}></div>
           </div>

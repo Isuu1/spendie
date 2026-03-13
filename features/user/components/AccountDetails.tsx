@@ -9,10 +9,10 @@ import ChangePasswordForm from "./ChangePasswordForm";
 import ChangeAvatarForm from "./ChangeAvatarForm";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 //Hooks
-import { useUserClient } from "../hooks/useUserClient";
+import { useUser } from "../hooks/useUser";
 
 const AccountDetails: React.FC = () => {
-  const { data: user, error } = useUserClient();
+  const { data: user, error } = useUser();
 
   if (error || !user) {
     return (
