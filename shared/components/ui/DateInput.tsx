@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 //Styles
 import styles from "./DateInput.module.scss";
-import moment from "moment";
 import InputError from "../InputError";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
@@ -9,6 +8,7 @@ import { AnimatePresence, motion } from "motion/react";
 import CustomDatePicker from "../CustomDatepicker/CustomDatepicker";
 //Icons
 import { TbArrowBigDownLineFilled } from "react-icons/tb";
+import dayjs from "dayjs";
 
 interface DateInputProps {
   id: string;
@@ -31,7 +31,7 @@ const DateInput: React.FC<DateInputProps> = ({
   const [openDatePicker, setOpenDatePicker] = useState(false);
 
   const formatValue = (dateStr: string) => {
-    return moment(dateStr).format("Do MMMM YYYY");
+    return dayjs(dateStr).format("Do MMMM YYYY");
   };
 
   return (

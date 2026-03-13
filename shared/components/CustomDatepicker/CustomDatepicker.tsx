@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef } from "react";
-import moment from "moment";
 //Styles
 import styles from "./CustomDatepicker.module.scss";
 //DatePicker
@@ -12,6 +11,7 @@ import { useClickOutside } from "@/shared/hooks/useClickOutside";
 //Components
 import CustomDatepickerHeader from "./CustomDatepickerHeader";
 import PopUp from "../PopUp";
+import dayjs from "dayjs";
 
 interface CustomDatePickerProps {
   onChange?: (option: string) => void;
@@ -45,11 +45,10 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
             }
           }}
           inline
-          minDate={moment().toDate()}
+          minDate={dayjs().toDate()}
           onSelect={() => {
             onClose?.();
           }}
-          formatWeekDay={(nameOfDay) => moment(nameOfDay, "dd").format("ddd")}
           renderCustomHeader={({
             date,
             changeYear,
