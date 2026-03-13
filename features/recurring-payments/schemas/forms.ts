@@ -8,11 +8,11 @@ export const recurringPaymentSchema = z.object({
   }),
   amount: z
     .number({ invalid_type_error: "Please provide amount" })
-    .min(0.01, "Amount must be greater than 0"),
+    .min(1, "Amount must be greater than 0"),
   type: z.enum(typeOptions, {
     message: "Invalid type value",
   }),
-  first_payment_date: z.string().refine((val) => !isNaN(Date.parse(val)), {
+  next_payment_date: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "Invalid date format",
   }),
 });

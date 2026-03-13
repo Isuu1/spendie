@@ -31,7 +31,7 @@ const AddPaymentForm: React.FC = () => {
 
   const [state, formAction, isPending] = useActionState(
     addRecurringPayment,
-    initialRecurringPaymentFormState
+    initialRecurringPaymentFormState,
   );
 
   const { formData, errors, handleChange, validateForm } = useForm(
@@ -41,12 +41,12 @@ const AddPaymentForm: React.FC = () => {
       repeat: "Monthly",
       type: "Income",
       amount: 0,
-      first_payment_date: "",
-    }
+      next_payment_date: "",
+    },
   );
 
   const handleValidationBeforeSubmit = (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>,
   ) => {
     //This runs before server action to validate all fields on client side
     const isValid = validateForm(formData);
@@ -61,6 +61,7 @@ const AddPaymentForm: React.FC = () => {
     if (state.success) {
       toast.success("Recurring payment added successfully!", toastStyle);
       router.push("/recurring-payments");
+      router.refresh();
     }
     if (state.error) {
       toast.error(`Error: ${state.error}`, toastStyle);
@@ -103,11 +104,11 @@ const AddPaymentForm: React.FC = () => {
         onChange={(e) => handleChange("amount", e.target.value)}
       />
       <DateInput
-        id="first_payment_date"
-        label="First Payment Date"
-        errors={errors.first_payment_date}
-        value={formData.first_payment_date}
-        onChange={(val) => handleChange("first_payment_date", val)}
+        id="next_payment_date"
+        label="Next Payment Date"
+        errors={errors.next_payment_date}
+        value={formData.next_payment_date}
+        onChange={(val) => handleChange("next_payment_date", val)}
         icon={<IoCalendarNumber />}
       />
 

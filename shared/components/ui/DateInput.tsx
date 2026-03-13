@@ -31,7 +31,7 @@ const DateInput: React.FC<DateInputProps> = ({
   const [openDatePicker, setOpenDatePicker] = useState(false);
 
   const formatValue = (dateStr: string) => {
-    return dayjs(dateStr).format("Do MMMM YYYY");
+    return dayjs(dateStr).format("D MMMM YYYY");
   };
 
   return (

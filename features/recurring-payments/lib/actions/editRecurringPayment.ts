@@ -11,7 +11,7 @@ import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/fo
 export async function editRecurringPayment(
   paymentId: string,
   prevState: RecurringPaymentFormState,
-  formData: FormData
+  formData: FormData,
 ) {
   const supabase = await createClient();
 
@@ -22,7 +22,7 @@ export async function editRecurringPayment(
     repeat: formData.get("repeat") as Repeat,
     amount: (amountValue && parseFloat(amountValue as string)) || 0,
     type: formData.get("type") as PaymentType,
-    first_payment_date: formData.get("first_payment_date")?.toString() || "",
+    next_payment_date: formData.get("next_payment_date")?.toString() || "",
   };
 
   const validateData = recurringPaymentSchema.safeParse(data);

@@ -22,7 +22,7 @@ export async function addRecurringPayment(
     repeat: formData.get("repeat") as Repeat,
     amount: amountValue || 0,
     type: formData.get("type") as PaymentType,
-    first_payment_date: formData.get("first_payment_date")?.toString() || "",
+    next_payment_date: formData.get("next_payment_date")?.toString() || "",
   };
 
   //Validate the form data
@@ -48,7 +48,7 @@ export async function addRecurringPayment(
   const newPayment = {
     user_id: user.user.id,
     add_payment_date: dayjs().format("YYYY-MM-DD"),
-    next_payment_date: data.first_payment_date,
+    //next_payment_date: data.next_payment_date,
     ...data,
   };
 
