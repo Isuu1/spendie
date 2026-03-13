@@ -13,12 +13,16 @@
   .innerContainer {
     background: var(--color-bg-secondary);
     line-height: 2rem;
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: 14px;
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
     align-items: center;
+    max-width: 300px;
+    .title {
+      text-align: center;
+    }
     .buttonsContainer {
       display: flex;
       gap: 1rem;
