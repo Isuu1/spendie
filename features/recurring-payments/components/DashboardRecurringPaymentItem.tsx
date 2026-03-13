@@ -1,19 +1,15 @@
-import React, { useState } from "react";
-import toast from "react-hot-toast";
+import React from "react";
 import dayjs from "dayjs";
 //Styles
 import styles from "./DashboardRecurringPaymentItem.module.scss";
-import { toastStyle } from "@/shared/styles/toastStyle";
 //Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
 //Components
 import PaymentStatus from "@/features/recurring-payments/components/PaymentStatus";
 import Button from "@/shared/components/ui/Button";
 import LoadingSpinner from "@/shared/components/LoadingSpinner";
-//Animations
-import { motion } from "motion/react";
-//Actions
-import { markAsPaid } from "../lib/actions/markAsPaid";
+//Hooks
+import { useMarkAsPaid } from "../hooks/useMarkAsPaid";
 
 interface RecurringPaymentItemProps {
   payment: RecurringPayment;
@@ -22,24 +18,10 @@ interface RecurringPaymentItemProps {
 const DashboardRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   payment,
 }) => {
-  const [loadingId, setLoadingId] = useState<string | null>(null);
+  const { mutate, isPending, variables } = useMarkAsPaid();
 
   const handleMarkAsPaid = async (payment: RecurringPayment) => {
-    setLoadingId(payment.id);
-    try {
-      const result = await markAsPaid(payment);
-
-      if (result?.error) {
-        console.error("Error marking payment as paid:", result.error);
-        toast.error(result.error, toastStyle);
-      }
-      if (result?.success) {
-        toast.success("Payment marked as paid.", toastStyle);
-      }
-    } catch (error) {
-      console.error("Error marking payment as paid:", error);
-    }
-    setLoadingId(null);
+    mutate(payment);
   };
 
   const formatedDate = (dateStr: string) => {
@@ -47,13 +29,8 @@ const DashboardRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   };
 
   return (
-    <motion.div
-      className={styles.paymentItemWrapper}
-      layout
-      transition={{ duration: 0.2, ease: "easeInOut" }}
-      onAnimationComplete={() => setLoadingId(null)}
-    >
-      {loadingId === payment.id && (
+    <div className={styles.paymentItemWrapper}>
+      {isPending && variables?.id === payment.id && (
         <div className={styles.processingPayment}>
           <LoadingSpinner />
         </div>
@@ -77,14 +54,18 @@ const DashboardRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
 
         <Button
           className={styles.paidButton}
-          text={loadingId === payment.id ? "Processing..." : "Mark as paid"}
+          text={
+            isPending && variables?.id === payment.id
+              ? "Processing..."
+              : "Mark as paid"
+          }
           variant="secondary"
           size="small"
           onClick={() => handleMarkAsPaid(payment)}
-          disabled={loadingId === payment.id}
+          disabled={isPending && variables?.id === payment.id}
         />
       </div>
-    </motion.div>
+    </div>
   );
 };
 
