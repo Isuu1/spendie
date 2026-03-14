@@ -6,9 +6,10 @@
   align-items: center;
   .historyContainer {
     display: grid;
-    grid-template-columns: 2fr 1fr 0.5fr;
+    grid-template-columns: 1fr 1fr 0.5fr;
     gap: 1rem;
     .historyHeader {
+      position: relative;
       display: grid;
       grid-template-columns: subgrid; //Use parent grid columns
       grid-column: 1 / -1; //Span all columns
@@ -17,20 +18,40 @@
       li {
         white-space: nowrap;
       }
-      li:nth-child(3) {
-        text-align: right;
+      &::after {
+        position: absolute;
+        bottom: -0.5rem;
+        left: 0;
+        width: 100%;
+        content: "";
+        grid-column: 1 / -1; //Span all columns
+        height: 2px;
+        background: var(--color-bg-tile);
       }
     }
     .historyItem {
+      position: relative;
       display: grid;
       grid-template-columns: subgrid; //Use parent grid columns
       grid-column: 1 / -1; //Span all columns
-      background: var(--color-bg-tile);
       padding: 0.5rem 0.7rem;
       border-radius: var(--border-radius-m);
       list-style: none;
       li {
         white-space: nowrap;
+      }
+      &::after {
+        position: absolute;
+        bottom: -0.5rem;
+        left: 0;
+        width: 100%;
+        content: "";
+        grid-column: 1 / -1; //Span all columns
+        height: 2px;
+        background: var(--color-bg-tile);
+      }
+      &:last-child::after {
+        display: none;
       }
     }
   }

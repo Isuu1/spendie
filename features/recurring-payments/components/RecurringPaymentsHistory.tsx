@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { useRecurringPaymentsPagination } from "../hooks/useRecurringPaymentsPagination";
 import Pagination from "@/shared/components/Pagination";
 import Button from "@/shared/components/ui/Button";
+import PaymentHistoryStatus from "./PaymentHistoryStatus";
 
 interface RecurringPaymentsHistoryProps {
   payment: RecurringPayment;
@@ -48,18 +49,22 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
       <p>
         Payments history for <strong>{payment.name}</strong>
       </p>
+      <p>
+        Amount: <strong>£{payment.amount}</strong>
+      </p>
 
       <div className={styles.historyContainer}>
         <ul className={styles.historyHeader}>
           <li>Paid date</li>
-          <li>Amount</li>
           <li>Due by</li>
+          <li>Status</li>
         </ul>
         {currentItems.map((history) => (
           <ul key={history.id} className={styles.historyItem}>
-            <li>{dayjs(history.paid_date).format("DD MMM `YY")}</li>
-            <li>{history.amount}</li>
-            <li>{dayjs(history.payment_date).format("DD MMM `YY")}</li>
+            <li>{dayjs(history.paid_date).format("DD MMM YYYY")}</li>
+            {/* <li>£{history.amount}</li> */}
+            <li>{dayjs(history.payment_date).format("DD MMM YYYY")}</li>
+            <PaymentHistoryStatus paymentHistory={history} />
           </ul>
         ))}
       </div>
