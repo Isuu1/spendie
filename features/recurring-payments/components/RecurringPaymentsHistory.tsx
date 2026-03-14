@@ -4,6 +4,9 @@ import styles from "./RecurringPaymentsHistory.module.scss";
 import { useRecurringPaymentsHistory } from "../hooks/useRecurringPaymentsHistory";
 import { RecurringPayment } from "../types/recurring-payment";
 import dayjs from "dayjs";
+import { useRecurringPaymentsPagination } from "../hooks/useRecurringPaymentsPagination";
+import Pagination from "@/shared/components/Pagination";
+import Button from "@/shared/components/ui/Button";
 
 interface RecurringPaymentsHistoryProps {
   payment: RecurringPayment;
@@ -12,6 +15,7 @@ interface RecurringPaymentsHistoryProps {
 const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
   payment,
 }) => {
+  const [confirmClear, setConfirmClear] = React.useState(false);
   const {
     data: recurringPaymentsHistory = [],
     error: recurringPaymentsHistoryError,
@@ -21,20 +25,37 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
     (history) => history.payment_id === payment.id,
   );
 
+  const { page, setPage, totalPages, currentItems } =
+    useRecurringPaymentsPagination(paymentHistory, 4);
+
   if (recurringPaymentsHistoryError) {
     return <div>Error loading payment history</div>;
   }
 
+  if (paymentHistory.length === 0) {
+    return (
+      <div className={styles.historyWrapper}>
+        <p>
+          Payments history for <strong>{payment.name}</strong>
+        </p>
+        <p>Looks like you don`t have any payment history yet.</p>
+      </div>
+    );
+  }
+
   return (
-    <>
-      <h3>{payment.name} payments history</h3>
+    <div className={styles.historyWrapper}>
+      <p>
+        Payments history for <strong>{payment.name}</strong>
+      </p>
+
       <div className={styles.historyContainer}>
         <ul className={styles.historyHeader}>
           <li>Paid date</li>
           <li>Amount</li>
           <li>Due by</li>
         </ul>
-        {paymentHistory.map((history) => (
+        {currentItems.map((history) => (
           <ul key={history.id} className={styles.historyItem}>
             <li>{dayjs(history.paid_date).format("DD MMM `YY")}</li>
             <li>{history.amount}</li>
@@ -42,7 +63,36 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
           </ul>
         ))}
       </div>
-    </>
+      {totalPages > 1 && (
+        <Pagination
+          page={page}
+          onPageChange={setPage}
+          totalPages={totalPages}
+        />
+      )}
+      <p className={styles.clear} onClick={() => setConfirmClear(true)}>
+        Clear history
+      </p>
+      {confirmClear && (
+        <div className={styles.confirmClear}>
+          <p>Are you sure you want to clear the history?</p>
+          <div className={styles.buttons}>
+            <Button
+              onClick={() => setConfirmClear(false)}
+              variant="primary"
+              text="Delete"
+              size="small"
+            />
+            <Button
+              onClick={() => setConfirmClear(false)}
+              variant="secondary"
+              text="Cancel"
+              size="small"
+            />
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
