@@ -3,7 +3,7 @@ import { RecurringPaymentHistory } from "../types/recurring-payment";
 import dayjs from "dayjs";
 import { BsHandThumbsUpFill } from "react-icons/bs";
 //Styles
-import styles from "./RecurringPaymentsHistory.module.scss";
+import styles from "./PaymentHistoryStatus.module.scss";
 
 import { MdWatchLater } from "react-icons/md";
 import clsx from "clsx";
