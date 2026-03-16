@@ -1,12 +1,11 @@
-import React from "react";
+import clsx from "clsx";
+//Types
 import { RecurringPaymentHistory } from "../types/recurring-payment";
-import dayjs from "dayjs";
+//Icons
 import { BsHandThumbsUpFill } from "react-icons/bs";
+import { MdWatchLater } from "react-icons/md";
 //Styles
 import styles from "./PaymentHistoryStatus.module.scss";
-
-import { MdWatchLater } from "react-icons/md";
-import clsx from "clsx";
 
 interface PaymentHistoryStatusProps {
   paymentHistory: RecurringPaymentHistory;
@@ -15,20 +14,16 @@ interface PaymentHistoryStatusProps {
 const PaymentHistoryStatus = ({
   paymentHistory,
 }: PaymentHistoryStatusProps) => {
-  const paidDate = dayjs(paymentHistory.paid_date);
-  const paymentDate = dayjs(paymentHistory.payment_date);
-  const daysDiff = paidDate.diff(paymentDate, "day");
-
-  if (paidDate.isBefore(paymentDate) || paidDate.isSame(paymentDate, "day")) {
+  if (paymentHistory.status === "On time") {
     return (
       <li className={clsx(styles.status, styles.onTime)}>
-        <BsHandThumbsUpFill /> On time
+        <BsHandThumbsUpFill /> {paymentHistory.status}
       </li>
     );
   }
   return (
     <li className={clsx(styles.status, styles.late)}>
-      <MdWatchLater /> {daysDiff} {daysDiff === 1 ? "day" : "days"} late
+      <MdWatchLater /> {paymentHistory.status}
     </li>
   );
 };

@@ -20,22 +20,19 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
 }) => {
   const [confirmClear, setConfirmClear] = React.useState(false);
   const [sortedBy, setSortedBy] = React.useState("All");
-  const {
-    data: recurringPaymentsHistory = [],
-    error: recurringPaymentsHistoryError,
-  } = useRecurringPaymentsHistory();
+  const { data = [], error } = useRecurringPaymentsHistory();
 
-  const paymentHistory = recurringPaymentsHistory.filter(
-    (history) => history.payment_id === payment.id,
-  );
+  const paymentHistory = React.useMemo(() => {
+    return data.filter((history) => history.payment_id === payment.id);
+  }, [data, payment.id]);
 
+  //Filter history based on sortedBy state
   const filteredHistory = React.useMemo(() => {
     if (sortedBy === "Late") {
       return paymentHistory.filter((history) =>
         history.status.startsWith("Late"),
       );
     }
-
     if (sortedBy === "On time") {
       return paymentHistory.filter((history) => history.status === "On time");
     }
@@ -48,11 +45,12 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
     4,
   );
 
+  //Reset to page 1 when sortedBy changes
   React.useEffect(() => {
     setPage(1);
   }, [sortedBy, setPage]);
 
-  if (recurringPaymentsHistoryError) {
+  if (error) {
     return <div>Error loading payment history</div>;
   }
 
