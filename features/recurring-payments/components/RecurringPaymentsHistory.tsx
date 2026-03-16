@@ -10,6 +10,8 @@ import { RecurringPayment } from "../types/recurring-payment";
 import Pagination from "@/shared/components/Pagination";
 import ConfirmAction from "@/shared/components/ConfirmAction";
 import RecurringPaymentsHistoryItem from "./RecurringPaymentsHistoryItem";
+//Animations
+import { AnimatePresence } from "motion/react";
 
 interface RecurringPaymentsHistoryProps {
   payment: RecurringPayment;
@@ -120,13 +122,15 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
         />
       )}
 
-      {confirmClear && (
-        <ConfirmAction
-          message="Are you sure you want to clear the history?"
-          onCancel={() => setConfirmClear(false)}
-          onConfirm={() => {}}
-        />
-      )}
+      <AnimatePresence>
+        {confirmClear && (
+          <ConfirmAction
+            message="Are you sure you want to clear the history?"
+            onCancel={() => setConfirmClear(false)}
+            onConfirm={() => {}}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
