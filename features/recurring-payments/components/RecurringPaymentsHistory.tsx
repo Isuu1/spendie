@@ -92,18 +92,25 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
         </p>
       </div>
 
-      <div className={styles.historyContainer}>
-        <ul className={styles.historyHeader}>
-          <li></li>
-          <li>Amount</li>
-          <li>Due by</li>
-          <li>Paid date</li>
-          <li>Status</li>
-        </ul>
-        {currentItems.map((history) => (
-          <RecurringPaymentsHistoryItem key={history.id} payment={history} />
-        ))}
-      </div>
+      {filteredHistory.length === 0 ? (
+        <p className={styles.noResults}>
+          Could not find any payments matching the selected filter. Try changing
+          the filter or check back later when more payments have been made.
+        </p>
+      ) : (
+        <div className={styles.historyContainer}>
+          <ul className={styles.historyHeader}>
+            <li></li>
+            <li>Amount</li>
+            <li>Due by</li>
+            <li>Paid date</li>
+            <li>Status</li>
+          </ul>
+          {currentItems.map((history) => (
+            <RecurringPaymentsHistoryItem key={history.id} payment={history} />
+          ))}
+        </div>
+      )}
 
       {totalPages > 1 && (
         <Pagination
