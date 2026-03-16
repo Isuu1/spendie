@@ -3,6 +3,7 @@
 import React from "react";
 import dayjs from "dayjs";
 import clsx from "clsx";
+import Link from "next/link";
 //Styles
 import styles from "./RecurringPaymentItem.module.scss";
 //Types
@@ -10,11 +11,6 @@ import { RecurringPayment } from "../types/recurring-payment";
 //Components
 import PaymentStatus from "./PaymentStatus";
 import RecurringPaymentMenu from "./RecurringPaymentMenu";
-import Modal from "@/shared/components/Modal";
-import RecurringPaymentsHistory from "./RecurringPaymentsHistory";
-//Animations
-import { AnimatePresence } from "motion/react";
-import Link from "next/link";
 
 interface RecurringPaymentItemProps {
   payment: RecurringPayment;
@@ -23,8 +19,6 @@ interface RecurringPaymentItemProps {
 const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   payment,
 }) => {
-  const [openHistory, setOpenHistory] = React.useState(false);
-
   const formatedDate = (dateStr: string) => {
     return dayjs(dateStr).format("D MMMM YYYY");
   };
@@ -62,26 +56,13 @@ const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
           £{payment.amount}
         </span>
       </div>
-      <p
-        className={styles.paymentHistory}
-        onClick={() => setOpenHistory(!openHistory)}
-      >
-        View payment history
-      </p>
+
       <Link
         href={`/recurring-payments/history/${payment.id}`}
-        className={styles.detailsLink}
+        className={styles.paymentHistory}
       >
-        View details
+        View history
       </Link>
-
-      <AnimatePresence>
-        {openHistory && (
-          <Modal onClose={() => setOpenHistory(false)}>
-            <RecurringPaymentsHistory payment={payment} />
-          </Modal>
-        )}
-      </AnimatePresence>
     </div>
   );
 };
