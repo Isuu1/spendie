@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./RecurringPaymentsHistory.module.scss";
 //Hooks
 import { useRecurringPaymentsHistory } from "../hooks/useRecurringPaymentsHistory";
-import { useRecurringPaymentsPagination } from "../hooks/useRecurringPaymentsPagination";
+import { usePagination } from "@/shared/hooks/usePagination";
 //Types
 import { RecurringPayment } from "../types/recurring-payment";
 //Components
@@ -43,8 +43,10 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
     return paymentHistory;
   }, [sortedBy, paymentHistory]);
 
-  const { page, setPage, totalPages, currentItems } =
-    useRecurringPaymentsPagination(filteredHistory, 4);
+  const { page, setPage, totalPages, currentItems } = usePagination(
+    filteredHistory,
+    4,
+  );
 
   React.useEffect(() => {
     setPage(1);

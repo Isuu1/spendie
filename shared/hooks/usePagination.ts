@@ -1,9 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 
-export function useRecurringPaymentsPagination<T>(
-  items: T[],
-  itemsPerPage: number,
-) {
+export function usePagination<T>(items: T[], itemsPerPage: number) {
   const [page, setPage] = useState(1);
 
   const totalPages = Math.max(1, Math.ceil(items.length / itemsPerPage));

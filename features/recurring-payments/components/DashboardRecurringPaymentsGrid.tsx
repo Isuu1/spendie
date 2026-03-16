@@ -16,7 +16,8 @@ import Pagination from "@/shared/components/Pagination";
 import DashboardRecurringPaymentItem from "./DashboardRecurringPaymentItem";
 //Utils
 import { sortDashboardRecurringPayments } from "../lib/utils/sortDashboardRecurringPayments";
-import { useRecurringPaymentsPagination } from "../hooks/useRecurringPaymentsPagination";
+//Hooks
+import { usePagination } from "@/shared/hooks/usePagination";
 
 interface DashboardRecurringPaymentsGridProps {
   type: "income" | "expense";
@@ -38,8 +39,10 @@ const DashboardRecurringPaymentsGrid: React.FC<
     return sortDashboardRecurringPayments(payments, sortingOption);
   }, [payments, sortingOption]);
 
-  const { page, setPage, totalPages, currentItems } =
-    useRecurringPaymentsPagination(sortedPayments, 4);
+  const { page, setPage, totalPages, currentItems } = usePagination(
+    sortedPayments,
+    4,
+  );
 
   const handleSortingChange = (option: "name" | "date") => {
     setSortingOption(option);
