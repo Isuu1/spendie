@@ -7,19 +7,15 @@ import { use } from "react";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  console.log("Payment history ID:", id);
 
   const { data } = useRecurringPayments();
 
-  console.log("Recurring payments data:", data);
-
   const payment = data?.find((payment) => payment.id == id);
-
-  console.log("Found payment:", payment);
 
   if (!payment) {
     return <div>Payment not found</div>;
   }
+
   return (
     <>
       <BackButton />

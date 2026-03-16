@@ -66,29 +66,31 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
 
   return (
     <div className={styles.historyWrapper}>
-      <ul className={styles.menu}>
-        <li
-          className={sortedBy === "All" ? styles.active : ""}
-          onClick={() => setSortedBy("All")}
-        >
-          All
-        </li>
-        <li
-          className={sortedBy === "Late" ? styles.active : ""}
-          onClick={() => setSortedBy("Late")}
-        >
-          Late
-        </li>
-        <li
-          className={sortedBy === "On time" ? styles.active : ""}
-          onClick={() => setSortedBy("On time")}
-        >
-          On time
-        </li>
-      </ul>
-      <p className={styles.clear} onClick={() => setConfirmClear(true)}>
-        Clear history
-      </p>
+      <div className="flex-row-space-between">
+        <ul className={styles.menu}>
+          <li
+            className={sortedBy === "All" ? styles.active : ""}
+            onClick={() => setSortedBy("All")}
+          >
+            All
+          </li>
+          <li
+            className={sortedBy === "Late" ? styles.active : ""}
+            onClick={() => setSortedBy("Late")}
+          >
+            Late
+          </li>
+          <li
+            className={sortedBy === "On time" ? styles.active : ""}
+            onClick={() => setSortedBy("On time")}
+          >
+            On time
+          </li>
+        </ul>
+        <p className={styles.clear} onClick={() => setConfirmClear(true)}>
+          Clear history
+        </p>
+      </div>
 
       <div className={styles.historyContainer}>
         <ul className={styles.historyHeader}>
