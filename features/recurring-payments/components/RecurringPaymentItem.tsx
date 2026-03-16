@@ -14,6 +14,7 @@ import Modal from "@/shared/components/Modal";
 import RecurringPaymentsHistory from "./RecurringPaymentsHistory";
 //Animations
 import { AnimatePresence } from "motion/react";
+import Link from "next/link";
 
 interface RecurringPaymentItemProps {
   payment: RecurringPayment;
@@ -67,6 +68,12 @@ const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
       >
         View payment history
       </p>
+      <Link
+        href={`/recurring-payments/history/${payment.id}`}
+        className={styles.detailsLink}
+      >
+        View details
+      </Link>
 
       <AnimatePresence>
         {openHistory && (

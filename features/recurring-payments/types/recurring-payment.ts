@@ -19,4 +19,6 @@ export type RecurringPaymentHistory = RecurringPaymentBase & {
   payment_id: string;
   payment_date: string;
   paid_date: string;
+  type: string;
+  status: string;
 };

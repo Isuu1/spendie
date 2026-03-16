@@ -13,7 +13,14 @@ export async function markAsPaid(
 ): Promise<MarkAsPaidResult> {
   const supabase = await createClient();
 
-  const paidDate = dayjs().format("YYYY-MM-DD");
+  const paidDate = dayjs();
+  const paymentDate = dayjs(payment.next_payment_date);
+  const daysDiff = paidDate.diff(paymentDate, "day");
+
+  const status =
+    paidDate.isBefore(paymentDate) || paidDate.isSame(paymentDate, "day")
+      ? "On time"
+      : `Late by ${daysDiff} ${daysDiff === 1 ? "day" : "days"}`;
 
   //Get user ID from supabase auth
   const user = await supabase.auth.getUser();
@@ -60,6 +67,8 @@ export async function markAsPaid(
       payment_date: payment.next_payment_date,
       paid_date: paidDate,
       amount: payment.amount,
+      type: payment.type,
+      status: status,
     });
 
   if (historyError) {

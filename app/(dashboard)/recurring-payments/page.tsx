@@ -3,6 +3,7 @@ import RecurringPaymentsGrid from "@/features/recurring-payments/components/Recu
 export default async function Page() {
   return (
     <>
+      <h3>Recurring payments</h3>
       <RecurringPaymentsGrid />
     </>
   );
