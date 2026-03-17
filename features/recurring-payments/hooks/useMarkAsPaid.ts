@@ -14,26 +14,29 @@ export function useMarkAsPaid() {
       return result;
     },
 
-    onMutate: async (payment) => {
-      await queryClient.cancelQueries({ queryKey: ["recurringPayments"] });
+    // onMutate: async (payment) => {
+    //   await queryClient.cancelQueries({ queryKey: ["recurringPayments"] });
 
-      const previous = queryClient.getQueryData<RecurringPayment[]>([
-        "recurringPayments",
-      ]);
+    //   const previous = queryClient.getQueryData<RecurringPayment[]>([
+    //     "recurringPayments",
+    //   ]);
 
-      queryClient.setQueryData<RecurringPayment[]>(
-        ["recurringPayments"],
-        (old = []) => old.filter((p) => p.id !== payment.id),
-      );
+    //   queryClient.setQueryData<RecurringPayment[]>(
+    //     ["recurringPayments"],
+    //     (old = []) => old.filter((p) => p.id !== payment.id),
+    //   );
 
-      return { previous };
-    },
+    //   return { previous };
+    // },
 
     onSuccess: () => {
       toast.success("Payment marked as paid.", toastStyle);
 
       queryClient.invalidateQueries({
         queryKey: ["recurringPayments"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["paymentsHistory"],
       });
     },
 

@@ -1,0 +1,38 @@
+.historyItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: subgrid; //Use parent grid columns
+  grid-column: 1 / -1; //Span all columns
+  padding: 0.5rem 0.7rem;
+  border-radius: var(--border-radius-m);
+  list-style: none;
+  align-items: center;
+  .icon {
+    font-size: 1.2rem;
+    svg {
+      display: block;
+    }
+    &.incomeIcon {
+      color: #41b300;
+    }
+    &.expenseIcon {
+      color: #ff0000;
+    }
+  }
+  li {
+    white-space: nowrap;
+  }
+  &::after {
+    position: absolute;
+    bottom: -0.9rem;
+    left: 0;
+    width: 100%;
+    content: "";
+    grid-column: 1 / -1; //Span all columns
+    height: 1px;
+    background: #292929;
+  }
+  &:last-child::after {
+    display: none;
+  }
+}

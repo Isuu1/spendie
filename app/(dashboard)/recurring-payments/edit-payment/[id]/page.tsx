@@ -1,31 +1,18 @@
+"use client";
+
 import EditPaymentForm from "@/features/recurring-payments/components/EditPaymentForm";
+import { useRecurringPayments } from "@/features/recurring-payments/hooks/useRecurringPayments";
+import BackButton from "@/shared/components/BackButton";
 import ErrorMessage from "@/shared/components/ErrorMessage";
-import { createClient } from "@/supabase/server";
+import { use } from "react";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
+export default function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
 
-  const supabase = await createClient();
+  const payments = useRecurringPayments();
+  const payment = payments.data?.find((p) => p.id == id);
 
-  const { data: user, error } = await supabase.auth.getUser();
-
-  if (!user || error) {
-    return <p>You must be logged in to edit a recurring payment.</p>;
-  }
-
-  const { data: payment, error: paymentError } = await supabase
-    .from("recurring_payments")
-    .select("*")
-    .eq("user_id", user.user.id)
-    .eq("id", id)
-    .single();
-
-  if (paymentError || !payment) {
-    console.error("Error fetching payment:", paymentError);
+  if (!payment) {
     return (
       <div className="page">
         <ErrorMessage
@@ -38,7 +25,8 @@ export default async function Page({
 
   return (
     <>
-      <h2>Edit recurring payment</h2>
+      <BackButton />
+      <h3>Edit recurring payment</h3>
       <EditPaymentForm payment={payment} />
     </>
   );

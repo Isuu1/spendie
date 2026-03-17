@@ -49,7 +49,7 @@ const ConfirmAction: React.FC<ConfirmActionProps> = ({
         animate="visible"
         exit="exit"
       >
-        <h3>{message}</h3>
+        <h4 className={styles.title}>{message}</h4>
         <div className={styles.buttonsContainer}>
           <Button
             variant="primary"

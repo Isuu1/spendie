@@ -1,0 +1,18 @@
+.status {
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  border-radius: var(--border-radius-l);
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  svg {
+    font-size: 1rem;
+  }
+  &.onTime {
+    background: #0c912d;
+  }
+  &.late {
+    background: #c92c2c;
+  }
+}

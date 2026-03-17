@@ -1,30 +1,57 @@
-.historyContainer {
-  display: grid;
-  grid-template-columns: 2fr 1fr 0.5fr;
-  gap: 1rem;
-  .historyHeader {
-    display: grid;
-    grid-template-columns: subgrid; //Use parent grid columns
-    grid-column: 1 / -1; //Span all columns
+.historyWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  background: var(--color-bg-tile);
+  padding: 2rem 1rem;
+  border-radius: var(--border-radius-l);
+  .menu {
+    display: flex;
+    gap: 0.7rem;
     list-style: none;
-    padding: 0 0.5rem;
+    padding: 0;
     li {
-      white-space: nowrap;
-    }
-    li:nth-child(3) {
-      text-align: right;
+      cursor: pointer;
+      padding: 0.5rem 0.8rem;
+      border-radius: var(--border-radius-l);
+      box-shadow: var(--box-shadow-default);
+      //background: var(--color-bg-secondary);
+      &.active {
+        background: var(--color-action-active);
+      }
     }
   }
-  .historyItem {
+  .historyContainer {
     display: grid;
-    grid-template-columns: subgrid; //Use parent grid columns
-    grid-column: 1 / -1; //Span all columns
-    background: var(--color-bg-tile);
-    padding: 0.5rem 0.7rem;
-    border-radius: var(--border-radius-m);
-    list-style: none;
-    li {
-      white-space: nowrap;
+    grid-template-columns: auto 1fr 2fr 2fr 2fr;
+    gap: 2rem;
+    .historyHeader {
+      position: relative;
+      display: grid;
+      grid-template-columns: subgrid; //Use parent grid columns
+      grid-column: 1 / -1; //Span all columns
+      list-style: none;
+      padding: 0 0.5rem;
+      li {
+        white-space: nowrap;
+      }
+      &::after {
+        position: absolute;
+        bottom: -1.3rem;
+        left: 0;
+        width: 100%;
+        content: "";
+        grid-column: 1 / -1; //Span all columns
+        height: 1px;
+        background: #292929;
+      }
     }
+  }
+  .clear {
+    margin-left: auto;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-s);
+    cursor: pointer;
   }
 }
