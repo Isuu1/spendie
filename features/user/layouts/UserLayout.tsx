@@ -16,8 +16,9 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className={styles.userLayout}>
       <ul className={styles.menu}>
-        <Link href="/user/account-details">
-          <li
+        <li>
+          <Link
+            href="/user/account-details"
             className={clsx(styles.item, {
               [styles.active]: pathname.includes("account-details"),
             })}
@@ -26,10 +27,11 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
               <FaUser />
             </i>
             <span>Account details</span>
-          </li>
-        </Link>
-        <Link href="/user/dashboard-settings">
-          <li
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/user/dashboard-settings"
             className={clsx(styles.item, {
               [styles.active]: pathname.includes("dashboard-settings"),
             })}
@@ -38,8 +40,8 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
               <IoSettings />
             </i>
             <span>Dashboard settings</span>
-          </li>
-        </Link>
+          </Link>
+        </li>
       </ul>
       <>{children}</>
     </div>
