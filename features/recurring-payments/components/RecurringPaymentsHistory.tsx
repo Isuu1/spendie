@@ -4,6 +4,7 @@ import styles from "./RecurringPaymentsHistory.module.scss";
 //Hooks
 import { useRecurringPaymentsHistory } from "../hooks/useRecurringPaymentsHistory";
 import { usePagination } from "@/shared/hooks/usePagination";
+import { useDeletePayment } from "../hooks/useDeletePaymentHistory";
 //Types
 import { RecurringPayment } from "../types/recurring-payment";
 //Components
@@ -23,9 +24,15 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
   const [confirmClear, setConfirmClear] = React.useState(false);
   const [sortedBy, setSortedBy] = React.useState("All");
   const { data = [], error } = useRecurringPaymentsHistory();
+  const { mutate } = useDeletePayment();
+
+  const handleDelete = (paymentId: string) => {
+    mutate(paymentId);
+    setConfirmClear(false);
+  };
 
   const paymentHistory = React.useMemo(() => {
-    return data.filter((history) => history.payment_id === payment.id);
+    return data.filter((history) => history.id === payment.id);
   }, [data, payment.id]);
 
   //Filter history based on sortedBy state
@@ -109,7 +116,10 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
             <li>Status</li>
           </ul>
           {currentItems.map((history) => (
-            <RecurringPaymentsHistoryItem key={history.id} payment={history} />
+            <RecurringPaymentsHistoryItem
+              key={`${history.id}-${history.payment_date}`}
+              payment={history}
+            />
           ))}
         </div>
       )}
@@ -127,7 +137,7 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
           <ConfirmAction
             message="Are you sure you want to clear the history?"
             onCancel={() => setConfirmClear(false)}
-            onConfirm={() => {}}
+            onConfirm={() => handleDelete(payment.id)}
           />
         )}
       </AnimatePresence>
