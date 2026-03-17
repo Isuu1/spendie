@@ -1,7 +1,9 @@
+import AccountsSettings from "@/features/accounts/components/AccountsSettings";
+
 export default function Page() {
   return (
     <div>
-      <h1>Accounts settings</h1>
+      <AccountsSettings />
     </div>
   );
 }

@@ -2,8 +2,6 @@
 import React from "react";
 //Styles
 import styles from "./AccountsList.module.scss";
-//Utils
-import { generateAccountBackground } from "../utils/generateAccountBackground";
 //Types
 import { Account } from "@/features/accounts/types/account";
 import { EmblaViewportRefType } from "embla-carousel-react";
@@ -11,8 +9,7 @@ import { EmblaViewportRefType } from "embla-carousel-react";
 import { useUser } from "@/features/user/hooks/useUser";
 //Components
 import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
-//Icons
-import { BsCreditCard2FrontFill } from "react-icons/bs";
+import AccountItem from "./AccountItem";
 
 interface AccountsListProps {
   accounts: Account[];
@@ -41,26 +38,7 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts, emblaRef }) => {
     >
       <div className={styles.accounts}>
         {accounts.map((account) => (
-          <div
-            key={account.account_id}
-            className={styles.account}
-            style={{
-              background: generateAccountBackground(account.subtype ?? ""),
-            }}
-          >
-            <i className={styles.icon}>
-              <BsCreditCard2FrontFill />
-            </i>
-            <h4 className={styles.name}>{account.name}</h4>
-            <div className={styles.details}>
-              <p className={styles.type}>{account.subtype}</p>
-              <p>**** **** **** {account.mask}</p>
-            </div>
-
-            <h3 className={styles.balance}>£{account.current_balance}</h3>
-
-            <div className={styles.shape}></div>
-          </div>
+          <AccountItem key={account.account_id} account={account} />
         ))}
       </div>
     </div>

@@ -1,0 +1,10 @@
+.accountsSettings {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  .accountsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
