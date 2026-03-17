@@ -8,13 +8,12 @@ import { createClient } from "@/supabase/client";
 import toast from "react-hot-toast";
 //Styles
 import styles from "./Sidebar.module.scss";
+import { toastStyle } from "@/shared/styles/toastStyle";
 //Icons
 import { FaSignOutAlt } from "react-icons/fa";
 //Components
 import ConfirmAction from "@/shared/components/ConfirmAction";
 import Switcher from "@/shared/components/ui/Switcher";
-//Styles
-import { toastStyle } from "@/shared/styles/toastStyle";
 //Animations
 import { AnimatePresence } from "motion/react";
 //Hooks
@@ -59,7 +58,7 @@ export default function Sidebar() {
                 pathname.startsWith("/user") && item.href.startsWith("/user")
                   ? styles.active
                   : "",
-                pathname === item.href ? styles.active : ""
+                pathname.startsWith(item.href) ? styles.active : "",
               )}
             >
               <i className={styles.icon}>{item.icon}</i>
