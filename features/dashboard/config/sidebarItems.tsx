@@ -4,6 +4,7 @@ import { IoWallet } from "react-icons/io5";
 import { FaCalculator } from "react-icons/fa6";
 import { FaRepeat } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
+import { MdAccountBalance } from "react-icons/md";
 
 export const sidebarItems = [
   {
@@ -11,6 +12,7 @@ export const sidebarItems = [
     href: "/dashboard",
     icon: <TbLayoutDashboardFilled />,
   },
+  { name: "Accounts", href: "/accounts", icon: <MdAccountBalance /> },
   { name: "Transactions", href: "/transactions", icon: <IoWallet /> },
   { name: "Budget planner", href: "/budget-planner", icon: <FaCalculator /> },
   {

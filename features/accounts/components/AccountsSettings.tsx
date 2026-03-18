@@ -40,7 +40,7 @@ const AccountsSettings = () => {
       <h3>Linked accounts</h3>
       <div className={styles.accountsContainer}>
         {accounts.map((account: Account) => (
-          <div className={styles.itemWrapper} key={account.account_id}>
+          <div className={styles.itemWrapper} key={account.id}>
             <div className={styles.syncInfo}>
               <p>{lastUpdated(account.last_synced_at)}</p>
               <Button
