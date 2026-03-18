@@ -1,10 +1,9 @@
 import UserLayout from "@/features/user/layouts/UserLayout";
-import BackButton from "@/shared/components/BackButton";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <BackButton text="Settings" />
+      <h3>Settings</h3>
       <UserLayout>{children}</UserLayout>
     </>
   );

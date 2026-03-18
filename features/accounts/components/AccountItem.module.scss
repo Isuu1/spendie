@@ -1,0 +1,71 @@
+.account {
+  z-index: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  flex: 0 0 70%;
+  overflow: hidden;
+  border-radius: var(--border-radius-m);
+  padding: 1.3rem;
+  user-select: none;
+  .icon {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    svg {
+      height: 30px;
+      width: 30px;
+    }
+  }
+  .name {
+    margin-bottom: 1.3rem;
+  }
+  .details {
+    z-index: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    .type {
+      text-transform: capitalize;
+      color: #a3a3a3;
+    }
+  }
+  .balance {
+    z-index: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+  }
+}
+.shape {
+  position: absolute;
+  top: 0;
+  left: 150px;
+  height: 500px;
+  width: 500px;
+  border-radius: 50%;
+  background: transparent;
+  border: 40px solid rgba(255, 255, 255, 0.1);
+  bottom: -250px;
+  right: -250px;
+  box-sizing: border-box;
+  &::after {
+    content: "";
+    position: absolute;
+    height: 600px;
+    width: 600px;
+    border-radius: 50%;
+    background: transparent;
+    border: 20px solid rgba(255, 255, 255, 0.1);
+    bottom: -80px;
+    right: -110px;
+    box-sizing: border-box;
+  }
+}

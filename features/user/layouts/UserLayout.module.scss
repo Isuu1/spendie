@@ -1,14 +1,28 @@
 .userLayout {
   display: grid;
-  grid-template-rows: auto auto;
-  gap: 1em;
+  gap: 2em;
   margin-top: 1rem;
   flex: 1 0;
+  background: var(--color-bg-tile);
+  padding: 2rem;
+  border-radius: var(--border-radius-l);
   .menu {
+    position: relative;
     list-style: none;
     display: flex;
     gap: 1rem;
-    padding-right: 2.5rem;
+    padding-right: 2rem;
+    height: 100%;
+    font-size: 0.85rem;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2px;
+      height: 100%;
+      background: #292929;
+    }
     .item {
       display: flex;
       gap: 0.5rem;
@@ -16,9 +30,8 @@
       white-space: nowrap;
       padding: 0.5rem 0.8rem;
       border-radius: var(--border-radius-m);
-      font-size: 0.9rem;
       .icon {
-        font-size: 1.05rem;
+        font-size: 1rem;
       }
       &.active {
         background: var(--color-action-active);

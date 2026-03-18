@@ -7,4 +7,5 @@ export type Account = {
   subtype: string | null;
   type: string;
   mask: string | null;
+  last_synced_at: string | null;
 };

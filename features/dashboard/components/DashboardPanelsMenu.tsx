@@ -1,22 +1,15 @@
 "use client";
 
-import clsx from "clsx";
 import React, { useRef } from "react";
-//Animations
-import { motion } from "motion/react";
-import { useUserSettings } from "@/features/user/hooks/useUserSettings";
-import { useTogglePanelVisibility } from "@/features/user/hooks/useTogglePanelVisibility";
+//Config
 import { PanelName, panelsLibrary } from "../config/panelsLibrary";
 //Styles
 import styles from "./DashboardPanelsMenu.module.scss";
+//Hooks
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
-
-const panelMenuVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-  transition: { duration: 0.15 },
-};
+import { useUserSettings } from "@/features/user/hooks/useUserSettings";
+import { useTogglePanelVisibility } from "@/features/user/hooks/useTogglePanelVisibility";
+import Switcher from "@/shared/components/ui/Switcher";
 
 interface DashboardPanelsMenuProps {
   onClose: () => void;
@@ -44,38 +37,20 @@ const DashboardPanelsMenu: React.FC<DashboardPanelsMenuProps> = ({
   useClickOutside(panelMenuRef, () => onClose());
 
   return (
-    <motion.ul
-      ref={panelMenuRef}
-      className={styles.menu}
-      variants={panelMenuVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-    >
+    <ul ref={panelMenuRef} className={styles.menu}>
       {panelsLibrary.map((panel) => (
         <li className={styles.menuItem} key={panel.name}>
-          <span
-            className={clsx(styles.panelStatus, [
-              { [styles.pending]: isPending },
-              { [styles.active]: isPanelActive(panel.name) },
-              { [styles.inactive]: !isPanelActive(panel.name) },
-            ])}
-            onClick={() =>
+          <Switcher
+            value={!isPanelActive(panel.name)}
+            onChange={() =>
               handleChange(panel.name, !!isPanelActive(panel.name))
             }
-          >
-            <motion.span
-              className={styles.indicator}
-              initial={false}
-              animate={{
-                x: isPanelActive(panel.name) ? "0%" : "100%",
-              }}
-            />
-          </span>
+            isPending={isPending}
+          />
           <span className={styles.panelName}>{panel.name}</span>
         </li>
       ))}
-    </motion.ul>
+    </ul>
   );
 };
 

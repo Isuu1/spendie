@@ -16,6 +16,9 @@
     border-radius: var(--border-radius-l);
     background: var(--color-bg-tile);
     padding: 0.2rem;
+    &.pending {
+      pointer-events: none;
+    }
     &.active {
       background: var(--color-action-active) !important;
       .indicator {

@@ -36,7 +36,7 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = () => {
     {
       newPassword: "",
       confirmPassword: "",
-    }
+    },
   );
 
   console.log(formData);
@@ -54,7 +54,6 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = () => {
         id="newPassword"
         type="text"
         label="New password"
-        defaultValue=""
         value={formData.newPassword}
         onChange={(e) => {
           handleChange("newPassword", e.target.value);
@@ -66,7 +65,6 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = () => {
         id="confirmPassword"
         type="email"
         label="Confirm password"
-        defaultValue=""
         value={formData.confirmPassword}
         onChange={(e) => {
           handleChange("confirmPassword", e.target.value);
