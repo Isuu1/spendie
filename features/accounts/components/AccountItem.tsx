@@ -31,7 +31,9 @@ const AccountItem = ({ account }: AccountItemProps) => {
         <p>**** **** **** {account.mask}</p>
       </div>
 
-      <h3 className={styles.balance}>£{account.current_balance}</h3>
+      <h3 className={styles.balance}>
+        {account.currency} {account.current_balance?.toFixed(2)}
+      </h3>
 
       <div className={styles.shape}></div>
     </div>
