@@ -1,6 +1,5 @@
 "use client";
 
-import dayjs from "dayjs";
 //Hooks
 import { useAccounts } from "../hooks/useAccounts";
 //Types
@@ -12,29 +11,10 @@ import styles from "./AccountsSettings.module.scss";
 import Button from "@/shared/components/ui/Button";
 //Icons
 import { FaSyncAlt } from "react-icons/fa";
+import { lastUpdated } from "../utils/calculateLastSyncTime";
 
 const AccountsSettings = () => {
   const { data = [] } = useAccounts();
-
-  console.log("Accounts data:", data);
-
-  const today = dayjs();
-
-  const lastUpdated = (syncedDate: string | null) => {
-    const lastSyncedAt = dayjs(syncedDate);
-
-    const diffInDays = today.diff(lastSyncedAt, "day");
-
-    const diffInHours = today.diff(lastSyncedAt, "hour");
-
-    if (diffInHours < 0.1) return "Last updated: Just now";
-
-    if (diffInHours < 24) return `Last updated: ${diffInHours} hours ago`;
-
-    if (diffInDays === 1) return "Last updated: Yesterday";
-
-    return `Last updated: ${diffInDays} days ago`;
-  };
 
   return (
     <div className={styles.accountsSettings}>
