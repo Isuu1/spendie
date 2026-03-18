@@ -1,5 +1,6 @@
 export type Account = {
   account_id: string;
+  plaid_item_id: string;
   name: string;
   current_balance: number | null;
   available_balance: number | null;
