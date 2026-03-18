@@ -11,7 +11,7 @@ import styles from "./AccountsSettings.module.scss";
 import Button from "@/shared/components/ui/Button";
 //Icons
 import { FaSyncAlt } from "react-icons/fa";
-import { lastUpdated } from "../utils/calculateLastSyncTime";
+import { lastUpdated } from "../lib/utils/calculateLastSyncTime";
 
 const AccountsSettings = () => {
   const { data = [] } = useAccounts();

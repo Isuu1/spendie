@@ -2,7 +2,7 @@ import React from "react";
 //Styles
 import styles from "./AccountItem.module.scss";
 //Utils
-import { generateAccountBackground } from "../utils/generateAccountBackground";
+import { generateAccountBackground } from "../lib/utils/generateAccountBackground";
 //Types
 import { Account } from "@/features/accounts/types/account";
 //Icons
