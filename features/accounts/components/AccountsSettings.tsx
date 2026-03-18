@@ -25,7 +25,11 @@ const AccountsSettings = () => {
 
     const diffInDays = today.diff(lastSyncedAt, "day");
 
-    if (diffInDays === 0) return "Last updated: Today";
+    const diffInHours = today.diff(lastSyncedAt, "hour");
+
+    if (diffInHours < 0.1) return "Last updated: Just now";
+
+    if (diffInHours < 24) return `Last updated: ${diffInHours} hours ago`;
 
     if (diffInDays === 1) return "Last updated: Yesterday";
 

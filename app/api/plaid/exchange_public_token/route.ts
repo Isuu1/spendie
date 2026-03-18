@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/supabase/server"; // Assuming you have a Supabase server client utility
 import { ItemPublicTokenExchangeRequest } from "plaid";
 import plaidClient from "@/shared/lib/plaid";
-import { syncPlaidAccounts } from "@/features/accounts/api/syncPlaidAccounts";
 import { syncPlaidTransactions } from "@/features/transactions/api/syncPlaidTransactions";
+import { syncPlaidAccountsForItem } from "@/features/accounts/api/syncPlaidAccountsForItem";
 
 export async function POST(request: Request) {
   try {
@@ -25,13 +25,15 @@ export async function POST(request: Request) {
     const { access_token, item_id } = plaidResponse.data;
 
     // Store the access_token and item_id in your Supabase database
-    const supabase = await createClient(); // Get your Supabase server client instance
+    const supabase = await createClient();
 
     const { error } = await supabase.from("plaid_items").insert([
       {
         user_id: userId,
         plaid_item_id: item_id,
         access_token: access_token,
+        last_synced_at: new Date(),
+        status: "connected",
       },
     ]);
 
@@ -44,8 +46,13 @@ export async function POST(request: Request) {
     }
 
     //Accounts will be synced after user connects their bank
-    // Sync accounts immediately after storing the access token
-    await syncPlaidAccounts(userId);
+    //Sync accounts immediately after storing the access token
+    //Sync only accounts for the newly connected item to avoid unnecessary API calls and potential rate limits
+    await syncPlaidAccountsForItem({
+      userId,
+      accessToken: access_token,
+      itemId: item_id,
+    });
     await syncPlaidTransactions(userId);
 
     return NextResponse.json({ success: true });
