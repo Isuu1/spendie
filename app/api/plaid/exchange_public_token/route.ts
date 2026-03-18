@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/supabase/server"; // Assuming you have a Supabase server client utility
-import { ItemPublicTokenExchangeRequest } from "plaid";
+import { CountryCode, ItemPublicTokenExchangeRequest } from "plaid";
 import plaidClient from "@/shared/lib/plaid";
 import { syncPlaidTransactions } from "@/features/transactions/api/syncPlaidTransactions";
 import { syncPlaidAccountsForItem } from "@/features/accounts/api/syncPlaidAccountsForItem";
@@ -20,11 +20,35 @@ export async function POST(request: Request) {
       public_token: public_token,
     };
 
+    //Exchange the public token for an access token and item ID
     const plaidResponse =
       await plaidClient.itemPublicTokenExchange(plaidRequest);
+
     const { access_token, item_id } = plaidResponse.data;
 
-    // Store the access_token and item_id in your Supabase database
+    //Get institution_id (bank name) for the item to store in the database
+    const itemResponse = await plaidClient.itemGet({
+      access_token,
+    });
+
+    const institutionId = itemResponse.data.item.institution_id;
+
+    let institutionName = "Unknown";
+
+    let institutionLogo = null;
+
+    if (institutionId) {
+      const institutionResponse = await plaidClient.institutionsGetById({
+        institution_id: institutionId,
+        country_codes: [CountryCode.Gb],
+      });
+
+      institutionName = institutionResponse.data.institution.name;
+
+      institutionLogo = institutionResponse.data.institution.logo || null;
+    }
+
+    //Store the access_token and item_id in your Supabase database
     const supabase = await createClient();
 
     const { error } = await supabase.from("plaid_items").insert([
@@ -33,6 +57,8 @@ export async function POST(request: Request) {
         plaid_item_id: item_id,
         access_token: access_token,
         last_synced_at: new Date(),
+        institution_name: institutionName,
+        institution_logo: institutionLogo,
         status: "connected",
       },
     ]);
