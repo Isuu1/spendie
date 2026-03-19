@@ -13,10 +13,9 @@ interface AccountItemProps {
 }
 
 const AccountItem = ({ account }: AccountItemProps) => {
-  console.log("Rendering AccountItem for account:", account);
   return (
     <div
-      key={account.account_id}
+      key={account.id}
       className={styles.account}
       style={{
         background: generateAccountBackground(account.subtype ?? ""),

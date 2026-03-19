@@ -5,9 +5,10 @@ export function useSyncAccount() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: syncAccountAction,
+    mutationFn: (itemId: string) => syncAccountAction(itemId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      queryClient.invalidateQueries({ queryKey: ["plaid_items"] });
     },
   });
 }
