@@ -3,12 +3,11 @@ import { Account } from "../types/account";
 //Components
 import AccountItem from "./AccountItem";
 import Button from "@/shared/components/ui/Button";
+import SyncIcon from "@/shared/components/SyncIcon";
 //Styles
 import styles from "./InstitutionCard.module.scss";
 //Utils
 import { lastUpdated } from "../lib/utils/calculateLastSyncTime";
-//Icons
-import { FaSyncAlt } from "react-icons/fa";
 
 type Institution = {
   plaid_item_id: string;
@@ -37,12 +36,12 @@ const InstitutionCard = ({
     <div key={institution.plaid_item_id} className={styles.accountGroup}>
       <h4>{institution.institution_name}</h4>
       <div className={styles.syncInfo}>
+        <SyncIcon isSyncing={isSyncing} />
         <p>{lastUpdated(institution.last_synced_at)}</p>
         <Button
           variant="primary"
           size="small"
           text={isSyncing ? "Syncing..." : "Sync now"}
-          icon={<FaSyncAlt />}
           iconPosition="left"
           onClick={handleSync}
           disabled={isSyncing}
