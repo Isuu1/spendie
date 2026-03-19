@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useMemo } from "react";
 //Types
 import { Account } from "../types/account";
 //Components
@@ -15,41 +14,26 @@ import { lastUpdated } from "../lib/utils/calculateLastSyncTime";
 import { FaSyncAlt } from "react-icons/fa";
 //Hooks
 import { useSyncAccount } from "../hooks/useSyncAccount";
-import { usePlaidItems } from "../hooks/usePlaidItems";
-import { useAccounts } from "../hooks/useAccounts";
+import { useGroupedAccounts } from "../hooks/useGroupedAccounts";
 
 const AccountsGrid = () => {
-  const { data: accounts = [] } = useAccounts();
-  const { data: plaidItems } = usePlaidItems();
+  const { data: grouped = [] } = useGroupedAccounts();
 
-  const { mutate: syncAccount, isPending } = useSyncAccount();
+  const sortedGrouped = grouped.sort((a, b) => {
+    const dateA = new Date(a.created_at).getTime();
+    const dateB = new Date(b.created_at).getTime();
+    return dateA - dateB;
+  });
 
-  console.log("Plaid items in AccountsGrid:", plaidItems);
-  console.log("Accounts in AccountsGrid:", accounts);
-
-  const grouped = useMemo(() => {
-    if (!accounts || !plaidItems) return [];
-
-    return plaidItems
-      .map((item) => ({
-        ...item,
-        accounts: accounts.filter(
-          (acc: Account) =>
-            acc.plaid_item_id === item.plaid_item_id && !acc.is_deleted,
-        ),
-      }))
-      .filter((item) => item.accounts.length > 0);
-  }, [accounts, plaidItems]);
+  const { mutate: syncAccount, isPending, variables } = useSyncAccount();
 
   const handleSync = (itemId: string) => {
     syncAccount(itemId);
   };
 
-  console.log("Grouped accounts by item:", grouped);
-
   return (
     <div className={styles.accountsGrid}>
-      {grouped.map((item) => (
+      {sortedGrouped.map((item) => (
         <div key={item.plaid_item_id} className={styles.accountGroup}>
           <h4>{item.institution_name}</h4>
           <div className={styles.syncInfo}>
@@ -57,11 +41,15 @@ const AccountsGrid = () => {
             <Button
               variant="primary"
               size="small"
-              text={isPending ? "Syncing..." : "Sync now"}
+              text={
+                isPending && variables === item.plaid_item_id
+                  ? "Syncing..."
+                  : "Sync now"
+              }
               icon={<FaSyncAlt />}
               iconPosition="left"
               onClick={() => handleSync(item.plaid_item_id)}
-              disabled={isPending}
+              disabled={isPending && variables === item.plaid_item_id}
             />
           </div>
           <div className={styles.accountsContainer}>

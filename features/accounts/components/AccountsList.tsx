@@ -38,7 +38,7 @@ const AccountsList: React.FC<AccountsListProps> = ({ accounts, emblaRef }) => {
     >
       <div className={styles.accounts}>
         {accounts.map((account) => (
-          <AccountItem key={account.account_id} account={account} />
+          <AccountItem key={account.id} account={account} />
         ))}
       </div>
     </div>
