@@ -14,6 +14,7 @@
   .accountsContainer {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
     .accountItem {
       position: relative;
       display: flex;
