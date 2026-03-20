@@ -6,7 +6,7 @@ import React from "react";
 import styles from "./Button.module.scss";
 
 interface ButtonProps {
-  variant: "primary" | "secondary";
+  variant: "primary" | "secondary" | "tertiary";
   size: "small" | "medium" | "large";
   type?: "button" | "submit";
   text?: string;

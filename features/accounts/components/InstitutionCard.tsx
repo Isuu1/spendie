@@ -39,7 +39,7 @@ const InstitutionCard = ({
         <SyncIcon isSyncing={isSyncing} />
         <p>{lastUpdated(institution.last_synced_at)}</p>
         <Button
-          variant="secondary"
+          variant="tertiary"
           size="small"
           text={isSyncing ? "Syncing..." : "Sync now"}
           iconPosition="left"
