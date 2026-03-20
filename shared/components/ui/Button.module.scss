@@ -1,7 +1,7 @@
 .button {
   --color-bg-button-primary: #d34702;
   --color-bg-button-primary-hover: #7c2a00;
-  --color-bg-button-secondary: #1c1c1c;
+  --color-bg-button-secondary: #333333;
   cursor: pointer;
   width: fit-content;
   display: flex;
@@ -62,7 +62,7 @@
   color: white;
   font-weight: 600;
   &:hover {
-    background: #414141;
+    background: #4d4d4d;
   }
 }
 

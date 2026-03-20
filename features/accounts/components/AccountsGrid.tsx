@@ -14,10 +14,7 @@ const AccountsGrid = () => {
   const { mutate: syncAccount, isPending, variables } = useSyncAccount();
 
   const sortedGrouped = [...grouped].sort((a, b) => {
-    return (
-      new Date(b.last_synced_at).getTime() -
-      new Date(a.last_synced_at).getTime()
-    );
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
   });
 
   return (
