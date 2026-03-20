@@ -8,6 +8,8 @@ import SyncIcon from "@/shared/components/SyncIcon";
 import styles from "./InstitutionCard.module.scss";
 //Utils
 import { lastUpdated } from "../lib/utils/calculateLastSyncTime";
+//Icons
+import { IoMdMore } from "react-icons/io";
 
 type Institution = {
   plaid_item_id: string;
@@ -35,6 +37,12 @@ const InstitutionCard = ({
   return (
     <div key={institution.plaid_item_id} className={styles.accountGroup}>
       <h4>{institution.institution_name}</h4>
+      <p>
+        Total balance: {institution.accounts[0]?.currency}{" "}
+        {institution.accounts
+          .reduce((sum, acc) => sum + (acc?.current_balance || 0), 0)
+          .toFixed(2)}
+      </p>
       <div className={styles.syncInfo}>
         <SyncIcon isSyncing={isSyncing} />
         <p>{lastUpdated(institution.last_synced_at)}</p>
@@ -49,7 +57,10 @@ const InstitutionCard = ({
       </div>
       <div className={styles.accountsContainer}>
         {institution.accounts.map((acc: Account) => (
-          <AccountItem key={acc.id} account={acc} />
+          <div key={acc.id} className={styles.accountItem}>
+            <AccountItem key={acc.id} account={acc} />
+            <IoMdMore className={styles.icon} />
+          </div>
         ))}
       </div>
     </div>
