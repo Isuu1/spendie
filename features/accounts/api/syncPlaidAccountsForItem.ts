@@ -1,27 +1,38 @@
+"use server";
+
 import { createClient } from "@/supabase/server";
 import plaidClient from "@/shared/lib/plaid";
 
 type SyncPlaidAccountsForItemParams = {
   userId: string;
-  accessToken: string;
   itemId: string;
 };
 
 export async function syncPlaidAccountsForItem({
   userId,
-  accessToken,
   itemId,
 }: SyncPlaidAccountsForItemParams) {
   const supabase = await createClient();
 
-  //1. Get accounts from Plaid for the specific item
+  //1. Fetch access token securely from DB
+  const { data: item } = await supabase
+    .from("plaid_items")
+    .select("access_token")
+    .eq("plaid_item_id", itemId)
+    .single();
+
+  if (!item) throw new Error("Item not found");
+
+  const accessToken = item.access_token;
+
+  //2. Get accounts from Plaid for the specific item
   const response = await plaidClient.accountsGet({
     access_token: accessToken,
   });
 
   const accounts = response.data.accounts;
 
-  //2. Format accounts for upsert into Supabase
+  //3. Format accounts for upsert into Supabase
   const formattedAccounts = accounts.map((acc) => ({
     user_id: userId,
     plaid_item_id: itemId, //Associate account with the correct item in plaid_items table
@@ -41,7 +52,7 @@ export async function syncPlaidAccountsForItem({
     is_hidden: false,
   }));
 
-  //3. Upsert accounts into Supabase
+  //4. Upsert accounts into Supabase
   const { error: insertError } = await supabase
     .from("accounts")
     .upsert(formattedAccounts, {
@@ -53,7 +64,7 @@ export async function syncPlaidAccountsForItem({
     throw new Error("Failed to sync accounts");
   }
 
-  //4. Update last_synced_at for the plaid item
+  //5. Update last_synced_at for the plaid item
   const { error: updateError } = await supabase
     .from("plaid_items")
     .update({ last_synced_at: new Date() })

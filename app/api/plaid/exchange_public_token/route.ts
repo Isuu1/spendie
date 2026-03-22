@@ -76,7 +76,6 @@ export async function POST(request: Request) {
     //Sync only accounts for the newly connected item to avoid unnecessary API calls and potential rate limits
     await syncPlaidAccountsForItem({
       userId,
-      accessToken: access_token,
       itemId: item_id,
     });
     await syncPlaidTransactions(userId);
