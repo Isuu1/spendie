@@ -1,0 +1,48 @@
+.accountGroup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  // box-shadow: var(--box-shadow-default);
+  // padding: 1rem;
+  // border-radius: var(--border-radius-l);
+  .syncInfo {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    p {
+      font-size: 0.8rem;
+      color: var(--color-text-secondary);
+    }
+  }
+  &::after {
+    position: absolute;
+    bottom: -1.3rem;
+    left: 0;
+    width: 100%;
+    content: "";
+    grid-column: 1 / -1; //Span all columns
+    height: 1px;
+    background: #292929;
+  }
+  .accountsContainer {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    .accountItem {
+      position: relative;
+      display: flex;
+      gap: 0.5rem;
+      .icon {
+        cursor: pointer;
+        z-index: 99;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        background: #ffffff1f;
+        border-radius: var(--border-radius-s);
+      }
+    }
+  }
+}

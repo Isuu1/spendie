@@ -3,13 +3,12 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import clsx from "clsx";
 //Styles
 import styles from "./UserLayout.module.scss";
-import clsx from "clsx";
 //Icons
 import { FaUser } from "react-icons/fa";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
-import { MdAccountBalanceWallet } from "react-icons/md";
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -41,19 +40,6 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
               <TbLayoutDashboardFilled />
             </i>
             <span>Dashboard settings</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/user/accounts"
-            className={clsx(styles.item, {
-              [styles.active]: pathname.includes("accounts"),
-            })}
-          >
-            <i className={styles.icon}>
-              <MdAccountBalanceWallet />
-            </i>
-            <span>Accounts</span>
           </Link>
         </li>
       </ul>
