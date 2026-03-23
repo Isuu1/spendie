@@ -13,6 +13,8 @@ interface AccountItemProps {
 }
 
 const AccountItem = ({ account }: AccountItemProps) => {
+  const displayName = account.user_account_name ?? account.name;
+
   return (
     <div
       key={account.id}
@@ -24,7 +26,7 @@ const AccountItem = ({ account }: AccountItemProps) => {
       <i className={styles.icon}>
         <BsCreditCard2FrontFill />
       </i>
-      <h4 className={styles.name}>{account.name}</h4>
+      <h4 className={styles.name}>{displayName}</h4>
       <div className={styles.details}>
         <p className={styles.type}>{account.subtype}</p>
         <p>**** **** **** {account.mask}</p>
