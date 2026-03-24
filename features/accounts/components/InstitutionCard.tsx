@@ -8,8 +8,6 @@ import SyncIcon from "@/shared/components/SyncIcon";
 import styles from "./InstitutionCard.module.scss";
 //Utils
 import { lastUpdated } from "../lib/utils/calculateLastSyncTime";
-//Icons
-import { IoMdMore } from "react-icons/io";
 
 type Institution = {
   plaid_item_id: string;
@@ -57,10 +55,7 @@ const InstitutionCard = ({
       </div>
       <div className={styles.accountsContainer}>
         {institution.accounts.map((acc: Account) => (
-          <div key={acc.id} className={styles.accountItem}>
-            <AccountItem key={acc.id} account={acc} />
-            <IoMdMore className={styles.icon} />
-          </div>
+          <AccountItem key={acc.id} account={acc} showMenu />
         ))}
       </div>
     </div>
