@@ -21,9 +21,16 @@
   }
   .nameInput {
     margin-bottom: 1.15rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    font-size: inherit;
+    color: inherit;
   }
   .name {
     margin-bottom: 1.3rem;
+    //cursor: pointer;
   }
   .details {
     z-index: 1;

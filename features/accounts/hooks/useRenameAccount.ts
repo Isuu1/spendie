@@ -13,7 +13,7 @@ export function useRenameAccount() {
 
   return useMutation({
     mutationFn: async ({ accountId, userName }: RenameAccountParams) =>
-      renameAccount({ accountId, userName }),
+      await renameAccount({ accountId, userName }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
       toast.success("Account renamed successfully!", toastStyle);

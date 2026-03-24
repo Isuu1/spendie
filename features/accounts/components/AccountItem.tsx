@@ -8,17 +8,45 @@ import { Account } from "@/features/accounts/types/account";
 //Icons
 import { BsCreditCard2FrontFill } from "react-icons/bs";
 import { IoMdMore } from "react-icons/io";
+import { useRenameAccount } from "../hooks/useRenameAccount";
 
 interface AccountItemProps {
   account: Account;
   onRename?: (accountId: string, newName: string) => void;
-  showMenu?: boolean;
+  canEdit?: boolean;
 }
 
-const AccountItem = ({ account, showMenu }: AccountItemProps) => {
+const AccountItem = ({ account, canEdit }: AccountItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [value, setValue] = useState<string>(
+    account.user_account_name ?? account.name,
+  );
+
+  const { mutate: renameAccount } = useRenameAccount();
 
   const displayName = account.user_account_name ?? account.name;
+
+  const startEditing = () => {
+    setIsEditing(true);
+  };
+
+  const cancelEditing = () => {
+    setIsEditing(false);
+    setValue(account.user_account_name ?? account.name);
+  };
+
+  const save = async () => {
+    const trimmed = value.trim();
+    if (!trimmed) return cancelEditing();
+
+    renameAccount({ accountId: account.id, userName: trimmed });
+    setIsEditing(false);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") save();
+    if (e.key === "Escape") cancelEditing();
+  };
 
   return (
     <div
@@ -31,9 +59,21 @@ const AccountItem = ({ account, showMenu }: AccountItemProps) => {
         <BsCreditCard2FrontFill />
       </i>
       {isEditing ? (
-        <input type="text" className={styles.nameInput} />
+        <input
+          value={value}
+          type="text"
+          autoFocus
+          className={styles.nameInput}
+          onChange={(e) => setValue(e.target.value)}
+          onBlur={cancelEditing}
+          onKeyDown={handleKeyDown}
+        />
       ) : (
-        <h4 className={styles.name} onClick={() => setIsEditing(true)}>
+        <h4
+          className={styles.name}
+          style={canEdit ? { cursor: "pointer" } : { cursor: "default" }}
+          onClick={canEdit ? startEditing : undefined}
+        >
           {displayName}
         </h4>
       )}
@@ -48,7 +88,7 @@ const AccountItem = ({ account, showMenu }: AccountItemProps) => {
 
       <div className={styles.shape}></div>
 
-      {showMenu && <IoMdMore className={styles.menuIcon} />}
+      {canEdit && <IoMdMore className={styles.menuIcon} />}
     </div>
   );
 };

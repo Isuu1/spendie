@@ -55,7 +55,7 @@ const InstitutionCard = ({
       </div>
       <div className={styles.accountsContainer}>
         {institution.accounts.map((acc: Account) => (
-          <AccountItem key={acc.id} account={acc} showMenu />
+          <AccountItem key={acc.id} account={acc} canEdit />
         ))}
       </div>
     </div>
