@@ -1,0 +1,39 @@
+.menu {
+  z-index: 98;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border-radius: var(--border-radius-s);
+  font-size: 0.8rem;
+  transition: background 0.2s ease;
+  &.active {
+    background: #ffffff1f;
+  }
+  .icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ffffff;
+  }
+  .dropdown {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    list-style: none;
+    white-space: nowrap;
+    background: var(--color-bg-tile);
+    padding: 0.5rem;
+    border-radius: var(--border-radius-m);
+    line-height: 1.4rem;
+    .option {
+      cursor: pointer;
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--border-radius-s);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      &:hover {
+        background: #ffffff1f;
+      }
+    }
+  }
+}
