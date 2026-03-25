@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import clsx from "clsx";
 //Styles
 import styles from "./AccountItem.module.scss";
 //Utils
@@ -8,13 +9,14 @@ import { Account } from "@/features/accounts/types/account";
 //Icons
 import { BsCreditCard2FrontFill } from "react-icons/bs";
 import { IoMdMore } from "react-icons/io";
+import { MdEditDocument } from "react-icons/md";
+//Hooks
 import { useRenameAccount } from "../hooks/useRenameAccount";
 
-interface AccountItemProps {
+type AccountItemProps = {
   account: Account;
-  onRename?: (accountId: string, newName: string) => void;
   canEdit?: boolean;
-}
+};
 
 const AccountItem = ({ account, canEdit }: AccountItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -22,7 +24,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
     account.user_account_name ?? account.name,
   );
 
-  const { mutate: renameAccount } = useRenameAccount();
+  const { mutateAsync: renameAccount, isPending } = useRenameAccount();
 
   const displayName = account.user_account_name ?? account.name;
 
@@ -36,10 +38,10 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
   };
 
   const save = async () => {
+    //Remove leading/trailing whitespace and check if the name is empty
     const trimmed = value.trim();
     if (!trimmed) return cancelEditing();
-
-    renameAccount({ accountId: account.id, userName: trimmed });
+    await renameAccount({ accountId: account.id, userName: trimmed });
     setIsEditing(false);
   };
 
@@ -47,6 +49,11 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
     if (e.key === "Enter") save();
     if (e.key === "Escape") cancelEditing();
   };
+
+  //Sync local state with db
+  useEffect(() => {
+    setValue(account.user_account_name ?? account.name);
+  }, [account.user_account_name, account.name]);
 
   return (
     <div
@@ -67,13 +74,14 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
           onChange={(e) => setValue(e.target.value)}
           onBlur={cancelEditing}
           onKeyDown={handleKeyDown}
+          disabled={isPending}
         />
       ) : (
         <h4
-          className={styles.name}
-          style={canEdit ? { cursor: "pointer" } : { cursor: "default" }}
+          className={clsx(styles.name, canEdit && styles.editable)}
           onClick={canEdit ? startEditing : undefined}
         >
+          <MdEditDocument className={styles.editIcon} />
           {displayName}
         </h4>
       )}
@@ -83,7 +91,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
       </div>
 
       <h3 className={styles.balance}>
-        {account.currency} {account.current_balance?.toFixed(2)}
+        {account.currency} {(account.current_balance ?? 0).toFixed(2)}
       </h3>
 
       <div className={styles.shape}></div>

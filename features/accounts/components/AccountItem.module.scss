@@ -1,15 +1,14 @@
 .account {
   z-index: 1;
   position: relative;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
   gap: 0.7rem;
   flex: 0 0 70%;
   overflow: hidden;
   border-radius: var(--border-radius-m);
   padding: 1.3rem;
   user-select: none;
-  //min-width: 300px;
   .icon {
     position: absolute;
     bottom: 1rem;
@@ -20,7 +19,7 @@
     }
   }
   .nameInput {
-    margin-bottom: 1.15rem;
+    align-self: flex-start;
     background: transparent;
     border: none;
     outline: none;
@@ -29,8 +28,23 @@
     color: inherit;
   }
   .name {
-    margin-bottom: 1.3rem;
-    //cursor: pointer;
+    position: relative;
+    width: fit-content;
+    &.editable {
+      cursor: pointer;
+      &:hover {
+        .editIcon {
+          display: block;
+        }
+      }
+    }
+    .editIcon {
+      display: none;
+      position: absolute;
+      right: -20px;
+      top: 2px;
+      font-size: 0.9rem;
+    }
   }
   .details {
     z-index: 1;
