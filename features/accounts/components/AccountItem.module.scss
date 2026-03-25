@@ -1,15 +1,14 @@
 .account {
   z-index: 1;
   position: relative;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
   gap: 0.7rem;
   flex: 0 0 70%;
   overflow: hidden;
   border-radius: var(--border-radius-m);
   padding: 1.3rem;
   user-select: none;
-  min-width: 300px;
   .icon {
     position: absolute;
     bottom: 1rem;
@@ -19,8 +18,33 @@
       width: 30px;
     }
   }
+  .nameInput {
+    align-self: flex-start;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    font-size: inherit;
+    color: inherit;
+  }
   .name {
-    margin-bottom: 1.3rem;
+    position: relative;
+    width: fit-content;
+    &.editable {
+      cursor: pointer;
+      &:hover {
+        .editIcon {
+          display: block;
+        }
+      }
+    }
+    .editIcon {
+      display: none;
+      position: absolute;
+      right: -20px;
+      top: 2px;
+      font-size: 0.9rem;
+    }
   }
   .details {
     z-index: 1;
@@ -43,6 +67,16 @@
     align-items: center;
     justify-content: space-between;
     font-weight: 600;
+  }
+  .menuIcon {
+    cursor: pointer;
+    z-index: 99;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    background: #ffffff1f;
+    border-radius: var(--border-radius-s);
   }
 }
 .shape {
