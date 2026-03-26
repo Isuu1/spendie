@@ -8,26 +8,26 @@ import Button from "./ui/Button";
 import styles from "./ConfirmAction.module.scss";
 //Animations
 import { motion } from "motion/react";
+import { useClickOutside } from "../hooks/useClickOutside";
 
 interface ConfirmActionProps {
-  message: string;
+  title: string;
+  subtitle?: string;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
-const confirmActionVariants = {
-  hidden: { scale: 0 },
-  visible: { scale: 1, transition: { duration: 0.15 } },
-  exit: { scale: 0, transition: { duration: 0.15 } },
-};
-
 const ConfirmAction: React.FC<ConfirmActionProps> = ({
-  message,
+  title,
+  subtitle,
   onConfirm,
   onCancel,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
   const modalRootRef = useRef<HTMLElement | null>(null);
+  const innerModalRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside(innerModalRef, onCancel);
 
   useEffect(() => {
     setIsMounted(true);
@@ -41,15 +41,25 @@ const ConfirmAction: React.FC<ConfirmActionProps> = ({
   }, []);
 
   const modalContent = (
-    <div className={styles.confirmActionContainer}>
+    <motion.div
+      className={styles.confirmActionContainer}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.1 }}
+    >
       <motion.div
+        ref={innerModalRef}
         className={styles.innerContainer}
-        variants={confirmActionVariants}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0 }}
+        transition={{ duration: 0.15 }}
+        role="dialog"
+        aria-modal="true"
       >
-        <h4 className={styles.title}>{message}</h4>
+        <h3 className={styles.title}>{title}</h3>
+        {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
         <div className={styles.buttonsContainer}>
           <Button
             variant="primary"
@@ -67,7 +77,7 @@ const ConfirmAction: React.FC<ConfirmActionProps> = ({
           />
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
   //Render nothing during SSR or before mount/target is ready
   if (!isMounted || !modalRootRef.current) {

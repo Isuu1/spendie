@@ -13,6 +13,7 @@ import { MdEditDocument } from "react-icons/md";
 import { useRenameAccount } from "../hooks/useRenameAccount";
 //Components
 import AccountItemMenu from "./AccountItemMenu";
+import { useDisconnectAccount } from "../hooks/useDisconnectAccount";
 
 type AccountItemProps = {
   account: Account;
@@ -26,6 +27,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
   );
 
   const { mutateAsync: renameAccount, isPending } = useRenameAccount();
+  const { mutateAsync: disconnectAccount } = useDisconnectAccount();
 
   const displayName = account.user_account_name ?? account.name;
 
@@ -97,7 +99,12 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
 
       <div className={styles.shape}></div>
 
-      {canEdit && <AccountItemMenu onRename={() => setIsEditing(true)} />}
+      {canEdit && (
+        <AccountItemMenu
+          onRename={() => setIsEditing(true)}
+          onDisconnect={() => disconnectAccount(account.id)}
+        />
+      )}
     </div>
   );
 };

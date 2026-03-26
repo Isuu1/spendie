@@ -14,7 +14,7 @@ export function useGroupedAccounts() {
         accounts: accounts
           .filter(
             (acc: Account) =>
-              acc.plaid_item_id === item.plaid_item_id && !acc.is_deleted,
+              acc.plaid_item_id === item.plaid_item_id && !acc.is_disconnected,
           )
           .sort(
             (a: Account, b: Account) =>
