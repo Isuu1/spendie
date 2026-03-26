@@ -8,10 +8,11 @@ import { generateAccountBackground } from "../lib/utils/generateAccountBackgroun
 import { Account } from "@/features/accounts/types/account";
 //Icons
 import { BsCreditCard2FrontFill } from "react-icons/bs";
-import { IoMdMore } from "react-icons/io";
 import { MdEditDocument } from "react-icons/md";
 //Hooks
 import { useRenameAccount } from "../hooks/useRenameAccount";
+//Components
+import AccountItemMenu from "./AccountItemMenu";
 
 type AccountItemProps = {
   account: Account;
@@ -96,7 +97,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
 
       <div className={styles.shape}></div>
 
-      {canEdit && <IoMdMore className={styles.menuIcon} />}
+      {canEdit && <AccountItemMenu onRename={() => setIsEditing(true)} />}
     </div>
   );
 };
