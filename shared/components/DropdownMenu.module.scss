@@ -5,14 +5,30 @@
   right: 1rem;
   border-radius: var(--border-radius-s);
   font-size: 0.8rem;
-  transition: background 0.2s ease;
-  &.active {
-    background: #ffffff1f;
-  }
   .icon {
+    display: block;
     font-size: 1.5rem;
     cursor: pointer;
     color: #ffffff;
+    background: var(--color-bg-secondary);
+    border-radius: var(--border-radius-s);
+    border: 0;
+    transition: background 0.2s ease;
+    &:hover {
+      background: var(--color-action-hover-secondary);
+    }
+    &.active {
+      background: var(--color-action-hover-secondary);
+    }
+    &.ghost {
+      background: transparent;
+      &:hover {
+        background: #ffffff1f;
+      }
+      &.active {
+        background: #ffffff1f;
+      }
+    }
   }
   .dropdown {
     position: absolute;
@@ -24,7 +40,7 @@
     padding: 0.5rem;
     border-radius: var(--border-radius-m);
     line-height: 1.4rem;
-    .option {
+    .item {
       cursor: pointer;
       padding: 0.2rem 0.5rem;
       border-radius: var(--border-radius-s);
@@ -32,7 +48,7 @@
       align-items: center;
       gap: 0.5rem;
       &:hover {
-        background: #ffffff1f;
+        background: var(--color-action-hover-secondary);
       }
     }
   }
