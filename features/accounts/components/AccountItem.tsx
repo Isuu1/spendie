@@ -14,6 +14,7 @@ import { useRenameAccount } from "../hooks/useRenameAccount";
 //Components
 import AccountItemMenu from "./AccountItemMenu";
 import { useDisconnectAccount } from "../hooks/useDisconnectAccount";
+import { useHideAccount } from "../hooks/useHideAccount";
 
 type AccountItemProps = {
   account: Account;
@@ -27,7 +28,10 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
   );
 
   const { mutateAsync: renameAccount, isPending } = useRenameAccount();
+
   const { mutateAsync: disconnectAccount } = useDisconnectAccount();
+
+  const { mutateAsync: hideAccount } = useHideAccount();
 
   const displayName = account.user_account_name ?? account.name;
 
@@ -103,6 +107,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
         <AccountItemMenu
           onRename={() => setIsEditing(true)}
           onDisconnect={() => disconnectAccount(account.id)}
+          onHide={() => hideAccount(account.id)}
         />
       )}
     </div>

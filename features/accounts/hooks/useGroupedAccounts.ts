@@ -12,10 +12,7 @@ export function useGroupedAccounts() {
       .map((item) => ({
         ...item,
         accounts: accounts
-          .filter(
-            (acc: Account) =>
-              acc.plaid_item_id === item.plaid_item_id && !acc.is_disconnected,
-          )
+          .filter((acc: Account) => acc.plaid_item_id === item.plaid_item_id)
           .sort(
             (a: Account, b: Account) =>
               (a.current_balance || 0) - (b.current_balance || 0),

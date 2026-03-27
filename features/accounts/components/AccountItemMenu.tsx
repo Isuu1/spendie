@@ -1,21 +1,27 @@
 "use client";
 
+import { useState } from "react";
 //Icons
 import { MdEditDocument } from "react-icons/md";
 import { PiPlugsConnectedFill } from "react-icons/pi";
 import { BiSolidHide } from "react-icons/bi";
 //Components
 import DropdownMenu from "@/shared/components/DropdownMenu";
-import { useState } from "react";
 import ConfirmAction from "@/shared/components/ConfirmAction";
+//Animations
 import { AnimatePresence } from "motion/react";
 
 type AccountItemMenuProps = {
   onRename: () => void;
   onDisconnect: () => void;
+  onHide: () => void;
 };
 
-const AccountItemMenu = ({ onRename, onDisconnect }: AccountItemMenuProps) => {
+const AccountItemMenu = ({
+  onRename,
+  onDisconnect,
+  onHide,
+}: AccountItemMenuProps) => {
   const [disconnectModalOpen, setDisconnectModalOpen] = useState(false);
 
   const handleRename = () => {
@@ -23,6 +29,10 @@ const AccountItemMenu = ({ onRename, onDisconnect }: AccountItemMenuProps) => {
   };
   const handleDisconnect = () => {
     setDisconnectModalOpen(true);
+  };
+
+  const handleHide = () => {
+    onHide();
   };
   return (
     <>
@@ -35,7 +45,7 @@ const AccountItemMenu = ({ onRename, onDisconnect }: AccountItemMenuProps) => {
           <PiPlugsConnectedFill />
           Disconnect
         </DropdownMenu.Item>
-        <DropdownMenu.Item>
+        <DropdownMenu.Item onClick={handleHide}>
           <BiSolidHide />
           Hide
         </DropdownMenu.Item>
