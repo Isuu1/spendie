@@ -135,7 +135,7 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
       <AnimatePresence>
         {confirmClear && (
           <ConfirmAction
-            message="Are you sure you want to clear the history?"
+            title="Are you sure you want to clear the history?"
             onCancel={() => setConfirmClear(false)}
             onConfirm={() => handleDelete(payment.id)}
           />
