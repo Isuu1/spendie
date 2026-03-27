@@ -62,6 +62,11 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
     setValue(account.user_account_name ?? account.name);
   }, [account.user_account_name, account.name]);
 
+  //Don't render hidden accounts on dashboard view
+  if (account.is_hidden && !canEdit) {
+    return null;
+  }
+
   return (
     <div
       className={styles.account}
@@ -69,6 +74,9 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
         background: generateAccountBackground(account.subtype ?? ""),
       }}
     >
+      {account.is_hidden && canEdit && (
+        <div className={styles.hiddenOverlay}>Hidden</div>
+      )}
       <i className={styles.icon}>
         <BsCreditCard2FrontFill />
       </i>
@@ -108,6 +116,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
           onRename={() => setIsEditing(true)}
           onDisconnect={() => disconnectAccount(account.id)}
           onHide={() => hideAccount(account.id)}
+          isHidden={account.is_hidden}
         />
       )}
     </div>

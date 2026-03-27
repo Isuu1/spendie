@@ -15,12 +15,14 @@ type AccountItemMenuProps = {
   onRename: () => void;
   onDisconnect: () => void;
   onHide: () => void;
+  isHidden: boolean;
 };
 
 const AccountItemMenu = ({
   onRename,
   onDisconnect,
   onHide,
+  isHidden,
 }: AccountItemMenuProps) => {
   const [disconnectModalOpen, setDisconnectModalOpen] = useState(false);
 
@@ -47,7 +49,7 @@ const AccountItemMenu = ({
         </DropdownMenu.Item>
         <DropdownMenu.Item onClick={handleHide}>
           <BiSolidHide />
-          Hide
+          {isHidden ? "Unhide" : "Hide"}
         </DropdownMenu.Item>
       </DropdownMenu>
       <AnimatePresence>

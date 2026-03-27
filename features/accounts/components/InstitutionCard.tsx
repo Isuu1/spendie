@@ -1,4 +1,4 @@
-import React from "react";
+//Types
 import { Account } from "../types/account";
 //Components
 import AccountItem from "./AccountItem";
@@ -21,13 +21,22 @@ type InstitutionCardProps = {
   institution: Institution;
   onSync: (itemId: string) => void;
   isSyncing: boolean;
+  showHidden: boolean;
 };
 
 const InstitutionCard = ({
   institution,
   onSync,
   isSyncing,
+  showHidden,
 }: InstitutionCardProps) => {
+  //Show only active accounts by default
+  const visibleAccounts = institution.accounts.filter((acc) => {
+    if (acc.is_disconnected) return false;
+    if (!showHidden && acc.is_hidden) return false;
+    return true;
+  });
+
   const handleSync = async () => {
     onSync(institution.plaid_item_id);
   };
@@ -54,7 +63,7 @@ const InstitutionCard = ({
         />
       </div>
       <div className={styles.accountsContainer}>
-        {institution.accounts.map((acc: Account) => (
+        {visibleAccounts.map((acc: Account) => (
           <AccountItem key={acc.id} account={acc} canEdit />
         ))}
       </div>
