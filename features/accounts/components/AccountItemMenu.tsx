@@ -16,6 +16,7 @@ type AccountItemMenuProps = {
   onDisconnect: () => void;
   onHide: () => void;
   isHidden: boolean;
+  isDisconnected: boolean;
 };
 
 const AccountItemMenu = ({
@@ -23,6 +24,7 @@ const AccountItemMenu = ({
   onDisconnect,
   onHide,
   isHidden,
+  isDisconnected,
 }: AccountItemMenuProps) => {
   const [disconnectModalOpen, setDisconnectModalOpen] = useState(false);
 
@@ -45,7 +47,7 @@ const AccountItemMenu = ({
         </DropdownMenu.Item>
         <DropdownMenu.Item onClick={handleDisconnect}>
           <PiPlugsConnectedFill />
-          Disconnect
+          {isDisconnected ? "Reconnect" : "Disconnect"}
         </DropdownMenu.Item>
         <DropdownMenu.Item onClick={handleHide}>
           <BiSolidHide />

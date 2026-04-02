@@ -117,6 +117,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
           onDisconnect={() => disconnectAccount(account.id)}
           onHide={() => hideAccount(account.id)}
           isHidden={account.is_hidden}
+          isDisconnected={account.is_disconnected}
         />
       )}
     </div>

@@ -13,7 +13,7 @@ import SegmentedControl from "@/shared/components/SegmentedControl";
 import { Account } from "../types/account";
 
 const AccountsGrid = () => {
-  const [activeSegment, setActiveSegment] = useState("active");
+  const [activeSegment, setActiveSegment] = useState("all");
 
   const { data: grouped = [] } = useGroupedAccounts();
 

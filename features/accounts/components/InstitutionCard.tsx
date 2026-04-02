@@ -32,6 +32,8 @@ const InstitutionCard = ({
     onSync(institution.plaid_item_id);
   };
 
+  if (institution.accounts.length === 0) return null;
+
   return (
     <div key={institution.plaid_item_id} className={styles.accountGroup}>
       <h4>{institution.institution_name}</h4>
