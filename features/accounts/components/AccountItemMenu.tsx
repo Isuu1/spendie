@@ -55,10 +55,21 @@ const AccountItemMenu = ({
         </DropdownMenu.Item>
       </DropdownMenu>
       <AnimatePresence>
-        {disconnectModalOpen && (
+        {disconnectModalOpen && !isDisconnected && (
           <ConfirmAction
             title="Disconnect this account?"
             subtitle="You will no longer receive updates from this bank. Your existing data will remain."
+            onConfirm={() => {
+              onDisconnect();
+              setDisconnectModalOpen(false);
+            }}
+            onCancel={() => setDisconnectModalOpen(false)}
+          />
+        )}
+        {disconnectModalOpen && isDisconnected && (
+          <ConfirmAction
+            title="Reconnect this account?"
+            subtitle="This will attempt to reconnect the account and fetch the latest data."
             onConfirm={() => {
               onDisconnect();
               setDisconnectModalOpen(false);
