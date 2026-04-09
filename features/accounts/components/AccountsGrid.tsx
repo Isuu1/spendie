@@ -69,6 +69,7 @@ const AccountsGrid = () => {
             institution={item}
             onSync={() => syncAccount(item.plaid_item_id)}
             isSyncing={isPending && variables === item.plaid_item_id}
+            activeSegment={activeSegment}
           />
         ))
       ) : (
