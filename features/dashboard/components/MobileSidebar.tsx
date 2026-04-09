@@ -68,7 +68,7 @@ const MobileSidebar = ({ onClose }: MobileSidebarProps) => {
                 pathname.startsWith("/user") && item.href.startsWith("/user")
                   ? styles.active
                   : "",
-                pathname === item.href ? styles.active : ""
+                pathname === item.href ? styles.active : "",
               )}
             >
               <i className={styles.icon}>{item.icon}</i>
@@ -89,7 +89,7 @@ const MobileSidebar = ({ onClose }: MobileSidebarProps) => {
       <AnimatePresence>
         {signoutClicked && (
           <ConfirmAction
-            message="Are you sure you want to sign out?"
+            title="Are you sure you want to sign out?"
             onCancel={() => setSignoutClicked(false)}
             onConfirm={handleSignOut}
           />

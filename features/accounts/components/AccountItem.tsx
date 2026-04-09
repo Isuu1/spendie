@@ -13,6 +13,8 @@ import { MdEditDocument } from "react-icons/md";
 import { useRenameAccount } from "../hooks/useRenameAccount";
 //Components
 import AccountItemMenu from "./AccountItemMenu";
+import { useDisconnectAccount } from "../hooks/useDisconnectAccount";
+import { useHideAccount } from "../hooks/useHideAccount";
 
 type AccountItemProps = {
   account: Account;
@@ -26,6 +28,10 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
   );
 
   const { mutateAsync: renameAccount, isPending } = useRenameAccount();
+
+  const { mutateAsync: disconnectAccount } = useDisconnectAccount();
+
+  const { mutateAsync: hideAccount } = useHideAccount();
 
   const displayName = account.user_account_name ?? account.name;
 
@@ -56,6 +62,11 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
     setValue(account.user_account_name ?? account.name);
   }, [account.user_account_name, account.name]);
 
+  //Don't render hidden accounts on dashboard view
+  if (account.is_hidden && !canEdit) {
+    return null;
+  }
+
   return (
     <div
       className={styles.account}
@@ -63,6 +74,9 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
         background: generateAccountBackground(account.subtype ?? ""),
       }}
     >
+      {account.is_hidden && canEdit && (
+        <div className={styles.hiddenOverlay}>Hidden</div>
+      )}
       <i className={styles.icon}>
         <BsCreditCard2FrontFill />
       </i>
@@ -97,7 +111,15 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
 
       <div className={styles.shape}></div>
 
-      {canEdit && <AccountItemMenu onRename={() => setIsEditing(true)} />}
+      {canEdit && (
+        <AccountItemMenu
+          onRename={() => setIsEditing(true)}
+          onDisconnect={() => disconnectAccount(account.id)}
+          onHide={() => hideAccount(account.id)}
+          isHidden={account.is_hidden}
+          isDisconnected={account.is_disconnected}
+        />
+      )}
     </div>
   );
 };

@@ -83,7 +83,7 @@ export default function Sidebar() {
       <AnimatePresence>
         {signoutClicked && (
           <ConfirmAction
-            message="Are you sure you want to sign out?"
+            title="Are you sure you want to sign out?"
             onCancel={() => setSignoutClicked(false)}
             onConfirm={handleSignOut}
           />

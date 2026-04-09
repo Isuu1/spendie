@@ -53,7 +53,7 @@ const RecurringPaymentMenu: React.FC<RecurringPaymentMenuProps> = ({
       <AnimatePresence>
         {confirmDeletePayment && (
           <ConfirmAction
-            message={`Are you sure you want to delete following payment: ${payment.name}?`}
+            title={`Are you sure you want to delete following payment: ${payment.name}?`}
             onCancel={() => setConfirmDeletePayment(null)}
             onConfirm={() => handleDeletePayment(payment.id)}
           />

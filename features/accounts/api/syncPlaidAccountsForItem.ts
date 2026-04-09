@@ -48,8 +48,8 @@ export async function syncPlaidAccountsForItem({
 
     last_synced_at: new Date(),
 
-    is_deleted: false,
-    is_hidden: false,
+    // is_disconnected: false,
+    // is_hidden: false,
   }));
 
   //4. Upsert accounts into Supabase
