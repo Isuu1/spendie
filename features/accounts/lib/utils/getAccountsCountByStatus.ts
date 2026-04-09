@@ -25,6 +25,6 @@ export function getAccountsCountByStatus(grouped: Institution[] = []) {
   //Add the total by summing the values
   return {
     ...counts,
-    all: counts.active + counts.hidden + counts.disconnected,
+    all: counts.active + counts.hidden,
   };
 }
