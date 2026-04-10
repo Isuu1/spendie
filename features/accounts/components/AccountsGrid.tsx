@@ -52,7 +52,7 @@ const AccountsGrid = () => {
     <div className={styles.accountsGrid}>
       <SegmentedControl
         options={[
-          { label: `All (${counts.all})`, value: "all" },
+          { label: `All in use (${counts.all})`, value: "all" },
           { label: `Active (${counts.active})`, value: "active" },
           { label: `Hidden (${counts.hidden})`, value: "hidden" },
           {

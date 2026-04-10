@@ -64,25 +64,20 @@ const InstitutionCard = ({
           </p>
         </>
       )}
-      {/* <p className={styles.hiddenBalance}>
-        Hidden: {institution.accounts[0]?.currency} {totals.hidden.toFixed(2)}
-      </p>
-      <p className={styles.disconnectedBalance}>
-        Disconnected: {institution.accounts[0]?.currency}{" "}
-        {totals.disconnected.toFixed(2)}
-      </p> */}
-      <div className={styles.syncInfo}>
-        <SyncIcon isSyncing={isSyncing} />
-        <p>{lastUpdated(institution.last_synced_at)}</p>
-        <Button
-          variant="tertiary"
-          size="small"
-          text={isSyncing ? "Syncing..." : "Sync now"}
-          iconPosition="left"
-          onClick={handleSync}
-          disabled={isSyncing}
-        />
-      </div>
+      {activeSegment !== "disconnected" && (
+        <div className={styles.syncInfo}>
+          <SyncIcon isSyncing={isSyncing} />
+          <p>{lastUpdated(institution.last_synced_at)}</p>
+          <Button
+            variant="tertiary"
+            size="small"
+            text={isSyncing ? "Syncing..." : "Sync now"}
+            iconPosition="left"
+            onClick={handleSync}
+            disabled={isSyncing}
+          />
+        </div>
+      )}
       <div className={styles.accountsContainer}>
         {institution.accounts.map((acc: Account) => (
           <AccountItem key={acc.id} account={acc} canEdit />
