@@ -9,15 +9,20 @@ import { TbArrowBigDownLineFilled } from "react-icons/tb";
 //Components
 import PopUp from "../PopUp";
 
-interface SelectInputProps {
+type Option = {
+  label: string;
+  value: string;
+};
+
+type SelectInputProps = {
   id: string;
   label?: string;
   value?: string;
-  selectOptions?: readonly string[];
+  selectOptions?: readonly Option[];
   optionsHeader?: React.ReactNode;
   onChange?: (option: string) => void;
   icon?: React.ReactNode;
-}
+};
 
 const SelectInput: React.FC<SelectInputProps> = ({
   id,
@@ -71,7 +76,9 @@ const SelectInput: React.FC<SelectInputProps> = ({
             // ref={selectRef}
           >
             {icon && <i className={styles.icon}>{icon}</i>}
-            {value || selectOptions?.[0]}
+            {value
+              ? selectOptions?.find((opt) => opt.value === value)?.label
+              : selectOptions?.[0]?.label}
             <motion.i
               className={`${styles.dropdownIcon} ${showOptions ? styles.dropdownOpen : ""}`}
             >
@@ -95,10 +102,10 @@ const SelectInput: React.FC<SelectInputProps> = ({
                   {selectOptions?.map((option, index) => (
                     <li
                       key={index}
-                      onClick={() => handleOptionClick(option)}
-                      className={`${styles.option} ${value === option ? styles.active : ""}`}
+                      onClick={() => handleOptionClick(option.value)}
+                      className={`${styles.option} ${value === option.value ? styles.active : ""}`}
                     >
-                      {option}
+                      {option.label}
                     </li>
                   ))}
                 </ul>
