@@ -91,14 +91,14 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
         label="Repeat"
         selectOptions={repeatOptions}
         value={formData.repeat}
-        onChange={(val) => handleChange("repeat", val)}
+        onChange={(val) => handleChange("repeat", val.value)}
       />
       <SelectInput
         id="type"
         label="Type"
         selectOptions={typeOptions}
         value={formData.type}
-        onChange={(val) => handleChange("type", val)}
+        onChange={(val) => handleChange("type", val.value)}
       />
       <NumberInput
         id="amount"

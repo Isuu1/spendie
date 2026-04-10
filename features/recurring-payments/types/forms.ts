@@ -1,8 +1,14 @@
-export const repeatOptions = ["Monthly", "Weekly"] as const;
-export const typeOptions = ["Income", "Expense"] as const;
+export const repeatOptions = [
+  { label: "Monthly", value: "Monthly" },
+  { label: "Weekly", value: "Weekly" },
+];
+export const typeOptions = [
+  { label: "Income", value: "Income" },
+  { label: "Expense", value: "Expense" },
+];
 
-export type Repeat = (typeof repeatOptions)[number];
-export type PaymentType = (typeof typeOptions)[number];
+export type Repeat = (typeof repeatOptions)[number]["value"];
+export type PaymentType = (typeof typeOptions)[number]["value"];
 
 export type RecurringPaymentFormState = {
   data: {
