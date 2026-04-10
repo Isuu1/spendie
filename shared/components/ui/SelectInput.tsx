@@ -20,7 +20,7 @@ type SelectInputProps = {
   value?: string;
   selectOptions?: readonly Option[];
   optionsHeader?: React.ReactNode;
-  onChange?: (option: string) => void;
+  onChange?: (option: Option) => void;
   icon?: React.ReactNode;
 };
 
@@ -45,7 +45,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
 
   const columns = getColumnCount(selectOptions?.length || 0);
 
-  const handleOptionClick = (option: string) => {
+  const handleOptionClick = (option: Option) => {
     onChange?.(option);
     setShowOptions(false);
   };
@@ -102,7 +102,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
                   {selectOptions?.map((option, index) => (
                     <li
                       key={index}
-                      onClick={() => handleOptionClick(option.value)}
+                      onClick={() => handleOptionClick(option)}
                       className={`${styles.option} ${value === option.value ? styles.active : ""}`}
                     >
                       {option.label}
