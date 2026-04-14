@@ -37,7 +37,7 @@ const TotalBalancePanel: React.FC = () => {
         <SelectInput
           id="mode"
           selectOptions={selectOptions}
-          value={futureBalanceVisible ? "Detailed" : "Simple"}
+          value={futureBalanceVisible ? selectOptions[0] : selectOptions[1]}
           onChange={(option) =>
             setFutureBalanceVisible(option.value === "Detailed")
           }

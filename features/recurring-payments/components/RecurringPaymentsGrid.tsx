@@ -16,6 +16,12 @@ import { useSorting } from "@/shared/hooks/useSorting";
 //Config
 import { sortingOptions } from "../config/sortingOptions";
 
+//Extraact only label and value for SelectInput
+const selectOptions = sortingOptions.map(({ label, value }) => ({
+  label,
+  value,
+}));
+
 const RecurringPaymentsGrid: React.FC = () => {
   const { data = [], error } = useRecurringPayments();
 
@@ -24,8 +30,6 @@ const RecurringPaymentsGrid: React.FC = () => {
     sortingOptions,
     "Date",
   );
-
-  console.log("Sort option:", sortOption);
 
   const hasPayments = data.length > 0;
 
@@ -53,8 +57,8 @@ const RecurringPaymentsGrid: React.FC = () => {
           <span>Sort by</span>
           <SelectInput
             id="sort"
-            selectOptions={sortingOptions}
-            value={sortOption.value}
+            selectOptions={selectOptions}
+            value={{ label: sortOption.label, value: sortOption.value }}
             onChange={(option) => handleSortingChange(option.value)}
           />
         </div>

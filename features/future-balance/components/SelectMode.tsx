@@ -64,7 +64,7 @@ const Select: React.FC<SelectProps> = ({
       <div className={styles.select}>
         <SelectInput
           id="dateRange"
-          value={selectedOption.value}
+          value={selectedOption}
           selectOptions={options}
           onChange={handleSelect}
         />

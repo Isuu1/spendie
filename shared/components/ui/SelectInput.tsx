@@ -17,7 +17,7 @@ type Option = {
 type SelectInputProps = {
   id: string;
   label?: string;
-  value?: string;
+  value?: Option;
   selectOptions?: readonly Option[];
   optionsHeader?: React.ReactNode;
   onChange?: (option: Option) => void;
@@ -59,7 +59,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
         id={id}
         name={id}
         type="hidden"
-        value={value}
+        value={value?.value || ""}
         className={styles.selectInput}
       />
 
@@ -77,7 +77,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
           >
             {icon && <i className={styles.icon}>{icon}</i>}
             {value
-              ? selectOptions?.find((opt) => opt.value === value)?.label
+              ? selectOptions?.find((opt) => opt.value === value.value)?.label
               : selectOptions?.[0]?.label}
             <motion.i
               className={`${styles.dropdownIcon} ${showOptions ? styles.dropdownOpen : ""}`}
@@ -103,7 +103,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
                     <li
                       key={index}
                       onClick={() => handleOptionClick(option)}
-                      className={`${styles.option} ${value === option.value ? styles.active : ""}`}
+                      className={`${styles.option} ${value?.value === option.value ? styles.active : ""}`}
                     >
                       {option.label}
                     </li>
