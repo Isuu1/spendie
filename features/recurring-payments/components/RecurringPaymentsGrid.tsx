@@ -25,6 +25,8 @@ const RecurringPaymentsGrid: React.FC = () => {
     "Date",
   );
 
+  console.log("Sort option:", sortOption);
+
   const hasPayments = data.length > 0;
 
   if (error)
@@ -53,7 +55,7 @@ const RecurringPaymentsGrid: React.FC = () => {
             id="sort"
             selectOptions={sortingOptions}
             value={sortOption.value}
-            onChange={handleSortingChange}
+            onChange={(option) => handleSortingChange(option.value)}
           />
         </div>
       </div>
