@@ -38,6 +38,16 @@ const CustomDatepickerHeader = ({
 
   const years = Array.from({ length: 10 }, (_, i) => baseYear + i);
 
+  const monthsSelect = dayjs.months().map((month, index) => ({
+    label: month,
+    value: index.toString(),
+  }));
+
+  const yearsSelect = years.map((year) => ({
+    label: year.toString(),
+    value: year.toString(),
+  }));
+
   return (
     <div className={styles.header}>
       <button
@@ -51,17 +61,21 @@ const CustomDatepickerHeader = ({
       <div className={styles.selects}>
         <SelectInput
           id="select"
-          selectOptions={dayjs.months()}
-          value={dayjs(date).format("MMMM")}
-          onChange={(value) =>
-            changeMonth(dayjs.months().indexOf(value.toString()))
-          }
+          selectOptions={monthsSelect}
+          value={{
+            label: dayjs(date).format("MMMM"),
+            value: dayjs(date).month().toString(),
+          }}
+          onChange={(option) => changeMonth(Number(option.value))}
         />
         <SelectInput
           id="year-select"
-          selectOptions={years.map((year) => year.toString())}
-          value={dayjs(date).year().toString()}
-          onChange={(value) => changeYear(Number(value))}
+          selectOptions={yearsSelect}
+          value={{
+            label: dayjs(date).year().toString(),
+            value: dayjs(date).year().toString(),
+          }}
+          onChange={(option) => changeYear(Number(option.value))}
           optionsHeader={
             <div className={styles.yearHeader}>
               <button onClick={() => setYearPageOffset(yearPageOffset - 1)}>

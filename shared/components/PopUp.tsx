@@ -47,7 +47,7 @@ const PopUp = ({
         right: right,
         bottom: bottom,
         left: left,
-        width: width,
+        minWidth: width,
       }}
       ref={popupRef}
     >
