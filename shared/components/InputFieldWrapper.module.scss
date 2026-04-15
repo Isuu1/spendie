@@ -1,0 +1,31 @@
+.inputContainer {
+  color: var(--color-text-primary);
+  width: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+  @media (min-width: 600px) {
+    grid-template-columns: 150px 1fr;
+    grid-template-rows: auto;
+  }
+  .label {
+    white-space: nowrap;
+    font-size: var(--input-label-font-size);
+    padding-top: 0.8rem;
+  }
+  .fieldWrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    gap: 1rem;
+    .fieldInnerWrapper {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+  }
+}
+.noLabel {
+  grid-template-columns: 1fr;
+}
