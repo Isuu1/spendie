@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 //Styles
 import styles from "./SelectInput.module.scss";
 //Animations
@@ -17,10 +17,10 @@ type Option = {
 type SelectInputProps = {
   id: string;
   label?: string;
-  value?: Option;
-  selectOptions?: readonly Option[];
+  value: Option;
+  selectOptions: readonly Option[];
   optionsHeader?: React.ReactNode;
-  onChange?: (option: Option) => void;
+  onChange: (option: Option) => void;
   icon?: React.ReactNode;
 };
 
@@ -37,11 +37,13 @@ const SelectInput: React.FC<SelectInputProps> = ({
 
   const selectRef = useRef<HTMLDivElement>(null);
 
-  const getColumnCount = (length: number) => {
-    if (length > 14) return 3;
-    if (length > 7) return 2;
-    return 1;
-  };
+  const getColumnCount = useMemo(() => {
+    return (length: number) => {
+      if (length > 14) return 3;
+      if (length > 7) return 2;
+      return 1;
+    };
+  }, []);
 
   const columns = getColumnCount(selectOptions?.length || 0);
 
@@ -72,15 +74,15 @@ const SelectInput: React.FC<SelectInputProps> = ({
         <div className={styles.inputFieldWrapper}>
           <span
             className={`${styles.inputField} ${styles.selectInputField} ${icon ? styles.withIcon : ""}`}
-            onClick={() => setShowOptions(!showOptions)}
-            // ref={selectRef}
+            onClick={() => setShowOptions((prev) => !prev)}
+            role="button"
           >
             {icon && <i className={styles.icon}>{icon}</i>}
-            {value
-              ? selectOptions?.find((opt) => opt.value === value.value)?.label
-              : selectOptions?.[0]?.label}
+            {value?.label ?? selectOptions[0]?.label}
             <motion.i
-              className={`${styles.dropdownIcon} ${showOptions ? styles.dropdownOpen : ""}`}
+              className={styles.dropdownIcon}
+              animate={{ rotate: showOptions ? 180 : 0 }}
+              transition={{ duration: 0.1 }}
             >
               <TbArrowBigDownLineFilled />
             </motion.i>
@@ -89,27 +91,25 @@ const SelectInput: React.FC<SelectInputProps> = ({
         <AnimatePresence>
           {showOptions && (
             <PopUp popupRef={selectRef} top={40} left={0} width="100%">
-              <div ref={selectRef}>
-                <ul
-                  style={{
-                    gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-                  }}
-                  className={styles.selectOptions}
-                >
-                  {optionsHeader && (
-                    <li className={styles.optionsHeader}>{optionsHeader}</li>
-                  )}
-                  {selectOptions?.map((option, index) => (
-                    <li
-                      key={index}
-                      onClick={() => handleOptionClick(option)}
-                      className={`${styles.option} ${value?.value === option.value ? styles.active : ""}`}
-                    >
-                      {option.label}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <ul
+                style={{
+                  gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+                }}
+                className={styles.selectOptions}
+              >
+                {optionsHeader && (
+                  <li className={styles.optionsHeader}>{optionsHeader}</li>
+                )}
+                {selectOptions?.map((option) => (
+                  <li
+                    key={option.value}
+                    onClick={() => handleOptionClick(option)}
+                    className={`${styles.option} ${value?.value === option.value ? styles.active : ""}`}
+                  >
+                    {option.label}
+                  </li>
+                ))}
+              </ul>
             </PopUp>
           )}
         </AnimatePresence>
