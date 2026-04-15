@@ -12,25 +12,24 @@ import ErrorMessage from "@/shared/components/ErrorMessage";
 import RecurringPaymentItem from "./RecurringPaymentItem";
 //Hooks
 import { useRecurringPayments } from "../hooks/useRecurringPayments";
-//Utils
-import { sortRecurringPayments } from "../lib/utils/sortRecurringPayments";
+import { useSorting } from "@/shared/hooks/useSorting";
+//Config
+import { sortingOptions } from "../config/sortingOptions";
 
-const sortingOptions = ["Date", "Amount", "Name"] as const;
-
-type SortOption = (typeof sortingOptions)[number];
+//Extraact only label and value for SelectInput
+const selectOptions = sortingOptions.map(({ label, value }) => ({
+  label,
+  value,
+}));
 
 const RecurringPaymentsGrid: React.FC = () => {
   const { data = [], error } = useRecurringPayments();
 
-  const [sortOption, setSortOption] = React.useState<SortOption>("Date");
-
-  const handleSortingChange = (value: SortOption) => {
-    setSortOption(value);
-  };
-
-  const sortedPayments = React.useMemo(() => {
-    return sortRecurringPayments(data, sortOption);
-  }, [data, sortOption]);
+  const { sortedItems, sortOption, handleSortingChange } = useSorting(
+    data,
+    sortingOptions,
+    "Date",
+  );
 
   const hasPayments = data.length > 0;
 
@@ -58,15 +57,15 @@ const RecurringPaymentsGrid: React.FC = () => {
           <span>Sort by</span>
           <SelectInput
             id="sort"
-            selectOptions={sortingOptions}
-            value={sortOption}
-            onChange={(value) => handleSortingChange(value as SortOption)}
+            selectOptions={selectOptions}
+            value={{ label: sortOption.label, value: sortOption.value }}
+            onChange={(option) => handleSortingChange(option.value)}
           />
         </div>
       </div>
 
       <div className={styles.paymentsGrid}>
-        {sortedPayments.map((payment) => {
+        {sortedItems.map((payment) => {
           return <RecurringPaymentItem key={payment.id} payment={payment} />;
         })}
       </div>

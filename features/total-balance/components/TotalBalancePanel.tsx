@@ -11,6 +11,11 @@ import { useAccounts } from "@/features/accounts/hooks/useAccounts";
 import { AnimatePresence } from "motion/react";
 import { Account } from "@/features/accounts/types/account";
 
+const selectOptions = [
+  { label: "Detailed", value: "Detailed" },
+  { label: "Simple", value: "Simple" },
+];
+
 const TotalBalancePanel: React.FC = () => {
   const { data = [], isLoading } = useAccounts();
 
@@ -31,9 +36,11 @@ const TotalBalancePanel: React.FC = () => {
         <h3>Total Balance</h3>
         <SelectInput
           id="mode"
-          selectOptions={["Detailed", "Simple"]}
-          value={futureBalanceVisible ? "Detailed" : "Simple"}
-          onChange={(option) => setFutureBalanceVisible(option === "Detailed")}
+          selectOptions={selectOptions}
+          value={futureBalanceVisible ? selectOptions[0] : selectOptions[1]}
+          onChange={(option) =>
+            setFutureBalanceVisible(option.value === "Detailed")
+          }
         />
       </div>
 

@@ -25,13 +25,24 @@ const Select: React.FC<SelectProps> = ({
 }) => {
   const [openDatePicker, setOpenDatePicker] = useState(false);
 
-  const options = [
-    "End of the month",
-    dateSelected ? dateSelected.format("DD MMM YYYY") : "Specific date",
-  ];
+  const options = useMemo(
+    () => [
+      {
+        label: "End of the month",
+        value: "endOfMonth",
+      },
+      {
+        label: dateSelected
+          ? dateSelected.format("DD MMM YYYY")
+          : "Specific date",
+        value: "specificDate",
+      },
+    ],
+    [dateSelected],
+  );
 
-  const handleSelect = (value: string) => {
-    if (value === "End of the month") {
+  const handleSelect = (option: { label: string; value: string }) => {
+    if (option.value === "endOfMonth") {
       selectMode("endOfMonth");
     } else {
       selectMode("specificDate");
@@ -39,11 +50,13 @@ const Select: React.FC<SelectProps> = ({
     }
   };
 
-  const selectedLabel = useMemo(() => {
-    if (mode === "endOfMonth") return "End of the month";
-    if (dateSelected) return dateSelected.format("DD MMM YYYY");
-    return "Specific date";
-  }, [mode, dateSelected]);
+  const selectedOption = useMemo(() => {
+    if (mode === "endOfMonth") {
+      return options[0];
+    }
+
+    return options[1];
+  }, [mode, options]);
 
   return (
     <div className={styles.selectContainer}>
@@ -51,7 +64,7 @@ const Select: React.FC<SelectProps> = ({
       <div className={styles.select}>
         <SelectInput
           id="dateRange"
-          value={selectedLabel}
+          value={selectedOption}
           selectOptions={options}
           onChange={handleSelect}
         />

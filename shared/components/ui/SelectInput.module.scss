@@ -14,9 +14,6 @@
     font-size: 0.9rem;
     transition: all 0.2s ease;
   }
-  .dropdownOpen {
-    transform: rotate(180deg);
-  }
   .selectOptions {
     font-size: calc(var(--input-font-size) + 0.05rem);
     list-style: none;
