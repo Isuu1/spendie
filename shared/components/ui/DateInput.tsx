@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 //Styles
 import styles from "./DateInput.module.scss";
-import InputError from "../InputError";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
 //Components
@@ -9,6 +8,8 @@ import CustomDatePicker from "../CustomDatepicker/CustomDatepicker";
 //Icons
 import { TbArrowBigDownLineFilled } from "react-icons/tb";
 import dayjs from "dayjs";
+import InputFieldWrapper from "../InputFieldWrapper";
+import clsx from "clsx";
 
 interface DateInputProps {
   id: string;
@@ -35,46 +36,33 @@ const DateInput: React.FC<DateInputProps> = ({
   };
 
   return (
-    <>
-      <div className={styles.inputContainer}>
-        {/* Hidden input to store the selected value */}
-        <input type="hidden" id={id} name={id} value={value} />
+    <InputFieldWrapper id={id} label={label} errors={errors}>
+      <input type="hidden" id={id} name={id} value={value} />
+      <span
+        className={clsx(styles.inputField, icon ? styles.withIcon : "")}
+        onClick={() => setOpenDatePicker(!openDatePicker)}
+      >
+        {icon && <i className={styles.icon}>{icon}</i>}
+        {value ? formatValue(value) : "Select Date"}
+        <motion.i
+          className={`${styles.dropdownIcon} ${openDatePicker ? styles.dropdownOpen : ""}`}
+        >
+          <TbArrowBigDownLineFilled />
+        </motion.i>
+      </span>
 
-        {label && (
-          <label htmlFor={id} className={styles.label}>
-            {label}
-          </label>
+      <AnimatePresence>
+        {openDatePicker && (
+          <CustomDatePicker
+            value={value}
+            onChange={(val) => {
+              onChange?.(val);
+            }}
+            onClose={() => setOpenDatePicker(false)}
+          />
         )}
-        <div className={styles.fieldWrapper}>
-          <div className={styles.inputFieldWrapper}>
-            <span
-              className={`${styles.inputField} ${icon ? styles.withIcon : ""}`}
-              onClick={() => setOpenDatePicker(!openDatePicker)}
-            >
-              {icon && <i className={styles.icon}>{icon}</i>}
-              {value ? formatValue(value) : "Select Date"}
-              <motion.i
-                className={`${styles.dropdownIcon} ${openDatePicker ? styles.dropdownOpen : ""}`}
-              >
-                <TbArrowBigDownLineFilled />
-              </motion.i>
-            </span>
-          </div>
-          <AnimatePresence>
-            {openDatePicker && (
-              <CustomDatePicker
-                value={value}
-                onChange={(val) => {
-                  onChange?.(val);
-                }}
-                onClose={() => setOpenDatePicker(false)}
-              />
-            )}
-          </AnimatePresence>
-          {errors && errors.length > 0 && <InputError errors={errors} />}
-        </div>
-      </div>
-    </>
+      </AnimatePresence>
+    </InputFieldWrapper>
   );
 };
 
