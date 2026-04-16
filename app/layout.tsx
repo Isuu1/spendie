@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>
+      <body className={inter.className}>
         <Toaster toastOptions={toastStyle} containerStyle={{ top: 100 }} />
         {children}
       </body>

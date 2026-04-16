@@ -1,7 +1,7 @@
-@use "./_variables.scss";
 @use "./datepicker-globals.scss";
 
 :root {
+  /* Colors */
   --color-bg-main: #121212;
   --color-bg-secondary: #171718;
   --color-bg-tile: #1c1c1c;
@@ -14,6 +14,16 @@
   --color-action-active-hover: #973a13;
   --color-action-danger: #ff0000;
   --color-action-danger-hover: #b10000;
+  /* Typography Scale */
+  --font-size-xs: 0.75rem; /* 12px - Hints, tooltips, captions */
+  --font-size-s: 0.8125rem; /* 13px - Secondary data, dense tables */
+  --font-size-m: 0.875rem; /* 14px - Default UI (Your Body) */
+  --font-size-l: 1rem; /* 16px - Large UI / Panel Titles */
+  --font-size-xl: 1.25rem; /* 20px - Sub-headers */
+  --font-size-xxl: 1.5rem; /* 24px - Page Titles */
+  /* Line Heights */
+  --lh-tight: 1.2;
+  --lh-normal: 1.5;
   /* Border */
   --border-radius-s: 5px;
   --border-radius-m: 10px;
@@ -21,22 +31,14 @@
   --border-radius-xl: 20px;
   /* Box shadows */
   --box-shadow-default: 0 0 10px 10px rgba(0, 0, 0, 0.1);
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  font-size: 16px;
-}
-
-body {
-  color: var(--color-text-primary);
-  background: var(--color-bg-main);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 0.875rem;
+  /* Input */
+  --input-font-size: var(--font-size-m);
+  --input-label-font-size: var(--font-size-s);
+  --input-icon-size: 1.1rem;
+  --input-label-width: 150px;
+  --color-input-bg: #222222;
+  --color-input-placeholder: #888888;
+  --color-input-text: #ffffff;
 }
 
 * {
@@ -45,9 +47,65 @@ body {
   margin: 0;
 }
 
+html {
+  font-size: 100%; /* Default 16px */
+}
+
+body {
+  color: var(--color-text-primary);
+  background: var(--color-bg-main);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.2;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* --- Headings --- */
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em; /* Tighten large text */
+  color: var(--color-text-title);
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.25rem; /* ~20px */
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* --- Text Elements --- */
+p,
+span,
+label {
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
 }
 
 /* Ensure SVGs don't have weird gaps below them */

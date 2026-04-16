@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
+import clsx from "clsx";
 //Styles
 import styles from "./NumberInput.module.scss";
 //Components
-import InputError from "@/shared/components/InputError";
+import InputFieldWrapper from "../InputFieldWrapper";
 
 interface NumberInputProps {
   id: string;
@@ -24,35 +25,17 @@ const NumberInput: React.FC<NumberInputProps> = ({
   icon,
 }) => {
   return (
-    <>
-      <div className={styles.inputContainer}>
-        {label && (
-          <label className={styles.label} htmlFor={id}>
-            {label}
-          </label>
-        )}
-        <div className={styles.fieldWrapper}>
-          <div className={`${styles.inputFieldWrapper} `}>
-            <input
-              className={`${styles.inputField} ${icon ? styles.withIcon : ""}`}
-              id={id}
-              name={id}
-              type="number"
-              onChange={onChange}
-              value={
-                value instanceof Date ? value.toISOString().slice(0, 10) : value
-              }
-            />
-            {icon && <span className={styles.icon}>{icon}</span>}
-          </div>
-          {errors && errors.length > 0 && (
-            <div className={styles.errorContainer}>
-              <InputError errors={errors} />
-            </div>
-          )}
-        </div>
-      </div>
-    </>
+    <InputFieldWrapper id={id} label={label} errors={errors}>
+      <input
+        className={clsx(styles.inputField, icon && styles.withIcon)}
+        id={id}
+        name={id}
+        type="number"
+        onChange={onChange}
+        value={value instanceof Date ? value.toISOString().slice(0, 10) : value}
+      />
+      {icon && <span className={styles.icon}>{icon}</span>}
+    </InputFieldWrapper>
   );
 };
 

@@ -1,44 +1,50 @@
-@use "@/shared/styles/mixins/inputs" as inputs;
-
-.noLabel {
-  grid-template-columns: auto !important;
-}
-
-.inputContainer {
+.inputField {
+  outline: 3px solid transparent;
+  flex: 1;
+  background: var(--color-input-bg);
+  color: var(--color-input-text);
+  border: 0;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-m);
+  transition: 0.2s all ease;
+  font-size: var(--input-font-size);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   cursor: pointer;
-  @include inputs.inputSkeleton;
-  .selectInputField {
+  &.selectInputField {
     gap: 0.5rem;
   }
   .dropdownIcon {
     font-size: 0.9rem;
     transition: all 0.2s ease;
   }
-  .selectOptions {
-    font-size: calc(var(--input-font-size) + 0.05rem);
-    list-style: none;
-    display: grid;
-    gap: 0.8rem;
-    width: max-content;
-    padding: 0.2rem;
-    .optionsHeader {
-      grid-column: 1 / -1;
-      border-bottom: 1px solid var(--border-muted);
+}
+
+.selectOptions {
+  font-size: calc(var(--input-font-size) + 0.05rem);
+  list-style: none;
+  display: grid;
+  gap: 0.8rem;
+  width: max-content;
+  padding: 0.2rem;
+  .optionsHeader {
+    grid-column: 1 / -1;
+    border-bottom: 1px solid var(--border-muted);
+  }
+  .option {
+    cursor: pointer;
+    transition: 0.2s color ease;
+    white-space: nowrap;
+    &:hover {
+      color: var(--color-action-active);
     }
-    .option {
-      cursor: pointer;
-      transition: 0.2s color ease;
-      white-space: nowrap;
-      &:hover {
-        color: var(--color-action-active);
-      }
-      &.active {
-        font-weight: bold;
-        color: var(--color-action-active);
-      }
+    &.active {
+      font-weight: bold;
+      color: var(--color-action-active);
     }
-    .activeIcon {
-      font-size: 1.1rem;
-    }
+  }
+  .activeIcon {
+    font-size: 1.1rem;
   }
 }
