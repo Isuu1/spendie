@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors - Grouped by Function */
+  --color-bg-main: var(--color-bg-main);
+  --color-bg-secondary: var(--color-bg-secondary);
+  --color-bg-tile: var(--color-bg-tile);
+
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-brand: var(--color-text-active);
+
+  --color-action-hover: var(--color-action-hover);
+  --color-action-hover-sec: var(--color-action-hover-secondary);
+  --color-action-active: var(--color-action-active);
+  --color-action-active-hover: var(--color-action-active-hover);
+  --color-danger: var(--color-action-danger);
+  --color-danger-hover: var(--color-action-danger-hover);
+
+  --color-input-bg: var(--color-input-bg);
+  --color-input-placeholder: var(--color-input-placeholder);
+
+  /* Typography Scale */
+  --font-size-xs: var(--font-size-xs);
+  --font-size-s: var(--font-size-s);
+  --font-size-m: var(--font-size-m);
+  --font-size-l: var(--font-size-l);
+  --font-size-xl: var(--font-size-xl);
+  --font-size-xxl: var(--font-size-xxl);
+
+  /* Line Heights */
+  --leading-tight: var(--lh-tight);
+  --leading-normal: var(--lh-normal);
+
+  /* Border Radius */
+  --radius-s: var(--border-radius-s);
+  --radius-m: var(--border-radius-m);
+  --radius-l: var(--border-radius-l);
+  --radius-xl: var(--border-radius-xl);
+
+  /* Shadows */
+  --shadow-default: var(--box-shadow-default);
+
+  /* Custom Spacing/Widths */
+  --spacing-label-width: var(--input-label-width);
+}
