@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-//Styles
-import styles from "./DateInput.module.scss";
+import dayjs from "dayjs";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
 //Components
 import CustomDatePicker from "../CustomDatepicker/CustomDatepicker";
+import InputFieldWrapper from "../InputFieldWrapper";
 //Icons
 import { TbArrowBigDownLineFilled } from "react-icons/tb";
-import dayjs from "dayjs";
-import InputFieldWrapper from "../InputFieldWrapper";
-import clsx from "clsx";
+//Utils
+import { cn } from "@/shared/lib/cn";
 
 interface DateInputProps {
   id: string;
@@ -39,16 +38,20 @@ const DateInput: React.FC<DateInputProps> = ({
     <InputFieldWrapper id={id} label={label} errors={errors}>
       <input type="hidden" id={id} name={id} value={value} />
       <span
-        className={clsx(styles.inputField, icon ? styles.withIcon : "")}
+        className={cn(
+          "bg-bg-surface-dark px-4 py-2 rounded-md cursor-pointer flex grow items-center justify-between outline-0 border-0",
+          icon && "pl-10",
+        )}
         onClick={() => setOpenDatePicker(!openDatePicker)}
       >
-        {icon && <i className={styles.icon}>{icon}</i>}
+        {icon && <span className="absolute left-3">{icon}</span>}
         {value ? formatValue(value) : "Select Date"}
-        <motion.i
-          className={`${styles.dropdownIcon} ${openDatePicker ? styles.dropdownOpen : ""}`}
+        <motion.span
+          animate={openDatePicker ? { rotate: 180 } : { rotate: 0 }}
+          transition={{ duration: 0.2 }}
         >
           <TbArrowBigDownLineFilled />
-        </motion.i>
+        </motion.span>
       </span>
 
       <AnimatePresence>
