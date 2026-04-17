@@ -2,11 +2,13 @@
 
 @theme {
   /* =========================
-     BACKGROUND
+     COLORS
   ========================= */
   --color-bg-primary: var(--color-bg-main);
   --color-bg-secondary: var(--color-bg-secondary);
   --color-bg-surface: var(--color-bg-tile);
+  --color-bg-surface-dark: #333333;
+  --color-bg-surface-dark-hover: #4d4d4d;
 
   /* =========================
      TEXT
@@ -21,8 +23,7 @@
   --color-brand: var(--color-action-active);
   --color-brand-hover: var(--color-action-active-hover);
 
-  --color-action-hover: var(--color-action-hover);
-  --color-action-hover-secondary: var(--color-action-hover-secondary);
+  --color-action-hover-dark: var(--color-action-hover-secondary);
 
   /* =========================
      STATES

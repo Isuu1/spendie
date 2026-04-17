@@ -79,14 +79,15 @@ const PlaidLink: React.FC<PlaidLinkProps> = ({
 
   return (
     <Button
-      text="Connect bank account"
       variant={variant}
       size="medium"
       onClick={() => open()}
       disabled={!ready || !linkToken}
       icon={<PiBankFill />}
       iconPosition="left"
-    />
+    >
+      Connect bank account
+    </Button>
   );
 };
 

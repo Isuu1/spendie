@@ -19,12 +19,13 @@ const AccountsMenu = () => {
   return (
     <div className={styles.menu}>
       <Button
-        text="Sync all accounts"
         variant="secondary"
         size="medium"
         icon={<FaSyncAlt />}
         iconPosition="left"
-      />
+      >
+        Sync all accounts
+      </Button>
       <PlaidLink userId={data?.id} variant="secondary" />
     </div>
   );
