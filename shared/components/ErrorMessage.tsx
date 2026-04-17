@@ -27,12 +27,9 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
     <div className={`${styles.errorContainer} ${styles[variant]}`}>
       <h3>{message || "An error occurred."}</h3>
       <p>Try to refresh the page or contact support if problem persists.</p>
-      <Button
-        text="Reload"
-        variant="secondary"
-        size="medium"
-        onClick={handleReload}
-      />
+      <Button variant="secondary" size="medium" onClick={handleReload}>
+        Reload
+      </Button>
     </div>
   );
 };

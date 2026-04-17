@@ -37,20 +37,18 @@ const SignupSuccess = () => {
         your Spendie account.
       </p>
       <Button
-        text="Go to mailbox"
         variant="primary"
         size="medium"
         icon={<MdEmail />}
         onClick={handleGoToMailbox}
-      />
+      >
+        Go to mailbox
+      </Button>
       <div className={styles.resend}>
         <p>Didn`t receive the email?</p>
-        <Button
-          text="Resend email"
-          variant="secondary"
-          size="medium"
-          icon={<IoSend />}
-        />
+        <Button variant="secondary" size="medium" icon={<IoSend />}>
+          Resend email
+        </Button>
       </div>
     </div>
   );

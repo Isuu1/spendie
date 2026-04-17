@@ -44,13 +44,13 @@ const SignupForm = () => {
       email: "",
       password: "",
       confirmPassword: "",
-    }
+    },
   );
 
   const router = useRouter();
 
   const handleValidationBeforeSubmit = (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>,
   ) => {
     //This runs before server action to validate all fields on client side
     const isValid = validateForm(formData);
@@ -126,14 +126,16 @@ const SignupForm = () => {
         />
         <Button
           className={styles.loginButton}
-          text={isPending ? "Creating account..." : "Create account"}
           size="large"
           variant="primary"
           type="submit"
           icon={<FiLogIn />}
           iconPosition="left"
           disabled={isPending}
-        />
+        >
+          {isPending ? "Creating account..." : "Create account"}
+        </Button>
+
         <Providers />
       </Form>
     </div>

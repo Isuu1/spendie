@@ -42,7 +42,7 @@ const LoginForm = () => {
     {
       email: "",
       password: "",
-    }
+    },
   );
 
   console.log("state", state);
@@ -50,7 +50,7 @@ const LoginForm = () => {
   const router = useRouter();
 
   const handleValidationBeforeSubmit = (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>,
   ) => {
     //This runs before server action to validate all fields on client side
     const isValid = validateForm(formData);
@@ -68,7 +68,7 @@ const LoginForm = () => {
     if (state.success) {
       toast.success(
         "Logged in successfully! Redirecting to dashboard...",
-        toastStyle
+        toastStyle,
       );
       router.push("/dashboard");
     }
@@ -122,14 +122,15 @@ const LoginForm = () => {
           />
           <Button
             className={styles.loginButton}
-            text={isPending ? "Signing in..." : "Sign In"}
             size="large"
             variant="primary"
             type="submit"
             icon={<FiLogIn />}
             iconPosition="left"
             disabled={isPending}
-          />
+          >
+            {isPending ? "Signing in..." : "Sign In"}
+          </Button>
           <Providers />
         </Form>
       </div>

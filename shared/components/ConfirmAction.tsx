@@ -64,17 +64,19 @@ const ConfirmAction: React.FC<ConfirmActionProps> = ({
           <Button
             variant="primary"
             onClick={onConfirm}
-            text="Confirm"
             size="medium"
             type="button"
-          />
+          >
+            Confirm
+          </Button>
           <Button
             variant="secondary"
             onClick={onCancel}
-            text="Cancel"
             size="medium"
             type="button"
-          />
+          >
+            Cancel
+          </Button>
         </div>
       </motion.div>
     </motion.div>

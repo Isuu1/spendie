@@ -21,13 +21,14 @@ const DashboardOptions = () => {
     <div className={styles.dashboardOptions}>
       <Button
         className={styles.panelsButton}
-        text="Manage panels"
         variant="secondary"
         size="medium"
         icon={<MdSpaceDashboard />}
         iconPosition="left"
         onClick={() => setOpenPanelsMenu(!openPanelsMenu)}
-      />
+      >
+        Manage panels
+      </Button>
       <PlaidLink userId={user?.id ?? ""} variant="secondary" />
       <AnimatePresence>
         {openPanelsMenu && (
