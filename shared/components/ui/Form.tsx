@@ -1,32 +1,29 @@
 import React from "react";
+import { cva } from "class-variance-authority";
+import { cn } from "@/shared/lib/cn";
 
-//Styles
-import styles from "./Form.module.scss";
+const formVariants = cva("flex gap-4", {
+  variants: {
+    layout: {
+      horizontal: "flex-row",
+      vertical: "flex-col",
+    },
+  },
+});
 
-interface FormProps {
+interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   children: React.ReactNode;
-  action?: (string | ((formData: FormData) => void)) | undefined;
   layout: "horizontal" | "vertical";
   ref?: React.Ref<HTMLFormElement>;
-  onSubmit?:
-    | ((e: React.FormEvent) => void)
-    | ((e: React.FormEvent<HTMLFormElement>) => void);
 }
 
-const Form: React.FC<FormProps> = ({
-  children,
-  action,
-  layout,
-  ref,
-  onSubmit,
-}) => {
+const Form = ({ children, layout, ref, ...props }: FormProps) => {
   return (
     <form
-      action={action}
-      className={`${styles.formContainer} ${styles[layout]}`}
+      className={cn(formVariants({ layout }))}
       ref={ref}
-      onSubmit={onSubmit}
       noValidate
+      {...props}
     >
       {children}
     </form>
