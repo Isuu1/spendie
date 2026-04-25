@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  /* =========================
+     COLORS
+  ========================= */
+  --color-bg-primary: var(--color-bg-main);
+  --color-bg-secondary: var(--color-bg-secondary);
+  --color-bg-surface: var(--color-bg-tile);
+  --color-bg-surface-dark: #333333;
+  --color-bg-surface-dark-hover: #4d4d4d;
+
+  /* =========================
+     TEXT
+  ========================= */
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-accent: var(--color-text-active);
+
+  /* =========================
+     ACTIONS / BRAND
+  ========================= */
+  --color-brand: var(--color-action-active);
+  --color-brand-hover: var(--color-action-active-hover);
+
+  --color-action-hover-dark: var(--color-action-hover-secondary);
+
+  /* =========================
+     STATES
+  ========================= */
+  --color-danger: var(--color-action-danger);
+  --color-danger-hover: var(--color-action-danger-hover);
+
+  /* =========================
+     INPUT
+  ========================= */
+  --color-input-bg: var(--color-input-bg);
+  --color-input-text: var(--color-input-text);
+  --color-input-placeholder: var(--color-input-placeholder);
+
+  /* =========================
+     TYPOGRAPHY
+  ========================= */
+  --font-size-xs: var(--font-size-xs);
+  --font-size-sm: var(--font-size-s);
+  --font-size-base: var(--font-size-m);
+  --font-size-lg: var(--font-size-l);
+  --font-size-xl: var(--font-size-xl);
+  --font-size-2xl: var(--font-size-xxl);
+
+  --line-height-tight: var(--lh-tight);
+  --line-height-normal: var(--lh-normal);
+
+  /* =========================
+     RADIUS
+  ========================= */
+  --radius-sm: var(--border-radius-s);
+  --radius-md: var(--border-radius-m);
+  --radius-lg: var(--border-radius-l);
+  --radius-xl: var(--border-radius-xl);
+
+  /* =========================
+     SHADOW
+  ========================= */
+  --shadow-default: var(--box-shadow-default);
+}

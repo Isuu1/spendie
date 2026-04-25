@@ -59,12 +59,13 @@ const Dashboard = () => {
                 your needs.
               </p>
               <Button
-                text="Show all panels"
                 variant="primary"
                 size="medium"
                 onClick={() => toggleAllPanels()}
                 className={styles.emptyBtn}
-              />
+              >
+                Show all panels
+              </Button>
             </div>
           )}
         </AnimatePresence>

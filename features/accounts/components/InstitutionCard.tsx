@@ -71,11 +71,12 @@ const InstitutionCard = ({
           <Button
             variant="tertiary"
             size="small"
-            text={isSyncing ? "Syncing..." : "Sync now"}
             iconPosition="left"
             onClick={handleSync}
             disabled={isSyncing}
-          />
+          >
+            {isSyncing ? "Syncing..." : "Sync now"}
+          </Button>
         </div>
       )}
       <div className={styles.accountsContainer}>

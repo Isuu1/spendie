@@ -1,11 +1,10 @@
 "use client";
 
 import React from "react";
-import clsx from "clsx";
-//Styles
-import styles from "./Input.module.scss";
 //Components
 import InputFieldWrapper from "../InputFieldWrapper";
+//Utils
+import { cn } from "@/shared/lib/cn";
 
 interface InputProps {
   id: string;
@@ -35,7 +34,11 @@ const Input: React.FC<InputProps> = ({
   return (
     <InputFieldWrapper id={id} label={label} errors={errors}>
       <input
-        className={clsx(styles.inputField, icon && styles.withIcon)}
+        className={cn(
+          "bg-bg-surface-dark rounded-md px-4 py-2 border-0 transition-all outline-3 outline-transparent duration-200 ease-in-out flex flex-1 items-center",
+          "focus:outline-brand focus:outline-3",
+          icon && "pl-10",
+        )}
         id={id}
         name={id}
         type={type}
@@ -44,9 +47,9 @@ const Input: React.FC<InputProps> = ({
         defaultValue={defaultValue}
         value={value instanceof Date ? value.toISOString().slice(0, 10) : value}
       />
-      {icon && <span className={styles.icon}>{icon}</span>}
+      {icon && <span className="absolute left-3 text-base!">{icon}</span>}
       {passwordIcon && (
-        <i className={styles.showPasswordToggle}>{passwordIcon}</i>
+        <i className="absolute left-3 text-base!">{passwordIcon}</i>
       )}
     </InputFieldWrapper>
   );

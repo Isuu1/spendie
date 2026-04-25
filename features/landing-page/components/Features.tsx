@@ -36,7 +36,9 @@ const Features = () => {
             Connect bank accounts with Plaid and see your total balance in one
             view.
           </p>
-          <Button text="Read more" variant="primary" size="medium" />
+          <Button variant="primary" size="medium">
+            Read more
+          </Button>
         </div>
         <div className={styles.featureCard}>
           <i className={styles.icon}>
@@ -48,11 +50,12 @@ const Features = () => {
             next.
           </p>
           <Button
-            text="Read more"
             variant="primary"
             size="medium"
             onClick={() => scrollToSection("payments")}
-          />
+          >
+            Read more
+          </Button>
         </div>
         <div className={styles.featureCard}>
           <i className={styles.icon}>
@@ -61,11 +64,12 @@ const Features = () => {
           <h2>Customizable dashboard</h2>
           <p>Choose your dashboard tiles and make Spendie fit your goals.</p>
           <Button
-            text="Read more"
             variant="primary"
             size="medium"
             onClick={() => scrollToSection("dashboard")}
-          />
+          >
+            Read more
+          </Button>
         </div>
       </div>
     </div>

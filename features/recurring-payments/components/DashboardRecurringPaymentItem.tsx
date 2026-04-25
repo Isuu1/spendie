@@ -54,16 +54,15 @@ const DashboardRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
 
         <Button
           className={styles.paidButton}
-          text={
-            isPending && variables?.id === payment.id
-              ? "Processing..."
-              : "Mark as paid"
-          }
           variant="secondary"
           size="small"
           onClick={() => handleMarkAsPaid(payment)}
           disabled={isPending && variables?.id === payment.id}
-        />
+        >
+          {isPending && variables?.id === payment.id
+            ? "Processing..."
+            : "Mark as paid"}
+        </Button>
       </div>
     </div>
   );

@@ -37,7 +37,7 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
 
   const [state, formAction, isPending] = useActionState(
     changeUserDetails,
-    initialFormState
+    initialFormState,
   );
 
   const { formData, errors, handleChange, resetForm, setErrors } = useForm(
@@ -47,7 +47,7 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
       surname: user.surname,
       dob: user.dob,
       email: user.email,
-    }
+    },
   );
 
   const handleCloseForm = () => {
@@ -126,15 +126,15 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
       <div style={{ display: "flex", gap: "1rem", marginLeft: "auto" }}>
         {editMode && (
           <Button
-            text="Cancel"
             variant="secondary"
             type="button"
             size="medium"
             onClick={() => handleCloseForm()}
-          />
+          >
+            Cancel
+          </Button>
         )}
         <Button
-          text={isPending ? "Saving..." : "Save Changes"}
           variant="primary"
           type="submit"
           size="medium"
@@ -143,7 +143,9 @@ const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
             Object.values(errors).some((errArr) => errArr.length > 0) ||
             isPending
           }
-        />
+        >
+          {isPending ? "Saving..." : "Save Changes"}
+        </Button>
       </div>
     </Form>
   );

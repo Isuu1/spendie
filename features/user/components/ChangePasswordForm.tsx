@@ -74,7 +74,6 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = () => {
       />
       <div style={{ display: "flex", gap: "1rem", marginLeft: "auto" }}>
         <Button
-          text="Change password"
           variant="primary"
           type="submit"
           size="medium"
@@ -82,15 +81,18 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = () => {
             !editMode ||
             Object.values(errors).some((errArr) => errArr.length > 0)
           }
-        />
+        >
+          Change Password
+        </Button>
         {editMode && (
           <Button
-            text="Cancel"
             variant="secondary"
             type="button"
             size="medium"
             onClick={() => handleCloseForm()}
-          />
+          >
+            Cancel
+          </Button>
         )}
       </div>
     </Form>

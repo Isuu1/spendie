@@ -119,16 +119,18 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
           variant="secondary"
           size="medium"
           type="button"
-          text="Cancel"
           onClick={() => router.push("/recurring-payments")}
-        />
+        >
+          Cancel
+        </Button>
         <Button
           variant="primary"
           size="medium"
           type="submit"
-          text="Save"
           disabled={isPending}
-        />
+        >
+          Save
+        </Button>
       </div>
     </Form>
   );
