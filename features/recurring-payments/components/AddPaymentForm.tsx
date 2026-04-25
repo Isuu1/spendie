@@ -115,18 +115,13 @@ const AddPaymentForm: React.FC = () => {
       <div className="flex-row-space-between">
         <Button
           variant="secondary"
-          size="medium"
+          size="sm"
           type="button"
           onClick={() => router.push("/recurring-payments")}
         >
           Cancel
         </Button>
-        <Button
-          variant="primary"
-          size="medium"
-          type="submit"
-          disabled={isPending}
-        >
+        <Button variant="default" size="sm" type="submit" disabled={isPending}>
           Add Payment
         </Button>
       </div>
