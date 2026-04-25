@@ -1,6 +1,4 @@
 import React, { useMemo, useRef, useState } from "react";
-//Styles
-import styles from "./SelectInput.module.scss";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
@@ -9,6 +7,7 @@ import { TbArrowBigDownLineFilled } from "react-icons/tb";
 //Components
 import PopUp from "../PopUp";
 import InputFieldWrapper from "../InputFieldWrapper";
+import { cn } from "@/shared/lib/cn";
 
 type Option = {
   label: string;
@@ -58,22 +57,17 @@ const SelectInput: React.FC<SelectInputProps> = ({
   return (
     <InputFieldWrapper id={id} label={label}>
       {/* Hidden input to store the selected value */}
-      <input
-        id={id}
-        name={id}
-        type="hidden"
-        value={value?.value || ""}
-        className={styles.selectInput}
-      />
+      <input id={id} name={id} type="hidden" value={value?.value || ""} />
       <span
-        className={`${styles.inputField} ${styles.selectInputField} ${icon ? styles.withIcon : ""}`}
+        className={cn(
+          "bg-bg-surface-dark cursor-pointer rounded-md px-4 py-2 border-0 transition-all outline-3 outline-transparent duration-200 ease-in-out flex flex-1 items-center justify-between gap-0.5",
+        )}
         onClick={() => setShowOptions((prev) => !prev)}
         role="button"
       >
-        {icon && <i className={styles.icon}>{icon}</i>}
+        {icon && <i className="absolute left-3 text-base!">{icon}</i>}
         {value?.label ?? selectOptions[0]?.label}
         <motion.i
-          className={styles.dropdownIcon}
           animate={{ rotate: showOptions ? 180 : 0 }}
           transition={{ duration: 0.1 }}
         >
@@ -87,16 +81,20 @@ const SelectInput: React.FC<SelectInputProps> = ({
               style={{
                 gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
               }}
-              className={styles.selectOptions}
+              className="grid gap-4 p-1 w-max"
             >
               {optionsHeader && (
-                <li className={styles.optionsHeader}>{optionsHeader}</li>
+                <li className="col-span-full">{optionsHeader}</li>
               )}
               {selectOptions?.map((option) => (
                 <li
                   key={option.value}
                   onClick={() => handleOptionClick(option)}
-                  className={`${styles.option} ${value?.value === option.value ? styles.active : ""}`}
+                  className={cn(
+                    "cursor-pointer transition-colors duration-200 ease-in-out whitespace-nowrap",
+                    value?.value === option.value && "text-brand",
+                    "hover:text-brand",
+                  )}
                 >
                   {option.label}
                 </li>
