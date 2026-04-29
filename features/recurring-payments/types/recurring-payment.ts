@@ -11,7 +11,7 @@ export type RecurringPayment = RecurringPaymentBase & {
   type: string;
   repeat: string;
   first_payment_date: string;
-  next_payment_date: string;
+  next_payment_date: Date;
 };
 
 //History of payments made - stored in a separate table

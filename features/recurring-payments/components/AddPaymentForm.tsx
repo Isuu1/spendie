@@ -1,131 +1,181 @@
 "use client";
 
-import React, { useActionState, useEffect } from "react";
+import React, { startTransition } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
 //Components
 import Button from "@/shared/components/ui/Button";
-import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 import SelectInput from "@/shared/components/ui/SelectInput";
 import DateInput from "@/shared/components/ui/DateInput";
-import NumberInput from "@/shared/components/ui/NumberInput";
+import { Field, FieldError, FieldGroup } from "@/components/ui/field";
 //Actions
 import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/addRecurringPayment";
 //Types
 import {
-  initialRecurringPaymentFormState,
   repeatOptions,
   typeOptions,
-} from "@/features/recurring-payments/types/forms";
+} from "@/features/recurring-payments/types/recurringPaymentForm";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
-import { useForm } from "@/shared/hooks/useForm";
 //Schemas
-import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/forms";
+import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/recurringPaymentSchema";
 //Icons
-import { IoCalendarNumber } from "react-icons/io5";
+import { FolderPen, Wallet } from "lucide-react";
 
 const AddPaymentForm: React.FC = () => {
   const router = useRouter();
 
-  const [state, formAction, isPending] = useActionState(
-    addRecurringPayment,
-    initialRecurringPaymentFormState,
-  );
-
-  const { formData, errors, handleChange, validateForm } = useForm(
-    recurringPaymentSchema,
-    {
+  const form = useForm<z.infer<typeof recurringPaymentSchema>>({
+    resolver: zodResolver(recurringPaymentSchema),
+    defaultValues: {
       name: "",
-      repeat: "Monthly",
-      type: "Income",
-      amount: 0,
-      next_payment_date: "",
+      repeat: "",
+      type: "",
+      amount: undefined,
+      next_payment_date: undefined,
     },
-  );
+    mode: "onChange",
+  });
 
-  const handleValidationBeforeSubmit = (
-    e: React.FormEvent<HTMLFormElement>,
-  ) => {
-    //This runs before server action to validate all fields on client side
-    const isValid = validateForm(formData);
-    console.log("data before submit", formData, isValid);
-    if (!isValid) {
-      //Stop form submission if invalid
-      e.preventDefault();
-    }
-  };
+  function onSubmit(data: z.infer<typeof recurringPaymentSchema>) {
+    console.log("Submitting data:", data);
+    startTransition(async () => {
+      const result = await addRecurringPayment(data);
 
-  useEffect(() => {
-    if (state.success) {
-      toast.success("Recurring payment added successfully!", toastStyle);
-      router.push("/recurring-payments");
-      router.refresh();
-    }
-    if (state.error) {
-      toast.error(`Error: ${state.error}`, toastStyle);
-    }
-  }, [state, router]);
+      if (result.success) {
+        toast.success("Payment added!", toastStyle);
+        router.push("/recurring-payments");
+        router.refresh();
+      } else {
+        toast.error(result.error || "Something went wrong", toastStyle);
+        // If server returns specific field errors, you can map them here:
+        // form.setError("name", { message: "This name is already taken" });
+      }
+    });
+  }
 
   return (
-    <Form
-      layout="vertical"
-      action={formAction}
-      onSubmit={handleValidationBeforeSubmit}
-    >
-      <Input
-        id="name"
-        type="text"
-        label="Payment Name"
-        errors={errors.name}
-        value={formData.name}
-        onChange={(e) => handleChange("name", e.target.value)}
-      />
-      <SelectInput
-        id="repeat"
-        label="Repeat"
-        selectOptions={repeatOptions}
-        value={{ label: formData.repeat, value: formData.repeat }}
-        onChange={(val) => handleChange("repeat", val.value)}
-      />
-      <SelectInput
-        id="type"
-        label="Type"
-        selectOptions={typeOptions}
-        value={{ label: formData.type, value: formData.type }}
-        onChange={(val) => handleChange("type", val.value)}
-      />
-      <NumberInput
-        id="amount"
-        label="Amount"
-        errors={errors.amount}
-        value={formData.amount}
-        onChange={(e) => handleChange("amount", e.target.value)}
-      />
-      <DateInput
-        id="next_payment_date"
-        label="Next Payment Date"
-        errors={errors.next_payment_date}
-        value={formData.next_payment_date}
-        onChange={(val) => handleChange("next_payment_date", val)}
-        icon={<IoCalendarNumber />}
-      />
-
-      <div className="flex-row-space-between">
-        <Button
-          variant="secondary"
-          size="sm"
-          type="button"
-          onClick={() => router.push("/recurring-payments")}
+    <form onSubmit={form.handleSubmit(onSubmit)} className="w-md">
+      <FieldGroup>
+        <Controller
+          control={form.control}
+          name="name"
+          render={({ field, fieldState }) => (
+            <div className="flex flex-col gap-3">
+              <Input
+                {...field}
+                id="name"
+                type="text"
+                label="Payment Name"
+                icon={<FolderPen />}
+                placeholder="Payment"
+              />
+              {fieldState.error && <FieldError errors={[fieldState.error]} />}
+            </div>
+          )}
+        />
+        <Field
+          orientation="horizontal"
+          className="flex justify-between gap-4 items-start"
         >
-          Cancel
-        </Button>
-        <Button variant="default" size="sm" type="submit" disabled={isPending}>
-          Add Payment
-        </Button>
-      </div>
-    </Form>
+          <Controller
+            control={form.control}
+            name="amount"
+            render={({ field, fieldState }) => (
+              <div className="flex flex-col gap-3 flex-1">
+                <Input
+                  {...form.register("amount", { valueAsNumber: true })}
+                  {...field}
+                  type="number"
+                  id="amount"
+                  label="Amount"
+                  icon={<Wallet />}
+                  placeholder="0.00"
+                  onChange={(e) =>
+                    field.onChange(
+                      e.target.value === ""
+                        ? undefined
+                        : Number(e.target.value),
+                    )
+                  }
+                />
+                {fieldState.error && <FieldError errors={[fieldState.error]} />}
+              </div>
+            )}
+          />
+          <Controller
+            control={form.control}
+            name="next_payment_date"
+            render={({ field, fieldState }) => (
+              <div className="flex flex-col gap-3 flex-1">
+                <DateInput
+                  {...field}
+                  id="next_payment_date"
+                  label="Next Payment Date"
+                />
+                {fieldState.error && <FieldError errors={[fieldState.error]} />}
+              </div>
+            )}
+          />
+        </Field>
+        <Field orientation="horizontal">
+          <div className="flex justify-between w-full gap-4 items-start">
+            <Controller
+              control={form.control}
+              name="repeat"
+              render={({ field, fieldState }) => (
+                <div className="flex flex-col gap-3 flex-1">
+                  <SelectInput
+                    {...field}
+                    id="repeat"
+                    label="Repeat"
+                    selectOptions={repeatOptions}
+                  />
+                  {fieldState.error && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </div>
+              )}
+            />
+            <Controller
+              control={form.control}
+              name="type"
+              render={({ field, fieldState }) => (
+                <div className="flex flex-col gap-3 flex-1">
+                  <SelectInput
+                    {...field}
+                    id="type"
+                    label="Type"
+                    selectOptions={typeOptions}
+                  />
+                  {fieldState.error && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </div>
+              )}
+            />
+          </div>
+        </Field>
+
+        <div className="flex justify-end gap-2 mt-4">
+          <Button
+            variant="secondary"
+            size="sm"
+            type="button"
+            onClick={() => router.push("/recurring-payments")}
+          >
+            Cancel
+          </Button>
+          <Button variant="default" size="sm" type="submit">
+            Add Payment
+          </Button>
+        </div>
+      </FieldGroup>
+    </form>
   );
 };
 
