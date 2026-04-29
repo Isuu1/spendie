@@ -1,5 +1,5 @@
 import { createClient } from "@/supabase/client";
-import { RecurringPaymentHistory } from "../types/recurring-payment";
+import { RecurringPaymentHistory } from "../types/recurringPayment";
 
 export async function getRecurringPaymentsHistoryClient(): Promise<
   RecurringPaymentHistory[]

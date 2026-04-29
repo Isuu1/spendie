@@ -2,7 +2,7 @@ import { populateRecurringPayments } from "@/features/recurring-payments/lib/uti
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo } from "react";
 import { calculateTotals } from "../utils/calculateTotals";
-import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
 
 type ModeType = "endOfMonth" | "specificDate";
 

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 //Types
-import { RecurringPaymentHistory } from "../types/recurring-payment";
+import { RecurringPaymentHistory } from "../types/recurringPayment";
 //Icons
 import { BsHandThumbsUpFill } from "react-icons/bs";
 import { MdWatchLater } from "react-icons/md";

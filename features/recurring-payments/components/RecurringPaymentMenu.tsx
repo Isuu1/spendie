@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 //Types
-import { RecurringPayment } from "../types/recurring-payment";
+import { RecurringPayment } from "../types/recurringPayment";
 //Styles
 import styles from "./RecurringPaymentMenu.module.scss";
 //Animations

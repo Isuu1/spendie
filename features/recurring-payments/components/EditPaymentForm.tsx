@@ -14,7 +14,7 @@ import { editRecurringPayment } from "@/features/recurring-payments/lib/actions/
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
 //Types
-import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
 import { repeatOptions, typeOptions } from "../types/recurringPaymentForm";
 //Schemas
 import { recurringPaymentSchema } from "../schemas/recurringPaymentSchema";

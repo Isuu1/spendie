@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import clsx from "clsx";
 //Types
-import { RecurringPaymentHistory } from "../types/recurring-payment";
+import { RecurringPaymentHistory } from "../types/recurringPayment";
 //Components
 import PaymentHistoryStatus from "./PaymentHistoryStatus";
 //Icons

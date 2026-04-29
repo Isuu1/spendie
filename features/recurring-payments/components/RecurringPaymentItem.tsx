@@ -7,7 +7,7 @@ import Link from "next/link";
 //Styles
 import styles from "./RecurringPaymentItem.module.scss";
 //Types
-import { RecurringPayment } from "../types/recurring-payment";
+import { RecurringPayment } from "../types/recurringPayment";
 //Components
 import PaymentStatus from "./PaymentStatus";
 import RecurringPaymentMenu from "./RecurringPaymentMenu";

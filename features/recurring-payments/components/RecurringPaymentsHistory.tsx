@@ -6,7 +6,7 @@ import { useRecurringPaymentsHistory } from "../hooks/useRecurringPaymentsHistor
 import { usePagination } from "@/shared/hooks/usePagination";
 import { useDeletePayment } from "../hooks/useDeletePaymentHistory";
 //Types
-import { RecurringPayment } from "../types/recurring-payment";
+import { RecurringPayment } from "../types/recurringPayment";
 //Components
 import Pagination from "@/shared/components/Pagination";
 import ConfirmAction from "@/shared/components/ConfirmAction";
