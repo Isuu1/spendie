@@ -116,6 +116,7 @@ const AddPaymentForm: React.FC = () => {
                   {...field}
                   id="next_payment_date"
                   label="Next Payment Date"
+                  disabled={(before) => before < new Date()}
                 />
                 {fieldState.error && <FieldError errors={[fieldState.error]} />}
               </div>
