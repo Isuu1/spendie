@@ -1,4 +1,4 @@
-import { RecurringPayment } from "../../types/recurring-payment";
+import { RecurringPayment } from "../../types/recurringPayment";
 
 export type SortOption = "date" | "name";
 

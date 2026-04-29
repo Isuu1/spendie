@@ -8,7 +8,7 @@ import styles from "./DashboardRecurringPaymentsGrid.module.scss";
 //Animations
 import { motion } from "motion/react";
 //Types
-import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
 //Icons
 import { TbArrowBigDownLineFilled } from "react-icons/tb";
 //Components

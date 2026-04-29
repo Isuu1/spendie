@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { markAsPaid } from "../lib/actions/markAsPaid";
-import { RecurringPayment } from "../types/recurring-payment";
+import { RecurringPayment } from "../types/recurringPayment";
 import { toastStyle } from "@/shared/styles/toastStyle";
 
 export function useMarkAsPaid() {

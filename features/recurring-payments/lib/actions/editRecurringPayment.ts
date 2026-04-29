@@ -1,33 +1,16 @@
 "use server";
 
 import { createClient } from "@/supabase/server";
-import {
-  PaymentType,
-  RecurringPaymentFormState,
-  Repeat,
-} from "@/features/recurring-payments/types/forms";
-import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/forms";
+import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/recurringPaymentSchema";
+import z from "zod";
 
 export async function editRecurringPayment(
+  data: z.infer<typeof recurringPaymentSchema>,
   paymentId: string,
-  prevState: RecurringPaymentFormState,
-  formData: FormData,
 ) {
   const supabase = await createClient();
 
-  const amountValue = formData.get("amount");
-
-  const data = {
-    name: formData.get("name")?.toString() || "",
-    repeat: formData.get("repeat") as Repeat,
-    amount: (amountValue && parseFloat(amountValue as string)) || 0,
-    type: formData.get("type") as PaymentType,
-    next_payment_date: formData.get("next_payment_date")?.toString() || "",
-  };
-
   const validateData = recurringPaymentSchema.safeParse(data);
-
-  console.log("validateData", validateData);
 
   if (!validateData.success) {
     return {

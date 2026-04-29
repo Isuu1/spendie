@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 //Styles
 import styles from "./DashboardRecurringPaymentItem.module.scss";
 //Types
-import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
 //Components
 import PaymentStatus from "@/features/recurring-payments/components/PaymentStatus";
 import Button from "@/shared/components/ui/Button";

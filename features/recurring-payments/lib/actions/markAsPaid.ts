@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/supabase/server";
-import { RecurringPayment } from "../../types/recurring-payment";
+import { RecurringPayment } from "../../types/recurringPayment";
 import dayjs from "dayjs";
 
 type MarkAsPaidResult = {

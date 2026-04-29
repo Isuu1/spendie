@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 //Types
-import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
 //Styles
 import styles from "./PaymentsSummary.module.scss";
 //Icons

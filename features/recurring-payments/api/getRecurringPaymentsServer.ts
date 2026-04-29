@@ -1,4 +1,4 @@
-import { RecurringPayment } from "@/features/recurring-payments/types/recurring-payment";
+import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
 import { createClient } from "@/supabase/server";
 
 export async function getRecurringPaymentsServer(): Promise<

@@ -1,7 +1,7 @@
 "use client";
 
 //Types
-import { RecurringPayment } from "../types/recurring-payment";
+import { RecurringPayment } from "../types/recurringPayment";
 //Styles
 import styles from "@/features/recurring-payments/components/PaymentStatus.module.scss";
 import dayjs from "dayjs";
