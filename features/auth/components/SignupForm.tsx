@@ -92,11 +92,11 @@ const SignupForm = () => {
           />
           <Button
             className="mt-4"
-            size="sm"
+            size="default"
             variant="default"
             type="submit"
             icon={<SendHorizontal />}
-            iconPosition="left"
+            iconPosition="right"
             disabled={!form.formState.isValid || form.formState.isSubmitting}
           >
             {form.formState.isSubmitting
