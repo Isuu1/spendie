@@ -31,6 +31,8 @@ interface EditPaymentFormProps {
 const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
   const router = useRouter();
 
+  console.log("Editing payment:", payment);
+
   const form = useForm<z.infer<typeof recurringPaymentSchema>>({
     resolver: zodResolver(recurringPaymentSchema),
     defaultValues: {
@@ -38,7 +40,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
       repeat: payment.repeat as "Monthly" | "Weekly",
       type: payment.type as "Income" | "Expense",
       amount: payment.amount,
-      next_payment_date: payment.next_payment_date,
+      next_payment_date: dayjs(payment.next_payment_date).toDate(),
     },
     mode: "onChange",
   });
