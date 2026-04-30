@@ -1,55 +1,29 @@
 "use server";
 
 import { createClient } from "@/supabase/server";
-import { SignupFormState } from "../../types/forms";
 import { signupFormSchema } from "../../schemas/forms";
+import z from "zod";
 
-export async function signup(prevState: SignupFormState, formData: FormData) {
-  const supabase = await createClient();
+export async function signup(data: z.infer<typeof signupFormSchema>) {
+  try {
+    const supabase = await createClient();
 
-  //Form data from frontend form
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-    confirmPassword: formData.get("confirmPassword") as string,
-  };
+    const result = signupFormSchema.safeParse(data);
 
-  const validateSignupData = signupFormSchema.safeParse(data);
+    if (!result.success) return { success: false, error: "Invalid data" };
 
-  //Return data along with error message to to able to set email as default value (prevent clearing the input)
-  if (!validateSignupData.success) {
-    return {
-      error: "Invalid form data. Please check your inputs.",
-      success: false,
-      data,
-      status: 400,
-      resetKey: Date.now(),
-    };
+    // Include all initial user data in metadata to insert them into database
+    const { error } = await supabase.auth.signUp({
+      email: data.email,
+      password: data.password,
+      options: {},
+    });
+
+    if (error) return { success: false, error: error.message };
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error during signup:", error);
+    return { success: false, error: "Server error" };
   }
-
-  // Include all initial user data in metadata to insert them into database
-  const { error } = await supabase.auth.signUp({
-    email: data.email,
-    password: data.password,
-    options: {},
-  });
-
-  if (error) {
-    return {
-      error: error.message,
-      success: false,
-      data,
-      status: 400,
-      resetKey: Date.now(),
-    };
-  }
-
-  //Upon successful registration, return success message
-  return {
-    error: null,
-    success: true,
-    data,
-    status: 200,
-    resetKey: Date.now(),
-  };
 }

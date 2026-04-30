@@ -93,7 +93,7 @@ const LoginForm = () => {
             type="submit"
             icon={<SendHorizontal />}
             iconPosition="right"
-            disabled={!form.formState.isValid}
+            disabled={!form.formState.isValid || form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? "Signing in..." : "Sign In"}
           </Button>

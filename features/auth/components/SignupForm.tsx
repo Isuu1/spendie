@@ -1,143 +1,111 @@
 "use client";
-import React, { useActionState, useEffect, useState } from "react";
+import React, { startTransition, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-//Types
-import { SignupFormState } from "../types/forms";
+import { useForm } from "react-hook-form";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 //Actions
 import { signup } from "../lib/actions/signup";
 //Styles
-import styles from "./SignupForm.module.scss";
 import { toastStyle } from "@/shared/styles/toastStyle";
 //Components
 import Button from "@/shared/components/ui/Button";
 import Providers from "./Providers";
-import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
+import { FieldError, FieldGroup } from "@/components/ui/field";
 //Icons
-import { FiLogIn } from "react-icons/fi";
-import { MdEmail } from "react-icons/md";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
-//Hooks
-import { useForm } from "@/shared/hooks/useForm";
+import { Eye, EyeOff, Mail, SendHorizontal, Lock } from "lucide-react";
 //Schemas
 import { signupFormSchema } from "../schemas/forms";
 
-const initialState: SignupFormState = {
-  error: null,
-  success: false,
-  data: { email: "", password: "", confirmPassword: "" },
-  status: 0,
-  resetKey: Date.now(),
-};
-
 const SignupForm = () => {
-  const [state, formAction, isPending] = useActionState(signup, initialState);
   const [showPassword, setShowPassword] = useState(false);
-  console.log("LoginForm state", state);
 
-  const { formData, errors, handleChange, validateForm } = useForm(
-    signupFormSchema,
-    {
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof signupFormSchema>>({
+    resolver: zodResolver(signupFormSchema),
+    defaultValues: {
       email: "",
       password: "",
       confirmPassword: "",
     },
-  );
+    mode: "onChange",
+  });
 
-  const router = useRouter();
-
-  const handleValidationBeforeSubmit = (
-    e: React.FormEvent<HTMLFormElement>,
-  ) => {
-    //This runs before server action to validate all fields on client side
-    const isValid = validateForm(formData);
-    console.log("data before submit", formData, isValid);
-    if (!isValid) {
-      //Stop form submission if invalid
-      e.preventDefault();
-    }
-  };
-
-  useEffect(() => {
-    if (state.error) {
-      toast.error(`Error: ${state.error}`, toastStyle);
-    }
-    if (state.success) {
-      router.push(`/signup/success?email=${formData.email}`);
-    }
-  }, [state, router, formData.email]);
+  function onSubmit(data: z.infer<typeof signupFormSchema>) {
+    startTransition(async () => {
+      const result = await signup(data);
+      if (result.success) {
+        router.push(`/signup/success?email=${data.email}`);
+      } else {
+        toast.error(`Error: ${result.error}`, toastStyle);
+      }
+    });
+  }
 
   return (
-    <div className={styles.signupForm}>
+    <div className="flex flex-col items-center gap-7 p-4">
       <h2>Create Spendie account</h2>
-      <p className={styles.subtitle}>
+      <p className="max-w-sm text-center">
         Create your account and start managing money with confidence.
       </p>
-      <Form
-        layout="vertical"
-        action={formAction}
-        onSubmit={handleValidationBeforeSubmit}
-      >
-        <Input
-          label="Email"
-          id="email"
-          type="text"
-          placeholder="Enter your email"
-          icon={<MdEmail />}
-          errors={errors.email}
-          value={formData.email}
-          onChange={(e) => handleChange("email", e.target.value)}
-        />
-        <Input
-          label="Password"
-          id="password"
-          placeholder="Enter your password"
-          type={showPassword ? "text" : "password"}
-          icon={<RiLockPasswordFill />}
-          errors={errors.password}
-          value={formData.password}
-          onChange={(e) => handleChange("password", e.target.value)}
-          passwordIcon={
-            showPassword ? (
-              <FaEyeSlash
-                onClick={() => setShowPassword(false)}
-                style={{ cursor: "pointer" }}
-              />
-            ) : (
-              <FaEye
-                onClick={() => setShowPassword(true)}
-                style={{ cursor: "pointer" }}
-              />
-            )
-          }
-        />
-        <Input
-          label="Confirm Password"
-          id="confirmPassword"
-          placeholder="Re-enter your password"
-          type={showPassword ? "text" : "password"}
-          icon={<RiLockPasswordFill />}
-          errors={errors.confirmPassword}
-          value={formData.confirmPassword}
-          onChange={(e) => handleChange("confirmPassword", e.target.value)}
-        />
-        <Button
-          className={styles.loginButton}
-          size="large"
-          variant="primary"
-          type="submit"
-          icon={<FiLogIn />}
-          iconPosition="left"
-          disabled={isPending}
-        >
-          {isPending ? "Creating account..." : "Create account"}
-        </Button>
-
-        <Providers />
-      </Form>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-md">
+        <FieldGroup>
+          <Input
+            {...form.register("email")}
+            label="Email"
+            id="email"
+            type="text"
+            placeholder="Enter your email"
+            icon={<Mail />}
+          />
+          {form.formState.errors.email && (
+            <FieldError errors={[form.formState.errors.email]} />
+          )}
+          <Input
+            {...form.register("password")}
+            label="Password"
+            id="password"
+            placeholder="Enter your password"
+            type={showPassword ? "text" : "password"}
+            icon={<Lock />}
+            passwordIcon={
+              showPassword ? (
+                <Eye onClick={() => setShowPassword(false)} />
+              ) : (
+                <EyeOff onClick={() => setShowPassword(true)} />
+              )
+            }
+          />
+          {form.formState.errors.password && (
+            <FieldError errors={[form.formState.errors.password]} />
+          )}
+          <Input
+            {...form.register("confirmPassword")}
+            label="Confirm Password"
+            id="confirmPassword"
+            placeholder="Re-enter your password"
+            type={showPassword ? "text" : "password"}
+            icon={<Lock />}
+          />
+          <Button
+            className="mt-4"
+            size="sm"
+            variant="default"
+            type="submit"
+            icon={<SendHorizontal />}
+            iconPosition="left"
+            disabled={!form.formState.isValid || form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting
+              ? "Creating account..."
+              : "Create account"}
+          </Button>
+        </FieldGroup>
+      </form>
+      <Providers />
     </div>
   );
 };
