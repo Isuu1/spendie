@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
+import dayjs from "dayjs";
+import { useQueryClient } from "@tanstack/react-query";
 //Components
 import Button from "@/shared/components/ui/Button";
 import Input from "@/shared/components/ui/Input";
@@ -25,10 +27,11 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/recurringPaymentSchema";
 //Icons
 import { FolderPen, Wallet } from "lucide-react";
-import dayjs from "dayjs";
 
 const AddPaymentForm: React.FC = () => {
   const router = useRouter();
+
+  const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof recurringPaymentSchema>>({
     resolver: zodResolver(recurringPaymentSchema),
@@ -49,12 +52,12 @@ const AddPaymentForm: React.FC = () => {
 
       if (result.success) {
         toast.success("Payment added!", toastStyle);
+        await queryClient.invalidateQueries({
+          queryKey: ["recurringPayments"],
+        });
         router.push("/recurring-payments");
-        router.refresh();
       } else {
         toast.error(result.error || "Something went wrong", toastStyle);
-        // If server returns specific field errors, you can map them here:
-        // form.setError("name", { message: "This name is already taken" });
       }
     });
   }
@@ -62,52 +65,38 @@ const AddPaymentForm: React.FC = () => {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="w-md">
       <FieldGroup>
-        <Controller
-          control={form.control}
-          name="name"
-          render={({ field, fieldState }) => (
-            <div className="flex flex-col gap-3">
-              <Input
-                {...field}
-                id="name"
-                type="text"
-                label="Payment Name"
-                icon={<FolderPen />}
-                placeholder="Payment"
-              />
-              {fieldState.error && <FieldError errors={[fieldState.error]} />}
-            </div>
+        <div className="flex flex-col gap-3">
+          <Input
+            {...form.register("name")}
+            id="name"
+            type="text"
+            label="Payment Name"
+            icon={<FolderPen />}
+            placeholder="Payment"
+          />
+          {form.formState.errors.name && (
+            <FieldError errors={[form.formState.errors.name]} />
           )}
-        />
+        </div>
+
         <Field
           orientation="horizontal"
           className="flex justify-between gap-4 items-start"
         >
-          <Controller
-            control={form.control}
-            name="amount"
-            render={({ field, fieldState }) => (
-              <div className="flex flex-col gap-3 flex-1">
-                <Input
-                  {...form.register("amount", { valueAsNumber: true })}
-                  {...field}
-                  type="number"
-                  id="amount"
-                  label="Amount"
-                  icon={<Wallet />}
-                  placeholder="0.00"
-                  onChange={(e) =>
-                    field.onChange(
-                      e.target.value === ""
-                        ? undefined
-                        : Number(e.target.value),
-                    )
-                  }
-                />
-                {fieldState.error && <FieldError errors={[fieldState.error]} />}
-              </div>
+          <div className="flex flex-col gap-3 flex-1">
+            <Input
+              {...form.register("amount", { valueAsNumber: true })}
+              type="number"
+              id="amount"
+              label="Amount"
+              icon={<Wallet />}
+              placeholder="0.00"
+            />
+            {form.formState.errors.amount && (
+              <FieldError errors={[form.formState.errors.amount]} />
             )}
-          />
+          </div>
+
           <Controller
             control={form.control}
             name="next_payment_date"

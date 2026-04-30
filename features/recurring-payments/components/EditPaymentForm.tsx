@@ -3,6 +3,11 @@
 import React, { startTransition } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import dayjs from "dayjs";
+import { useQueryClient } from "@tanstack/react-query";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
 //Components
 import Button from "@/shared/components/ui/Button";
 import Input from "@/shared/components/ui/Input";
@@ -18,11 +23,8 @@ import { RecurringPayment } from "@/features/recurring-payments/types/recurringP
 import { repeatOptions, typeOptions } from "../types/recurringPaymentForm";
 //Schemas
 import { recurringPaymentSchema } from "../schemas/recurringPaymentSchema";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
-import z from "zod";
+//Icons
 import { FolderPen, Wallet } from "lucide-react";
-import dayjs from "dayjs";
 
 interface EditPaymentFormProps {
   payment: RecurringPayment;
@@ -30,6 +32,8 @@ interface EditPaymentFormProps {
 
 const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
   const router = useRouter();
+
+  const queryClient = useQueryClient();
 
   console.log("Editing payment:", payment);
 
@@ -51,13 +55,13 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
       const result = await editRecurringPayment(data, payment.id);
 
       if (result.success) {
-        toast.success("Payment added!", toastStyle);
+        toast.success("Payment updated!", toastStyle);
+        await queryClient.invalidateQueries({
+          queryKey: ["recurringPayments"],
+        });
         router.push("/recurring-payments");
-        router.refresh();
       } else {
         toast.error(result.error || "Something went wrong", toastStyle);
-        // If server returns specific field errors, you can map them here:
-        // form.setError("name", { message: "This name is already taken" });
       }
     });
   }
@@ -65,52 +69,38 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="w-md">
       <FieldGroup>
-        <Controller
-          control={form.control}
-          name="name"
-          render={({ field, fieldState }) => (
-            <div className="flex flex-col gap-3">
-              <Input
-                {...field}
-                id="name"
-                type="text"
-                label="Payment Name"
-                icon={<FolderPen />}
-                placeholder="Payment"
-              />
-              {fieldState.error && <FieldError errors={[fieldState.error]} />}
-            </div>
+        <div className="flex flex-col gap-3">
+          <Input
+            {...form.register("name")}
+            id="name"
+            type="text"
+            label="Payment Name"
+            icon={<FolderPen />}
+            placeholder="Payment"
+          />
+          {form.formState.errors.name && (
+            <FieldError errors={[form.formState.errors.name]} />
           )}
-        />
+        </div>
+
         <Field
           orientation="horizontal"
           className="flex justify-between gap-4 items-start"
         >
-          <Controller
-            control={form.control}
-            name="amount"
-            render={({ field, fieldState }) => (
-              <div className="flex flex-col gap-3 flex-1">
-                <Input
-                  {...form.register("amount", { valueAsNumber: true })}
-                  {...field}
-                  type="number"
-                  id="amount"
-                  label="Amount"
-                  icon={<Wallet />}
-                  placeholder="0.00"
-                  onChange={(e) =>
-                    field.onChange(
-                      e.target.value === ""
-                        ? undefined
-                        : Number(e.target.value),
-                    )
-                  }
-                />
-                {fieldState.error && <FieldError errors={[fieldState.error]} />}
-              </div>
+          <div className="flex flex-col gap-3 flex-1">
+            <Input
+              {...form.register("amount", { valueAsNumber: true })}
+              type="number"
+              id="amount"
+              label="Amount"
+              icon={<Wallet />}
+              placeholder="0.00"
+            />
+            {form.formState.errors.amount && (
+              <FieldError errors={[form.formState.errors.amount]} />
             )}
-          />
+          </div>
+
           <Controller
             control={form.control}
             name="next_payment_date"
@@ -176,7 +166,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
             Cancel
           </Button>
           <Button variant="default" size="sm" type="submit">
-            Add Payment
+            Update Payment
           </Button>
         </div>
       </FieldGroup>
