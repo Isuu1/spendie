@@ -15,11 +15,12 @@ type InputProps = React.ComponentProps<typeof ShadcnInput> & {
   id: string;
   label: string;
   icon?: React.ReactNode;
+  passwordIcon?: React.ReactNode;
   value?: string | number | Date;
 };
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ icon, id, label, className, value, ...props }, ref) => {
+  ({ icon, id, label, className, value, passwordIcon, ...props }, ref) => {
     return (
       <Field>
         <FieldLabel htmlFor={id}>{label}</FieldLabel>
@@ -31,6 +32,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
         >
           <InputGroupAddon>{icon}</InputGroupAddon>
+          <InputGroupAddon align="inline-end">
+            {passwordIcon && (
+              <button type="button" className="cursor-pointer">
+                {passwordIcon}
+              </button>
+            )}
+          </InputGroupAddon>
           <InputGroupInput
             ref={ref}
             id={id}
