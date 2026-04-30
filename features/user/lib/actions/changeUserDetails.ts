@@ -1,8 +1,8 @@
 "use server";
 
 import { createClient } from "@/supabase/server";
-import { getUserServer } from "../api/getUserServer";
-import { accountDetailsSchema } from "../schemas/accountDetailsSchema";
+import { getUserServer } from "../../api/getUserServer";
+import { accountDetailsSchema } from "../../schemas/accountDetailsSchema";
 import z from "zod";
 import { revalidatePath } from "next/cache";
 

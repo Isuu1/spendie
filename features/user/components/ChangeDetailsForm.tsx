@@ -14,7 +14,7 @@ import { FieldError, FieldGroup } from "@/components/ui/field";
 //Types
 import { UserProfile } from "@/features/user/types/user";
 //Actions
-import { changeUserDetails } from "@/features/user/actions/changeUserDetails";
+import { changeUserDetails } from "@/features/user/lib/actions/changeUserDetails";
 //Icons
 import { Mail, User } from "lucide-react";
 //Types
