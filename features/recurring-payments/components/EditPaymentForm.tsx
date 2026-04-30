@@ -35,8 +35,6 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
 
   const queryClient = useQueryClient();
 
-  console.log("Editing payment:", payment);
-
   const form = useForm<z.infer<typeof recurringPaymentSchema>>({
     resolver: zodResolver(recurringPaymentSchema),
     defaultValues: {
@@ -50,7 +48,6 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
   });
 
   function onSubmit(data: z.infer<typeof recurringPaymentSchema>) {
-    console.log("Submitting data:", data);
     startTransition(async () => {
       const result = await editRecurringPayment(data, payment.id);
 

@@ -46,7 +46,6 @@ const AddPaymentForm: React.FC = () => {
   });
 
   function onSubmit(data: z.infer<typeof recurringPaymentSchema>) {
-    console.log("Submitting data:", data);
     startTransition(async () => {
       const result = await addRecurringPayment(data);
 

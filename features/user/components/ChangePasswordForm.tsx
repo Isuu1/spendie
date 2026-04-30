@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React from "react";
 import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 //Components
-import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 import Button from "@/shared/components/ui/Button";
+import { FieldGroup } from "@/components/ui/field";
 //Types
 import { UserProfile } from "@/features/user/types/user";
-//Hooks
-import { useForm } from "@/shared/hooks/useForm";
 
 const passwordSchema = z
   .object({
@@ -24,78 +24,57 @@ const passwordSchema = z
     path: ["confirmPassword"], // attach error specifically to confirmPassword
   });
 
-interface ChangePasswordFormProps {
+type ChangePasswordFormProps = {
   user: UserProfile;
-}
+};
 
 const ChangePasswordForm: React.FC<ChangePasswordFormProps> = () => {
-  const [editMode, setEditMode] = useState(false);
-
-  const { formData, errors, handleChange, resetForm } = useForm(
-    passwordSchema,
-    {
+  const form = useForm<z.infer<typeof passwordSchema>>({
+    resolver: zodResolver(passwordSchema),
+    defaultValues: {
       newPassword: "",
       confirmPassword: "",
     },
-  );
-
-  console.log(formData);
-
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const handleCloseForm = () => {
-    setEditMode(false);
-    resetForm();
-  };
+    mode: "onChange",
+  });
 
   return (
-    <Form layout="vertical" ref={formRef}>
-      <Input
-        id="newPassword"
-        type="text"
-        label="New password"
-        value={formData.newPassword}
-        onChange={(e) => {
-          handleChange("newPassword", e.target.value);
-          setEditMode(true);
-        }}
-        errors={errors.newPassword}
-      />
-      <Input
-        id="confirmPassword"
-        type="email"
-        label="Confirm password"
-        value={formData.confirmPassword}
-        onChange={(e) => {
-          handleChange("confirmPassword", e.target.value);
-          setEditMode(true);
-        }}
-        errors={errors.confirmPassword}
-      />
-      <div style={{ display: "flex", gap: "1rem", marginLeft: "auto" }}>
-        <Button
-          variant="primary"
-          type="submit"
-          size="medium"
-          disabled={
-            !editMode ||
-            Object.values(errors).some((errArr) => errArr.length > 0)
-          }
-        >
-          Change Password
-        </Button>
-        {editMode && (
+    <form>
+      <FieldGroup>
+        <Input
+          {...form.register("newPassword")}
+          id="newPassword"
+          type="text"
+          label="New password"
+        />
+        <Input
+          {...form.register("confirmPassword")}
+          id="confirmPassword"
+          type="email"
+          label="Confirm password"
+        />
+        <div className="flex justify-end gap-2 mt-4">
           <Button
-            variant="secondary"
-            type="button"
-            size="medium"
-            onClick={() => handleCloseForm()}
+            variant="default"
+            type="submit"
+            size="default"
+            disabled={!form.formState.isValid || form.formState.isSubmitting}
           >
-            Cancel
+            Change Password
           </Button>
-        )}
-      </div>
-    </Form>
+          {form.formState.isDirty && (
+            <Button
+              variant="secondary"
+              type="button"
+              size="default"
+              onClick={() => form.reset()}
+            >
+              Cancel
+            </Button>
+          )}
+        </div>
+      </FieldGroup>
+    </form>
   );
 };
 
