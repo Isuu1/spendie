@@ -2,71 +2,41 @@
 
 import { createClient } from "@/supabase/server";
 import { getUserServer } from "../api/getUserServer";
-import { accountDetailsSchema } from "../schemas/forms";
-import { ChangeDetailsFormState } from "../types/forms";
+import { accountDetailsSchema } from "../schemas/accountDetailsSchema";
+import z from "zod";
+import { revalidatePath } from "next/cache";
 
 export async function changeUserDetails(
-  prevState: ChangeDetailsFormState,
-  formData: FormData,
-): Promise<ChangeDetailsFormState> {
-  const name = formData.get("name") as string;
-  const surname = formData.get("surname") as string;
-  const dob = formData.get("dob") as string;
-  const email = formData.get("email") as string;
-
+  data: z.infer<typeof accountDetailsSchema>,
+) {
   try {
     const user = await getUserServer();
 
     const supabase = await createClient();
 
-    if (!user) {
-      return { success: false, user: null, error: "Failed to fetch user" };
-    }
+    if (!user) return { success: false, error: "Unauthorized" };
 
-    const result = accountDetailsSchema.safeParse({
-      name,
-      surname,
-      dob,
-      email,
-    });
+    const result = accountDetailsSchema.safeParse(data);
 
-    if (!result.success) {
-      return {
-        success: false,
-        user: null,
-        error: "Failed to update details, invalid data.",
-      };
-    }
+    if (!result.success) return { success: false, error: "Invalid data" };
 
-    const { data: updatedProfile, error: updateError } = await supabase
+    const { error: updateError } = await supabase
       .from("profiles")
-      .update({
-        name: result.data.name,
-        surname: result.data.surname,
-        dob: result.data.dob,
-        email: result.data.email,
-      })
+      .update(result.data)
       .eq("id", user.id)
       .select()
       .single();
 
-    if (updateError || !updatedProfile) {
-      console.error("Error updating profile:", updateError);
-      // Check for unique violation (Postgres error code: 23505)
-      if (updateError?.code === "23505") {
-        return {
-          success: false,
-          user: null,
-          error: "This email is already in use",
-          fieldErrors: { email: ["This email is already in use"] },
-        };
-      }
-      return { success: false, user: null, error: "Failed to update profile" };
+    if (updateError) {
+      if (updateError.code === "23505")
+        return { success: false, error: "Email already in use" };
+      return { success: false, error: "Update failed" };
     }
 
-    return { success: true, user: user, error: null };
+    revalidatePath("/user");
+    return { success: true };
   } catch (error) {
     console.error("Error changing user details:", error);
-    return { success: false, user: null, error: "An error occurred" };
+    return { success: false, error: "Server error" };
   }
 }

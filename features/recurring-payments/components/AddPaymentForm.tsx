@@ -25,6 +25,7 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/recurringPaymentSchema";
 //Icons
 import { FolderPen, Wallet } from "lucide-react";
+import dayjs from "dayjs";
 
 const AddPaymentForm: React.FC = () => {
   const router = useRouter();
@@ -116,7 +117,7 @@ const AddPaymentForm: React.FC = () => {
                   {...field}
                   id="next_payment_date"
                   label="Next Payment Date"
-                  disabled={(before) => before < new Date()}
+                  disabled={{ before: dayjs().startOf("day").toDate() }}
                 />
                 {fieldState.error && <FieldError errors={[fieldState.error]} />}
               </div>

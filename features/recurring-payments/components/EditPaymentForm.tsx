@@ -22,6 +22,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import z from "zod";
 import { FolderPen, Wallet } from "lucide-react";
+import dayjs from "dayjs";
 
 interface EditPaymentFormProps {
   payment: RecurringPayment;
@@ -117,7 +118,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
                   {...field}
                   id="next_payment_date"
                   label="Next Payment Date"
-                  disabled={(before) => before < new Date()}
+                  disabled={{ before: dayjs().startOf("day").toDate() }}
                 />
                 {fieldState.error && <FieldError errors={[fieldState.error]} />}
               </div>

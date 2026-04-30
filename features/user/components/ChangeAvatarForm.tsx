@@ -22,7 +22,7 @@ const ChangeAvatarForm = ({ user }: ChangeAvatarFormProps) => {
         height={100}
       />
       <div className={styles.editButton}>
-        <Button variant="primary" size="medium">
+        <Button variant="default" size="sm">
           Change Avatar
         </Button>
       </div>
