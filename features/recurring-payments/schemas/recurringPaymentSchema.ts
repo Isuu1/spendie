@@ -6,9 +6,6 @@ export const recurringPaymentSchema = z.object({
   repeat: z.enum(
     repeatOptions.map((opt) => opt.value) as [string, ...string[]],
   ),
-  // amount: z
-  //   .number({ invalid_type_error: "Please provide an amount" })
-  //   .min(0.01, "Amount must be greater than 0"),
   amount: z.coerce.number().min(0.01),
   type: z.enum(typeOptions.map((opt) => opt.value) as [string, ...string[]]),
   next_payment_date: z.date({
