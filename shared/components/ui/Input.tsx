@@ -28,16 +28,16 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const errorClasses = error
       ? "ring-2 ring-red-600 border-red-600"
-      : "border-transparent focus-within:ring-2 focus-within:ring-brand";
+      : "border-transparent";
 
     return (
       <Field>
         <FieldLabel htmlFor={id}>{label}</FieldLabel>
         <InputGroup
           className={cn(
-            "bg-bg-surface-dark rounded-md px-1 border transition-all duration-200 ease-in-out",
-            "border-transparent",
-            "focus-within:ring-2 focus-within:ring-bg-brand focus-within:border-brand",
+            "bg-bg-surface-dark rounded-md border transition-all duration-200 ease-in-out outline-none",
+            "border-transparent!",
+            "focus-within:ring-2 focus-within:ring-bg-bg-surface-dark-hover focus-within:border-bg-surface-dark-hover",
             className,
             errorClasses,
           )}
@@ -55,7 +55,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             id={id}
             name={id}
             {...props}
-            className="focus:ring-0 outline-none"
             value={
               value instanceof Date ? value.toISOString().slice(0, 10) : value
             }

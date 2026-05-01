@@ -105,6 +105,7 @@ const AddPaymentForm: React.FC = () => {
                   id="next_payment_date"
                   label="Next Payment Date"
                   disabled={{ before: dayjs().startOf("day").toDate() }}
+                  error={fieldState.error}
                 />
                 <InputError error={fieldState.error} />
               </div>

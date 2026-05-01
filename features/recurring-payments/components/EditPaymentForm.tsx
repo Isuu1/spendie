@@ -75,6 +75,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
             label="Payment Name"
             icon={<FolderPen />}
             placeholder="Payment"
+            error={form.formState.errors.name}
           />
           <InputError error={form.formState.errors.name} />
         </div>
@@ -85,13 +86,13 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
         >
           <div className="flex flex-col gap-3 flex-1">
             <Input
-              // {...form.register("amount", { valueAsNumber: true })}
               {...form.register("amount")}
               type="number"
               id="amount"
               label="Amount"
               icon={<Wallet />}
               placeholder="0.00"
+              error={form.formState.errors.amount}
             />
             <InputError error={form.formState.errors.amount} />
           </div>
@@ -106,6 +107,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
                   id="next_payment_date"
                   label="Next Payment Date"
                   disabled={{ before: dayjs().startOf("day").toDate() }}
+                  error={fieldState.error}
                 />
                 <InputError error={fieldState.error} />
               </div>
