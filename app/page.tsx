@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+//import { redirect } from "next/navigation";
 //Components
 import Header from "@/features/landing-page/components/Header";
 import HeroSection from "@/features/landing-page/components/HeroSection";
@@ -7,14 +7,14 @@ import Footer from "@/features/landing-page/components/Footer";
 import PaymentsFeature from "@/features/landing-page/components/PaymentsFeature";
 import DashboardFeature from "@/features/landing-page/components/DashboardFeature";
 //Api
-import { getUserServer } from "@/features/user/api/getUserServer";
+//import { getUserServer } from "@/features/user/api/getUserServer";
 
 export default async function Home() {
-  const data = await getUserServer();
+  // const data = await getUserServer();
 
-  if (data) {
-    redirect("/dashboard");
-  }
+  // if (data) {
+  //   redirect("/dashboard");
+  // }
   return (
     <div className="landing-page">
       <Header />

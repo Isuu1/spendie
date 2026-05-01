@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { togglePanelVisibility } from "@/features/user/actions/togglePanelVisibility";
+import { togglePanelVisibility } from "@/features/user/lib/actions/togglePanelVisibility";
 import { toast } from "react-hot-toast";
 import { toastStyle } from "@/shared/styles/toastStyle";
 import { UserSettings } from "../types/user";
@@ -38,7 +38,7 @@ export function useTogglePanelVisibility() {
             ? visible.filter((p) => p !== panelName)
             : [...visible, panelName];
           return { ...old, visible_panels: newPanels };
-        }
+        },
       );
 
       return { previousSettings };

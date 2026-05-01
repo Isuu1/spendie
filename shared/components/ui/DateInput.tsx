@@ -11,6 +11,7 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { Matcher } from "react-day-picker";
+import type { FieldError } from "react-hook-form";
 
 interface DateInputProps {
   id: string;
@@ -18,6 +19,7 @@ interface DateInputProps {
   value?: Date;
   onChange?: (date: Date | null) => void;
   disabled?: Matcher;
+  error?: FieldError;
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -26,12 +28,15 @@ const DateInput: React.FC<DateInputProps> = ({
   value,
   onChange,
   disabled,
+  error,
 }) => {
   const formatValue = (dateStr: Date) => {
     return dayjs(dateStr).format("D MMMM YYYY");
   };
 
-  console.log("Rendering DateInput with value:", value);
+  const errorClasses = error
+    ? "ring-1 ring-red-600 border-red-600"
+    : "border-transparent";
 
   return (
     <Field>
@@ -41,9 +46,10 @@ const DateInput: React.FC<DateInputProps> = ({
           <Button
             data-empty={!value}
             className={cn(
-              "w-70 justify-start text-left font-normal data-[empty=true]:text-muted-foreground",
-              "bg-bg-surface-dark",
+              "justify-start text-left font-normal data-[empty=true]:text-muted-foreground",
+              "bg-bg-surface-dark border border-transparent!",
               "hover:bg-bg-surface-dark",
+              errorClasses,
             )}
           >
             <CalendarIcon />

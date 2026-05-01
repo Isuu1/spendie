@@ -1,153 +1,130 @@
 "use client";
 
-import React, { useActionState, useEffect, useState } from "react";
+import React, { startTransition } from "react";
 import toast from "react-hot-toast";
+import { Controller, useForm } from "react-hook-form";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import dayjs from "dayjs";
 //Components
-import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 import Button from "@/shared/components/ui/Button";
+import DateInput from "@/shared/components/ui/DateInput";
+import { FieldError, FieldGroup } from "@/components/ui/field";
 //Types
 import { UserProfile } from "@/features/user/types/user";
-//Hooks
-import { useForm } from "@/shared/hooks/useForm";
-import { changeUserDetails } from "@/features/user/actions/changeUserDetails";
+//Actions
+import { changeUserDetails } from "@/features/user/lib/actions/changeUserDetails";
 //Icons
-import { FaUser } from "react-icons/fa";
-import { BsCalendarDateFill } from "react-icons/bs";
-import { MdEmail } from "react-icons/md";
+import { Mail, User } from "lucide-react";
 //Types
-import { ChangeDetailsFormState } from "@/features/user/types/forms";
-import { accountDetailsSchema } from "@/features/user/schemas/forms";
+import { accountDetailsSchema } from "@/features/user/schemas/accountDetailsSchema";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
-import DateInput from "@/shared/components/ui/DateInput";
 
-interface ChangeDetailsFormProps {
+type ChangeDetailsFormProps = {
   user: UserProfile;
-}
-
-const initialFormState: ChangeDetailsFormState = {
-  success: false,
-  error: "",
-  user: null,
 };
 
-const ChangeDetailsForm: React.FC<ChangeDetailsFormProps> = ({ user }) => {
-  const [editMode, setEditMode] = useState(false);
-
-  const [state, formAction, isPending] = useActionState(
-    changeUserDetails,
-    initialFormState,
-  );
-
-  const { formData, errors, handleChange, resetForm, setErrors } = useForm(
-    accountDetailsSchema,
-    {
+const ChangeDetailsForm = ({ user }: ChangeDetailsFormProps) => {
+  const form = useForm<z.infer<typeof accountDetailsSchema>>({
+    resolver: zodResolver(accountDetailsSchema),
+    defaultValues: {
       name: user.name,
       surname: user.surname,
-      dob: user.dob,
+      dob: dayjs(user.dob).toDate(),
       email: user.email,
     },
-  );
+    mode: "onChange",
+  });
 
-  const handleCloseForm = () => {
-    setEditMode(false);
-    resetForm();
-  };
-
-  useEffect(() => {
-    if (state && state.success) {
-      setEditMode(false);
-      toast.success("Details updated successfully!", toastStyle);
-    }
-    if (state && state.error && !state.fieldErrors) {
-      toast.error(`Error: ${state.error}`, toastStyle);
-    }
-    if (state?.fieldErrors) {
-      setErrors((prev) => ({
-        ...prev,
-        ...state.fieldErrors,
-      }));
-    }
-  }, [state, setErrors]);
-
-  console.log("form state", state);
-  console.log("form errors", errors);
+  function onSubmit(data: z.infer<typeof accountDetailsSchema>) {
+    startTransition(async () => {
+      const result = await changeUserDetails(data);
+      if (result.success) {
+        toast.success("Details updated!", toastStyle);
+        form.reset(data); // Reset form with new values
+      } else {
+        if (result.error === "Email already in use") {
+          form.setError("email", { message: result.error });
+        } else {
+          toast.error(result.error || "Failed to update details", toastStyle);
+        }
+      }
+    });
+  }
 
   return (
-    <Form layout="vertical" action={formAction}>
-      <Input
-        id="name"
-        type="text"
-        label="Name"
-        value={formData.name}
-        onChange={(e) => {
-          handleChange("name", e.target.value);
-          setEditMode(true);
-        }}
-        errors={errors.name}
-        icon={<FaUser />}
-      />
-      <Input
-        id="surname"
-        type="text"
-        label="Surname"
-        value={formData.surname}
-        onChange={(e) => {
-          handleChange("surname", e.target.value);
-          setEditMode(true);
-        }}
-        errors={errors.surname}
-        icon={<FaUser />}
-      />
-      <DateInput
-        id="dob"
-        label="Date of Birth"
-        value={formData.dob}
-        onChange={(value) => {
-          handleChange("dob", value);
-          setEditMode(true);
-        }}
-        errors={errors.dob}
-        icon={<BsCalendarDateFill />}
-      />
-      <Input
-        id="email"
-        type="email"
-        label="Email"
-        value={formData.email}
-        onChange={(e) => {
-          handleChange("email", e.target.value);
-          setEditMode(true);
-        }}
-        errors={errors.email}
-        icon={<MdEmail />}
-      />
-      <div style={{ display: "flex", gap: "1rem", marginLeft: "auto" }}>
-        {editMode && (
-          <Button
-            variant="secondary"
-            type="button"
-            size="medium"
-            onClick={() => handleCloseForm()}
-          >
-            Cancel
-          </Button>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="w-md">
+      <FieldGroup>
+        <Input
+          {...form.register("name")}
+          id="name"
+          type="text"
+          label="Name"
+          icon={<User />}
+        />
+        {form.formState.errors.name && (
+          <FieldError errors={[form.formState.errors.name]} />
         )}
-        <Button
-          variant="primary"
-          type="submit"
-          size="medium"
-          disabled={
-            !editMode ||
-            Object.values(errors).some((errArr) => errArr.length > 0) ||
-            isPending
-          }
-        >
-          {isPending ? "Saving..." : "Save Changes"}
-        </Button>
-      </div>
-    </Form>
+        <Input
+          {...form.register("surname")}
+          id="surname"
+          type="text"
+          label="Surname"
+          icon={<User />}
+        />
+        {form.formState.errors.surname && (
+          <FieldError errors={[form.formState.errors.surname]} />
+        )}
+        <Controller
+          control={form.control}
+          name="dob"
+          render={({ field, fieldState }) => (
+            <div>
+              <DateInput
+                {...field}
+                id="dob"
+                label="Date of Birth"
+                disabled={{ after: new Date() }}
+              />
+              {fieldState.error && <FieldError errors={[fieldState.error]} />}
+            </div>
+          )}
+        />
+        <Input
+          {...form.register("email")}
+          id="email"
+          type="email"
+          label="Email"
+          icon={<Mail />}
+        />
+        {form.formState.errors.email && (
+          <FieldError errors={[form.formState.errors.email]} />
+        )}
+        <div className="flex justify-end gap-2 mt-4">
+          {form.formState.isDirty && (
+            <Button
+              variant="secondary"
+              type="button"
+              size="sm"
+              onClick={() => form.reset()}
+            >
+              Cancel
+            </Button>
+          )}
+
+          <Button
+            variant="default"
+            type="submit"
+            size="sm"
+            disabled={!form.formState.isDirty}
+          >
+            Save
+          </Button>
+        </div>
+      </FieldGroup>
+    </form>
   );
 };
 

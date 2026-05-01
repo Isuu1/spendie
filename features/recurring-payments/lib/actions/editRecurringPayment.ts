@@ -3,53 +3,37 @@
 import { createClient } from "@/supabase/server";
 import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/recurringPaymentSchema";
 import z from "zod";
+import { getUserServer } from "@/features/user/api/getUserServer";
 
 export async function editRecurringPayment(
   data: z.infer<typeof recurringPaymentSchema>,
   paymentId: string,
 ) {
+  const user = await getUserServer();
+
   const supabase = await createClient();
 
-  const validateData = recurringPaymentSchema.safeParse(data);
+  if (!user) return { success: false, error: "Unauthorized" };
 
-  if (!validateData.success) {
-    return {
-      data,
-      success: false,
-      message: "Validation error",
-      error: "Unable to validate form data",
-    };
-  }
+  //Validate the form data
+  const result = recurringPaymentSchema.safeParse(data);
 
-  const { data: user, error: userError } = await supabase.auth.getUser();
-
-  if (userError) {
-    console.error("Error fetching user:", userError);
-    throw new Error("Failed to fetch user");
-  }
+  if (!result.success)
+    return { success: false, error: "Unable to validate form data" };
 
   // Create the new payment object with user_id
-  const editedPayment = { ...data, user_id: user.user.id };
+  const editedPayment = { ...data, user_id: user.id };
 
   const { error: updateError } = await supabase
     .from("recurring_payments")
     .update(editedPayment)
     .eq("id", paymentId);
 
-  if (updateError) {
-    console.error("Error saving recurring payment:", updateError);
+  if (updateError)
     return {
-      data,
       success: false,
-      message: "Failed to save payment. Please try again.",
-      error: "Unable to save recurring payment",
+      error: updateError.message || "Failed to update recurring payment",
     };
-  }
 
-  return {
-    data,
-    success: true,
-    message: "Recurring payment updated successfully",
-    error: null,
-  };
+  return { success: true };
 }

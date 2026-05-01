@@ -1,139 +1,105 @@
 "use client";
-import React, { useActionState, useEffect, useState } from "react";
+import React, { startTransition, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-//Types
-import { LoginFormState } from "../types/forms";
+import { useForm } from "react-hook-form";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 //Actions
 import { login } from "../lib/actions/login";
 //Components
-import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 import Button from "@/shared/components/ui/Button";
 import Providers from "./Providers";
+import { FieldError, FieldGroup } from "@/components/ui/field";
 //Styles
-import styles from "./LoginForm.module.scss";
 import { toastStyle } from "@/shared/styles/toastStyle";
-//Hooks
-import { useForm } from "@/shared/hooks/useForm";
 //Schemas
 import { loginFormSchema } from "../schemas/forms";
 //Icons
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
-import { FiLogIn } from "react-icons/fi";
-import { MdEmail } from "react-icons/md";
-import { RiLockPasswordFill } from "react-icons/ri";
-
-const initialState: LoginFormState = {
-  error: null,
-  success: false,
-  data: null,
-  status: 0,
-  resetKey: Date.now(),
-};
+import { Mail, Lock, SendHorizontal, Eye, EyeOff } from "lucide-react";
 
 const LoginForm = () => {
-  const [state, formAction, isPending] = useActionState(login, initialState);
   const [showPassword, setShowPassword] = useState(false);
-
-  const { formData, errors, handleChange, validateForm } = useForm(
-    loginFormSchema,
-    {
-      email: "",
-      password: "",
-    },
-  );
-
-  console.log("state", state);
 
   const router = useRouter();
 
-  const handleValidationBeforeSubmit = (
-    e: React.FormEvent<HTMLFormElement>,
-  ) => {
-    //This runs before server action to validate all fields on client side
-    const isValid = validateForm(formData);
-    console.log("data before submit", formData, isValid);
-    if (!isValid) {
-      //Stop form submission if invalid
-      e.preventDefault();
-    }
-  };
+  const form = useForm<z.infer<typeof loginFormSchema>>({
+    resolver: zodResolver(loginFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "onChange",
+  });
 
-  useEffect(() => {
-    if (state.error) {
-      toast.error(`Error: ${state.error}`, toastStyle);
-    }
-    if (state.success) {
-      toast.success(
-        "Logged in successfully! Redirecting to dashboard...",
-        toastStyle,
-      );
-      router.push("/dashboard");
-    }
-  }, [state, router]);
+  function onSubmit(data: z.infer<typeof loginFormSchema>) {
+    startTransition(async () => {
+      const result = await login(data);
+      if (result.success) {
+        toast.success(
+          "Logged in successfully! Redirecting to dashboard...",
+          toastStyle,
+        );
+        router.push("/dashboard");
+      } else {
+        toast.error(`Error: ${result.error}`, toastStyle);
+      }
+    });
+  }
 
   return (
-    <div className={styles.loginFormContainer}>
-      <div className={styles.loginForm}>
-        <h2>Welcome back to Spendie</h2>
-        <p className={styles.subtitle}>
-          Manage your finances, track payments, and pick up right where you left
-          off.
-        </p>
-        <Form
-          action={formAction}
-          layout="vertical"
-          onSubmit={handleValidationBeforeSubmit}
-        >
+    <div className="flex flex-col items-center gap-7 p-4">
+      <h2>Welcome back to Spendie</h2>
+      <p className="max-w-sm text-center">
+        Manage your finances, track payments, and pick up right where you left
+        off.
+      </p>
+      <form className="w-md" onSubmit={form.handleSubmit(onSubmit)}>
+        <FieldGroup>
           <Input
+            {...form.register("email")}
             type="email"
             id="email"
             label="Email"
             placeholder="Enter your email"
-            icon={<MdEmail />}
-            errors={errors.email}
-            value={formData.email}
-            onChange={(e) => handleChange("email", e.target.value)}
+            icon={<Mail />}
           />
+          {form.formState.errors.email && (
+            <FieldError errors={[form.formState.errors.email]} />
+          )}
           <Input
+            {...form.register("password")}
             type={showPassword ? "text" : "password"}
             id="password"
             label="Password"
             placeholder="Enter your password"
-            icon={<RiLockPasswordFill />}
-            errors={errors.password}
-            value={formData.password}
-            onChange={(e) => handleChange("password", e.target.value)}
+            icon={<Lock />}
             passwordIcon={
               showPassword ? (
-                <FaEyeSlash
-                  onClick={() => setShowPassword(false)}
-                  style={{ cursor: "pointer" }}
-                />
+                <Eye onClick={() => setShowPassword(false)} />
               ) : (
-                <FaEye
-                  onClick={() => setShowPassword(true)}
-                  style={{ cursor: "pointer" }}
-                />
+                <EyeOff onClick={() => setShowPassword(true)} />
               )
             }
           />
+          {form.formState.errors.password && (
+            <FieldError errors={[form.formState.errors.password]} />
+          )}
           <Button
-            className={styles.loginButton}
-            size="large"
-            variant="primary"
+            className="mt-4"
+            size="default"
+            variant="default"
             type="submit"
-            icon={<FiLogIn />}
-            iconPosition="left"
-            disabled={isPending}
+            icon={<SendHorizontal />}
+            iconPosition="right"
+            disabled={!form.formState.isValid || form.formState.isSubmitting}
           >
-            {isPending ? "Signing in..." : "Sign In"}
+            {form.formState.isSubmitting ? "Signing in..." : "Sign In"}
           </Button>
-          <Providers />
-        </Form>
-      </div>
+        </FieldGroup>
+      </form>
+      <Providers />
     </div>
   );
 };

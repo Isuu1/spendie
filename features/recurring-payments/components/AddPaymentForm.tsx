@@ -6,12 +6,15 @@ import toast from "react-hot-toast";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
+import dayjs from "dayjs";
+import { useQueryClient } from "@tanstack/react-query";
 //Components
 import Button from "@/shared/components/ui/Button";
 import Input from "@/shared/components/ui/Input";
 import SelectInput from "@/shared/components/ui/SelectInput";
 import DateInput from "@/shared/components/ui/DateInput";
-import { Field, FieldError, FieldGroup } from "@/components/ui/field";
+import { Field, FieldGroup } from "@/components/ui/field";
+import InputError from "@/shared/components/ui/InputError";
 //Actions
 import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/addRecurringPayment";
 //Types
@@ -29,10 +32,14 @@ import { FolderPen, Wallet } from "lucide-react";
 const AddPaymentForm: React.FC = () => {
   const router = useRouter();
 
+  const queryClient = useQueryClient();
+
   const form = useForm<z.infer<typeof recurringPaymentSchema>>({
     resolver: zodResolver(recurringPaymentSchema),
     defaultValues: {
       name: "",
+      // repeat: repeatOptions[0].value,
+      // type: typeOptions[0].value,
       repeat: "",
       type: "",
       amount: undefined,
@@ -42,18 +49,17 @@ const AddPaymentForm: React.FC = () => {
   });
 
   function onSubmit(data: z.infer<typeof recurringPaymentSchema>) {
-    console.log("Submitting data:", data);
     startTransition(async () => {
       const result = await addRecurringPayment(data);
 
       if (result.success) {
         toast.success("Payment added!", toastStyle);
+        await queryClient.invalidateQueries({
+          queryKey: ["recurringPayments"],
+        });
         router.push("/recurring-payments");
-        router.refresh();
       } else {
         toast.error(result.error || "Something went wrong", toastStyle);
-        // If server returns specific field errors, you can map them here:
-        // form.setError("name", { message: "This name is already taken" });
       }
     });
   }
@@ -61,52 +67,36 @@ const AddPaymentForm: React.FC = () => {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="w-md">
       <FieldGroup>
-        <Controller
-          control={form.control}
-          name="name"
-          render={({ field, fieldState }) => (
-            <div className="flex flex-col gap-3">
-              <Input
-                {...field}
-                id="name"
-                type="text"
-                label="Payment Name"
-                icon={<FolderPen />}
-                placeholder="Payment"
-              />
-              {fieldState.error && <FieldError errors={[fieldState.error]} />}
-            </div>
-          )}
-        />
+        <div className="flex flex-col gap-3">
+          <Input
+            {...form.register("name")}
+            id="name"
+            type="text"
+            label="Payment Name"
+            icon={<FolderPen />}
+            placeholder="Payment"
+            error={form.formState.errors.name}
+          />
+          <InputError error={form.formState.errors.name} />
+        </div>
+
         <Field
           orientation="horizontal"
           className="flex justify-between gap-4 items-start"
         >
-          <Controller
-            control={form.control}
-            name="amount"
-            render={({ field, fieldState }) => (
-              <div className="flex flex-col gap-3 flex-1">
-                <Input
-                  {...form.register("amount", { valueAsNumber: true })}
-                  {...field}
-                  type="number"
-                  id="amount"
-                  label="Amount"
-                  icon={<Wallet />}
-                  placeholder="0.00"
-                  onChange={(e) =>
-                    field.onChange(
-                      e.target.value === ""
-                        ? undefined
-                        : Number(e.target.value),
-                    )
-                  }
-                />
-                {fieldState.error && <FieldError errors={[fieldState.error]} />}
-              </div>
-            )}
-          />
+          <div className="flex flex-col gap-3 flex-1">
+            <Input
+              {...form.register("amount")}
+              type="number"
+              id="amount"
+              label="Amount"
+              icon={<Wallet />}
+              placeholder="0.00"
+              error={form.formState.errors.amount}
+            />
+            <InputError error={form.formState.errors.amount} />
+          </div>
+
           <Controller
             control={form.control}
             name="next_payment_date"
@@ -116,9 +106,10 @@ const AddPaymentForm: React.FC = () => {
                   {...field}
                   id="next_payment_date"
                   label="Next Payment Date"
-                  disabled={(before) => before < new Date()}
+                  disabled={{ before: dayjs().startOf("day").toDate() }}
+                  error={fieldState.error}
                 />
-                {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                <InputError error={fieldState.error} />
               </div>
             )}
           />
@@ -135,10 +126,9 @@ const AddPaymentForm: React.FC = () => {
                     id="repeat"
                     label="Repeat"
                     selectOptions={repeatOptions}
+                    error={fieldState.error}
                   />
-                  {fieldState.error && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
+                  <InputError error={fieldState.error} />
                 </div>
               )}
             />
@@ -152,10 +142,9 @@ const AddPaymentForm: React.FC = () => {
                     id="type"
                     label="Type"
                     selectOptions={typeOptions}
+                    error={fieldState.error}
                   />
-                  {fieldState.error && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
+                  <InputError error={fieldState.error} />
                 </div>
               )}
             />
