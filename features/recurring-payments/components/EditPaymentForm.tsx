@@ -13,7 +13,8 @@ import Button from "@/shared/components/ui/Button";
 import Input from "@/shared/components/ui/Input";
 import SelectInput from "@/shared/components/ui/SelectInput";
 import DateInput from "@/shared/components/ui/DateInput";
-import { Field, FieldError, FieldGroup } from "@/components/ui/field";
+import { Field, FieldGroup } from "@/components/ui/field";
+import InputError from "@/shared/components/ui/InputError";
 //Actions
 import { editRecurringPayment } from "@/features/recurring-payments/lib/actions/editRecurringPayment";
 //Styles
@@ -39,8 +40,8 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
     resolver: zodResolver(recurringPaymentSchema),
     defaultValues: {
       name: payment.name,
-      repeat: payment.repeat as "Monthly" | "Weekly",
-      type: payment.type as "Income" | "Expense",
+      repeat: payment.repeat,
+      type: payment.type,
       amount: payment.amount,
       next_payment_date: dayjs(payment.next_payment_date).toDate(),
     },
@@ -75,9 +76,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
             icon={<FolderPen />}
             placeholder="Payment"
           />
-          {form.formState.errors.name && (
-            <FieldError errors={[form.formState.errors.name]} />
-          )}
+          <InputError error={form.formState.errors.name} />
         </div>
 
         <Field
@@ -86,16 +85,15 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
         >
           <div className="flex flex-col gap-3 flex-1">
             <Input
-              {...form.register("amount", { valueAsNumber: true })}
+              // {...form.register("amount", { valueAsNumber: true })}
+              {...form.register("amount")}
               type="number"
               id="amount"
               label="Amount"
               icon={<Wallet />}
               placeholder="0.00"
             />
-            {form.formState.errors.amount && (
-              <FieldError errors={[form.formState.errors.amount]} />
-            )}
+            <InputError error={form.formState.errors.amount} />
           </div>
 
           <Controller
@@ -109,7 +107,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
                   label="Next Payment Date"
                   disabled={{ before: dayjs().startOf("day").toDate() }}
                 />
-                {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                <InputError error={fieldState.error} />
               </div>
             )}
           />
@@ -127,9 +125,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
                     label="Repeat"
                     selectOptions={repeatOptions}
                   />
-                  {fieldState.error && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
+                  <InputError error={fieldState.error} />
                 </div>
               )}
             />
@@ -144,9 +140,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
                     label="Type"
                     selectOptions={typeOptions}
                   />
-                  {fieldState.error && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
+                  <InputError error={fieldState.error} />
                 </div>
               )}
             />

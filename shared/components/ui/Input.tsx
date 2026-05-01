@@ -10,6 +10,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
+import { FieldError } from "react-hook-form";
 
 type InputProps = React.ComponentProps<typeof ShadcnInput> & {
   id: string;
@@ -17,18 +18,28 @@ type InputProps = React.ComponentProps<typeof ShadcnInput> & {
   icon?: React.ReactNode;
   passwordIcon?: React.ReactNode;
   value?: string | number | Date;
+  error?: FieldError;
 };
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ icon, id, label, className, value, passwordIcon, ...props }, ref) => {
+  (
+    { icon, id, label, className, value, passwordIcon, error, ...props },
+    ref,
+  ) => {
+    const errorClasses = error
+      ? "ring-2 ring-red-600 border-red-600"
+      : "border-transparent focus-within:ring-2 focus-within:ring-brand";
+
     return (
       <Field>
         <FieldLabel htmlFor={id}>{label}</FieldLabel>
         <InputGroup
           className={cn(
-            "bg-bg-surface-dark rounded-md px-1 border-0 transition-all outline-3 outline-transparent duration-200 ease-in-out",
-            "focus:outline-brand focus:outline-3",
+            "bg-bg-surface-dark rounded-md px-1 border transition-all duration-200 ease-in-out",
+            "border-transparent",
+            "focus-within:ring-2 focus-within:ring-bg-brand focus-within:border-brand",
             className,
+            errorClasses,
           )}
         >
           <InputGroupAddon>{icon}</InputGroupAddon>
@@ -44,6 +55,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             id={id}
             name={id}
             {...props}
+            className="focus:ring-0 outline-none"
             value={
               value instanceof Date ? value.toISOString().slice(0, 10) : value
             }

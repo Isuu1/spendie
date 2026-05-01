@@ -31,8 +31,6 @@ const DateInput: React.FC<DateInputProps> = ({
     return dayjs(dateStr).format("D MMMM YYYY");
   };
 
-  console.log("Rendering DateInput with value:", value);
-
   return (
     <Field>
       <FieldLabel htmlFor={id}>{label}</FieldLabel>

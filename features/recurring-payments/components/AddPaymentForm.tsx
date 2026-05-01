@@ -13,7 +13,8 @@ import Button from "@/shared/components/ui/Button";
 import Input from "@/shared/components/ui/Input";
 import SelectInput from "@/shared/components/ui/SelectInput";
 import DateInput from "@/shared/components/ui/DateInput";
-import { Field, FieldError, FieldGroup } from "@/components/ui/field";
+import { Field, FieldGroup } from "@/components/ui/field";
+import InputError from "@/shared/components/ui/InputError";
 //Actions
 import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/addRecurringPayment";
 //Types
@@ -37,8 +38,8 @@ const AddPaymentForm: React.FC = () => {
     resolver: zodResolver(recurringPaymentSchema),
     defaultValues: {
       name: "",
-      repeat: "",
-      type: "",
+      repeat: repeatOptions[0].value,
+      type: typeOptions[0].value,
       amount: undefined,
       next_payment_date: undefined,
     },
@@ -72,10 +73,9 @@ const AddPaymentForm: React.FC = () => {
             label="Payment Name"
             icon={<FolderPen />}
             placeholder="Payment"
+            error={form.formState.errors.name}
           />
-          {form.formState.errors.name && (
-            <FieldError errors={[form.formState.errors.name]} />
-          )}
+          <InputError error={form.formState.errors.name} />
         </div>
 
         <Field
@@ -84,16 +84,15 @@ const AddPaymentForm: React.FC = () => {
         >
           <div className="flex flex-col gap-3 flex-1">
             <Input
-              {...form.register("amount", { valueAsNumber: true })}
+              {...form.register("amount")}
               type="number"
               id="amount"
               label="Amount"
               icon={<Wallet />}
               placeholder="0.00"
+              error={form.formState.errors.amount}
             />
-            {form.formState.errors.amount && (
-              <FieldError errors={[form.formState.errors.amount]} />
-            )}
+            <InputError error={form.formState.errors.amount} />
           </div>
 
           <Controller
@@ -107,7 +106,7 @@ const AddPaymentForm: React.FC = () => {
                   label="Next Payment Date"
                   disabled={{ before: dayjs().startOf("day").toDate() }}
                 />
-                {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                <InputError error={fieldState.error} />
               </div>
             )}
           />
@@ -125,9 +124,7 @@ const AddPaymentForm: React.FC = () => {
                     label="Repeat"
                     selectOptions={repeatOptions}
                   />
-                  {fieldState.error && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
+                  <InputError error={fieldState.error} />
                 </div>
               )}
             />
@@ -142,9 +139,7 @@ const AddPaymentForm: React.FC = () => {
                     label="Type"
                     selectOptions={typeOptions}
                   />
-                  {fieldState.error && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
+                  <InputError error={fieldState.error} />
                 </div>
               )}
             />
