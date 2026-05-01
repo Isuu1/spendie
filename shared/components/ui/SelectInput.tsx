@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Field, FieldLabel } from "@/components/ui/field";
+import type { FieldError } from "react-hook-form";
 
 type Option = {
   label: string;
@@ -22,6 +23,7 @@ type SelectInputProps = {
   selectOptions: readonly Option[];
   value: string;
   onChange: (value: string) => void;
+  error?: FieldError;
 };
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -30,12 +32,22 @@ const SelectInput: React.FC<SelectInputProps> = ({
   selectOptions,
   value,
   onChange,
+  error,
 }) => {
+  const errorClasses = error
+    ? "ring-2 ring-red-600 border-red-600"
+    : "border-transparent";
+
   return (
     <Field>
       <FieldLabel htmlFor={id}>{label}</FieldLabel>
       <Select onValueChange={onChange} defaultValue={value}>
-        <SelectTrigger className="bg-bg-surface-dark border-0 w-full cursor-pointer">
+        <SelectTrigger
+          className={cn(
+            "bg-bg-surface-dark border-0 w-full cursor-pointer",
+            errorClasses,
+          )}
+        >
           <SelectValue placeholder={label} />
         </SelectTrigger>
         <SelectContent className="bg-bg-surface-dark">

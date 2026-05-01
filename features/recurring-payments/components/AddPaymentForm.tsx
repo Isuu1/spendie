@@ -38,8 +38,10 @@ const AddPaymentForm: React.FC = () => {
     resolver: zodResolver(recurringPaymentSchema),
     defaultValues: {
       name: "",
-      repeat: repeatOptions[0].value,
-      type: typeOptions[0].value,
+      // repeat: repeatOptions[0].value,
+      // type: typeOptions[0].value,
+      repeat: "",
+      type: "",
       amount: undefined,
       next_payment_date: undefined,
     },
@@ -124,6 +126,7 @@ const AddPaymentForm: React.FC = () => {
                     id="repeat"
                     label="Repeat"
                     selectOptions={repeatOptions}
+                    error={fieldState.error}
                   />
                   <InputError error={fieldState.error} />
                 </div>
@@ -139,6 +142,7 @@ const AddPaymentForm: React.FC = () => {
                     id="type"
                     label="Type"
                     selectOptions={typeOptions}
+                    error={fieldState.error}
                   />
                   <InputError error={fieldState.error} />
                 </div>

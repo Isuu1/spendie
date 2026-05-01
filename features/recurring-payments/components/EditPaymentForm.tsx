@@ -126,6 +126,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
                     id="repeat"
                     label="Repeat"
                     selectOptions={repeatOptions}
+                    error={fieldState.error}
                   />
                   <InputError error={fieldState.error} />
                 </div>
@@ -141,6 +142,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
                     id="type"
                     label="Type"
                     selectOptions={typeOptions}
+                    error={fieldState.error}
                   />
                   <InputError error={fieldState.error} />
                 </div>
