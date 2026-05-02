@@ -1,6 +1,6 @@
 import React from "react";
 //Components
-import AccountsList from "./AccountsList";
+import DashboardAccountsList from "./DashboardAccountsList";
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 import AccountsListButtons from "./AccountsListButtons";
 //Hooks
@@ -30,7 +30,7 @@ const AccountsPanel: React.FC = () => {
         )}
       </div>
 
-      <AccountsList accounts={accounts || []} emblaRef={emblaRef} />
+      <DashboardAccountsList accounts={accounts || []} emblaRef={emblaRef} />
       {accounts.length > 0 && (
         <Link className={styles.manageAccounts} href="/accounts">
           Manage accounts
