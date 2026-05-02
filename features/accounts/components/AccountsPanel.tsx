@@ -2,7 +2,7 @@ import React from "react";
 //Components
 import DashboardAccountsList from "./DashboardAccountsList";
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
-import AccountsListButtons from "./AccountsListButtons";
+import AccountsListButtons from "./DashboardAccountsListButtons";
 //Hooks
 import { useAccounts } from "../hooks/useAccounts";
 import useEmblaCarousel from "embla-carousel-react";
@@ -10,7 +10,7 @@ import Link from "next/link";
 //Styles
 import styles from "./AccountsPanel.module.scss";
 
-const AccountsPanel: React.FC = () => {
+const AccountsPanel = () => {
   const { data: accounts = [], isLoading } = useAccounts();
   const [emblaRef, emblaApi] = useEmblaCarousel({
     dragFree: true,
