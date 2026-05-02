@@ -11,7 +11,8 @@ import { login } from "../lib/actions/login";
 import Input from "@/shared/components/ui/Input";
 import Button from "@/shared/components/ui/Button";
 import Providers from "./Providers";
-import { FieldError, FieldGroup } from "@/components/ui/field";
+import { FieldGroup } from "@/components/ui/field";
+import InputError from "@/shared/components/ui/InputError";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
 //Schemas
@@ -64,10 +65,9 @@ const LoginForm = () => {
             label="Email"
             placeholder="Enter your email"
             icon={<Mail />}
+            error={form.formState.errors.email}
           />
-          {form.formState.errors.email && (
-            <FieldError errors={[form.formState.errors.email]} />
-          )}
+          <InputError error={form.formState.errors.email} />
           <Input
             {...form.register("password")}
             type={showPassword ? "text" : "password"}
@@ -82,10 +82,9 @@ const LoginForm = () => {
                 <EyeOff onClick={() => setShowPassword(true)} />
               )
             }
+            error={form.formState.errors.password}
           />
-          {form.formState.errors.password && (
-            <FieldError errors={[form.formState.errors.password]} />
-          )}
+          <InputError error={form.formState.errors.password} />
           <Button
             className="mt-4"
             size="default"
