@@ -10,7 +10,8 @@ import dayjs from "dayjs";
 import Input from "@/shared/components/ui/Input";
 import Button from "@/shared/components/ui/Button";
 import DateInput from "@/shared/components/ui/DateInput";
-import { FieldError, FieldGroup } from "@/components/ui/field";
+import { FieldGroup } from "@/components/ui/field";
+import InputError from "@/shared/components/ui/InputError";
 //Types
 import { UserProfile } from "@/features/user/types/user";
 //Actions
@@ -63,20 +64,18 @@ const ChangeDetailsForm = ({ user }: ChangeDetailsFormProps) => {
           type="text"
           label="Name"
           icon={<User />}
+          error={form.formState.errors.name}
         />
-        {form.formState.errors.name && (
-          <FieldError errors={[form.formState.errors.name]} />
-        )}
+        <InputError error={form.formState.errors.name} />
         <Input
           {...form.register("surname")}
           id="surname"
           type="text"
           label="Surname"
           icon={<User />}
+          error={form.formState.errors.surname}
         />
-        {form.formState.errors.surname && (
-          <FieldError errors={[form.formState.errors.surname]} />
-        )}
+        <InputError error={form.formState.errors.surname} />
         <Controller
           control={form.control}
           name="dob"
@@ -87,8 +86,9 @@ const ChangeDetailsForm = ({ user }: ChangeDetailsFormProps) => {
                 id="dob"
                 label="Date of Birth"
                 disabled={{ after: new Date() }}
+                error={fieldState.error}
               />
-              {fieldState.error && <FieldError errors={[fieldState.error]} />}
+              <InputError error={fieldState.error} />
             </div>
           )}
         />
@@ -98,10 +98,9 @@ const ChangeDetailsForm = ({ user }: ChangeDetailsFormProps) => {
           type="email"
           label="Email"
           icon={<Mail />}
+          error={form.formState.errors.email}
         />
-        {form.formState.errors.email && (
-          <FieldError errors={[form.formState.errors.email]} />
-        )}
+        <InputError error={form.formState.errors.email} />
         <div className="flex justify-end gap-2 mt-4">
           {form.formState.isDirty && (
             <Button
@@ -118,7 +117,7 @@ const ChangeDetailsForm = ({ user }: ChangeDetailsFormProps) => {
             variant="default"
             type="submit"
             size="sm"
-            disabled={!form.formState.isDirty}
+            disabled={!form.formState.isDirty || form.formState.isSubmitting}
           >
             Save
           </Button>
