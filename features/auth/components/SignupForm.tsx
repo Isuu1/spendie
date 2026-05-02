@@ -13,7 +13,8 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 import Button from "@/shared/components/ui/Button";
 import Providers from "./Providers";
 import Input from "@/shared/components/ui/Input";
-import { FieldError, FieldGroup } from "@/components/ui/field";
+import { FieldGroup } from "@/components/ui/field";
+import InputError from "@/shared/components/ui/InputError";
 //Icons
 import { Eye, EyeOff, Mail, SendHorizontal, Lock } from "lucide-react";
 //Schemas
@@ -60,10 +61,9 @@ const SignupForm = () => {
             type="text"
             placeholder="Enter your email"
             icon={<Mail />}
+            error={form.formState.errors.email}
           />
-          {form.formState.errors.email && (
-            <FieldError errors={[form.formState.errors.email]} />
-          )}
+          <InputError error={form.formState.errors.email} />
           <Input
             {...form.register("password")}
             label="Password"
@@ -78,10 +78,9 @@ const SignupForm = () => {
                 <EyeOff onClick={() => setShowPassword(true)} />
               )
             }
+            error={form.formState.errors.password}
           />
-          {form.formState.errors.password && (
-            <FieldError errors={[form.formState.errors.password]} />
-          )}
+          <InputError error={form.formState.errors.password} />
           <Input
             {...form.register("confirmPassword")}
             label="Confirm Password"
@@ -89,7 +88,9 @@ const SignupForm = () => {
             placeholder="Re-enter your password"
             type={showPassword ? "text" : "password"}
             icon={<Lock />}
+            error={form.formState.errors.confirmPassword}
           />
+          <InputError error={form.formState.errors.confirmPassword} />
           <Button
             className="mt-4"
             size="default"

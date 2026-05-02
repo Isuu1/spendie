@@ -9,12 +9,22 @@ import Sidebar from "@/features/dashboard/components/Sidebar";
 import DashboardLayoutWrapper from "@/features/dashboard/layouts/DashboardLayoutWrapper";
 //Config
 import { prefetchDashboard } from "@/features/dashboard/config/prefetchDashboard";
+import { createClient } from "@/supabase/server";
+import { redirect } from "next/navigation";
 
 export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const supabase = await createClient();
+
+  const data = await supabase.auth.getUser();
+
+  if (!data.data.user) {
+    redirect("/");
+  }
+
   const queryClient = new QueryClient();
 
   // Prefetch all the data for the dashboard on the server side before rendering the page
