@@ -1,20 +1,19 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { usePlaidLink } from "react-plaid-link";
 import Button from "../ui/Button";
-import { PiBankFill } from "react-icons/pi";
 import { useRouter } from "next/navigation";
+import { type VariantProps } from "class-variance-authority";
+import { buttonVariants } from "@/components/ui/button";
+import { Landmark } from "lucide-react";
 
-interface PlaidLinkProps {
+type PlaidLinkProps = {
   userId: string; // Pass the authenticated user ID
-  variant?: "primary" | "secondary";
-}
+  variant?: VariantProps<typeof buttonVariants>["variant"];
+};
 
-const PlaidLink: React.FC<PlaidLinkProps> = ({
-  userId,
-  variant = "primary",
-}) => {
+const PlaidLink = ({ userId, variant }: PlaidLinkProps) => {
   const [linkToken, setLinkToken] = useState<string | null>(null);
 
   const router = useRouter();
@@ -80,10 +79,10 @@ const PlaidLink: React.FC<PlaidLinkProps> = ({
   return (
     <Button
       variant={variant}
-      size="medium"
+      size="default"
       onClick={() => open()}
       disabled={!ready || !linkToken}
-      icon={<PiBankFill />}
+      icon={<Landmark />}
       iconPosition="left"
     >
       Connect bank account
