@@ -9,11 +9,10 @@ import { BsCreditCard2FrontFill } from "react-icons/bs";
 import { MdEditDocument } from "react-icons/md";
 //Hooks
 import { useRenameAccount } from "../hooks/useRenameAccount";
-//Components
-import AccountItemMenu from "./AccountItemMenu";
-//Hooks
 import { useDisconnectAccount } from "../hooks/useDisconnectAccount";
 import { useHideAccount } from "../hooks/useHideAccount";
+//Components
+import AccountItemMenu from "./AccountItemMenu";
 
 type AccountItemProps = {
   account: Account;
@@ -34,8 +33,13 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
 
   const displayName = account.user_account_name ?? account.name;
 
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
   const startEditing = () => {
     setIsEditing(true);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 5);
   };
 
   const cancelEditing = () => {
@@ -83,9 +87,10 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
 
       {isEditing ? (
         <input
+          ref={inputRef}
+          id="account-name-input"
           value={value}
           type="text"
-          autoFocus
           className="self-start border-0 outline-0 font-bold text-base"
           onChange={(e) => setValue(e.target.value)}
           onBlur={cancelEditing}
@@ -133,7 +138,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
 
       {canEdit && (
         <AccountItemMenu
-          onRename={() => setIsEditing(true)}
+          onRename={startEditing}
           onDisconnect={() => disconnectAccount(account.id)}
           onHide={() => hideAccount(account.id)}
           isHidden={account.is_hidden}

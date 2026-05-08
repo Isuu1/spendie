@@ -38,25 +38,21 @@ const DashboardAccountsListButtons = ({
   return (
     <div className="flex items-center gap-3 justify-between">
       <button
-        //className={`${styles.button} ${prevBtnDisabled ? styles.disabled : ""}`}
         className={cn(
           "cursor-pointer relative border-0",
           prevBtnDisabled ? "opacity-50 cursor-not-allowed" : "",
         )}
         onClick={scrollPrev}
       >
-        {/* <TbArrowBigLeftLinesFilled /> */}
         <ChevronLeft />
       </button>
       <button
-        //className={`${nextBtnDisabled ? styles.disabled : ""} ${styles.button}`}
         className={cn(
           "cursor-pointer relative border-0",
           nextBtnDisabled ? "opacity-50 cursor-not-allowed" : "",
         )}
         onClick={scrollNext}
       >
-        {/* <TbArrowBigRightLinesFilled /> */}
         <ChevronRight />
       </button>
     </div>
