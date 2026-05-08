@@ -1,15 +1,18 @@
 "use client";
 
 import { useState } from "react";
-//Icons
-import { MdEditDocument } from "react-icons/md";
-import { PiPlugsConnectedFill } from "react-icons/pi";
-import { BiSolidHide } from "react-icons/bi";
 //Components
-import DropdownMenu from "@/shared/components/DropdownMenu";
 import ConfirmAction from "@/shared/components/ConfirmAction";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 //Animations
 import { AnimatePresence } from "motion/react";
+//Icons
+import { EllipsisVertical, EyeOff, FilePenLine, Unplug } from "lucide-react";
 
 type AccountItemMenuProps = {
   onRename: () => void;
@@ -40,20 +43,38 @@ const AccountItemMenu = ({
   };
   return (
     <>
-      <DropdownMenu variant="ghost">
-        <DropdownMenu.Item onClick={handleRename}>
-          <MdEditDocument />
-          Rename
-        </DropdownMenu.Item>
-        <DropdownMenu.Item onClick={handleDisconnect}>
-          <PiPlugsConnectedFill />
-          {isDisconnected ? "Reconnect" : "Disconnect"}
-        </DropdownMenu.Item>
-        <DropdownMenu.Item onClick={handleHide}>
-          <BiSolidHide />
-          {isHidden ? "Unhide" : "Hide"}
-        </DropdownMenu.Item>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          asChild
+          className="absolute top-2 right-2 cursor-pointer! z-99 hover:bg-[#ffffff1f] rounded-sm p-1"
+        >
+          <EllipsisVertical size={28} />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="bg-bg-surface text-white text-xs! p-2">
+          <DropdownMenuItem
+            className="cursor-pointer! hover:bg-bg-surface-dark-hover! text-white!"
+            onSelect={handleRename}
+          >
+            <FilePenLine color="white" />
+            Rename
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onSelect={handleDisconnect}
+            className="cursor-pointer! hover:bg-bg-surface-dark-hover! text-white!"
+          >
+            <Unplug color="white" />
+            {isDisconnected ? "Reconnect" : "Disconnect"}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onSelect={handleHide}
+            className="cursor-pointer! hover:bg-bg-surface-dark-hover! text-white!"
+          >
+            <EyeOff color="white" />
+            {isHidden ? "Unhide" : "Hide"}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
       </DropdownMenu>
+
       <AnimatePresence>
         {disconnectModalOpen && !isDisconnected && (
           <ConfirmAction

@@ -1,19 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
-//Styles
-import styles from "./AccountsListButtons.module.scss";
+import { useCallback, useEffect, useState } from "react";
 //Types
 import { EmblaCarouselType } from "embla-carousel";
 //Icons
-// import { IoIosArrowForward } from "react-icons/io";
-// import { IoIosArrowBack } from "react-icons/io";
-import { TbArrowBigRightLinesFilled } from "react-icons/tb";
-import { TbArrowBigLeftLinesFilled } from "react-icons/tb";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/shared/lib/cn";
 
-interface AccountsListButtonsProps {
+type DashboardAccountsListButtonsProps = {
   emblaApi: EmblaCarouselType | null;
-}
+};
 
-const AccountsListButtons = ({ emblaApi }: AccountsListButtonsProps) => {
+const DashboardAccountsListButtons = ({
+  emblaApi,
+}: DashboardAccountsListButtonsProps) => {
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(false);
   const [nextBtnDisabled, setNextBtnDisabled] = useState(false);
 
@@ -38,21 +36,27 @@ const AccountsListButtons = ({ emblaApi }: AccountsListButtonsProps) => {
   }, [emblaApi]);
 
   return (
-    <div className={styles.buttons}>
+    <div className="flex items-center gap-3 justify-between">
       <button
-        className={`${styles.button} ${prevBtnDisabled ? styles.disabled : ""}`}
+        className={cn(
+          "cursor-pointer relative border-0",
+          prevBtnDisabled ? "opacity-50 cursor-not-allowed" : "",
+        )}
         onClick={scrollPrev}
       >
-        <TbArrowBigLeftLinesFilled />
+        <ChevronLeft />
       </button>
       <button
-        className={`${nextBtnDisabled ? styles.disabled : ""} ${styles.button}`}
+        className={cn(
+          "cursor-pointer relative border-0",
+          nextBtnDisabled ? "opacity-50 cursor-not-allowed" : "",
+        )}
         onClick={scrollNext}
       >
-        <TbArrowBigRightLinesFilled />
+        <ChevronRight />
       </button>
     </div>
   );
 };
 
-export default AccountsListButtons;
+export default DashboardAccountsListButtons;

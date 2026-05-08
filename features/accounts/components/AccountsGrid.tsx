@@ -1,8 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-//Styles
-import styles from "./AccountsGrid.module.scss";
 //Hooks
 import { useSyncAccount } from "../hooks/useSyncAccount";
 import { useGroupedAccounts } from "../hooks/useGroupedAccounts";
@@ -49,7 +47,7 @@ const AccountsGrid = () => {
   }, [activeSegment, grouped]);
 
   return (
-    <div className={styles.accountsGrid}>
+    <div className="bg-bg-surface rounded-lg p-8 flex flex-col gap-8">
       <SegmentedControl
         options={[
           { label: `All in use (${counts.all})`, value: "all" },
@@ -73,7 +71,7 @@ const AccountsGrid = () => {
           />
         ))
       ) : (
-        <p className={styles.noAccounts}>No accounts to display.</p>
+        <p>No accounts to display.</p>
       )}
     </div>
   );

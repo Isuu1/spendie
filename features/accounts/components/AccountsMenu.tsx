@@ -1,32 +1,31 @@
 "use client";
 
+//Hooks
 import { useUser } from "@/features/user/hooks/useUser";
-//Styles
-import styles from "./AccountsMenu.module.scss";
 //Components
 import Button from "@/shared/components/ui/Button";
 import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 //Icons
-import { FaSyncAlt } from "react-icons/fa";
+import { RefreshCw } from "lucide-react";
 
 const AccountsMenu = () => {
   const { data } = useUser();
 
   if (!data) {
-    return null; // or a loading state
+    return null;
   }
 
   return (
-    <div className={styles.menu}>
+    <div className="flex gap-3">
       <Button
         variant="secondary"
-        size="medium"
-        icon={<FaSyncAlt />}
+        size="default"
+        icon={<RefreshCw />}
         iconPosition="left"
       >
         Sync all accounts
       </Button>
-      <PlaidLink userId={data?.id} variant="secondary" />
+      <PlaidLink userId={data?.id} variant="default" />
     </div>
   );
 };

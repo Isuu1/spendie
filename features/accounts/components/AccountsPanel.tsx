@@ -1,16 +1,14 @@
 import React from "react";
-//Components
-import AccountsList from "./AccountsList";
-import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
-import AccountsListButtons from "./AccountsListButtons";
-//Hooks
-import { useAccounts } from "../hooks/useAccounts";
 import useEmblaCarousel from "embla-carousel-react";
 import Link from "next/link";
-//Styles
-import styles from "./AccountsPanel.module.scss";
+//Components
+import DashboardAccountsList from "./DashboardAccountsList";
+import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
+import AccountsListButtons from "./DashboardAccountsListButtons";
+//Hooks
+import { useAccounts } from "../hooks/useAccounts";
 
-const AccountsPanel: React.FC = () => {
+const AccountsPanel = () => {
   const { data: accounts = [], isLoading } = useAccounts();
   const [emblaRef, emblaApi] = useEmblaCarousel({
     dragFree: true,
@@ -22,17 +20,17 @@ const AccountsPanel: React.FC = () => {
   }
 
   return (
-    <div className={styles.accountsPanel}>
-      <div className={styles.header}>
+    <div className="flex flex-col gap-5">
+      <div className="flex items-center justify-between">
         <h3>Accounts</h3>
         {accounts.length > 0 && (
           <AccountsListButtons emblaApi={emblaApi || null} />
         )}
       </div>
 
-      <AccountsList accounts={accounts || []} emblaRef={emblaRef} />
+      <DashboardAccountsList accounts={accounts || []} emblaRef={emblaRef} />
       {accounts.length > 0 && (
-        <Link className={styles.manageAccounts} href="/accounts">
+        <Link className="transition-all hover:text-primary!" href="/accounts">
           Manage accounts
         </Link>
       )}

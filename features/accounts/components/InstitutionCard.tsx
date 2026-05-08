@@ -4,8 +4,6 @@ import { Account } from "../types/account";
 import AccountItem from "./AccountItem";
 import Button from "@/shared/components/ui/Button";
 import SyncIcon from "@/shared/components/SyncIcon";
-//Styles
-import styles from "./InstitutionCard.module.scss";
 //Utils
 import { lastUpdated } from "../lib/utils/calculateLastSyncTime";
 
@@ -45,32 +43,35 @@ const InstitutionCard = ({
   if (institution.accounts.length === 0) return null;
 
   return (
-    <div key={institution.plaid_item_id} className={styles.accountGroup}>
+    <div
+      key={institution.plaid_item_id}
+      className="relative flex flex-col gap-4"
+    >
       <h4>{institution.institution_name}</h4>
       {activeSegment === "disconnected" ? (
-        <p className={styles.disconnectedBalance}>
+        <p className="text-text-secondary!">
           Disconnected balance: {institution.accounts[0]?.currency}{" "}
           {totals.disconnected.toFixed(2)}
         </p>
       ) : (
         <>
-          <p className={styles.totalBalance}>
+          <p className="font-bold">
             Total balance: {institution.accounts[0]?.currency}{" "}
             {totals.total.toFixed(2)}
           </p>
-          <p className={styles.hiddenBalance}>
+          <p className="text-text-secondary!">
             Hidden: {institution.accounts[0]?.currency}{" "}
             {totals.hidden.toFixed(2)}
           </p>
         </>
       )}
       {activeSegment !== "disconnected" && (
-        <div className={styles.syncInfo}>
+        <div className="flex gap-2 items-center">
           <SyncIcon isSyncing={isSyncing} />
           <p>{lastUpdated(institution.last_synced_at)}</p>
           <Button
-            variant="tertiary"
-            size="small"
+            variant="secondary"
+            size="xs"
             iconPosition="left"
             onClick={handleSync}
             disabled={isSyncing}
@@ -79,7 +80,7 @@ const InstitutionCard = ({
           </Button>
         </div>
       )}
-      <div className={styles.accountsContainer}>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,350px))] gap-4">
         {institution.accounts.map((acc: Account) => (
           <AccountItem key={acc.id} account={acc} canEdit />
         ))}

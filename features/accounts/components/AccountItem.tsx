@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import clsx from "clsx";
-//Styles
-import styles from "./AccountItem.module.scss";
+import { cn } from "@/shared/lib/cn";
 //Utils
 import { generateAccountBackground } from "../lib/utils/generateAccountBackground";
 //Types
@@ -11,10 +9,10 @@ import { BsCreditCard2FrontFill } from "react-icons/bs";
 import { MdEditDocument } from "react-icons/md";
 //Hooks
 import { useRenameAccount } from "../hooks/useRenameAccount";
-//Components
-import AccountItemMenu from "./AccountItemMenu";
 import { useDisconnectAccount } from "../hooks/useDisconnectAccount";
 import { useHideAccount } from "../hooks/useHideAccount";
+//Components
+import AccountItemMenu from "./AccountItemMenu";
 
 type AccountItemProps = {
   account: Account;
@@ -35,8 +33,13 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
 
   const displayName = account.user_account_name ?? account.name;
 
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
   const startEditing = () => {
     setIsEditing(true);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 5);
   };
 
   const cancelEditing = () => {
@@ -69,23 +72,26 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
 
   return (
     <div
-      className={styles.account}
+      className="z-1 relative grid grid-rows-2 overflow-hidden flex-[0_0_70%] rounded-md p-4"
       style={{
         background: generateAccountBackground(account.subtype ?? ""),
       }}
     >
       {account.is_hidden && canEdit && (
-        <div className={styles.hiddenOverlay}>Hidden</div>
+        <div className="absolute top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-10 text-lg">
+          Hidden
+        </div>
       )}
-      <i className={styles.icon}>
-        <BsCreditCard2FrontFill />
-      </i>
+
+      <BsCreditCard2FrontFill size={30} className="absolute bottom-2 right-3" />
+
       {isEditing ? (
         <input
+          ref={inputRef}
+          id="account-name-input"
           value={value}
           type="text"
-          autoFocus
-          className={styles.nameInput}
+          className="self-start border-0 outline-0 font-bold text-base"
           onChange={(e) => setValue(e.target.value)}
           onBlur={cancelEditing}
           onKeyDown={handleKeyDown}
@@ -93,27 +99,46 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
         />
       ) : (
         <h4
-          className={clsx(styles.name, canEdit && styles.editable)}
+          className={cn(
+            "group relative w-fit font-bold text-base",
+            canEdit && "cursor-pointer",
+          )}
           onClick={canEdit ? startEditing : undefined}
         >
-          <MdEditDocument className={styles.editIcon} />
+          <MdEditDocument
+            size={16}
+            className="hidden! absolute -right-5 top-1 group-hover:block!"
+          />
           {displayName}
         </h4>
       )}
-      <div className={styles.details}>
-        <p className={styles.type}>{account.subtype}</p>
-        <p>**** **** **** {account.mask}</p>
+
+      <div className="flex flex-col gap-3">
+        <div className="z-1 relative flex flex-col gap-1 capitalize">
+          <p>{account.subtype}</p>
+          <p>**** **** **** {account.mask}</p>
+        </div>
+
+        <h3>
+          {account.currency} {(account.current_balance ?? 0).toFixed(2)}
+        </h3>
       </div>
 
-      <h3 className={styles.balance}>
-        {account.currency} {(account.current_balance ?? 0).toFixed(2)}
-      </h3>
-
-      <div className={styles.shape}></div>
+      <div
+        className={cn(
+          "absolute top-0 left-37.5 bottom-62.5 right-62.5",
+          "h-125 w-125 rounded-full bg-transparent",
+          "border-40 border-white/10 box-border",
+          "after:content-['*'] after:absolute after:h-150 after:w-150",
+          "after:rounded-full after:bg-transparent",
+          "after:border-20 after:border-white/10",
+          "after:-bottom-20 after:-right-27.5 after:box-border",
+        )}
+      ></div>
 
       {canEdit && (
         <AccountItemMenu
-          onRename={() => setIsEditing(true)}
+          onRename={startEditing}
           onDisconnect={() => disconnectAccount(account.id)}
           onHide={() => hideAccount(account.id)}
           isHidden={account.is_hidden}
