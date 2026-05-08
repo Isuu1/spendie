@@ -4,8 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 //Components
 import Button from "./ui/Button";
-//Styles
-import styles from "./ConfirmAction.module.scss";
 //Animations
 import { motion } from "motion/react";
 import { useClickOutside } from "../hooks/useClickOutside";
@@ -29,6 +27,23 @@ const ConfirmAction: React.FC<ConfirmActionProps> = ({
 
   useClickOutside(innerModalRef, onCancel);
 
+  // Handle Keyboard (Esc and Enter)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onCancel();
+      if (e.key === "Enter") onConfirm();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    // Prevent scrolling of body when modal is open
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "unset";
+    };
+  }, [onCancel, onConfirm]);
+
   useEffect(() => {
     setIsMounted(true);
     let portalNode = document.getElementById("confirm-action-root");
@@ -42,7 +57,8 @@ const ConfirmAction: React.FC<ConfirmActionProps> = ({
 
   const modalContent = (
     <motion.div
-      className={styles.confirmActionContainer}
+      //className={styles.confirmActionContainer}
+      className="bg-[#2e2e2e83] z-99 fixed top-0 left-0 w-full h-full flex items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -50,21 +66,22 @@ const ConfirmAction: React.FC<ConfirmActionProps> = ({
     >
       <motion.div
         ref={innerModalRef}
-        className={styles.innerContainer}
-        initial={{ scale: 0 }}
+        //className={styles.innerContainer}
+        className="bg-bg-surface text-white rounded-md p-6 w-full max-w-sm mx-4 flex flex-col gap-4 items-center text-center leading-8"
+        initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
-        exit={{ scale: 0 }}
+        exit={{ scale: 0.8 }}
         transition={{ duration: 0.15 }}
         role="dialog"
         aria-modal="true"
       >
-        <h3 className={styles.title}>{title}</h3>
-        {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
-        <div className={styles.buttonsContainer}>
+        <h3>{title}</h3>
+        {subtitle && <p>{subtitle}</p>}
+        <div className="flex gap-4 mt-1">
           <Button
-            variant="primary"
+            variant="destructive"
             onClick={onConfirm}
-            size="medium"
+            size="sm"
             type="button"
           >
             Confirm
@@ -72,7 +89,7 @@ const ConfirmAction: React.FC<ConfirmActionProps> = ({
           <Button
             variant="secondary"
             onClick={onCancel}
-            size="medium"
+            size="sm"
             type="button"
           >
             Cancel
