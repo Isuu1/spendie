@@ -1,41 +1,23 @@
 "use client";
 
 import React from "react";
-//Styles
-import styles from "./PanelWrapper.module.scss";
-//Icons
-// import { TiThMenu } from "react-icons/ti";
 //Animations
 import { motion } from "motion/react";
 
-interface PanelWrapperProps {
-  name: string;
+type PanelWrapperProps = {
   children: React.ReactNode;
-}
-
-const panelWrapperVariants = {
-  hidden: { opacity: 0, scale: 0.5 },
-  visible: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.5 },
 };
 
-const PanelWrapper: React.FC<PanelWrapperProps> = ({ children }) => {
+const PanelWrapper = ({ children }: PanelWrapperProps) => {
   return (
     <motion.div
-      className={styles.panelWrapper}
-      variants={panelWrapperVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
+      className="flex flex-col p-4 rounded-lg bg-bg-surface break-inside-avoid max-w-lg"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
       layout
-      transition={{ duration: 0.15 }}
+      transition={{ duration: 0.1, ease: "easeInOut" }}
     >
-      {/* <div className={styles.header}>
-        <h3>{name}</h3>
-        <span className={styles.panelMenu}>
-          <TiThMenu className={styles.icon} />
-        </span>
-      </div> */}
       <>{children}</>
     </motion.div>
   );
