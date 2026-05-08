@@ -3,8 +3,6 @@
 import React, { useRef } from "react";
 //Config
 import { PanelName, panelsLibrary } from "../config/panelsLibrary";
-//Styles
-import styles from "./DashboardPanelsMenu.module.scss";
 //Hooks
 import { useUserSettings } from "@/features/user/hooks/useUserSettings";
 import { useTogglePanelVisibility } from "@/features/user/hooks/useTogglePanelVisibility";
@@ -29,9 +27,12 @@ const DashboardPanelsMenu = () => {
   };
 
   return (
-    <ul ref={panelMenuRef} className={styles.menu}>
+    <ul
+      ref={panelMenuRef}
+      className="list-none flex flex-col gap-3 whitespace-nowrap radius-md"
+    >
       {panelsLibrary.map((panel) => (
-        <li className={styles.menuItem} key={panel.name}>
+        <li className="flex items-center gap-2" key={panel.name}>
           <Switcher
             value={!isPanelActive(panel.name)}
             onChange={() =>
@@ -39,7 +40,7 @@ const DashboardPanelsMenu = () => {
             }
             isPending={isPending}
           />
-          <span className={styles.panelName}>{panel.name}</span>
+          <span>{panel.name}</span>
         </li>
       ))}
     </ul>
