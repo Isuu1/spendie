@@ -1,42 +1,43 @@
 "use client";
 
 import React from "react";
-//styles
-import styles from "./DashboardOptions.module.scss";
+//Components
 import Button from "@/shared/components/ui/Button";
-//Icons
-import { MdSpaceDashboard } from "react-icons/md";
 import DashboardPanelsMenu from "./DashboardPanelsMenu";
-import { AnimatePresence } from "motion/react";
 import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
+import {
+  Popover,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+//Hooks
 import { useUser } from "@/features/user/hooks/useUser";
-import PopUp from "@/shared/components/PopUp";
+//Icons
+import { LayoutDashboard } from "lucide-react";
 
 const DashboardOptions = () => {
-  const [openPanelsMenu, setOpenPanelsMenu] = React.useState(false);
-
   const { data: user } = useUser();
 
   return (
-    <div className={styles.dashboardOptions}>
-      <Button
-        className={styles.panelsButton}
-        variant="secondary"
-        size="medium"
-        icon={<MdSpaceDashboard />}
-        iconPosition="left"
-        onClick={() => setOpenPanelsMenu(!openPanelsMenu)}
-      >
-        Manage panels
-      </Button>
+    <div className="flex items-center gap-4">
+      <Popover>
+        <PopoverTrigger asChild className="text-white!">
+          <Button
+            variant="secondary"
+            size="default"
+            icon={<LayoutDashboard />}
+            iconPosition="left"
+          >
+            Manage panels
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="bg-bg-surface w-auto" align="start">
+          <PopoverHeader className="text-white">Manage Panels</PopoverHeader>
+          <DashboardPanelsMenu />
+        </PopoverContent>
+      </Popover>
       <PlaidLink userId={user?.id ?? ""} variant="secondary" />
-      <AnimatePresence>
-        {openPanelsMenu && (
-          <PopUp>
-            <DashboardPanelsMenu onClose={() => setOpenPanelsMenu(false)} />
-          </PopUp>
-        )}
-      </AnimatePresence>
     </div>
   );
 };
