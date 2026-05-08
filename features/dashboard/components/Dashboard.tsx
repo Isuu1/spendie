@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-//Styles
-import styles from "./Dashboard.module.scss";
+import { cn } from "@/shared/lib/cn";
 //Hooks
 import { useUserSettings } from "@/features/user/hooks/useUserSettings";
+import { useTogglePanelVisibility } from "@/features/user/hooks/useTogglePanelVisibility";
 //Components
 import PanelWrapper from "./PanelWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";
@@ -14,7 +14,6 @@ import Button from "@/shared/components/ui/Button";
 import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
-import { useTogglePanelVisibility } from "@/features/user/hooks/useTogglePanelVisibility";
 
 const Dashboard = () => {
   const { data: settings, error } = useUserSettings();
@@ -39,7 +38,13 @@ const Dashboard = () => {
   return (
     <>
       <DashboardOptions />
-      <motion.div className={styles.dashboard}>
+      <motion.div
+        className={cn(
+          "grow columns-sm",
+          visiblePanels.length === 0 &&
+            "flex columns-1 items-center justify-center",
+        )}
+      >
         <AnimatePresence>
           {panelsLibrary
             .filter((panel) => visiblePanels.includes(panel.name))
@@ -52,17 +57,16 @@ const Dashboard = () => {
               );
             })}
           {visiblePanels.length === 0 && (
-            <div className={styles.emptyState}>
+            <div className="flex flex-col items-center justify-center gap-4 text-center">
               <h2>Your dashboard is waiting for you</h2>
               <p>
                 Choose which panels you want to display and tailor Spendie to
                 your needs.
               </p>
               <Button
-                variant="primary"
-                size="medium"
+                variant="default"
+                size="default"
                 onClick={() => toggleAllPanels()}
-                className={styles.emptyBtn}
               >
                 Show all panels
               </Button>
