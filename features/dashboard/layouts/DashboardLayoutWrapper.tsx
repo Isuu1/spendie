@@ -1,9 +1,5 @@
-"use client";
-
 import React from "react";
-import { usePathname } from "next/navigation";
-//Styles
-import styles from "./DashboardLayoutWrapper.module.scss";
+import { cn } from "@/shared/lib/cn";
 
 type DashboardLayoutWrapperProps = {
   children: React.ReactNode;
@@ -16,13 +12,23 @@ const DashboardLayoutWrapper: React.FC<DashboardLayoutWrapperProps> = ({
   header,
   sidebar,
 }) => {
-  const pathname = usePathname();
   return (
-    <div className={`${styles.layout} `}>
+    <div
+      className={cn(
+        "relative overflow-hidden h-full grid",
+        "grid-rows-[auto_1fr] grid-cols-[65px_1fr]",
+        '[grid-template-areas:"header_header""sidebar_main"]',
+        "max-sm:grid-cols-1",
+      )}
+    >
       {header}
       {sidebar}
       <div
-        className={`${styles.innerWrapper} ${pathname === "/dashboard" ? styles.dashboardLayout : ""}`}
+        className={cn(
+          "relative grid-area-main p-5 h-full w-full bg-bg-secondary flex flex-col gap-5 rounded-lg",
+          "overflow-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]",
+          "box-border z-1 relative [grid-area:main] p-5 h-full",
+        )}
       >
         {children}
       </div>

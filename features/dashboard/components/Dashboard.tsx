@@ -51,7 +51,7 @@ const Dashboard = () => {
             .map((panel) => {
               const PanelComponent = panel.component;
               return (
-                <PanelWrapper key={panel.name} name={panel.name}>
+                <PanelWrapper key={panel.name}>
                   <PanelComponent />
                 </PanelWrapper>
               );
