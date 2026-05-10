@@ -18,7 +18,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
       <ul className={styles.menu}>
         <li>
           <Link
-            href="/user/account-details"
+            href="/settings/user/account-details"
             className={clsx(styles.item, {
               [styles.active]: pathname.includes("account-details"),
             })}
@@ -31,7 +31,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
         </li>
         <li>
           <Link
-            href="/user/dashboard-settings"
+            href="/settings/dashboard-settings"
             className={clsx(styles.item, {
               [styles.active]: pathname.includes("dashboard-settings"),
             })}
