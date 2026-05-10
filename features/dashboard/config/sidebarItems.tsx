@@ -20,5 +20,9 @@ export const sidebarItems = [
     href: "/recurring-payments",
     icon: <FaRepeat />,
   },
-  { name: "Settings", href: "/user/account-details", icon: <IoSettings /> },
+  {
+    name: "Settings",
+    href: "/settings/user/account-details",
+    icon: <IoSettings />,
+  },
 ];

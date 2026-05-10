@@ -6,7 +6,7 @@
   grid-template-columns: minmax(65px, auto) 1fr;
   grid-template-rows: auto 1fr;
   grid-template-areas:
-    "sidebar header"
+    "header header"
     "sidebar main";
   .innerWrapper {
     border-radius: var(--border-radius-l);

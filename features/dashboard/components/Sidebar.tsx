@@ -3,11 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import clsx from "clsx";
 import { createClient } from "@/supabase/client";
 import toast from "react-hot-toast";
+import { cn } from "@/shared/lib/cn";
 //Styles
-import styles from "./Sidebar.module.scss";
 import { toastStyle } from "@/shared/styles/toastStyle";
 //Icons
 import { FaSignOutAlt } from "react-icons/fa";
@@ -46,38 +45,66 @@ export default function Sidebar() {
   };
 
   return (
-    <div className={clsx(styles.sidebar, collapsed ? "" : styles.expanded)}>
-      <h2 className={styles.logo}>Spendie.</h2>
-      <ul className={styles.menu}>
+    <div
+      className={cn(
+        "group overflow-hidden",
+        "box-border z-98 absolute bg-bg-primary w-16.25 transition-width duration-150 linear [grid-area:sidebar] p-5 h-full flex flex-col gap-8",
+        collapsed && "relative w-62.5",
+        "hover:w-62.5",
+        "max-sm:hidden",
+      )}
+    >
+      <ul className="box-border z-4 relative flex flex-col gap-6 list-none h-full">
         {sidebarItems.map((item) => (
           <li key={item.name}>
             <Link
               href={item.href}
-              className={clsx(
-                styles.item,
-                pathname.startsWith("/user") && item.href.startsWith("/user")
-                  ? styles.active
-                  : "",
-                pathname.startsWith(item.href) ? styles.active : "",
+              className={cn(
+                "relative cursor-pointer flex gap-4 items-center whitespace-nowrap transition-colors duration-150 ease-in-out",
+                pathname.startsWith(item.href) && "text-brand",
+                "hover:text-brand",
               )}
             >
-              <i className={styles.icon}>{item.icon}</i>
-              <span className={styles.label}>{item.name}</span>
+              <span className="shrink-0 block text-lg!">{item.icon}</span>
+              <span
+                className={cn(
+                  "opacity-0 pointer-events-none transition-opacity duration-150 ease-in-out",
+                  "group-hover:opacity-100",
+                )}
+              >
+                {item.name}
+              </span>
             </Link>
           </li>
         ))}
-        <li className={styles.sidebarSwitch}>
-          <Switcher value={collapsed} onChange={handleSidebarToggle} />
+        <li
+          className={cn(
+            "opacity-0 absolute top-1/2 -right-1",
+            "group-hover:opacity-100",
+          )}
+        >
+          <Switcher value={!collapsed} onChange={handleSidebarToggle} />
         </li>
 
         <li
-          className={`${styles.item} ${styles.logout}`}
+          className={cn(
+            "relative cursor-pointer flex gap-4 items-center whitespace-nowrap transition-colors duration-150 ease-in-out",
+            "hover:text-brand!",
+            "mt-auto",
+          )}
           onClick={() => setSignoutClicked(true)}
         >
-          <i className={styles.icon}>
+          <span className="shrink-0 block text-lg!">
             <FaSignOutAlt />
-          </i>
-          <span className={styles.label}>Logout</span>
+          </span>
+          <span
+            className={cn(
+              "opacity-0 pointer-events-none transition-opacity duration-150 ease-in-out",
+              "group-hover:opacity-100",
+            )}
+          >
+            Logout
+          </span>
         </li>
       </ul>
       <AnimatePresence>
