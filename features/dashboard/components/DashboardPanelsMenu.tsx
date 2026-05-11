@@ -32,7 +32,7 @@ const DashboardPanelsMenu = () => {
       className="list-none flex flex-col gap-3 whitespace-nowrap radius-md"
     >
       {panelsLibrary.map((panel) => (
-        <li className="flex items-center gap-2" key={panel.name}>
+        <li className="flex items-center gap-2 text-white" key={panel.name}>
           <Switcher
             value={!isPanelActive(panel.name)}
             onChange={() =>

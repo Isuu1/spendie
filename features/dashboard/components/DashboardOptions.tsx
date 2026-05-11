@@ -22,7 +22,7 @@ const DashboardOptions = () => {
   return (
     <div className="flex items-center gap-4">
       <Popover>
-        <PopoverTrigger asChild className="text-white!">
+        <PopoverTrigger asChild>
           <Button
             variant="secondary"
             size="default"
