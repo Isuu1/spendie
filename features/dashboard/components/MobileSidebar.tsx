@@ -1,45 +1,18 @@
-import React, { useRef, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
-import { createClient } from "@/supabase/client";
-import { toast } from "react-hot-toast";
-import { cn } from "@/shared/lib/cn";
-//Styles
-import { toastStyle } from "@/shared/styles/toastStyle";
-//Components
-import ConfirmAction from "@/shared/components/ConfirmAction";
+import React, { useRef } from "react";
 //Animations
-import { AnimatePresence, motion } from "motion/react";
-//Config
-import { sidebarItems } from "../config/sidebarItems";
+import { motion } from "motion/react";
 //Hooks
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
 //Icons
-import { LogOut, PanelRightOpen } from "lucide-react";
+import { PanelRightOpen } from "lucide-react";
+import SidebarContent from "./SidebarContent";
 
-interface MobileSidebarProps {
+type MobileSidebarProps = {
   onClose: () => void;
-}
+};
 
 const MobileSidebar = ({ onClose }: MobileSidebarProps) => {
-  const [signoutClicked, setSignoutClicked] = useState(false);
-
-  const pathname = usePathname();
-
-  const router = useRouter();
-
   const mobileSidebarRef = useRef<HTMLDivElement>(null);
-
-  const supabase = createClient();
-
-  const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error("Error signing out:", error);
-      toast.error("Error signing out. Please try again.", toastStyle);
-    }
-    router.push("/");
-  };
 
   useClickOutside(mobileSidebarRef, onClose);
 
@@ -59,42 +32,8 @@ const MobileSidebar = ({ onClose }: MobileSidebarProps) => {
       >
         <PanelRightOpen size={20} />
       </span>
-      <ul className="relative flex flex-col gap-6 list-none mt-8 grow">
-        {sidebarItems.map((item) => (
-          <li key={item.name}>
-            <Link
-              href={item.href}
-              className={cn(
-                "relative cursor-pointer flex gap-2 items-center whitespace-nowrap",
-                pathname.startsWith(item.href) && "text-brand",
-              )}
-            >
-              {item.icon}
-              <span className="text-base!">{item.name}</span>
-            </Link>
-          </li>
-        ))}
-        <li
-          className={cn(
-            "relative cursor-pointer flex gap-2 items-center whitespace-nowrap text-2xl",
-            "mt-auto",
-          )}
-          onClick={() => setSignoutClicked(true)}
-        >
-          <LogOut size={20} />
 
-          <span className="text-base!">Logout</span>
-        </li>
-      </ul>
-      <AnimatePresence>
-        {signoutClicked && (
-          <ConfirmAction
-            title="Are you sure you want to sign out?"
-            onCancel={() => setSignoutClicked(false)}
-            onConfirm={handleSignOut}
-          />
-        )}
-      </AnimatePresence>
+      <SidebarContent menuClassName="mt-8" />
     </motion.div>
   );
 };
