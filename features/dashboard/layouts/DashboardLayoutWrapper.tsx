@@ -16,7 +16,7 @@ const DashboardLayoutWrapper: React.FC<DashboardLayoutWrapperProps> = ({
     <div
       className={cn(
         "relative overflow-hidden h-full grid",
-        "grid-rows-[auto_1fr] grid-cols-[65px_1fr]",
+        "grid-rows-[auto_1fr] grid-cols-[minmax(65px,auto)_1fr]",
         '[grid-template-areas:"header_header""sidebar_main"]',
         "max-sm:grid-cols-1",
       )}

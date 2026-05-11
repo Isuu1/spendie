@@ -23,7 +23,7 @@ import { sidebarItems } from "../config/sidebarItems";
 export default function Sidebar() {
   const [signoutClicked, setSignoutClicked] = useState(false);
 
-  const [collapsed, setCollapsed] = useLocalStorage("sidebar-collapsed", true);
+  const [collapsed, setCollapsed] = useLocalStorage("sidebar-collapsed", false);
 
   const pathname = usePathname();
 
@@ -49,7 +49,7 @@ export default function Sidebar() {
       className={cn(
         "group overflow-hidden text-text-secondary",
         "box-border z-98 absolute bg-bg-primary w-16.25 transition-width duration-150 linear [grid-area:sidebar] p-5 h-full flex flex-col gap-8",
-        collapsed && "relative w-62.5",
+        !collapsed && "relative w-62.5",
         "hover:w-62.5",
         "max-sm:hidden",
       )}
@@ -70,6 +70,7 @@ export default function Sidebar() {
                 className={cn(
                   "opacity-0 pointer-events-none transition-opacity duration-150 ease-in-out",
                   "group-hover:opacity-100",
+                  !collapsed && "opacity-100 pointer-events-auto",
                 )}
               >
                 {item.name}
@@ -79,11 +80,12 @@ export default function Sidebar() {
         ))}
         <li
           className={cn(
-            "opacity-0 absolute top-1/2 -right-1",
+            "opacity-0 absolute top-1/2 -right-5",
             "group-hover:opacity-100",
+            !collapsed && "opacity-100",
           )}
         >
-          <Switcher value={!collapsed} onChange={handleSidebarToggle} />
+          <Switcher value={collapsed} onChange={handleSidebarToggle} />
         </li>
 
         <li
@@ -101,6 +103,7 @@ export default function Sidebar() {
             className={cn(
               "opacity-0 pointer-events-none transition-opacity duration-150 ease-in-out",
               "group-hover:opacity-100",
+              !collapsed && "opacity-100 pointer-events-auto",
             )}
           >
             Logout
