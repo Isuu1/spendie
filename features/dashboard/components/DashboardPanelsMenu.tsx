@@ -3,21 +3,13 @@
 import React, { useRef } from "react";
 //Config
 import { PanelName, panelsLibrary } from "../config/panelsLibrary";
-//Styles
-import styles from "./DashboardPanelsMenu.module.scss";
 //Hooks
-import { useClickOutside } from "@/shared/hooks/useClickOutside";
 import { useUserSettings } from "@/features/user/hooks/useUserSettings";
 import { useTogglePanelVisibility } from "@/features/user/hooks/useTogglePanelVisibility";
+//Components
 import Switcher from "@/shared/components/ui/Switcher";
 
-interface DashboardPanelsMenuProps {
-  onClose: () => void;
-}
-
-const DashboardPanelsMenu: React.FC<DashboardPanelsMenuProps> = ({
-  onClose,
-}) => {
+const DashboardPanelsMenu = () => {
   const { data: settings } = useUserSettings();
 
   const { mutate: togglePanel, isPending } = useTogglePanelVisibility();
@@ -34,12 +26,13 @@ const DashboardPanelsMenu: React.FC<DashboardPanelsMenuProps> = ({
     togglePanel({ panelName, isActive });
   };
 
-  useClickOutside(panelMenuRef, () => onClose());
-
   return (
-    <ul ref={panelMenuRef} className={styles.menu}>
+    <ul
+      ref={panelMenuRef}
+      className="list-none flex flex-col gap-3 whitespace-nowrap radius-md"
+    >
       {panelsLibrary.map((panel) => (
-        <li className={styles.menuItem} key={panel.name}>
+        <li className="flex items-center gap-2 text-white" key={panel.name}>
           <Switcher
             value={!isPanelActive(panel.name)}
             onChange={() =>
@@ -47,7 +40,7 @@ const DashboardPanelsMenu: React.FC<DashboardPanelsMenuProps> = ({
             }
             isPending={isPending}
           />
-          <span className={styles.panelName}>{panel.name}</span>
+          <span>{panel.name}</span>
         </li>
       ))}
     </ul>

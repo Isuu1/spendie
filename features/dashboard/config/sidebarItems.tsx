@@ -1,24 +1,34 @@
 //Icons
-import { TbLayoutDashboardFilled } from "react-icons/tb";
-import { IoWallet } from "react-icons/io5";
-import { FaCalculator } from "react-icons/fa6";
-import { FaRepeat } from "react-icons/fa6";
-import { IoSettings } from "react-icons/io5";
-import { MdAccountBalance } from "react-icons/md";
+import {
+  Calculator,
+  Landmark,
+  LayoutDashboard,
+  Repeat,
+  Settings,
+  Wallet,
+} from "lucide-react";
 
 export const sidebarItems = [
   {
     name: "Dashboard",
     href: "/dashboard",
-    icon: <TbLayoutDashboardFilled />,
+    icon: <LayoutDashboard size={20} />,
   },
-  { name: "Accounts", href: "/accounts", icon: <MdAccountBalance /> },
-  { name: "Transactions", href: "/transactions", icon: <IoWallet /> },
-  { name: "Budget planner", href: "/budget-planner", icon: <FaCalculator /> },
+  { name: "Accounts", href: "/accounts", icon: <Landmark size={20} /> },
+  { name: "Transactions", href: "/transactions", icon: <Wallet size={20} /> },
+  {
+    name: "Budget planner",
+    href: "/budget-planner",
+    icon: <Calculator size={20} />,
+  },
   {
     name: "Recurring payments",
     href: "/recurring-payments",
-    icon: <FaRepeat />,
+    icon: <Repeat size={20} />,
   },
-  { name: "Settings", href: "/user/account-details", icon: <IoSettings /> },
+  {
+    name: "Settings",
+    href: "/settings/user/account-details",
+    icon: <Settings size={20} />,
+  },
 ];

@@ -5,7 +5,7 @@ import { QueryProvider } from "@/shared/providers/QueryProvider";
 import { toastStyle } from "@/shared/styles/toastStyle";
 //Components
 import DashboardHeader from "@/features/dashboard/components/DashboardHeader";
-import Sidebar from "@/features/dashboard/components/Sidebar";
+import DashboardSidebar from "@/features/dashboard/components/DashboardSidebar";
 import DashboardLayoutWrapper from "@/features/dashboard/layouts/DashboardLayoutWrapper";
 //Config
 import { prefetchDashboard } from "@/features/dashboard/config/prefetchDashboard";
@@ -40,7 +40,7 @@ export default async function Layout({
         <Toaster toastOptions={toastStyle} containerStyle={{ top: 100 }} />
         <DashboardLayoutWrapper
           header={<DashboardHeader />}
-          sidebar={<Sidebar />}
+          sidebar={<DashboardSidebar />}
         >
           {children}
         </DashboardLayoutWrapper>

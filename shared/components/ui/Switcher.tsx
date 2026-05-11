@@ -1,49 +1,62 @@
-import React from "react";
-//Styles
-import styles from "./Switcher.module.scss";
-import clsx from "clsx";
+import { cva } from "class-variance-authority";
+import { cn } from "@/shared/lib/cn";
 //Animations
 import { motion } from "motion/react";
 
-interface SwitcherProps {
+const switcherVariants = cva(
+  "flex items-center justify-between gap-2 select-none",
+  {
+    variants: {
+      labelPosition: {
+        left: "flex-row-reverse",
+        right: "flex-row",
+      },
+      size: {
+        sm: "w-7",
+        default: "w-9",
+      },
+    },
+  },
+);
+
+type SwitcherProps = {
   value: boolean;
   onChange: () => void;
   label?: string;
   labelPosition?: "left" | "right";
+  size?: "sm" | "default";
   isPending?: boolean;
-}
+};
 
-const Switcher: React.FC<SwitcherProps> = ({
+const Switcher = ({
   value,
   onChange,
   label,
   labelPosition = "right",
+  size = "default",
   isPending = false,
-}) => {
+}: SwitcherProps) => {
   return (
-    <div
-      className={clsx(styles.switcher, {
-        [styles.labelLeft]: labelPosition === "left",
-        [styles.labelRight]: labelPosition === "right",
-      })}
-    >
+    <div className={cn(switcherVariants({ labelPosition }))}>
       <span
-        className={clsx(styles.panelStatus, [
-          { [styles.pending]: isPending },
-          { [styles.active]: !value },
-          { [styles.inactive]: value },
-        ])}
+        className={cn(
+          switcherVariants({ size }),
+          "cursor-pointer rounded-lg bg-bg-surface p-0.5",
+          isPending && "pointer-events-none opacity-50",
+          !value ? "bg-brand" : "bg-gray-300",
+          value && "bg-gray-300",
+        )}
         onClick={() => onChange()}
       >
         <motion.span
-          className={styles.indicator}
+          className="w-[50%] h-full rounded-full aspect-square block bg-white"
           initial={false}
           animate={{
             x: value ? "0%" : "100%",
           }}
         />
       </span>
-      {label && <span className={styles.label}>{label}</span>}
+      {label && <span className="whitespace-nowrap">{label}</span>}
     </div>
   );
 };

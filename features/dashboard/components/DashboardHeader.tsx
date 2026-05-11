@@ -1,17 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
-import clsx from "clsx";
-//Icons
-import { IoNotifications } from "react-icons/io5";
-import { TiThMenu } from "react-icons/ti";
-//Styles
-import styles from "./DashboardHeader.module.scss";
+import { useState } from "react";
+import { cn } from "@/shared/lib/cn";
 //Components
 import UserProfileCard from "@/features/user/components/UserProfileCard";
-import MobileSidebar from "./MobileSidebar";
+import DashboardMobileSidebar from "./DashboardMobileSidebar";
 //Animations
 import { AnimatePresence } from "motion/react";
+//Icons
+import { Bell, Menu } from "lucide-react";
 
 const DashboardHeader = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -20,20 +17,37 @@ const DashboardHeader = () => {
     <>
       <AnimatePresence>
         {mobileSidebarOpen && (
-          <MobileSidebar onClose={() => setMobileSidebarOpen(false)} />
+          <DashboardMobileSidebar onClose={() => setMobileSidebarOpen(false)} />
         )}
       </AnimatePresence>
-      <div className={styles.header}>
-        <i
-          className={clsx(styles.icon, styles.menuIcon)}
+      <div className="[grid-area:header] flex items-center justify-end gap-4 py-4 px-2">
+        <h2
+          className={cn(
+            "text-brand absolute top-5 left-5 z-99",
+            "max-sm:hidden",
+          )}
+        >
+          Spendie.
+        </h2>
+        <span
+          className={cn(
+            "relative cursor-pointer p-2 rounded-md bg-bg-surface transition-colors",
+            "hover:bg-bg-surface-dark-hover",
+            "mr-auto sm:hidden",
+          )}
           onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
         >
-          <TiThMenu />
-        </i>
-        <i className={clsx(styles.icon, styles.notificationsIcon)}>
-          <IoNotifications />
-          <span className={styles.counter}></span>
-        </i>
+          <Menu size={14} />
+        </span>
+        <span
+          className={cn(
+            "relative cursor-pointer p-2 rounded-md bg-bg-surface transition-colors",
+            "hover:bg-bg-surface-dark-hover",
+          )}
+        >
+          <Bell size={14} />
+          <span className="absolute -bottom-1 -right-1.5 text-xs bg-brand rounded-full w-3 h-3"></span>
+        </span>
         <UserProfileCard />
       </div>
     </>
