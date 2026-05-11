@@ -15,12 +15,15 @@ import ConfirmAction from "@/shared/components/ConfirmAction";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
 
-type SidebarContentProps = {
+type DashboardSidebarContentProps = {
   collapsed?: boolean;
   menuClassName?: string;
 };
 
-const SidebarContent = ({ collapsed, menuClassName }: SidebarContentProps) => {
+const DashboardSidebarContent = ({
+  collapsed,
+  menuClassName,
+}: DashboardSidebarContentProps) => {
   const [signoutClicked, setSignoutClicked] = useState(false);
 
   const pathname = usePathname();
@@ -105,4 +108,4 @@ const SidebarContent = ({ collapsed, menuClassName }: SidebarContentProps) => {
   );
 };
 
-export default SidebarContent;
+export default DashboardSidebarContent;

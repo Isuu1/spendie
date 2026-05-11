@@ -1,12 +1,12 @@
 "use client";
 import { cn } from "@/shared/lib/cn";
 //Components
-import SidebarContent from "./SidebarContent";
+import DashboardSidebarContent from "./DashboardSidebarContent";
 import Switcher from "@/shared/components/ui/Switcher";
 //Hooks
 import { useLocalStorage } from "@/shared/hooks/useLocalStorage";
 
-export default function Sidebar() {
+const DashboardSidebar = () => {
   const [collapsed, setCollapsed] = useLocalStorage("sidebar-collapsed", false);
 
   const handleSidebarToggle = () => {
@@ -23,7 +23,7 @@ export default function Sidebar() {
         "max-sm:hidden",
       )}
     >
-      <SidebarContent collapsed={collapsed} />
+      <DashboardSidebarContent collapsed={collapsed} />
       <div
         className={cn(
           "opacity-0 absolute top-1/2 right-0",
@@ -35,4 +35,6 @@ export default function Sidebar() {
       </div>
     </div>
   );
-}
+};
+
+export default DashboardSidebar;

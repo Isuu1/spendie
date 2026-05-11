@@ -6,7 +6,7 @@ import { cn } from "@/shared/lib/cn";
 import { useUserSettings } from "@/features/user/hooks/useUserSettings";
 import { useTogglePanelVisibility } from "@/features/user/hooks/useTogglePanelVisibility";
 //Components
-import PanelWrapper from "./PanelWrapper";
+import DashboardPanelWrapper from "./DashboardPanelWrapper";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 import DashboardOptions from "./DashboardOptions";
 import Button from "@/shared/components/ui/Button";
@@ -51,9 +51,9 @@ const Dashboard = () => {
             .map((panel) => {
               const PanelComponent = panel.component;
               return (
-                <PanelWrapper key={panel.name}>
+                <DashboardPanelWrapper key={panel.name}>
                   <PanelComponent />
-                </PanelWrapper>
+                </DashboardPanelWrapper>
               );
             })}
           {visiblePanels.length === 0 && (

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { cn } from "@/shared/lib/cn";
 //Components
 import UserProfileCard from "@/features/user/components/UserProfileCard";
-import MobileSidebar from "./MobileSidebar";
+import DashboardMobileSidebar from "./DashboardMobileSidebar";
 //Animations
 import { AnimatePresence } from "motion/react";
 //Icons
@@ -17,7 +17,7 @@ const DashboardHeader = () => {
     <>
       <AnimatePresence>
         {mobileSidebarOpen && (
-          <MobileSidebar onClose={() => setMobileSidebarOpen(false)} />
+          <DashboardMobileSidebar onClose={() => setMobileSidebarOpen(false)} />
         )}
       </AnimatePresence>
       <div className="[grid-area:header] flex items-center justify-end gap-4 py-4 px-2">

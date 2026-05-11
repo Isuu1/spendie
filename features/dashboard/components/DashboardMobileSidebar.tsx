@@ -5,13 +5,14 @@ import { motion } from "motion/react";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
 //Icons
 import { PanelRightOpen } from "lucide-react";
-import SidebarContent from "./SidebarContent";
+//Components
+import DashboardSidebarContent from "./DashboardSidebarContent";
 
-type MobileSidebarProps = {
+type DashboardMobileSidebarProps = {
   onClose: () => void;
 };
 
-const MobileSidebar = ({ onClose }: MobileSidebarProps) => {
+const DashboardMobileSidebar = ({ onClose }: DashboardMobileSidebarProps) => {
   const mobileSidebarRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(mobileSidebarRef, onClose);
@@ -33,9 +34,9 @@ const MobileSidebar = ({ onClose }: MobileSidebarProps) => {
         <PanelRightOpen size={20} />
       </span>
 
-      <SidebarContent menuClassName="mt-8" />
+      <DashboardSidebarContent menuClassName="mt-8" />
     </motion.div>
   );
 };
 
-export default MobileSidebar;
+export default DashboardMobileSidebar;

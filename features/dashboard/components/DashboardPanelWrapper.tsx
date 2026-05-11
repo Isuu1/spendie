@@ -4,11 +4,11 @@ import React from "react";
 //Animations
 import { motion } from "motion/react";
 
-type PanelWrapperProps = {
+type DashboardPanelWrapperProps = {
   children: React.ReactNode;
 };
 
-const PanelWrapper = ({ children }: PanelWrapperProps) => {
+const DashboardPanelWrapper = ({ children }: DashboardPanelWrapperProps) => {
   return (
     <motion.div
       className="flex flex-col p-4 rounded-lg bg-bg-surface break-inside-avoid max-w-lg mb-5"
@@ -23,4 +23,4 @@ const PanelWrapper = ({ children }: PanelWrapperProps) => {
   );
 };
 
-export default PanelWrapper;
+export default DashboardPanelWrapper;
