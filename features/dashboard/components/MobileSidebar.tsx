@@ -1,15 +1,11 @@
 import React, { useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import clsx from "clsx";
 import { createClient } from "@/supabase/client";
 import { toast } from "react-hot-toast";
+import { cn } from "@/shared/lib/cn";
 //Styles
-import styles from "./MobileSidebar.module.scss";
 import { toastStyle } from "@/shared/styles/toastStyle";
-//Icons
-import { FaSignOutAlt } from "react-icons/fa";
-import { IoClose } from "react-icons/io5";
 //Components
 import ConfirmAction from "@/shared/components/ConfirmAction";
 //Animations
@@ -18,6 +14,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { sidebarItems } from "../config/sidebarItems";
 //Hooks
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
+//Icons
+import { LogOut, PanelRightOpen } from "lucide-react";
 
 interface MobileSidebarProps {
   onClose: () => void;
@@ -47,43 +45,45 @@ const MobileSidebar = ({ onClose }: MobileSidebarProps) => {
 
   return (
     <motion.div
-      className={styles.sidebar}
+      className="z-97 fixed h-full bg-bg-primary p-4 flex flex-col text-text-secondary"
       ref={mobileSidebarRef}
       initial={{ x: "-100%" }}
       animate={{ x: 0 }}
       exit={{ x: "-100%" }}
       transition={{ type: "tween", duration: 0.15 }}
     >
-      <h2 className={styles.logo}>Spendie.</h2>
-      <i className={styles.closeButton} onClick={onClose}>
-        <IoClose />
-      </i>
-      <ul className={styles.menu}>
+      <h2 className="text-brand">Spendie.</h2>
+      <span
+        className="absolute top-2.5 right-0 cursor-pointer rounded-sm p-1"
+        onClick={onClose}
+      >
+        <PanelRightOpen size={20} />
+      </span>
+      <ul className="relative flex flex-col gap-6 list-none mt-8 grow">
         {sidebarItems.map((item) => (
           <li key={item.name}>
             <Link
               href={item.href}
-              className={clsx(
-                styles.item,
-                pathname.startsWith("/user") && item.href.startsWith("/user")
-                  ? styles.active
-                  : "",
-                pathname === item.href ? styles.active : "",
+              className={cn(
+                "relative cursor-pointer flex gap-2 items-center whitespace-nowrap",
+                pathname.startsWith(item.href) && "text-brand",
               )}
             >
-              <i className={styles.icon}>{item.icon}</i>
-              <span className={styles.label}>{item.name}</span>
+              {item.icon}
+              <span className="text-base!">{item.name}</span>
             </Link>
           </li>
         ))}
         <li
-          className={`${styles.item} ${styles.logout}`}
+          className={cn(
+            "relative cursor-pointer flex gap-2 items-center whitespace-nowrap text-2xl",
+            "mt-auto",
+          )}
           onClick={() => setSignoutClicked(true)}
         >
-          <i className={styles.icon}>
-            <FaSignOutAlt />
-          </i>
-          <span className={styles.label}>Logout</span>
+          <LogOut size={20} />
+
+          <span className="text-base!">Logout</span>
         </li>
       </ul>
       <AnimatePresence>

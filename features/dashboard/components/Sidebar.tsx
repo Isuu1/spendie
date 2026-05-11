@@ -9,7 +9,7 @@ import { cn } from "@/shared/lib/cn";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
 //Icons
-import { FaSignOutAlt } from "react-icons/fa";
+import { LogOut } from "lucide-react";
 //Components
 import ConfirmAction from "@/shared/components/ConfirmAction";
 import Switcher from "@/shared/components/ui/Switcher";
@@ -47,7 +47,7 @@ export default function Sidebar() {
   return (
     <div
       className={cn(
-        "group overflow-hidden",
+        "group overflow-hidden text-text-secondary",
         "box-border z-98 absolute bg-bg-primary w-16.25 transition-width duration-150 linear [grid-area:sidebar] p-5 h-full flex flex-col gap-8",
         collapsed && "relative w-62.5",
         "hover:w-62.5",
@@ -95,7 +95,7 @@ export default function Sidebar() {
           onClick={() => setSignoutClicked(true)}
         >
           <span className="shrink-0 block text-lg!">
-            <FaSignOutAlt />
+            <LogOut size={20} />
           </span>
           <span
             className={cn(
