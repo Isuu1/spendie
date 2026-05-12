@@ -49,7 +49,7 @@ const SignupForm = () => {
   return (
     <div className="flex flex-col items-center gap-7 p-4">
       <h2>Create Spendie account</h2>
-      <p className="max-w-sm text-center">
+      <p className="max-w-sm text-center leading-6">
         Create your account and start managing money with confidence.
       </p>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-md">

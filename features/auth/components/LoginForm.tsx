@@ -52,7 +52,7 @@ const LoginForm = () => {
   return (
     <div className="flex flex-col items-center gap-7 p-4">
       <h2>Welcome back to Spendie</h2>
-      <p className="max-w-sm text-center">
+      <p className="max-w-sm text-center leading-6">
         Manage your finances, track payments, and pick up right where you left
         off.
       </p>
