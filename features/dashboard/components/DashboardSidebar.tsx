@@ -16,8 +16,8 @@ const DashboardSidebar = () => {
   return (
     <div
       className={cn(
-        "group overflow-hidden text-text-secondary flex flex-col",
-        "box-border z-98 absolute bg-bg-primary w-16.25 transition-width duration-150 linear [grid-area:sidebar] p-5 h-full flex flex-col gap-8",
+        "group overflow-hidden text-secondary flex flex-col",
+        "box-border z-98 absolute bg-background w-16.25 transition-width duration-150 linear [grid-area:sidebar] p-5 h-full flex flex-col gap-8",
         !collapsed && "relative w-62.5",
         "hover:w-62.5",
         "max-sm:hidden",
