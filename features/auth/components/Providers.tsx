@@ -6,6 +6,37 @@ import Image from "next/image";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
 
+const icons = {
+  google: "/images/google-icon.svg",
+  apple: "/images/apple-icon.svg",
+};
+
+type ProviderItemProps = {
+  provider: "google" | "apple";
+  onClick: () => void;
+  className?: string;
+};
+
+const ProviderItem = ({ provider, onClick, className }: ProviderItemProps) => {
+  return (
+    <div
+      className={cn(
+        "cursor-pointer bg-bg-surface flex items-center justify-center rounded-lg p-2",
+        "hover:bg-bg-surface-dark-hover transition-colors",
+        className,
+      )}
+      onClick={onClick}
+    >
+      <Image
+        src={icons[provider]}
+        alt={`${provider.charAt(0).toUpperCase() + provider.slice(1)} Icon`}
+        width={20}
+        height={20}
+      />
+    </div>
+  );
+};
+
 const Providers = () => {
   const handleGoogleLogin = async () => {
     const supabase = createClient();
@@ -28,34 +59,13 @@ const Providers = () => {
   return (
     <div className="w-full flex flex-col items-center gap-5">
       <p className="w-full text-center text-text-secondary">OR</p>
-      <div className="w-full h-18 grid grid-cols-2 gap-8">
-        <div
-          className={cn(
-            "cursor-pointer bg-bg-surface flex items-center justify-center rounded-lg p-2",
-            "hover:bg-bg-surface-dark-hover transition-colors",
-          )}
-          onClick={handleGoogleLogin}
-        >
-          <Image
-            src="/images/google-icon.svg"
-            alt="Google Icon"
-            width={22}
-            height={22}
-          />
-        </div>
-        <div
-          className={cn(
-            "cursor-not-allowed bg-bg-surface flex items-center justify-center rounded-lg p-2",
-            "hover:bg-bg-surface-dark-hover transition-colors",
-          )}
-        >
-          <Image
-            src="/images/apple-icon.svg"
-            alt="Apple Icon"
-            width={22}
-            height={22}
-          />
-        </div>
+      <div className="w-full h-14 grid grid-cols-2 gap-8">
+        <ProviderItem provider="google" onClick={handleGoogleLogin} />
+        <ProviderItem
+          provider="apple"
+          onClick={() => {}}
+          className="cursor-not-allowed"
+        />
       </div>
     </div>
   );
