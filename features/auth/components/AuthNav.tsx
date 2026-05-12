@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-//Styles
-import styles from "./AuthNav.module.scss";
 import { motion } from "motion/react";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -10,20 +8,26 @@ const AuthNav = () => {
   const pathname = usePathname();
   const router = useRouter();
   return (
-    <ul className={styles.nav}>
+    <nav className="relative flex gap-4 bg-bg-surface rounded-md list-none px-2 py-1">
       <motion.span
-        className={styles.active}
+        className="z-1 absolute top-0 left-0 bottom-0 w-1/2 h-full bg-brand rounded-md"
         animate={{ x: pathname.includes("/login") ? "0%" : "100%" }}
         initial={false} // Prevent animation on initial render
         transition={{ type: "spring", stiffness: 700, damping: 30 }}
       ></motion.span>
-      <li className={styles.item} onClick={() => router.push("/login")}>
+      <div
+        className="z-2 relative cursor-pointer rounded-md px-2 py-1"
+        onClick={() => router.push("/login")}
+      >
         Sign In
-      </li>
-      <li className={styles.item} onClick={() => router.push("/signup")}>
+      </div>
+      <div
+        className="z-2 relative cursor-pointer rounded-md px-2 py-1"
+        onClick={() => router.push("/signup")}
+      >
         Sign Up
-      </li>
-    </ul>
+      </div>
+    </nav>
   );
 };
 
