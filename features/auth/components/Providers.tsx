@@ -1,12 +1,10 @@
 import React from "react";
 import { createClient } from "@/supabase/client";
 import toast from "react-hot-toast";
+import { cn } from "@/shared/lib/cn";
+import Image from "next/image";
 //Styles
-import styles from "./Providers.module.scss";
 import { toastStyle } from "@/shared/styles/toastStyle";
-//Icons
-import { FcGoogle } from "react-icons/fc";
-import { BsApple } from "react-icons/bs";
 
 const Providers = () => {
   const handleGoogleLogin = async () => {
@@ -22,20 +20,41 @@ const Providers = () => {
       console.error("Error during Google OAuth sign-in:", error.message);
       toast.error(
         "Failed to initiate Google sign-in. Please try again.",
-        toastStyle
+        toastStyle,
       );
     }
   };
 
   return (
-    <div className={styles.providersContainer}>
-      <p className={styles.loginOptions}>OR</p>
-      <div className={styles.providers}>
-        <div className={styles.provider} onClick={handleGoogleLogin}>
-          <FcGoogle />
+    <div className="w-full flex flex-col items-center gap-5">
+      <p className="w-full text-center text-text-secondary">OR</p>
+      <div className="w-full h-18 grid grid-cols-2 gap-8">
+        <div
+          className={cn(
+            "cursor-pointer bg-bg-surface flex items-center justify-center rounded-lg p-2",
+            "hover:bg-bg-surface-dark-hover transition-colors",
+          )}
+          onClick={handleGoogleLogin}
+        >
+          <Image
+            src="/images/google-icon.svg"
+            alt="Google Icon"
+            width={22}
+            height={22}
+          />
         </div>
-        <div className={styles.provider}>
-          <BsApple />
+        <div
+          className={cn(
+            "cursor-not-allowed bg-bg-surface flex items-center justify-center rounded-lg p-2",
+            "hover:bg-bg-surface-dark-hover transition-colors",
+          )}
+        >
+          <Image
+            src="/images/apple-icon.svg"
+            alt="Apple Icon"
+            width={22}
+            height={22}
+          />
         </div>
       </div>
     </div>
