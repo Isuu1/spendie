@@ -3,15 +3,6 @@
 
 :root {
   /* Colors */
-  --color-bg-main: #121212;
-  --color-bg-secondary: #171718;
-  --color-bg-tile: #1c1c1c;
-  --color-text-primary: #ededed;
-  --color-text-secondary: #b4b4b4;
-  --color-text-active: #d34702;
-  --color-action-hover: #d34702;
-  --color-action-hover-secondary: #414141;
-  --color-action-active: #d34702;
   --color-action-active-hover: #973a13;
   --color-action-danger: #ff0000;
   --color-action-danger-hover: #b10000;
@@ -37,9 +28,6 @@
   --input-label-font-size: var(--font-size-s);
   --input-icon-size: 1.1rem;
   --input-label-width: 150px;
-  --color-input-bg: #222222;
-  --color-input-placeholder: #888888;
-  --color-input-text: #ffffff;
 }
 
 *,
@@ -53,8 +41,7 @@ html {
 }
 
 body {
-  color: var(--color-text-primary);
-  background: var(--color-bg-main);
+  color: var(--color-primary);
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
     sans-serif;

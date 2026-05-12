@@ -32,7 +32,7 @@ const DashboardOptions = () => {
             Manage panels
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="bg-bg-surface w-auto" align="start">
+        <PopoverContent className="bg-card w-auto" align="start">
           <PopoverHeader className="text-white">Manage Panels</PopoverHeader>
           <DashboardPanelsMenu />
         </PopoverContent>

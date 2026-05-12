@@ -23,7 +23,7 @@ const DashboardHeader = () => {
       <div className="[grid-area:header] flex items-center justify-end gap-4 py-4 px-2">
         <h2
           className={cn(
-            "text-brand absolute top-5 left-5 z-99",
+            "text-accent absolute top-5 left-5 z-99",
             "max-sm:hidden",
           )}
         >
@@ -41,12 +41,12 @@ const DashboardHeader = () => {
         </span>
         <span
           className={cn(
-            "relative cursor-pointer p-2 rounded-md bg-bg-surface transition-colors",
-            "hover:bg-bg-surface-dark-hover",
+            "relative cursor-pointer p-2 rounded-md bg-card transition-colors",
+            "hover:bg-card-foreground",
           )}
         >
           <Bell size={14} />
-          <span className="absolute -bottom-1 -right-1.5 text-xs bg-brand rounded-full w-3 h-3"></span>
+          <span className="absolute -bottom-1 -right-1.5 text-xs bg-accent rounded-full w-3 h-3"></span>
         </span>
         <UserProfileCard />
       </div>

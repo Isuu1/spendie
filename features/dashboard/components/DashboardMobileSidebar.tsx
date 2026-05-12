@@ -19,7 +19,7 @@ const DashboardMobileSidebar = ({ onClose }: DashboardMobileSidebarProps) => {
 
   return (
     <motion.div
-      className="z-97 fixed h-full bg-bg-primary p-4 flex flex-col text-text-secondary"
+      className="z-97 fixed h-full bg-background p-4 flex flex-col text-secondary"
       ref={mobileSidebarRef}
       initial={{ x: "-100%" }}
       animate={{ x: 0 }}

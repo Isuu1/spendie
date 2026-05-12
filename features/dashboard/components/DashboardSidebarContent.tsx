@@ -54,8 +54,8 @@ const DashboardSidebarContent = ({
               href={item.href}
               className={cn(
                 "relative cursor-pointer flex gap-4 items-center whitespace-nowrap transition-colors duration-150 ease-in-out",
-                pathname.startsWith(item.href) && "text-brand",
-                "hover:text-brand",
+                pathname.startsWith(item.href) && "text-accent!",
+                "hover:text-accent!",
               )}
             >
               <span className="shrink-0 block text-lg!">{item.icon}</span>
@@ -75,7 +75,7 @@ const DashboardSidebarContent = ({
         <li
           className={cn(
             "relative cursor-pointer flex gap-4 items-center whitespace-nowrap transition-colors duration-150 ease-in-out",
-            "hover:text-brand!",
+            "hover:text-accent!",
             "mt-auto",
           )}
           onClick={() => setSignoutClicked(true)}

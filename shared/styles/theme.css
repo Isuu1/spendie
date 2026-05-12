@@ -4,71 +4,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@theme {
-  /* =========================
-     COLORS
-  ========================= */
-  --color-bg-primary: var(--color-bg-main);
-  --color-bg-secondary: var(--color-bg-secondary);
-  --color-bg-surface: var(--color-bg-tile);
-  --color-bg-surface-dark: #333333;
-  --color-bg-surface-dark-hover: #4d4d4d;
-
-  /* =========================
-     TEXT
-  ========================= */
-  --color-text-primary: var(--color-text-primary);
-  --color-text-secondary: var(--color-text-secondary);
-  --color-text-accent: var(--color-text-active);
-
-  /* =========================
-     ACTIONS / BRAND
-  ========================= */
-  --color-brand: var(--color-action-active);
-  --color-brand-hover: var(--color-action-active-hover);
-
-  --color-action-hover-dark: var(--color-action-hover-secondary);
-
-  /* =========================
-     STATES
-  ========================= */
-  --color-danger: var(--color-action-danger);
-  --color-danger-hover: var(--color-action-danger-hover);
-
-  /* =========================
-     INPUT
-  ========================= */
-  --color-input-bg: var(--color-input-bg);
-  --color-input-text: var(--color-input-text);
-  --color-input-placeholder: var(--color-input-placeholder);
-
-  /* =========================
-     TYPOGRAPHY
-  ========================= */
-  --font-size-xs: var(--font-size-xs);
-  --font-size-sm: var(--font-size-s);
-  --font-size-base: var(--font-size-m);
-  --font-size-lg: var(--font-size-l);
-  --font-size-xl: var(--font-size-xl);
-  --font-size-2xl: var(--font-size-xxl);
-
-  --line-height-tight: var(--lh-tight);
-  --line-height-normal: var(--lh-normal);
-
-  /* =========================
-     RADIUS
-  ========================= */
-  --radius-sm: var(--border-radius-s);
-  --radius-md: var(--border-radius-m);
-  --radius-lg: var(--border-radius-l);
-  --radius-xl: var(--border-radius-xl);
-
-  /* =========================
-     SHADOW
-  ========================= */
-  --shadow-default: var(--box-shadow-default);
-}
-
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);
@@ -113,31 +48,45 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  /* --background: #121212; */
+  --background: #22252e;
+  --foreground: #dddddd;
+
+  /* --card: #1c1c1c; */
+  --card: #2e313a;
+  --card-foreground: #4d4d4d;
+
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #d34702;
+
+  --primary: #ededed;
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: #333333;
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
+
+  --secondary: #b4b4b4;
+  --secondary-foreground: #414141;
+
+  --muted: #121212;
+  --muted-foreground: oklch(0.708 0 0);
+
+  --accent: #d34702;
+  --accent-foreground: #973a13;
+
+  --destructive: #b10000;
+
   --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+
+  --input: #222222;
+  --ring: oklch(0.556 0 0);
+
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
+
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
+
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
