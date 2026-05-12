@@ -1,12 +1,16 @@
 import SignupSuccess from "@/features/auth/components/SignupSuccess";
-import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
-export default function Page() {
-  return (
-    <>
-      <Suspense>
-        <SignupSuccess />
-      </Suspense>
-    </>
-  );
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ email?: string }>;
+}) {
+  const { email } = await searchParams;
+
+  if (!email) {
+    redirect("/signup");
+  }
+
+  return <SignupSuccess />;
 }
