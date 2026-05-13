@@ -40,7 +40,7 @@ const DateInput: React.FC<DateInputProps> = ({
 
   return (
     <Field>
-      <FieldLabel htmlFor={id}>{label}</FieldLabel>
+      {label && <FieldLabel htmlFor={id}>{label}</FieldLabel>}
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -56,10 +56,7 @@ const DateInput: React.FC<DateInputProps> = ({
             {value ? formatValue(value) : <span>Pick a date</span>}
           </Button>
         </PopoverTrigger>
-        <PopoverContent
-          className="bg-bg-surface-dark! rounded-lg w-auto p-4"
-          align="end"
-        >
+        <PopoverContent className="bg-card rounded-lg w-auto p-4" align="end">
           <Calendar
             mode="single"
             captionLayout="dropdown"

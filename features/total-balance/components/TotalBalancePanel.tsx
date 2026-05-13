@@ -7,13 +7,13 @@ import SelectInput from "@/shared/components/ui/SelectInput";
 //Hooks
 import { useAccounts } from "@/features/accounts/hooks/useAccounts";
 import { useTransactions } from "@/features/transactions/hooks/useTransactions";
-//Animations
-import { AnimatePresence } from "motion/react";
 //Types
 import { Account } from "@/features/accounts/types/account";
 //Utils
 import { calculateFinancialSummary } from "@/features/transactions/lib/utils/calculateFinancialSummary";
 import { getTransactionsInPeriod } from "@/features/transactions/lib/utils/getTransactionsInPeriod";
+//Context
+import { FutureBalanceProvider } from "@/features/future-balance/context/FutureBalanceContext";
 
 const selectOptions = [
   { label: "Detailed", value: "Detailed" },
@@ -24,9 +24,6 @@ const TotalBalancePanel: React.FC = () => {
   const [futureBalanceVisible, setFutureBalanceVisible] = React.useState(true);
 
   const { data = [], isLoading, isFetching } = useAccounts();
-
-  console.log("is loading accounts", isLoading);
-  console.log("is fetching accounts", isFetching);
 
   const { data: transactions = [] } = useTransactions();
 
@@ -42,13 +39,15 @@ const TotalBalancePanel: React.FC = () => {
   const startOfMonth = dayjs().startOf("month").toDate();
   const endOfMonth = dayjs().endOf("month").toDate();
 
-  const thisMonthTransactions = getTransactionsInPeriod(
+  const currentMonthTransactions = getTransactionsInPeriod(
     transactions,
     startOfMonth,
     endOfMonth,
   );
 
-  const { income, expenses } = calculateFinancialSummary(thisMonthTransactions);
+  const { income, expenses } = calculateFinancialSummary(
+    currentMonthTransactions,
+  );
 
   return (
     <div className="flex flex-col gap-3">
@@ -77,9 +76,9 @@ const TotalBalancePanel: React.FC = () => {
         </div>
       </div>
 
-      <AnimatePresence initial={false}>
-        {futureBalanceVisible && <FutureBalance totalBalance={totalBalance} />}
-      </AnimatePresence>
+      <FutureBalanceProvider totalBalance={totalBalance ?? 0}>
+        <FutureBalance />
+      </FutureBalanceProvider>
     </div>
   );
 };

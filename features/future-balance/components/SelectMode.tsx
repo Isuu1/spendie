@@ -1,75 +1,126 @@
-import React, { useMemo, useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
+import React, { useState } from "react";
+import dayjs from "dayjs";
 //Components
-import CustomDatePicker from "@/shared/components/CustomDatepicker/CustomDatepicker";
-import SelectInput from "@/shared/components/ui/SelectInput";
 import Button from "@/shared/components/ui/Button";
-//Icons
-import { FilePenLine } from "lucide-react";
-//Animations
-import { AnimatePresence } from "motion/react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { useFutureBalanceContext } from "../context/FutureBalanceContext";
+import DateInput from "@/shared/components/ui/DateInput";
 
-type SelectProps = {
-  mode: "endOfMonth" | "specificDate";
-  selectMode: (range: "endOfMonth" | "specificDate") => void;
-  dateSelected: Dayjs | null;
-  onDateSelect: (date: Dayjs | null) => void;
-};
+const Select = () => {
+  const [open, setOpen] = useState(false);
 
-const Select = ({
-  mode,
-  selectMode,
-  dateSelected,
-  onDateSelect,
-}: SelectProps) => {
-  const [openDatePicker, setOpenDatePicker] = useState(false);
+  const { selectedDate, setSelectedDate } = useFutureBalanceContext();
 
-  const options = useMemo(
-    () => [
-      {
-        label: "End of the month",
-        value: "endOfMonth",
-      },
-      {
-        label: dateSelected
-          ? dateSelected.format("DD MMM YYYY")
-          : "Specific date",
-        value: "specificDate",
-      },
-    ],
-    [dateSelected],
-  );
+  const label = selectedDate
+    ? selectedDate.format("DD MMM YYYY")
+    : "End of month";
 
-  const handleSelect = (option: string) => {
-    if (option === "endOfMonth") {
-      selectMode("endOfMonth");
-    } else {
-      selectMode("specificDate");
-      if (!dateSelected) setOpenDatePicker(true);
+  // const options = useMemo(
+  //   () => [
+  //     {
+  //       label: "End of the month",
+  //       value: "endOfMonth",
+  //     },
+  //     {
+  //       label: selectedDate
+  //         ? selectedDate.format("DD MMM YYYY")
+  //         : "Specific date",
+  //       value: "specificDate",
+  //     },
+  //   ],
+  //   [selectedDate],
+  // );
+
+  function handleDateSelect(date: Date | null) {
+    if (!date) {
+      setSelectedDate(null);
+      return;
     }
-  };
+    setSelectedDate(dayjs(date));
+    setOpen(false);
+  }
 
-  const selectedOption = useMemo(() => {
-    if (mode === "endOfMonth") {
-      return options[0];
-    }
+  // const handleSelect = (option: string) => {
+  //   if (option === "endOfMonth") {
+  //     onDateSelect(null);
+  //   } else {
+  //     setOpenDatePicker(true);
+  //   }
+  // };
 
-    return options[1];
-  }, [mode, options]);
+  // const selectedOption = useMemo(() => {
+  //   if (isEndOfMonth) {
+  //     return options[0];
+  //   }
+
+  //   return options[1];
+  // }, [isEndOfMonth, options]);
 
   return (
     <div className="flex items-center justify-between w-full gap-5">
       <p>Payments by date</p>
-      <div className="ml-auto">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button variant="outline">{label}</Button>
+        </PopoverTrigger>
+        <PopoverContent className="bg-card w-auto">
+          <Button
+            variant="default"
+            className=""
+            onClick={() => {
+              setSelectedDate(null);
+              setOpen(false);
+            }}
+          >
+            End of month
+          </Button>
+          <DateInput
+            id="date"
+            value={selectedDate?.toDate()}
+            onChange={handleDateSelect}
+          />
+          {/* <p>
+            {selectedDate
+              ? selectedDate.format("DD MMM YYYY")
+              : "Select a date"}
+          </p> */}
+          {/* <Calendar
+                mode="single"
+                selected={dateSelected ? dateSelected.toDate() : undefined}
+                onSelect={(date) => {
+                  onDateSelect(dayjs(date));
+                  setOpenDatePicker(false);
+                }}
+              /> */}
+        </PopoverContent>
+      </Popover>
+      {/* <div className="ml-auto">
         <SelectInput
           id="dateRange"
           value={selectedOption.value}
           selectOptions={options}
           onChange={handleSelect}
         />
-      </div>
+      </div> */}
+      {/* <Popover>
+        <PopoverTrigger>{selectedOption.value}</PopoverTrigger>
+        <PopoverContent>
+          <Calendar
+            mode="single"
+            selected={dateSelected ? dateSelected.toDate() : undefined}
+            onSelect={(date) => {
+              onDateSelect(dayjs(date));
+              setOpenDatePicker(false);
+            }}
+          />
+        </PopoverContent>
+      </Popover> */}
 
-      {dateSelected && mode === "specificDate" && (
+      {/* {selectedDate && !isEndOfMonth && (
         <Button
           className="bg-input h-full"
           icon={<FilePenLine />}
@@ -77,9 +128,9 @@ const Select = ({
           size="sm"
           onClick={() => setOpenDatePicker(true)}
         />
-      )}
+      )} */}
 
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {openDatePicker && (
           <CustomDatePicker
             value={dateSelected ? dateSelected.toISOString() : null}
@@ -90,8 +141,21 @@ const Select = ({
             top={50}
             right={0}
           />
+          <Popover>
+            <PopoverTrigger className="hidden" />
+            <PopoverContent className="w-auto p-0">
+              <Calendar
+                mode="single"
+                selected={dateSelected ? dateSelected.toDate() : undefined}
+                onSelect={(date) => {
+                  onDateSelect(dayjs(date));
+                  setOpenDatePicker(false);
+                }}
+              />
+            </PopoverContent>
+          </Popover>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </div>
   );
 };
