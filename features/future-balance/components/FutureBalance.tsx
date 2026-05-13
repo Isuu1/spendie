@@ -46,7 +46,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
 
   return (
     <motion.div
-      className="flex flex-col items-center justify-center gap-5 p-5 rounded-lg shadow-default"
+      className="flex flex-col items-center justify-center gap-5 p-5 min-w-90 rounded-lg shadow-default"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

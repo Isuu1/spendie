@@ -1,28 +1,27 @@
 import React, { useMemo, useState } from "react";
-//Styles
-import styles from "./SelectMode.module.scss";
+import dayjs, { Dayjs } from "dayjs";
 //Components
 import CustomDatePicker from "@/shared/components/CustomDatepicker/CustomDatepicker";
 import SelectInput from "@/shared/components/ui/SelectInput";
 import Button from "@/shared/components/ui/Button";
 //Icons
-import { MdEditDocument } from "react-icons/md";
+import { FilePenLine } from "lucide-react";
+//Animations
 import { AnimatePresence } from "motion/react";
-import dayjs, { Dayjs } from "dayjs";
 
-interface SelectProps {
+type SelectProps = {
   mode: "endOfMonth" | "specificDate";
   selectMode: (range: "endOfMonth" | "specificDate") => void;
   dateSelected: Dayjs | null;
   onDateSelect: (date: Dayjs | null) => void;
-}
+};
 
-const Select: React.FC<SelectProps> = ({
+const Select = ({
   mode,
   selectMode,
   dateSelected,
   onDateSelect,
-}) => {
+}: SelectProps) => {
   const [openDatePicker, setOpenDatePicker] = useState(false);
 
   const options = useMemo(
@@ -41,8 +40,8 @@ const Select: React.FC<SelectProps> = ({
     [dateSelected],
   );
 
-  const handleSelect = (option: { label: string; value: string }) => {
-    if (option.value === "endOfMonth") {
+  const handleSelect = (option: string) => {
+    if (option === "endOfMonth") {
       selectMode("endOfMonth");
     } else {
       selectMode("specificDate");
@@ -59,12 +58,12 @@ const Select: React.FC<SelectProps> = ({
   }, [mode, options]);
 
   return (
-    <div className={styles.selectContainer}>
+    <div className="flex items-center justify-between w-full gap-5">
       <p>Payments by date</p>
-      <div className={styles.select}>
+      <div className="ml-auto">
         <SelectInput
           id="dateRange"
-          value={selectedOption}
+          value={selectedOption.value}
           selectOptions={options}
           onChange={handleSelect}
         />
@@ -72,13 +71,14 @@ const Select: React.FC<SelectProps> = ({
 
       {dateSelected && mode === "specificDate" && (
         <Button
-          className={styles.editButton}
-          icon={<MdEditDocument />}
+          className="bg-input h-full"
+          icon={<FilePenLine />}
           variant="secondary"
-          size="medium"
+          size="sm"
           onClick={() => setOpenDatePicker(true)}
         />
       )}
+
       <AnimatePresence>
         {openDatePicker && (
           <CustomDatePicker
