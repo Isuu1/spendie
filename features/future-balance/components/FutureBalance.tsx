@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import { Dayjs } from "dayjs";
 import Link from "next/link";
-//Styles
-import styles from "./FutureBalance.module.scss";
 //Components
 import SelectMode from "@/features/future-balance/components/SelectMode";
 import PaymentsSummary from "@/features/future-balance/components/PaymentsSummary";
@@ -48,7 +46,7 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
 
   return (
     <motion.div
-      className={styles.futureBalance}
+      className="flex flex-col items-center justify-center gap-5 p-5 rounded-lg shadow-default"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -84,14 +82,14 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
           </Modal>
         )}
       </AnimatePresence>
-      <div className={styles.balance}>
+      <div className="flex justify-between items-center w-full">
         <h4 className="text-secondary">
           Balance{" "}
           {mode === "endOfMonth"
             ? "at end of month"
             : `on ${selectedDate?.format("DD MMM YYYY")}`}
         </h4>
-        <h2 className={styles.value}>£{futureBalance.toFixed(2)}</h2>
+        <h2>£{futureBalance.toFixed(2)}</h2>
       </div>
     </motion.div>
   );

@@ -24,6 +24,7 @@
   --color-input: var(--input);
   --color-input-hover: var(--input-hover);
   --color-border: var(--border);
+  --shadow-default: var(--shadow-default);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
@@ -75,6 +76,8 @@
   --destructive: #b10000;
 
   --border: oklch(0.922 0 0);
+
+  --shadow-default: 0 0 10px 10px rgba(0, 0, 0, 0.1);
 
   --input: #3e424e;
   --input-hover: #535868;

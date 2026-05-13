@@ -25,6 +25,9 @@ const TotalBalancePanel: React.FC = () => {
 
   const { data = [], isLoading, isFetching } = useAccounts();
 
+  console.log("is loading accounts", isLoading);
+  console.log("is fetching accounts", isFetching);
+
   const { data: transactions = [] } = useTransactions();
 
   if (isLoading || isFetching) {
