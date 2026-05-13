@@ -40,7 +40,7 @@ const Dashboard = () => {
       <DashboardOptions />
       <motion.div
         className={cn(
-          "grow columns-sm",
+          "grow flex flex-row gap-6 flex-wrap",
           visiblePanels.length === 0 &&
             "flex columns-1 items-center justify-center",
         )}

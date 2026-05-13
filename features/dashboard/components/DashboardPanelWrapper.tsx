@@ -11,7 +11,7 @@ type DashboardPanelWrapperProps = {
 const DashboardPanelWrapper = ({ children }: DashboardPanelWrapperProps) => {
   return (
     <motion.div
-      className="flex flex-col p-4 rounded-2xl bg-[linear-gradient(333deg,rgba(61,64,71,1)_0%,rgba(46,49,58,1)_100%)] break-inside-avoid max-w-lg mb-5"
+      className="flex flex-col w-fit p-4 rounded-2xl bg-[linear-gradient(120deg,rgba(61,64,71,1)_0%,rgba(46,49,58,1)_100%)] break-inside-avoid mb-5"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}

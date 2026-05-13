@@ -85,7 +85,12 @@ const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
         )}
       </AnimatePresence>
       <div className={styles.balance}>
-        <h3>Balance after payments</h3>
+        <h4 className="text-secondary">
+          Balance{" "}
+          {mode === "endOfMonth"
+            ? "at end of month"
+            : `on ${selectedDate?.format("DD MMM YYYY")}`}
+        </h4>
         <h2 className={styles.value}>£{futureBalance.toFixed(2)}</h2>
       </div>
     </motion.div>
