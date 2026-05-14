@@ -20,6 +20,7 @@ interface DateInputProps {
   onChange?: (date: Date | null) => void;
   disabled?: Matcher;
   error?: FieldError;
+  className?: string;
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -29,6 +30,7 @@ const DateInput: React.FC<DateInputProps> = ({
   onChange,
   disabled,
   error,
+  className,
 }) => {
   const formatValue = (dateStr: Date) => {
     return dayjs(dateStr).format("D MMMM YYYY");
@@ -50,6 +52,7 @@ const DateInput: React.FC<DateInputProps> = ({
               "bg-bg-surface-dark border border-transparent!",
               "hover:bg-bg-surface-dark",
               errorClasses,
+              className,
             )}
           >
             <CalendarIcon />
