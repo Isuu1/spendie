@@ -69,7 +69,7 @@ const TotalBalancePanel: React.FC = () => {
       <h2>£{totalBalance ?? 0}</h2>
 
       <div className="flex flex-row gap-6 justify-between">
-        <p>This month</p>
+        <p className="text-secondary">This month</p>
         <div className="flex flex-row gap-3">
           <p className="text-green-500">+£{income}</p>
           <p className="text-red-500">-£{expenses}</p>
