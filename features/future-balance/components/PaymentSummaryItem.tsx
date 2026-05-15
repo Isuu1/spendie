@@ -19,33 +19,32 @@ const PaymentSummaryItem = ({
   return (
     <div
       className={cn(
-        "flex items-center gap-5 cursor-pointer w-fit rounded-lg p-3",
-        type === "income" && "bg-[rgba(65,179,0,0.1)]",
-        type === "expense" && "bg-[rgba(255,0,0,0.1)]",
+        "flex items-center gap-2 cursor-pointer w-full rounded-lg p-2 bg-card",
+        // type === "income" && "bg-green-600/20",
+        // type === "expense" && "bg-red-600/20",
       )}
       onClick={() => handleToggleDetails(type)}
     >
       <div
         className={cn(
-          "w-fit rounded-sm p-2",
-          type === "income" && "bg-[#42b30059]",
-          type === "expense" && "bg-[#ff000059]",
+          "w-fit rounded-sm p-1.5",
+          type === "income" && "bg-green-600/20",
+          type === "expense" && "bg-red-600/20",
         )}
       >
         <span
           className={cn(
-            type === "income" && "text-[#41b300]",
+            type === "income" && "text-green-600",
             type === "expense" && "text-red-600",
           )}
         >
           {icon}
         </span>
       </div>
-      <div className="flex flex-col items-start gap-1">
-        <span>
+      <div className="flex items-start justify-between grow gap-1">
+        <span className="text-sm text-secondary">
           {payments.length}
-          {` `}
-          Income
+          {payments.length === 1 ? " payment" : " payments"}
         </span>
         <span
           className={cn(
@@ -54,7 +53,7 @@ const PaymentSummaryItem = ({
             type === "expense" && "text-red-600",
           )}
         >
-          +£{amount.toFixed(2)}
+          {type === "income" ? "+" : "-"}£{amount.toFixed(2)}
         </span>
       </div>
     </div>

@@ -32,6 +32,9 @@ const TotalBalancePanel: React.FC = () => {
   }
 
   const totalBalance = data?.reduce((sum: number, currentAccount: Account) => {
+    if (currentAccount.is_disconnected) {
+      return sum;
+    }
     const currentBalance = currentAccount.current_balance ?? 0;
     return sum + currentBalance;
   }, 0);
@@ -68,11 +71,15 @@ const TotalBalancePanel: React.FC = () => {
 
       <h2>£{totalBalance ?? 0}</h2>
 
-      <div className="flex flex-row gap-6 justify-between">
+      <div className="flex flex-row gap-6 justify-between items-center">
         <p className="text-secondary">This month</p>
         <div className="flex flex-row gap-3">
-          <p className="text-green-500">+£{income}</p>
-          <p className="text-red-500">-£{expenses}</p>
+          <p className="text-green-500 px-2 py-1 bg-green-600/20 rounded-md">
+            +£{income}
+          </p>
+          <p className="text-red-500 px-2 py-1 bg-red-600/20 rounded-md">
+            -£{expenses}
+          </p>
         </div>
       </div>
 

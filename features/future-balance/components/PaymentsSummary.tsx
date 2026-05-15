@@ -22,9 +22,7 @@ const PaymentsSummary = () => {
 
   if (incomePayments.length === 0 && expensePayments.length === 0) {
     return (
-      <div className="relative flex justify-between w-full gap-5">
-        <p className="w-fit text-secondary">No upcoming changes</p>
-      </div>
+      <p className="w-full text-center text-secondary">No upcoming changes</p>
     );
   }
 
@@ -51,7 +49,7 @@ const PaymentsSummary = () => {
           </Modal>
         )}
       </AnimatePresence>
-      <div className="relative flex justify-between w-full gap-5">
+      <div className="relative flex flex-col w-full gap-3">
         {incomePayments.length > 0 && (
           <PaymentSummaryItem
             type="income"

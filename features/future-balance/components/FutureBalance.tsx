@@ -1,7 +1,7 @@
 "use client";
 
 //Components
-import SelectMode from "@/features/future-balance/components/SelectMode";
+import FutureBalanceDateSelector from "@/features/future-balance/components/FutureBalanceDateSelector";
 import PaymentsSummary from "@/features/future-balance/components/PaymentsSummary";
 //Context
 import { useFutureBalanceContext } from "../context/FutureBalanceContext";
@@ -10,8 +10,11 @@ const FutureBalance = () => {
   const { futureBalance, selectedDate } = useFutureBalanceContext();
 
   return (
-    <div className="flex flex-col items-center justify-center gap-5 p-5 min-w-90 rounded-lg shadow-default">
-      <SelectMode />
+    <div
+      // className="flex flex-col items-center justify-center gap-5 p-5 min-w-90 rounded-lg shadow-default"
+      className="flex flex-col items-center justify-center gap-6 min-w-80 mt-2"
+    >
+      <FutureBalanceDateSelector />
 
       <PaymentsSummary />
 

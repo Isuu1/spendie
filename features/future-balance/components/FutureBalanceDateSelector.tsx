@@ -11,7 +11,7 @@ import DateInput from "@/shared/components/ui/DateInput";
 //Context
 import { useFutureBalanceContext } from "../context/FutureBalanceContext";
 
-const Select = () => {
+const FutureBalanceDateSelector = () => {
   const [open, setOpen] = useState(false);
 
   const { selectedDate, setSelectedDate } = useFutureBalanceContext();
@@ -34,7 +34,11 @@ const Select = () => {
       <p>Payments by date</p>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button size="sm" variant="secondary" className="bg-input">
+          <Button
+            size="default"
+            variant="secondary"
+            className="bg-input font-normal"
+          >
             {label}
           </Button>
         </PopoverTrigger>
@@ -61,4 +65,4 @@ const Select = () => {
   );
 };
 
-export default Select;
+export default FutureBalanceDateSelector;
