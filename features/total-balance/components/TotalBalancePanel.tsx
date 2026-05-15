@@ -21,7 +21,7 @@ import { getTransactionsInPeriod } from "@/features/transactions/lib/utils/getTr
 import { FutureBalanceProvider } from "@/features/future-balance/context/FutureBalanceContext";
 
 const TotalBalancePanel: React.FC = () => {
-  const [selectedMode, setSelectedMode] = useState<"detailed" | "simple">(
+  const [selectedMode, setSelectedMode] = useState<"detailed" | "overview">(
     "detailed",
   );
 
@@ -57,7 +57,7 @@ const TotalBalancePanel: React.FC = () => {
   );
 
   const handleModeChange = (option: string) => {
-    setSelectedMode(option === "Detailed" ? "detailed" : "simple");
+    setSelectedMode(option === "Detailed" ? "detailed" : "overview");
     setOpen(false);
   };
 
@@ -72,7 +72,7 @@ const TotalBalancePanel: React.FC = () => {
               variant="secondary"
               className="bg-input font-normal"
             >
-              {selectedMode === "detailed" ? "Detailed" : "Simple"}
+              {selectedMode === "detailed" ? "Detailed" : "Overview"}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="bg-input w-auto p-1 gap-1">
@@ -86,9 +86,9 @@ const TotalBalancePanel: React.FC = () => {
             <Button
               className="bg-transparent hover:bg-input-hover text-primary font-normal"
               size="default"
-              onClick={() => handleModeChange("Simple")}
+              onClick={() => handleModeChange("Overview")}
             >
-              Simple
+              Overview
             </Button>
           </PopoverContent>
         </Popover>

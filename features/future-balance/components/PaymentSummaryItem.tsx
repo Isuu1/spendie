@@ -20,8 +20,6 @@ const PaymentSummaryItem = ({
     <div
       className={cn(
         "flex items-center gap-2 cursor-pointer w-full rounded-lg p-2 bg-card",
-        // type === "income" && "bg-green-600/20",
-        // type === "expense" && "bg-red-600/20",
       )}
       onClick={() => handleToggleDetails(type)}
     >
