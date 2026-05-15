@@ -40,7 +40,7 @@ const Dashboard = () => {
       <DashboardOptions />
       <motion.div
         className={cn(
-          "grow flex flex-row gap-6 flex-wrap",
+          "grid grid-cols-12 gap-6 items-start",
           visiblePanels.length === 0 &&
             "flex columns-1 items-center justify-center",
         )}
@@ -51,7 +51,10 @@ const Dashboard = () => {
             .map((panel) => {
               const PanelComponent = panel.component;
               return (
-                <DashboardPanelWrapper key={panel.name}>
+                <DashboardPanelWrapper
+                  key={panel.name}
+                  className={panel.className}
+                >
                   <PanelComponent />
                 </DashboardPanelWrapper>
               );
