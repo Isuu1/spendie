@@ -22,7 +22,9 @@
   --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
+  --color-input-hover: var(--input-hover);
   --color-border: var(--border);
+  --shadow-default: var(--shadow-default);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
@@ -56,8 +58,8 @@
   --card: #2e313a;
   --card-foreground: #4d4d4d;
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
+  --popover: #2e313a;
+  --popover-foreground: #2e313a;
 
   --primary: #ededed;
   --primary-foreground: oklch(0.985 0 0);
@@ -75,7 +77,10 @@
 
   --border: oklch(0.922 0 0);
 
-  --input: #222222;
+  --shadow-default: 0 0 10px 10px rgba(0, 0, 0, 0.1);
+
+  --input: #3e424e;
+  --input-hover: #535868;
   --ring: oklch(0.556 0 0);
 
   --chart-1: oklch(0.87 0 0);

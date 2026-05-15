@@ -1,94 +1,42 @@
 "use client";
 
-import React, { useState } from "react";
-import { Dayjs } from "dayjs";
-import Link from "next/link";
-//Styles
-import styles from "./FutureBalance.module.scss";
 //Components
-import SelectMode from "@/features/future-balance/components/SelectMode";
+import FutureBalanceDateSelector from "@/features/future-balance/components/FutureBalanceDateSelector";
 import PaymentsSummary from "@/features/future-balance/components/PaymentsSummary";
-import Modal from "@/shared/components/Modal";
-import DashboardRecurringPaymentsGrid from "@/features/recurring-payments/components/DashboardRecurringPaymentsGrid";
-//Animations
-import { AnimatePresence, motion } from "motion/react";
-//Api
-import { useFutureBalance } from "../hooks/useFutureBalance";
-import { useRecurringPayments } from "@/features/recurring-payments/hooks/useRecurringPayments";
+//Context
+import { useFutureBalanceContext } from "../context/FutureBalanceContext";
 
-interface FutureBalanceProps {
-  totalBalance: number;
-}
+type FutureBalanceProps = {
+  selectedMode: "detailed" | "overview";
+};
 
-type PaymentType = "income" | "expense";
-type ModeType = "endOfMonth" | "specificDate";
-
-const FutureBalance: React.FC<FutureBalanceProps> = ({ totalBalance }) => {
-  const [mode, setMode] = useState<ModeType>("endOfMonth");
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-  const [detailsType, setDetailsType] = useState<PaymentType | null>(null);
-
-  const { data = [] } = useRecurringPayments();
-
-  const {
-    incomePayments,
-    expensePayments,
-    incomeTotal,
-    expenseTotal,
-    futureBalance,
-  } = useFutureBalance(totalBalance, mode, selectedDate, data);
-
-  const handleToggleDetails = (type: "income" | "expense" | null) => {
-    if (detailsType === type) {
-      setDetailsType(null);
-    } else {
-      setDetailsType(type);
-    }
-  };
+const FutureBalance = ({ selectedMode }: FutureBalanceProps) => {
+  const { futureBalance, selectedDate } = useFutureBalanceContext();
 
   return (
-    <motion.div
-      className={styles.futureBalance}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.15 }}
-    >
-      <SelectMode
-        mode={mode}
-        selectMode={setMode}
-        dateSelected={selectedDate}
-        onDateSelect={setSelectedDate}
-      />
+    <div className="flex flex-col items-center justify-center gap-6 min-w-80 mt-2">
+      {selectedMode === "detailed" && (
+        <>
+          <FutureBalanceDateSelector />
 
-      <PaymentsSummary
-        incomePayments={incomePayments}
-        expensePayments={expensePayments}
-        incomeTotal={incomeTotal}
-        expenseTotal={expenseTotal}
-        activeType={detailsType}
-        openDetails={handleToggleDetails}
-      />
+          <PaymentsSummary />
+        </>
+      )}
 
-      <AnimatePresence>
-        {detailsType && (
-          <Modal onClose={() => handleToggleDetails(null)}>
-            <DashboardRecurringPaymentsGrid
-              type={detailsType}
-              toggleDetails={handleToggleDetails}
-              payments={
-                detailsType === "income" ? incomePayments : expensePayments
-              }
-            />
-            <Link href="/recurring-payments">All payments</Link>
-          </Modal>
+      <div className="flex justify-between items-center w-full">
+        {selectedMode === "detailed" ? (
+          <h4 className="text-secondary">
+            Balance{" "}
+            {selectedDate
+              ? `by ${selectedDate.format("DD MMM YYYY")}`
+              : "at end of month"}
+          </h4>
+        ) : (
+          <h4 className="text-secondary">After bills this month</h4>
         )}
-      </AnimatePresence>
-      <div className={styles.balance}>
-        <h3>Balance after payments</h3>
-        <h2 className={styles.value}>£{futureBalance.toFixed(2)}</h2>
+        <h2>£{futureBalance.toFixed(2)}</h2>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

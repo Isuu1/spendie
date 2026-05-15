@@ -20,6 +20,7 @@ interface DateInputProps {
   onChange?: (date: Date | null) => void;
   disabled?: Matcher;
   error?: FieldError;
+  className?: string;
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -29,6 +30,7 @@ const DateInput: React.FC<DateInputProps> = ({
   onChange,
   disabled,
   error,
+  className,
 }) => {
   const formatValue = (dateStr: Date) => {
     return dayjs(dateStr).format("D MMMM YYYY");
@@ -40,7 +42,7 @@ const DateInput: React.FC<DateInputProps> = ({
 
   return (
     <Field>
-      <FieldLabel htmlFor={id}>{label}</FieldLabel>
+      {label && <FieldLabel htmlFor={id}>{label}</FieldLabel>}
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -50,16 +52,14 @@ const DateInput: React.FC<DateInputProps> = ({
               "bg-bg-surface-dark border border-transparent!",
               "hover:bg-bg-surface-dark",
               errorClasses,
+              className,
             )}
           >
             <CalendarIcon />
             {value ? formatValue(value) : <span>Pick a date</span>}
           </Button>
         </PopoverTrigger>
-        <PopoverContent
-          className="bg-bg-surface-dark! rounded-lg w-auto p-4"
-          align="end"
-        >
+        <PopoverContent className="bg-card rounded-lg w-auto p-4" align="end">
           <Calendar
             mode="single"
             captionLayout="dropdown"

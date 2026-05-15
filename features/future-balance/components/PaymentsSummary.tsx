@@ -1,93 +1,75 @@
-import React from "react";
-import clsx from "clsx";
-//Types
-import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
-//Styles
-import styles from "./PaymentsSummary.module.scss";
 //Icons
 import { TbArrowBigDownFilled } from "react-icons/tb";
 import { TbArrowBigUpFilled } from "react-icons/tb";
+//Context
+import { useFutureBalanceContext } from "../context/FutureBalanceContext";
+//Animations
+import { AnimatePresence } from "motion/react";
+//Components
+import Modal from "@/shared/components/Modal";
+import DashboardRecurringPaymentsGrid from "@/features/recurring-payments/components/DashboardRecurringPaymentsGrid";
+import PaymentSummaryItem from "./PaymentSummaryItem";
 
-interface PaymentsSummaryProps {
-  incomePayments: RecurringPayment[];
-  expensePayments: RecurringPayment[];
-  incomeTotal: number;
-  expenseTotal: number;
-  openDetails: (type: "income" | "expense") => void;
-  activeType: "income" | "expense" | null;
-}
+const PaymentsSummary = () => {
+  const {
+    incomePayments,
+    expensePayments,
+    incomeTotal,
+    expenseTotal,
+    detailsType,
+    setDetailsType,
+  } = useFutureBalanceContext();
 
-const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({
-  incomePayments,
-  expensePayments,
-  incomeTotal,
-  expenseTotal,
-  openDetails,
-  activeType,
-}) => {
   if (incomePayments.length === 0 && expensePayments.length === 0) {
     return (
-      <div className={styles.upcomingPaymentsContainer}>
-        <p className={styles.none}>No upcoming changes</p>
-      </div>
+      <p className="w-full text-center text-secondary">No upcoming changes</p>
     );
   }
 
+  const handleToggleDetails = (type: "income" | "expense" | null) => {
+    if (detailsType === type) {
+      setDetailsType(null);
+    } else {
+      setDetailsType(type);
+    }
+  };
+
   return (
-    <div className={styles.upcomingPaymentsContainer}>
-      {incomePayments.length > 0 && (
-        <div
-          className={clsx([
-            styles.item,
-            styles.income,
-            activeType === "income" ? styles.active : "",
-          ])}
-          onClick={() => openDetails("income")}
-        >
-          <div className={`${styles.iconWrapper} ${styles.incomeIconWrapper}`}>
-            <i className={styles.icon}>
-              <TbArrowBigUpFilled />
-            </i>
-          </div>
-          <div className={styles.details}>
-            <span>
-              {incomePayments.length}
-              {` `}
-              Income
-            </span>
-            <span className={`${styles.amount} ${styles.income}`}>
-              +£{incomeTotal.toFixed(2)}
-            </span>
-          </div>
-        </div>
-      )}
-      {expensePayments.length > 0 && (
-        <div
-          className={clsx([
-            styles.item,
-            styles.expense,
-            activeType === "expense" ? styles.active : "",
-          ])}
-          onClick={() => openDetails("expense")}
-        >
-          <div className={`${styles.iconWrapper} ${styles.expenseIconWrapper}`}>
-            <i className={styles.icon}>
-              <TbArrowBigDownFilled />
-            </i>
-          </div>
-          <div className={styles.details}>
-            <span>
-              {expensePayments.length}
-              {` `}
-              Expense
-            </span>
-            <span className={`${styles.amount} ${styles.expense}`}>
-              -£{expenseTotal.toFixed(2)}
-            </span>
-          </div>
-        </div>
-      )}
-    </div>
+    <>
+      <AnimatePresence>
+        {detailsType && (
+          <Modal onClose={() => handleToggleDetails(null)}>
+            <DashboardRecurringPaymentsGrid
+              type={detailsType}
+              toggleDetails={handleToggleDetails}
+              payments={
+                detailsType === "income" ? incomePayments : expensePayments
+              }
+            />
+          </Modal>
+        )}
+      </AnimatePresence>
+      <div className="relative flex flex-col w-full gap-3">
+        {incomePayments.length > 0 && (
+          <PaymentSummaryItem
+            type="income"
+            handleToggleDetails={handleToggleDetails}
+            payments={incomePayments}
+            amount={incomeTotal}
+            icon={<TbArrowBigUpFilled />}
+          />
+        )}
+        {expensePayments.length > 0 && (
+          <PaymentSummaryItem
+            type="expense"
+            handleToggleDetails={handleToggleDetails}
+            payments={expensePayments}
+            amount={expenseTotal}
+            icon={<TbArrowBigDownFilled />}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

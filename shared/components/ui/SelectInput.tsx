@@ -24,6 +24,7 @@ type SelectInputProps = {
   value: string;
   onChange: (value: string) => void;
   error?: FieldError;
+  className?: string;
 };
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -33,33 +34,35 @@ const SelectInput: React.FC<SelectInputProps> = ({
   value,
   onChange,
   error,
+  className,
 }) => {
   const errorClasses = error
     ? "ring-2 ring-red-600 border-red-600"
     : "border-transparent";
 
   return (
-    <Field>
-      <FieldLabel htmlFor={id}>{label}</FieldLabel>
+    <Field className={cn(className)}>
+      {label && <FieldLabel htmlFor={id}>{label}</FieldLabel>}
       <Select onValueChange={onChange} defaultValue={value}>
         <SelectTrigger
           className={cn(
-            "bg-bg-surface-dark border-0 w-full cursor-pointer",
+            "bg-input border-0 w-full cursor-pointer",
             errorClasses,
           )}
         >
           <SelectValue placeholder={label} />
         </SelectTrigger>
-        <SelectContent className="bg-bg-surface-dark">
-          <SelectGroup className="bg-bg-surface-dark">
-            <SelectLabel>{label}</SelectLabel>
+        <SelectContent className="bg-input text-primary">
+          <SelectGroup className="bg-input">
+            {label && <SelectLabel>{label}</SelectLabel>}
             {selectOptions?.map((option) => (
               <SelectItem
                 key={option.value}
                 value={option.value}
                 className={cn(
                   "cursor-pointer transition-all duration-200 ease-in-out whitespace-nowrap",
-                  "hover:bg-bg-surface-dark-hover!",
+                  "hover:bg-input-hover!",
+                  "focus:text-primary!",
                 )}
               >
                 {option.label}

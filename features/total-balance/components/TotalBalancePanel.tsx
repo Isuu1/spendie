@@ -1,54 +1,116 @@
-import React from "react";
-//Styles
-import styles from "./TotalBalancePanel.module.scss";
+import React, { useState } from "react";
+import dayjs from "dayjs";
 //Components
 import FutureBalance from "../../future-balance/components/FutureBalance";
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
-import SelectInput from "@/shared/components/ui/SelectInput";
-//Api
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import Button from "@/shared/components/ui/Button";
+//Hooks
 import { useAccounts } from "@/features/accounts/hooks/useAccounts";
-//Animations
-import { AnimatePresence } from "motion/react";
+import { useTransactions } from "@/features/transactions/hooks/useTransactions";
+//Types
 import { Account } from "@/features/accounts/types/account";
-
-const selectOptions = [
-  { label: "Detailed", value: "Detailed" },
-  { label: "Simple", value: "Simple" },
-];
+//Utils
+import { calculateFinancialSummary } from "@/features/transactions/lib/utils/calculateFinancialSummary";
+import { getTransactionsInPeriod } from "@/features/transactions/lib/utils/getTransactionsInPeriod";
+//Context
+import { FutureBalanceProvider } from "@/features/future-balance/context/FutureBalanceContext";
 
 const TotalBalancePanel: React.FC = () => {
+  const [selectedMode, setSelectedMode] = useState<"detailed" | "overview">(
+    "detailed",
+  );
+
+  const [open, setOpen] = useState(false);
+
   const { data = [], isLoading } = useAccounts();
 
-  const [futureBalanceVisible, setFutureBalanceVisible] = React.useState(true);
+  const { data: transactions = [] } = useTransactions();
 
   if (isLoading) {
     return <DashboardPanelLoader height={218} />;
   }
 
   const totalBalance = data?.reduce((sum: number, currentAccount: Account) => {
+    if (currentAccount.is_disconnected) {
+      return sum;
+    }
     const currentBalance = currentAccount.current_balance ?? 0;
     return sum + currentBalance;
   }, 0);
 
+  const startOfMonth = dayjs().startOf("month").toDate();
+  const endOfMonth = dayjs().endOf("month").toDate();
+
+  const currentMonthTransactions = getTransactionsInPeriod(
+    transactions,
+    startOfMonth,
+    endOfMonth,
+  );
+
+  const { income, expenses } = calculateFinancialSummary(
+    currentMonthTransactions,
+  );
+
+  const handleModeChange = (option: string) => {
+    setSelectedMode(option === "Detailed" ? "detailed" : "overview");
+    setOpen(false);
+  };
+
   return (
-    <div className={styles.totalBalanceTile}>
-      <div className={styles.header}>
-        <h3>Total Balance</h3>
-        <SelectInput
-          id="mode"
-          selectOptions={selectOptions}
-          value={futureBalanceVisible ? selectOptions[0] : selectOptions[1]}
-          onChange={(option) =>
-            setFutureBalanceVisible(option.value === "Detailed")
-          }
-        />
+    <div className="flex flex-col gap-3">
+      <div className="flex flex-row justify-between items-center gap-5">
+        <h4 className="text-secondary">Total Balance</h4>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              size="default"
+              variant="secondary"
+              className="bg-input font-normal"
+            >
+              {selectedMode === "detailed" ? "Detailed" : "Overview"}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="bg-input w-auto p-1 gap-1">
+            <Button
+              className="bg-transparent hover:bg-input-hover text-primary font-normal"
+              size="default"
+              onClick={() => handleModeChange("Detailed")}
+            >
+              Detailed
+            </Button>
+            <Button
+              className="bg-transparent hover:bg-input-hover text-primary font-normal"
+              size="default"
+              onClick={() => handleModeChange("Overview")}
+            >
+              Overview
+            </Button>
+          </PopoverContent>
+        </Popover>
       </div>
 
-      <h1 className={styles.balance}>£{totalBalance ?? 0}</h1>
+      <h2>£{totalBalance ?? 0}</h2>
 
-      <AnimatePresence initial={false}>
-        {futureBalanceVisible && <FutureBalance totalBalance={totalBalance} />}
-      </AnimatePresence>
+      <div className="flex flex-row gap-6 justify-between items-center">
+        <p className="text-secondary">This month</p>
+        <div className="flex flex-row gap-3">
+          <p className="text-green-500 px-2 py-1 bg-green-600/20 rounded-md">
+            +£{income}
+          </p>
+          <p className="text-red-500 px-2 py-1 bg-red-600/20 rounded-md">
+            -£{expenses}
+          </p>
+        </div>
+      </div>
+
+      <FutureBalanceProvider totalBalance={totalBalance ?? 0}>
+        <FutureBalance selectedMode={selectedMode} />
+      </FutureBalanceProvider>
     </div>
   );
 };
