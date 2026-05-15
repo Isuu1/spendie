@@ -27,11 +27,11 @@ const TotalBalancePanel: React.FC = () => {
 
   const [open, setOpen] = useState(false);
 
-  const { data = [], isLoading, isFetching } = useAccounts();
+  const { data = [], isLoading } = useAccounts();
 
   const { data: transactions = [] } = useTransactions();
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return <DashboardPanelLoader height={218} />;
   }
 
