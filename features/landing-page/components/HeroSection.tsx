@@ -16,12 +16,8 @@ const HeroSection = () => {
           into one clear dashboard — so you can plan smarter and stress less.
         </p>
         <div className={styles.cta}>
-          <Button variant="secondary" size="large">
-            Get Started
-          </Button>
-          <Button variant="primary" size="large">
-            Try demo
-          </Button>
+          <Button variant="secondary">Get Started</Button>
+          <Button variant="default">Try demo</Button>
         </div>
       </div>
       <div className={styles.image}>

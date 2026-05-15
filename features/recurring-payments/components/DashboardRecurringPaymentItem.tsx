@@ -24,7 +24,7 @@ const DashboardRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
     mutate(payment);
   };
 
-  const formatedDate = (dateStr: string) => {
+  const formatedDate = (dateStr: Date) => {
     return dayjs(dateStr).format("D MMMM YYYY");
   };
 
@@ -55,7 +55,7 @@ const DashboardRecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
         <Button
           className={styles.paidButton}
           variant="secondary"
-          size="small"
+          size="sm"
           onClick={() => handleMarkAsPaid(payment)}
           disabled={isPending && variables?.id === payment.id}
         >

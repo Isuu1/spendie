@@ -58,8 +58,8 @@ const RecurringPaymentsGrid: React.FC = () => {
           <SelectInput
             id="sort"
             selectOptions={selectOptions}
-            value={{ label: sortOption.label, value: sortOption.value }}
-            onChange={(option) => handleSortingChange(option.value)}
+            value={sortOption.value}
+            onChange={(option) => handleSortingChange(option)}
           />
         </div>
       </div>
