@@ -9,7 +9,7 @@ const DashboardSettings = () => {
   return (
     <div className={styles.dashboardSettings}>
       <h3>Dashboard panels</h3>
-      <DashboardPanelsMenu onClose={() => {}} />
+      <DashboardPanelsMenu />
     </div>
   );
 };

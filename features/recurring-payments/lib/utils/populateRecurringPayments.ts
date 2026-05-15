@@ -17,7 +17,7 @@ export function populateRecurringPayments(
     ) {
       populated.push({
         ...payment,
-        next_payment_date: occurrence.format("YYYY-MM-DD"),
+        next_payment_date: occurrence.toDate(),
       });
 
       if (payment.repeat.toLowerCase() === "monthly") {

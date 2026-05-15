@@ -19,7 +19,7 @@ interface RecurringPaymentItemProps {
 const RecurringPaymentItem: React.FC<RecurringPaymentItemProps> = ({
   payment,
 }) => {
-  const formatedDate = (dateStr: string) => {
+  const formatedDate = (dateStr: Date) => {
     return dayjs(dateStr).format("D MMMM YYYY");
   };
 
