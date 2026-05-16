@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 //Config
-import { PanelName, panelsLibrary } from "../config/panelsLibrary";
+import { PanelId, panelsLibrary } from "../config/panelsLibrary";
 //Hooks
 import { useUserSettings } from "@/features/user/hooks/useUserSettings";
 import { useTogglePanelVisibility } from "@/features/user/hooks/useTogglePanelVisibility";
@@ -14,16 +14,20 @@ const DashboardPanelsMenu = () => {
 
   const { mutate: togglePanel, isPending } = useTogglePanelVisibility();
 
-  const visiblePanels = settings?.visible_panels || [];
+  const visiblePanels = settings?.dashboard_layout
+    ? settings.dashboard_layout
+        .filter((panel) => panel.visible)
+        .map((panel) => panel.id)
+    : [];
 
   const panelMenuRef = useRef<HTMLUListElement>(null);
 
-  const isPanelActive = (panelName: PanelName) => {
-    return visiblePanels.includes(panelName);
+  const isPanelActive = (panelId: PanelId) => {
+    return visiblePanels.includes(panelId);
   };
 
-  const handleChange = (panelName: PanelName, isActive: boolean) => {
-    togglePanel({ panelName, isActive });
+  const handleChange = (panelId: PanelId) => {
+    togglePanel({ panelId, visible: isPanelActive(panelId) });
   };
 
   return (
@@ -34,10 +38,8 @@ const DashboardPanelsMenu = () => {
       {panelsLibrary.map((panel) => (
         <li className="flex items-center gap-2 text-white" key={panel.name}>
           <Switcher
-            value={!isPanelActive(panel.name)}
-            onChange={() =>
-              handleChange(panel.name, !!isPanelActive(panel.name))
-            }
+            value={!isPanelActive(panel.id)}
+            onChange={() => handleChange(panel.id)}
             isPending={isPending}
           />
           <span>{panel.name}</span>

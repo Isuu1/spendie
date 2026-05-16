@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { cn } from "@/shared/lib/cn";
 //Hooks
 import { useUserSettings } from "@/features/user/hooks/useUserSettings";
@@ -11,9 +10,18 @@ import ErrorMessage from "@/shared/components/ErrorMessage";
 import DashboardOptions from "./DashboardOptions";
 import Button from "@/shared/components/ui/Button";
 //Config
-import { panelsLibrary } from "@/features/dashboard/config/panelsLibrary";
+import {
+  PanelId,
+  panelsLibrary,
+} from "@/features/dashboard/config/panelsLibrary";
 //Animations
 import { AnimatePresence, motion } from "motion/react";
+
+export type DashboardLayoutItem = {
+  id: PanelId;
+  visible: boolean;
+  order: number;
+};
 
 const Dashboard = () => {
   const { data: settings, error } = useUserSettings();
@@ -27,11 +35,15 @@ const Dashboard = () => {
       />
     );
 
-  const visiblePanels = settings?.visible_panels || [];
+  const layout: DashboardLayoutItem[] = Array.isArray(
+    settings?.dashboard_layout,
+  )
+    ? settings.dashboard_layout
+    : [];
 
   const toggleAllPanels = () => {
     panelsLibrary.forEach((panel) => {
-      togglePanel({ panelName: panel.name, isActive: false });
+      togglePanel({ panelId: panel.id, visible: false });
     });
   };
 
@@ -41,25 +53,32 @@ const Dashboard = () => {
       <motion.div
         className={cn(
           "grid grid-cols-12 gap-6 items-start",
-          visiblePanels.length === 0 &&
-            "flex columns-1 items-center justify-center",
+          layout.length === 0 && "flex columns-1 items-center justify-center",
         )}
       >
         <AnimatePresence>
-          {panelsLibrary
-            .filter((panel) => visiblePanels.includes(panel.name))
-            .map((panel) => {
-              const PanelComponent = panel.component;
-              return (
-                <DashboardPanelWrapper
-                  key={panel.name}
-                  className={panel.className}
-                >
-                  <PanelComponent />
-                </DashboardPanelWrapper>
-              );
-            })}
-          {visiblePanels.length === 0 && (
+          {layout.map((panel) => {
+            const panelDefinition = panelsLibrary.find(
+              (p) => p.id === panel.id,
+            );
+
+            //Filter out panels that are not visible
+            if (!panel.visible) return null;
+
+            if (!panelDefinition) return null;
+
+            const PanelComponent = panelDefinition.component;
+
+            return (
+              <DashboardPanelWrapper
+                key={panel.id}
+                className={panelDefinition.className}
+              >
+                <PanelComponent />
+              </DashboardPanelWrapper>
+            );
+          })}
+          {layout.length === 0 && (
             <div className="flex flex-col items-center justify-center gap-4 text-center">
               <h2>Your dashboard is waiting for you</h2>
               <p>
