@@ -14,7 +14,7 @@ const FutureBalance = ({ selectedMode }: FutureBalanceProps) => {
   const { futureBalance, selectedDate } = useFutureBalanceContext();
 
   return (
-    <div className="flex flex-col items-center justify-center gap-6 min-w-80 mt-2">
+    <div className="flex flex-col items-center justify-center gap-6 w-full mt-2">
       {selectedMode === "detailed" && (
         <>
           <FutureBalanceDateSelector />

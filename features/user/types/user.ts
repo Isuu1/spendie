@@ -1,3 +1,5 @@
+import { DashboardLayoutItem } from "@/features/dashboard/components/Dashboard";
+
 export type UserProfile = {
   createdAt: string;
   id: string;
@@ -12,5 +14,5 @@ export type UserProfile = {
 export type UserSettings = {
   id: string;
   user_id: string;
-  visible_panels: string[];
+  dashboard_layout: DashboardLayoutItem[];
 };

@@ -7,22 +7,22 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 import { UserSettings } from "../types/user";
 
 interface TogglePanelArgs {
-  panelName: string;
-  isActive: boolean;
+  panelId: string;
+  visible: boolean;
 }
 
 export function useTogglePanelVisibility() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ panelName, isActive }: TogglePanelArgs) => {
-      const result = await togglePanelVisibility(panelName, isActive);
+    mutationFn: async ({ panelId, visible }: TogglePanelArgs) => {
+      const result = await togglePanelVisibility(panelId, visible);
       if (!result.success) throw new Error("Failed to update panel");
-      return { panelName, isActive };
+      return { panelId, visible };
     },
 
     // ✅ Optimistic update
-    onMutate: async ({ panelName, isActive }) => {
+    onMutate: async ({ panelId, visible }) => {
       await queryClient.cancelQueries({ queryKey: ["userSettings"] });
 
       const previousSettings = queryClient.getQueryData<UserSettings>([
@@ -33,11 +33,16 @@ export function useTogglePanelVisibility() {
         ["userSettings"],
         (old: UserSettings | undefined) => {
           if (!old) return old;
-          const visible = old.visible_panels ?? [];
-          const newPanels = isActive
-            ? visible.filter((p) => p !== panelName)
-            : [...visible, panelName];
-          return { ...old, visible_panels: newPanels };
+
+          const layout = old.dashboard_layout || [];
+
+          const newLayout = layout.map((panel) => {
+            if (panel.id === panelId) {
+              return { ...panel, visible: visible! };
+            }
+            return panel;
+          });
+          return { ...old, dashboard_layout: newLayout };
         },
       );
 

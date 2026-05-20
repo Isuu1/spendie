@@ -20,7 +20,7 @@ import { getTransactionsInPeriod } from "@/features/transactions/lib/utils/getTr
 //Context
 import { FutureBalanceProvider } from "@/features/future-balance/context/FutureBalanceContext";
 
-const TotalBalancePanel: React.FC = () => {
+const TotalBalancePanel = () => {
   const [selectedMode, setSelectedMode] = useState<"detailed" | "overview">(
     "detailed",
   );

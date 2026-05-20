@@ -43,7 +43,7 @@ const Switcher = ({
           switcherVariants({ size }),
           "cursor-pointer rounded-lg bg-bg-surface p-0.5",
           isPending && "pointer-events-none opacity-50",
-          !value ? "bg-brand" : "bg-gray-300",
+          !value ? "bg-accent" : "bg-gray-300",
           value && "bg-gray-300",
         )}
         onClick={() => onChange()}

@@ -44,7 +44,7 @@ const DashboardSidebarContent = ({
     <>
       <ul
         className={cn(
-          "box-border z-4 relative flex flex-col gap-6 list-none grow",
+          "box-border z-4 relative flex flex-col gap-6 list-none grow mt-13",
           menuClassName,
         )}
       >
