@@ -16,12 +16,6 @@ export function useTogglePanelVisibility() {
 
   return useMutation({
     mutationFn: async ({ panelId, visible }: TogglePanelArgs) => {
-      console.log(
-        "Toggling panel visibility. Panel ID:",
-        panelId,
-        "Visible:",
-        visible,
-      );
       const result = await togglePanelVisibility(panelId, visible);
       if (!result.success) throw new Error("Failed to update panel");
       return { panelId, visible };

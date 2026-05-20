@@ -8,8 +8,7 @@ export async function togglePanelVisibility(panelId: string, visible: boolean) {
   const { data: authData, error: authError } = await supabase.auth.getUser();
 
   if (authError) {
-    console.error("Error fetching user:", authError);
-    throw new Error("Failed to fetch user data");
+    throw new Error("Failed to fetch user data", authError);
   }
 
   const userId = authData.user.id;
@@ -21,8 +20,7 @@ export async function togglePanelVisibility(panelId: string, visible: boolean) {
     .single();
 
   if (settingsError) {
-    console.error("Error fetching user settings:", settingsError);
-    return { success: false };
+    throw new Error("Failed to fetch user settings", settingsError);
   }
 
   const layout = Array.isArray(settingsData.dashboard_layout)
@@ -46,8 +44,7 @@ export async function togglePanelVisibility(panelId: string, visible: boolean) {
     .eq("user_id", userId);
 
   if (updateError) {
-    console.error("Error updating user settings:", updateError);
-    return { success: false };
+    throw new Error("Failed to update user settings", updateError);
   }
 
   return { success: true };

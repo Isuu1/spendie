@@ -12,7 +12,11 @@ import Switcher from "@/shared/components/ui/Switcher";
 const DashboardPanelsMenu = () => {
   const { data: settings } = useUserSettings();
 
-  const { mutate: togglePanel, isPending } = useTogglePanelVisibility();
+  const {
+    mutate: togglePanel,
+    isPending,
+    variables,
+  } = useTogglePanelVisibility();
 
   const visiblePanels = settings?.dashboard_layout
     ? settings.dashboard_layout
@@ -40,7 +44,7 @@ const DashboardPanelsMenu = () => {
           <Switcher
             value={!isPanelActive(panel.id)}
             onChange={() => handleChange(panel.id)}
-            isPending={isPending}
+            isPending={isPending && variables?.panelId === panel.id}
           />
           <span>{panel.name}</span>
         </li>
