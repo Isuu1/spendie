@@ -1,10 +1,8 @@
 "use client";
 
+import dayjs from "dayjs";
 //Types
 import { RecurringPayment } from "../types/recurringPayment";
-//Styles
-import styles from "@/features/recurring-payments/components/PaymentStatus.module.scss";
-import dayjs from "dayjs";
 
 const PaymentStatus = ({ payment }: { payment: RecurringPayment }) => {
   const today = dayjs();
@@ -24,7 +22,7 @@ const PaymentStatus = ({ payment }: { payment: RecurringPayment }) => {
   };
 
   return (
-    <div className={styles.statusWrapper}>
+    <div className="flex items-center justify-between">
       <span className="text-accent font-bold">{daysDifference()}</span>
     </div>
   );
