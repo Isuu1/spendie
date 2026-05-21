@@ -3,6 +3,7 @@
 import React, { useMemo } from "react";
 import { useState } from "react";
 import { cn } from "@/shared/lib/cn";
+import dayjs from "dayjs";
 //Animations
 import { motion } from "motion/react";
 //Types
@@ -22,7 +23,6 @@ import {
 import { sortDashboardRecurringPayments } from "../lib/utils/sortDashboardRecurringPayments";
 //Hooks
 import { usePagination } from "@/shared/hooks/usePagination";
-import dayjs from "dayjs";
 
 type DashboardRecurringPaymentsGridProps = {
   type: "income" | "expense";
