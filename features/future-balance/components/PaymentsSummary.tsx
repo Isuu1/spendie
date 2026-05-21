@@ -18,6 +18,7 @@ const PaymentsSummary = () => {
     expenseTotal,
     detailsType,
     setDetailsType,
+    selectedDate,
   } = useFutureBalanceContext();
 
   if (incomePayments.length === 0 && expensePayments.length === 0) {
@@ -45,6 +46,7 @@ const PaymentsSummary = () => {
               payments={
                 detailsType === "income" ? incomePayments : expensePayments
               }
+              selectedDate={selectedDate}
             />
           </Modal>
         )}

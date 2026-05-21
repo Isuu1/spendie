@@ -25,7 +25,7 @@ const PaymentStatus = ({ payment }: { payment: RecurringPayment }) => {
 
   return (
     <div className={styles.statusWrapper}>
-      <span className={styles.status}>{daysDifference()}</span>
+      <span className="text-accent font-bold">{daysDifference()}</span>
     </div>
   );
 };

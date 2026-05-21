@@ -42,18 +42,27 @@ export async function markAsPaid(
     return current.format("YYYY-MM-DD");
   };
 
+  console.log("Marking payment as paid:", {
+    paymentId: payment.id,
+    userId: user.data.user.id,
+    paidDate: paidDate.format("YYYY-MM-DD"),
+    nextPaymentDate: nextPaymentDate(),
+    status,
+  });
+
   //Update next payment date in recurring_payments table
   const { error: updateError } = await supabase
     .from("recurring_payments")
     .update({
-      next_payment_date: nextPaymentDate(),
+      next_payment_date: dayjs(nextPaymentDate()),
     })
     .eq("id", payment.id)
     .eq("user_id", user.data.user.id);
 
   if (updateError) {
     throw new Error(
-      "There was an error marking the payment as paid. Please try again.",
+      "There was an error marking the payment as paid. Please try again." +
+        updateError.message,
     );
   }
 
@@ -62,7 +71,7 @@ export async function markAsPaid(
     .from("recurring_payments_history")
     .insert({
       user_id: user.data.user.id,
-      id: payment.id,
+      payment_id: payment.id,
       name: payment.name,
       payment_date: payment.next_payment_date,
       paid_date: paidDate,
@@ -73,7 +82,8 @@ export async function markAsPaid(
 
   if (historyError) {
     throw new Error(
-      "There was an error marking the payment as paid. Please try again.",
+      "There was an error marking the payment as paid. Please try again." +
+        historyError.message,
     );
   }
 

@@ -2,37 +2,46 @@
 
 import React, { useMemo } from "react";
 import { useState } from "react";
-import clsx from "clsx";
-//Styles
-import styles from "./DashboardRecurringPaymentsGrid.module.scss";
+import { cn } from "@/shared/lib/cn";
 //Animations
 import { motion } from "motion/react";
 //Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
-//Icons
-import { TbArrowBigDownLineFilled } from "react-icons/tb";
 //Components
 import Pagination from "@/shared/components/Pagination";
 import DashboardRecurringPaymentItem from "./DashboardRecurringPaymentItem";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 //Utils
 import { sortDashboardRecurringPayments } from "../lib/utils/sortDashboardRecurringPayments";
 //Hooks
 import { usePagination } from "@/shared/hooks/usePagination";
+import dayjs from "dayjs";
 
-interface DashboardRecurringPaymentsGridProps {
+type DashboardRecurringPaymentsGridProps = {
   type: "income" | "expense";
   toggleDetails: (type: "income" | "expense" | null) => void;
   payments: RecurringPayment[];
-}
+  selectedDate: dayjs.Dayjs | null;
+};
 
 const activeIndicatorVariants = {
   income: { x: 0 },
   expense: { x: "100%" },
 };
 
-const DashboardRecurringPaymentsGrid: React.FC<
-  DashboardRecurringPaymentsGridProps
-> = ({ type, toggleDetails, payments }) => {
+const DashboardRecurringPaymentsGrid = ({
+  type,
+  toggleDetails,
+  payments,
+  selectedDate,
+}: DashboardRecurringPaymentsGridProps) => {
   const [sortingOption, setSortingOption] = useState<"name" | "date">("date");
 
   const sortedPayments = useMemo(() => {
@@ -49,67 +58,88 @@ const DashboardRecurringPaymentsGrid: React.FC<
     setPage(1); //Reset to first page on sorting change
   };
 
-  if (payments.length === 0) return <p>No upcoming payments</p>;
-
   return (
     <>
-      <h3>Upcoming payments</h3>
-
-      <ul className={styles.nav}>
+      <div className="relative flex gap-2 bg-card rounded-b-lg">
         <motion.span
-          className={styles.active}
+          className="z-1 absolute top-0 bottom-0 left-0 h-full w-[50%] bg-accent rounded-lg"
           variants={activeIndicatorVariants}
           animate={type}
           initial={false} //Prevent animation on initial render
           transition={{ type: "spring", stiffness: 700, damping: 30 }}
         ></motion.span>
-        <li className={styles.item} onClick={() => toggleDetails?.("income")}>
+        <span
+          className="z-2 relative cursor-pointer px-3 py-1 rounded-lg"
+          onClick={() => toggleDetails?.("income")}
+        >
           Income
-        </li>
-        <li className={styles.item} onClick={() => toggleDetails?.("expense")}>
+        </span>
+        <span
+          className="z-2 relative cursor-pointer px-3 py-1 rounded-lg"
+          onClick={() => toggleDetails?.("expense")}
+        >
           Expense
-        </li>
-      </ul>
-
-      <ul className={styles.labelsBar}>
-        <li
-          className={clsx(
-            styles.label,
-            sortingOption === "name" ? styles.activeLabel : "",
-          )}
-          onClick={() => handleSortingChange("name")}
-        >
-          <span>Name</span>
-          <TbArrowBigDownLineFilled />
-        </li>
-        <li
-          className={clsx(
-            styles.label,
-            sortingOption === "date" ? styles.activeLabel : "",
-          )}
-          onClick={() => handleSortingChange("date")}
-        >
-          <span>Date</span>
-          <TbArrowBigDownLineFilled />
-        </li>
-        <li className={styles.label}>Actions</li>
-      </ul>
-
-      <div className={styles.paymentsList}>
-        {currentItems?.map((payment) => (
-          <DashboardRecurringPaymentItem
-            key={`${payment.id}-${payment.next_payment_date}`}
-            payment={payment}
-          />
-        ))}
-        {totalPages > 1 && (
-          <Pagination
-            page={page}
-            onPageChange={setPage}
-            totalPages={totalPages}
-          />
-        )}
+        </span>
       </div>
+
+      {sortedPayments.length === 0 ? (
+        <p className="text-center p2 text-secondary">
+          No upcoming payments by{" "}
+          {selectedDate
+            ? `${selectedDate.format("DD MMM YYYY")}`
+            : "end of month"}
+        </p>
+      ) : (
+        <Table>
+          <TableCaption>
+            A list of your upcoming payments by{" "}
+            {selectedDate
+              ? `${selectedDate.format("DD MMM YYYY")}`
+              : "end of month"}
+            .
+          </TableCaption>
+          <TableHeader>
+            <TableRow className="hover:bg-card">
+              <TableHead
+                className={cn(
+                  "w-25 cursor-pointer",
+                  sortingOption === "name" && "font-bold",
+                )}
+                onClick={() => handleSortingChange("name")}
+              >
+                Name
+              </TableHead>
+              <TableHead
+                className={cn(
+                  "w-25 cursor-pointer",
+                  sortingOption === "date" && "font-bold",
+                )}
+                onClick={() => handleSortingChange("date")}
+              >
+                Date
+              </TableHead>
+              <TableHead>Repeat</TableHead>
+              <TableHead className="text-right">Amount</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {currentItems.map((payment) => (
+              <DashboardRecurringPaymentItem
+                key={`${payment.id}-${payment.next_payment_date}`}
+                payment={payment}
+              />
+            ))}
+          </TableBody>
+        </Table>
+      )}
+
+      {totalPages > 1 && (
+        <Pagination
+          page={page}
+          onPageChange={setPage}
+          totalPages={totalPages}
+        />
+      )}
     </>
   );
 };
