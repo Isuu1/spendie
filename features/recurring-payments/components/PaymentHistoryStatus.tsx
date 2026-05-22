@@ -1,29 +1,36 @@
-import clsx from "clsx";
+import { cn } from "@/shared/lib/cn";
 //Types
 import { RecurringPaymentHistory } from "../types/recurringPayment";
 //Icons
-import { BsHandThumbsUpFill } from "react-icons/bs";
-import { MdWatchLater } from "react-icons/md";
-//Styles
-import styles from "./PaymentHistoryStatus.module.scss";
+import { CircleCheck, Clock } from "lucide-react";
 
-interface PaymentHistoryStatusProps {
+type PaymentHistoryStatusProps = {
   paymentHistory: RecurringPaymentHistory;
-}
+};
 
 const PaymentHistoryStatus = ({
   paymentHistory,
 }: PaymentHistoryStatusProps) => {
   if (paymentHistory.status === "On time") {
     return (
-      <li className={clsx(styles.status, styles.onTime)}>
-        <BsHandThumbsUpFill /> {paymentHistory.status}
+      <li
+        className={cn(
+          "p-2 rounded-md w-fit flex items-center gap-2 text-xs",
+          "bg-green-800",
+        )}
+      >
+        <CircleCheck size={16} /> {paymentHistory.status}
       </li>
     );
   }
   return (
-    <li className={clsx(styles.status, styles.late)}>
-      <MdWatchLater /> {paymentHistory.status}
+    <li
+      className={cn(
+        "p-2 rounded-md w-fit flex items-center gap-2 text-xs",
+        "bg-red-800",
+      )}
+    >
+      <Clock size={16} /> {paymentHistory.status}
     </li>
   );
 };

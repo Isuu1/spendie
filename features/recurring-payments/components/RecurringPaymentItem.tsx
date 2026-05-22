@@ -14,6 +14,7 @@ import ConfirmAction from "@/shared/components/ConfirmAction";
 import { useDeletePayment } from "../hooks/useDeletePayment";
 //Animations
 import { AnimatePresence } from "motion/react";
+//Icons
 import { Repeat } from "lucide-react";
 
 type RecurringPaymentItemProps = {

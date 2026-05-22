@@ -17,6 +17,7 @@ export type RecurringPayment = RecurringPaymentBase & {
 //History of payments made - stored in a separate table
 export type RecurringPaymentHistory = RecurringPaymentBase & {
   id: string;
+  payment_id: string;
   payment_date: string;
   paid_date: string;
   type: string;

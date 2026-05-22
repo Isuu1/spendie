@@ -32,7 +32,7 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
   };
 
   const paymentHistory = React.useMemo(() => {
-    return data.filter((history) => history.id === payment.id);
+    return data.filter((history) => history.payment_id === payment.id);
   }, [data, payment.id]);
 
   //Filter history based on sortedBy state
