@@ -3,17 +3,24 @@ import React, { useState } from "react";
 //Types
 import { RecurringPayment } from "../types/recurringPayment";
 //Styles
-import styles from "./RecurringPaymentMenu.module.scss";
+//import styles from "./RecurringPaymentMenu.module.scss";
 //Animations
 import { AnimatePresence } from "motion/react";
 //Icons
-import { FaEdit } from "react-icons/fa";
-import { IoTrashBin } from "react-icons/io5";
-//Components
-import HamburgerMenu from "@/shared/components/HamburgerMenu";
+// import { FaEdit } from "react-icons/fa";
+// import { IoTrashBin } from "react-icons/io5";
+// //Components
+// import HamburgerMenu from "@/shared/components/HamburgerMenu";
 import ConfirmAction from "@/shared/components/ConfirmAction";
 //Hooks
 import { useDeletePayment } from "../hooks/useDeletePayment";
+import Button from "@/shared/components/ui/Button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { EllipsisVertical } from "lucide-react";
 
 interface RecurringPaymentMenuProps {
   payment: RecurringPayment;
@@ -35,7 +42,31 @@ const RecurringPaymentMenu: React.FC<RecurringPaymentMenuProps> = ({
 
   return (
     <>
-      <HamburgerMenu position="right">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <EllipsisVertical size={20} />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="relative z-99">
+          <Link href={`/recurring-payments/edit-payment/${payment.id}`}>
+            <Button
+              variant="ghost"
+              className="p-0 hover:bg-transparent"
+              size="xs"
+            >
+              Edit payment
+            </Button>
+          </Link>
+          <Button
+            variant="ghost"
+            className="p-0 hover:bg-transparent"
+            size="xs"
+            onClick={() => setConfirmDeletePayment(payment.id)}
+          >
+            Delete payment
+          </Button>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      {/* <HamburgerMenu position="right">
         <li className={styles.menuItem}>
           <FaEdit className={styles.icon} />
           <Link href={`/recurring-payments/edit-payment/${payment.id}`}>
@@ -49,7 +80,7 @@ const RecurringPaymentMenu: React.FC<RecurringPaymentMenuProps> = ({
           <IoTrashBin className={styles.icon} />
           Delete payment
         </li>
-      </HamburgerMenu>
+      </HamburgerMenu> */}
       <AnimatePresence>
         {confirmDeletePayment && (
           <ConfirmAction
