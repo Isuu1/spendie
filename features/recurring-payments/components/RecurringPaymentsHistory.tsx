@@ -1,6 +1,4 @@
 import React from "react";
-//Styles
-import styles from "./RecurringPaymentsHistory.module.scss";
 //Hooks
 import { useRecurringPaymentsHistory } from "../hooks/useRecurringPaymentsHistory";
 import { useDeletePayment } from "../hooks/useDeletePaymentHistory";
@@ -31,6 +29,7 @@ import {
 import Button from "@/shared/components/ui/Button";
 
 import { columns } from "../config/paymentHistoryColumns";
+import { cn } from "@/shared/lib/cn";
 
 type RecurringPaymentsHistoryProps = {
   payment: RecurringPayment;
@@ -80,32 +79,36 @@ const RecurringPaymentsHistory = ({
 
   return (
     <>
-      <div className={styles.historyWrapper}>
-        <div className="flex-row-space-between">
-          <ul className={styles.menu}>
-            <li
-              className={sortedBy === "All" ? styles.active : ""}
-              onClick={() => setSortedBy("All")}
-            >
-              All
-            </li>
-            <li
-              className={sortedBy === "Late" ? styles.active : ""}
-              onClick={() => setSortedBy("Late")}
-            >
-              Late
-            </li>
-            <li
-              className={sortedBy === "On time" ? styles.active : ""}
-              onClick={() => setSortedBy("On time")}
-            >
-              On time
-            </li>
-          </ul>
-          <p className={styles.clear} onClick={() => setConfirmClear(true)}>
-            Clear history
-          </p>
+      <div className="flex-row-space-between">
+        <div className="flex items-center gap-4">
+          <span
+            className={cn("cursor-pointer", sortedBy === "All" && "bg-accent")}
+            onClick={() => setSortedBy("All")}
+          >
+            All
+          </span>
+          <span
+            className={cn("cursor-pointer", sortedBy === "Late" && "bg-accent")}
+            onClick={() => setSortedBy("Late")}
+          >
+            Late
+          </span>
+          <span
+            className={cn(
+              "cursor-pointer",
+              sortedBy === "On time" && "bg-accent",
+            )}
+            onClick={() => setSortedBy("On time")}
+          >
+            On time
+          </span>
         </div>
+        <p
+          className="ml-auto cursor-pointer"
+          onClick={() => setConfirmClear(true)}
+        >
+          Clear history
+        </p>
       </div>
       <div>
         <Table>
