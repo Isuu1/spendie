@@ -3,6 +3,7 @@ import { repeatOptions, typeOptions } from "../types/recurringPaymentForm";
 
 export const recurringPaymentSchema = z.object({
   name: z.string().min(1, "Name is required"),
+  category: z.string().min(1, "Category is required"),
   repeat: z.enum(
     repeatOptions.map((opt) => opt.value) as [string, ...string[]],
   ),

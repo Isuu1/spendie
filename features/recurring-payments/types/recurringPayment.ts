@@ -3,6 +3,7 @@ export type RecurringPaymentBase = {
   user_id: string;
   name: string;
   amount: number;
+  category: string;
 };
 
 //Recurring payment type stored in the database - servers as a skeleton
