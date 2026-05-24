@@ -31,13 +31,11 @@ import Button from "@/shared/components/ui/Button";
 import { columns } from "../config/paymentHistoryColumns";
 import SegmentedControl from "@/shared/components/SegmentedControl";
 
-type RecurringPaymentsHistoryProps = {
+type PaymentsHistoryProps = {
   payment: RecurringPayment;
 };
 
-const RecurringPaymentsHistory = ({
-  payment,
-}: RecurringPaymentsHistoryProps) => {
+const PaymentsHistory = ({ payment }: PaymentsHistoryProps) => {
   const [confirmClear, setConfirmClear] = React.useState(false);
   const [sortedBy, setSortedBy] = React.useState("All");
   const { data = [], error } = useRecurringPaymentsHistory();
@@ -200,4 +198,4 @@ const RecurringPaymentsHistory = ({
   );
 };
 
-export default RecurringPaymentsHistory;
+export default PaymentsHistory;
