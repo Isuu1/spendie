@@ -1,7 +1,5 @@
+import { cn } from "../lib/cn";
 import React, { useState } from "react";
-
-//Styles
-import styles from "./SegmentedControl.module.scss";
 
 type SegmentedControlProps = {
   options: { label: string; value: string }[];
@@ -11,20 +9,23 @@ type SegmentedControlProps = {
 const SegmentedControl = ({ options, onChange }: SegmentedControlProps) => {
   const [activeOption, setActiveOption] = useState(options[0].value);
   return (
-    <ul className={styles.menu}>
+    <nav className="flex items-center gap-4 bg-card rounded-lg w-fit">
       {options.map((option) => (
-        <li
+        <span
           key={option.value}
-          className={`${styles.item} ${activeOption === option.value ? styles.active : ""}`}
+          className={cn(
+            "cursor-pointer rounded-md px-4 py-2 transition-colors",
+            activeOption === option.value && "bg-accent",
+          )}
           onClick={() => {
             setActiveOption(option.value);
             onChange(option.value);
           }}
         >
           {option.label}
-        </li>
+        </span>
       ))}
-    </ul>
+    </nav>
   );
 };
 
