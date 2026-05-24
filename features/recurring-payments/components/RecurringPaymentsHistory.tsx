@@ -29,7 +29,7 @@ import {
 import Button from "@/shared/components/ui/Button";
 
 import { columns } from "../config/paymentHistoryColumns";
-import { cn } from "@/shared/lib/cn";
+import SegmentedControl from "@/shared/components/SegmentedControl";
 
 type RecurringPaymentsHistoryProps = {
   payment: RecurringPayment;
@@ -80,7 +80,16 @@ const RecurringPaymentsHistory = ({
   return (
     <>
       <div className="flex-row-space-between">
-        <div className="flex items-center gap-4">
+        {/* <PaymentsHistoryMenu sortBy={sortedBy} onSortChange={setSortedBy} /> */}
+        <SegmentedControl
+          options={[
+            { label: "All", value: "All" },
+            { label: "Late", value: "Late" },
+            { label: "On time", value: "On time" },
+          ]}
+          onChange={setSortedBy}
+        />
+        {/* <div className="flex items-center gap-4">
           <span
             className={cn("cursor-pointer", sortedBy === "All" && "bg-accent")}
             onClick={() => setSortedBy("All")}
@@ -102,7 +111,7 @@ const RecurringPaymentsHistory = ({
           >
             On time
           </span>
-        </div>
+        </div> */}
         <p
           className="ml-auto cursor-pointer"
           onClick={() => setConfirmClear(true)}
