@@ -3,7 +3,6 @@ import React from "react";
 import styles from "./RecurringPaymentsHistory.module.scss";
 //Hooks
 import { useRecurringPaymentsHistory } from "../hooks/useRecurringPaymentsHistory";
-import { usePagination } from "@/shared/hooks/usePagination";
 import { useDeletePayment } from "../hooks/useDeletePaymentHistory";
 //Types
 import {
@@ -11,9 +10,7 @@ import {
   RecurringPaymentHistory,
 } from "../types/recurringPayment";
 //Components
-import Pagination from "@/shared/components/Pagination";
 import ConfirmAction from "@/shared/components/ConfirmAction";
-import RecurringPaymentsHistoryItem from "./RecurringPaymentsHistoryItem";
 //Animations
 import { AnimatePresence } from "motion/react";
 import {
@@ -25,65 +22,23 @@ import {
   TableRow,
 } from "@/components/ui/table";
 //import RecurringPaymentMenu from "./RecurringPaymentMenu";
-import dayjs from "dayjs";
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import PaymentHistoryStatus from "./PaymentHistoryStatus";
+import Button from "@/shared/components/ui/Button";
 
-export const columns: ColumnDef<RecurringPaymentHistory>[] = [
-  {
-    accessorKey: "type",
-    header: "Type",
-  },
-  {
-    accessorKey: "amount",
-    header: "Amount",
-  },
-  {
-    accessorKey: "payment_date",
-    header: "Due by",
-    cell: ({ getValue }) => {
-      // const payment = row.original;
-      const dateStr = getValue() as Date;
-      return (
-        <div>
-          {dayjs(dateStr).format("D MMMM YYYY")}
-          {/* <PaymentStatus payment={payment} /> */}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "paid_date",
-    header: "Paid date",
-    cell: ({ getValue }) => {
-      // const payment = row.original;
-      const dateStr = getValue() as Date;
-      return <div>{dayjs(dateStr).format("D MMMM YYYY")}</div>;
-    },
-  },
+import { columns } from "../config/paymentHistoryColumns";
 
-  {
-    id: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const payment = row.original;
-      return <PaymentHistoryStatus paymentHistory={payment} />;
-    },
-  },
-];
-
-interface RecurringPaymentsHistoryProps {
+type RecurringPaymentsHistoryProps = {
   payment: RecurringPayment;
-}
+};
 
-const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
+const RecurringPaymentsHistory = ({
   payment,
-}) => {
+}: RecurringPaymentsHistoryProps) => {
   const [confirmClear, setConfirmClear] = React.useState(false);
   const [sortedBy, setSortedBy] = React.useState("All");
   const { data = [], error } = useRecurringPaymentsHistory();
@@ -112,35 +67,16 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
     return paymentHistory;
   }, [sortedBy, paymentHistory]);
 
-  const { page, setPage, totalPages, currentItems } = usePagination(
-    filteredHistory,
-    4,
-  );
-
-  //Reset to page 1 when sortedBy changes
-  React.useEffect(() => {
-    setPage(1);
-  }, [sortedBy, setPage]);
-
-  const table = useReactTable({
-    data,
+  const table = useReactTable<RecurringPaymentHistory>({
+    data: filteredHistory,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   if (error) {
     return <div>Error loading payment history</div>;
   }
-
-  // if (paymentHistory.length === 0) {
-  //   return (
-  //     <div className={styles.historyWrapper}>
-  //       <p>
-  //         Looks like you don`t have any payment history for {payment.name} yet.
-  //       </p>
-  //     </div>
-  //   );
-  // }
 
   return (
     <>
@@ -170,48 +106,6 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
             Clear history
           </p>
         </div>
-
-        {filteredHistory.length === 0 ? (
-          <p className={styles.noResults}>
-            Could not find any payments matching the selected filter. Try
-            changing the filter or check back later when more payments have been
-            made.
-          </p>
-        ) : (
-          <div className={styles.historyContainer}>
-            <ul className={styles.historyHeader}>
-              <li></li>
-              <li>Amount</li>
-              <li>Due by</li>
-              <li>Paid date</li>
-              <li>Status</li>
-            </ul>
-            {currentItems.map((history) => (
-              <RecurringPaymentsHistoryItem
-                key={`${history.id}-${history.payment_date}`}
-                payment={history}
-              />
-            ))}
-          </div>
-        )}
-
-        {totalPages > 1 && (
-          <Pagination
-            page={page}
-            onPageChange={setPage}
-            totalPages={totalPages}
-          />
-        )}
-
-        <AnimatePresence>
-          {confirmClear && (
-            <ConfirmAction
-              title="Are you sure you want to clear the history?"
-              onCancel={() => setConfirmClear(false)}
-              onConfirm={() => handleDelete(payment.id)}
-            />
-          )}
-        </AnimatePresence>
       </div>
       <div>
         <Table>
@@ -241,7 +135,7 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="py-5">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
@@ -262,7 +156,34 @@ const RecurringPaymentsHistory: React.FC<RecurringPaymentsHistoryProps> = ({
             )}
           </TableBody>
         </Table>
+        <div className="flex items-center justify-start space-x-2 py-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
+        </div>
       </div>
+      <AnimatePresence>
+        {confirmClear && (
+          <ConfirmAction
+            title="Are you sure you want to clear the history?"
+            onCancel={() => setConfirmClear(false)}
+            onConfirm={() => handleDelete(payment.id)}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };
