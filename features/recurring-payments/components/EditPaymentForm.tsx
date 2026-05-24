@@ -21,7 +21,11 @@ import { editRecurringPayment } from "@/features/recurring-payments/lib/actions/
 import { toastStyle } from "@/shared/styles/toastStyle";
 //Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
-import { repeatOptions, typeOptions } from "../types/recurringPaymentForm";
+import {
+  categoryOptions,
+  repeatOptions,
+  typeOptions,
+} from "../types/recurringPaymentForm";
 //Schemas
 import { recurringPaymentSchema } from "../schemas/recurringPaymentSchema";
 //Icons
@@ -40,6 +44,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
     resolver: zodResolver(recurringPaymentSchema),
     defaultValues: {
       name: payment.name,
+      category: payment.category,
       repeat: payment.repeat,
       type: payment.type,
       amount: payment.amount,
@@ -67,19 +72,36 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="w-md">
       <FieldGroup>
-        <div className="flex flex-col gap-3">
-          <Input
-            {...form.register("name")}
-            id="name"
-            type="text"
-            label="Payment Name"
-            icon={<FolderPen />}
-            placeholder="Payment"
-            error={form.formState.errors.name}
+        <Field orientation="horizontal">
+          <div className="flex flex-col gap-3 flex-1">
+            <Input
+              {...form.register("name")}
+              id="name"
+              type="text"
+              label="Payment Name"
+              icon={<FolderPen />}
+              placeholder="Payment"
+              error={form.formState.errors.name}
+            />
+            <InputError error={form.formState.errors.name} />
+          </div>
+          <Controller
+            control={form.control}
+            name="category"
+            render={({ field, fieldState }) => (
+              <div className="flex flex-col gap-3 flex-1">
+                <SelectInput
+                  {...field}
+                  id="category"
+                  label="Category"
+                  selectOptions={categoryOptions}
+                  error={fieldState.error}
+                />
+                <InputError error={form.formState.errors.category} />
+              </div>
+            )}
           />
-          <InputError error={form.formState.errors.name} />
-        </div>
-
+        </Field>
         <Field
           orientation="horizontal"
           className="flex justify-between gap-4 items-start"
