@@ -5,7 +5,6 @@ export default function Page() {
   return (
     <>
       <BackButton />
-      <h3>Add new recurring payment</h3>
       <AddPaymentForm />
     </>
   );

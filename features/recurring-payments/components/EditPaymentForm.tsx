@@ -70,8 +70,12 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="w-md">
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="w-md bg-card p-6 rounded-2xl"
+    >
       <FieldGroup>
+        <h3>Edit recurring payment</h3>
         <Field orientation="horizontal">
           <div className="flex flex-col gap-3 flex-1">
             <Input

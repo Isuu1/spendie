@@ -26,7 +26,6 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   return (
     <>
       <BackButton />
-      <h3>Edit recurring payment</h3>
       <EditPaymentForm payment={payment} />
     </>
   );
