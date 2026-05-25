@@ -67,10 +67,7 @@ const AddPaymentForm: React.FC = () => {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="w-md">
       <FieldGroup>
-        <Field
-          orientation="horizontal"
-          //className="flex justify-between gap-4 items-start"
-        >
+        <Field orientation="horizontal">
           <div className="flex flex-col gap-3 flex-1">
             <Input
               {...form.register("name")}

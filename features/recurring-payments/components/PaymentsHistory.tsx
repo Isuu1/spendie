@@ -19,7 +19,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-//import RecurringPaymentMenu from "./RecurringPaymentMenu";
 import {
   flexRender,
   getCoreRowModel,
@@ -76,9 +75,8 @@ const PaymentsHistory = ({ payment }: PaymentsHistoryProps) => {
   }
 
   return (
-    <>
+    <div className="flex flex-col gap-5 mt-4">
       <div className="flex-row-space-between">
-        {/* <PaymentsHistoryMenu sortBy={sortedBy} onSortChange={setSortedBy} /> */}
         <SegmentedControl
           options={[
             { label: "All", value: "All" },
@@ -87,29 +85,6 @@ const PaymentsHistory = ({ payment }: PaymentsHistoryProps) => {
           ]}
           onChange={setSortedBy}
         />
-        {/* <div className="flex items-center gap-4">
-          <span
-            className={cn("cursor-pointer", sortedBy === "All" && "bg-accent")}
-            onClick={() => setSortedBy("All")}
-          >
-            All
-          </span>
-          <span
-            className={cn("cursor-pointer", sortedBy === "Late" && "bg-accent")}
-            onClick={() => setSortedBy("Late")}
-          >
-            Late
-          </span>
-          <span
-            className={cn(
-              "cursor-pointer",
-              sortedBy === "On time" && "bg-accent",
-            )}
-            onClick={() => setSortedBy("On time")}
-          >
-            On time
-          </span>
-        </div> */}
         <p
           className="ml-auto cursor-pointer"
           onClick={() => setConfirmClear(true)}
@@ -118,13 +93,13 @@ const PaymentsHistory = ({ payment }: PaymentsHistoryProps) => {
         </p>
       </div>
       <div>
-        <Table>
+        <Table className="mt-4 bg-card rounded-2xl">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="p-4">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -145,7 +120,7 @@ const PaymentsHistory = ({ payment }: PaymentsHistoryProps) => {
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="py-5">
+                    <TableCell key={cell.id} className="py-5 px-4">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
@@ -194,7 +169,7 @@ const PaymentsHistory = ({ payment }: PaymentsHistoryProps) => {
           />
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 };
 
