@@ -49,7 +49,7 @@ const DateInput: React.FC<DateInputProps> = ({
             data-empty={!value}
             className={cn(
               "justify-start text-left font-normal data-[empty=true]:text-muted-foreground",
-              "bg-bg-surface-dark border border-transparent!",
+              "bg-input border border-transparent!",
               "hover:bg-bg-surface-dark",
               errorClasses,
               className,

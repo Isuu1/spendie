@@ -47,7 +47,7 @@ const RecurringPaymentItem = ({ payment }: RecurringPaymentItemProps) => {
       </div>
       <div className="flex justify-between mt-2">
         <span>
-          {payment.amount > 0 ? "-" : "+"} £{payment.amount.toFixed(2)}
+          {payment.type === "Expense" ? "-" : "+"} £{payment.amount.toFixed(2)}
         </span>
         <span className="flex items-center gap-2">
           <Repeat size={16} />

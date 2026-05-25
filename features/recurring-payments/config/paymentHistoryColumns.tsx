@@ -22,19 +22,13 @@ export const columns: ColumnDef<RecurringPaymentHistory>[] = [
     cell: ({ getValue }) => {
       // const payment = row.original;
       const dateStr = getValue() as Date;
-      return (
-        <div>
-          {dayjs(dateStr).format("D MMMM YYYY")}
-          {/* <PaymentStatus payment={payment} /> */}
-        </div>
-      );
+      return <div>{dayjs(dateStr).format("D MMMM YYYY")}</div>;
     },
   },
   {
     accessorKey: "paid_date",
     header: "Paid date",
     cell: ({ getValue }) => {
-      // const payment = row.original;
       const dateStr = getValue() as Date;
       return <div>{dayjs(dateStr).format("D MMMM YYYY")}</div>;
     },
