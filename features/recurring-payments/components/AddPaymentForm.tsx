@@ -30,7 +30,11 @@ import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/re
 //Icons
 import { FolderPen, Wallet } from "lucide-react";
 
-const AddPaymentForm: React.FC = () => {
+type AddPaymentFormProps = {
+  onCancel: () => void;
+};
+
+const AddPaymentForm = ({ onCancel }: AddPaymentFormProps) => {
   const router = useRouter();
 
   const queryClient = useQueryClient();
@@ -57,7 +61,8 @@ const AddPaymentForm: React.FC = () => {
         await queryClient.invalidateQueries({
           queryKey: ["recurringPayments"],
         });
-        router.push("/recurring-payments");
+        onCancel();
+        router.refresh();
       } else {
         toast.error(result.error || "Something went wrong", toastStyle);
       }
@@ -70,7 +75,6 @@ const AddPaymentForm: React.FC = () => {
       className="w-md bg-card p-6 rounded-2xl"
     >
       <FieldGroup>
-        <h3>Add new recurring payment</h3>
         <Field orientation="horizontal">
           <div className="flex flex-col gap-3 flex-1">
             <Input
@@ -178,7 +182,7 @@ const AddPaymentForm: React.FC = () => {
             variant="secondary"
             size="sm"
             type="button"
-            onClick={() => router.push("/recurring-payments")}
+            onClick={onCancel}
           >
             Cancel
           </Button>
