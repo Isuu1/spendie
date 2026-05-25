@@ -17,11 +17,11 @@ import { AnimatePresence } from "motion/react";
 //Icons
 import { Repeat } from "lucide-react";
 
-type RecurringPaymentItemProps = {
+type PaymentItemProps = {
   payment: RecurringPayment;
 };
 
-const RecurringPaymentItem = ({ payment }: RecurringPaymentItemProps) => {
+const PaymentItem = ({ payment }: PaymentItemProps) => {
   const [confirmDeletePayment, setConfirmDeletePayment] = useState<
     string | null
   >(null);
@@ -106,4 +106,4 @@ const RecurringPaymentItem = ({ payment }: RecurringPaymentItemProps) => {
   );
 };
 
-export default RecurringPaymentItem;
+export default PaymentItem;

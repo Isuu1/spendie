@@ -6,7 +6,7 @@ import { IdCard } from "lucide-react";
 //Components
 import SelectInput from "@/shared/components/ui/SelectInput";
 import ErrorMessage from "@/shared/components/ErrorMessage";
-import RecurringPaymentItem from "./RecurringPaymentItem";
+import PaymentItem from "./PaymentItem";
 import Button from "@/shared/components/ui/Button";
 //Hooks
 import { useRecurringPayments } from "../hooks/useRecurringPayments";
@@ -60,7 +60,7 @@ const RecurringPaymentsGrid: React.FC = () => {
 
       <div className="flex gap-4 flex-wrap">
         {sortedItems.map((payment) => {
-          return <RecurringPaymentItem key={payment.id} payment={payment} />;
+          return <PaymentItem key={payment.id} payment={payment} />;
         })}
       </div>
     </div>
