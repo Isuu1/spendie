@@ -57,7 +57,6 @@ const ConfirmAction: React.FC<ConfirmActionProps> = ({
 
   const modalContent = (
     <motion.div
-      //className={styles.confirmActionContainer}
       className="bg-[#2e2e2e83] z-99 fixed top-0 left-0 w-full h-full flex items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -66,8 +65,7 @@ const ConfirmAction: React.FC<ConfirmActionProps> = ({
     >
       <motion.div
         ref={innerModalRef}
-        //className={styles.innerContainer}
-        className="bg-bg-surface text-white rounded-md p-6 w-full max-w-sm mx-4 flex flex-col gap-4 items-center text-center leading-8"
+        className="bg-card text-white rounded-2xl p-6 w-full max-w-sm mx-4 flex flex-col gap-4 items-center text-center leading-8"
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0.8 }}
@@ -75,7 +73,7 @@ const ConfirmAction: React.FC<ConfirmActionProps> = ({
         role="dialog"
         aria-modal="true"
       >
-        <h3>{title}</h3>
+        <h4>{title}</h4>
         {subtitle && <p>{subtitle}</p>}
         <div className="flex gap-4 mt-1">
           <Button
