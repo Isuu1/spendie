@@ -4,14 +4,15 @@ import React from "react";
 import SelectInput from "@/shared/components/ui/SelectInput";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 import PaymentItem from "./PaymentItem";
+import AddPaymentDrawer from "./AddPaymentDrawer";
 //Hooks
 import { useRecurringPayments } from "../hooks/useRecurringPayments";
 import { useSorting } from "@/shared/hooks/useSorting";
 //Config
 import { sortingOptions } from "../config/sortingOptions";
-import AddPaymentDrawer from "./AddPaymentDrawer";
-import { CreditCard } from "lucide-react";
 import { paymentTemplates } from "../config/paymentTemplates";
+//Icons
+import { CreditCard } from "lucide-react";
 
 //Extraact only label and value for SelectInput
 const selectOptions = sortingOptions.map(({ label, value }) => ({
@@ -50,6 +51,19 @@ const PaymentsGrid = () => {
             value={sortOption.value}
             onChange={(option) => handleSortingChange(option)}
           />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-5">
+        <p>Templates</p>
+        <div className="flex gap-2 flex-wrap">
+          {paymentTemplates.map((template) => (
+            <AddPaymentDrawer
+              key={template.name}
+              defaultValues={template}
+              triggerName={template.name}
+            />
+          ))}
         </div>
       </div>
 

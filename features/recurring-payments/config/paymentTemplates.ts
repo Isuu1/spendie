@@ -19,4 +19,9 @@ export const paymentTemplates = [
     type: "Expense",
     category: "Bills",
   },
+  {
+    name: "Phone bill",
+    type: "Expense",
+    category: "Bills",
+  },
 ];
