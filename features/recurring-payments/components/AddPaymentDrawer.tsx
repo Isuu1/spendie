@@ -1,3 +1,5 @@
+import React from "react";
+//Components
 import {
   Drawer,
   DrawerContent,
@@ -7,14 +9,12 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import Button from "@/shared/components/ui/Button";
-import React from "react";
 import AddPaymentForm from "./AddPaymentForm";
+//Icons
 import { IdCard } from "lucide-react";
 
 const AddPaymentDrawer = () => {
   const [open, setOpen] = React.useState(false);
-
-  console.log("Drawer open:", open);
 
   const onCancel = () => {
     setOpen(false);

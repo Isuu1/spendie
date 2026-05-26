@@ -8,11 +8,11 @@ import { RecurringPayment } from "../types/recurringPayment";
 import Button from "@/shared/components/ui/Button";
 import ConfirmAction from "@/shared/components/ConfirmAction";
 import PaymentCard from "./PaymentCard";
+import EditPaymentDrawer from "./EditPaymentDrawer";
 //Hooks
 import { useDeletePayment } from "../hooks/useDeletePayment";
 //Animations
 import { AnimatePresence } from "motion/react";
-import EditPaymentDrawer from "./EditPaymentDrawer";
 
 type PaymentItemProps = {
   payment: RecurringPayment;
@@ -35,11 +35,6 @@ const PaymentItem = ({ payment }: PaymentItemProps) => {
       <PaymentCard payment={payment} />
 
       <div className="flex gap-2">
-        {/* <Link href={`/recurring-payments/edit-payment/${payment.id}`}>
-          <Button variant="secondary" className="bg-card-foreground" size="sm">
-            Edit
-          </Button>
-        </Link> */}
         <EditPaymentDrawer payment={payment} />
         <Button
           variant="secondary"
