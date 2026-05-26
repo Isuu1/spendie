@@ -7,7 +7,7 @@ import { useFutureBalanceContext } from "../context/FutureBalanceContext";
 import { AnimatePresence } from "motion/react";
 //Components
 import Modal from "@/shared/components/Modal";
-import DashboardRecurringPaymentsGrid from "@/features/recurring-payments/components/DashboardRecurringPaymentsGrid";
+import DashboardPaymentsGrid from "@/features/recurring-payments/components/DashboardPaymentsGrid";
 import PaymentSummaryItem from "./PaymentSummaryItem";
 
 const PaymentsSummary = () => {
@@ -40,7 +40,7 @@ const PaymentsSummary = () => {
       <AnimatePresence>
         {detailsType && (
           <Modal onClose={() => handleToggleDetails(null)}>
-            <DashboardRecurringPaymentsGrid
+            <DashboardPaymentsGrid
               type={detailsType}
               toggleDetails={handleToggleDetails}
               payments={

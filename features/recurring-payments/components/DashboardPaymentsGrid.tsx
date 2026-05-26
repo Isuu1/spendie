@@ -24,7 +24,7 @@ import { sortDashboardRecurringPayments } from "../lib/utils/sortDashboardRecurr
 //Hooks
 import { usePagination } from "@/shared/hooks/usePagination";
 
-type DashboardRecurringPaymentsGridProps = {
+type DashboardPaymentsGridProps = {
   type: "income" | "expense";
   toggleDetails: (type: "income" | "expense" | null) => void;
   payments: RecurringPayment[];
@@ -36,12 +36,12 @@ const activeIndicatorVariants = {
   expense: { x: "100%" },
 };
 
-const DashboardRecurringPaymentsGrid = ({
+const DashboardPaymentsGrid = ({
   type,
   toggleDetails,
   payments,
   selectedDate,
-}: DashboardRecurringPaymentsGridProps) => {
+}: DashboardPaymentsGridProps) => {
   const [sortingOption, setSortingOption] = useState<"name" | "date">("date");
 
   const sortedPayments = useMemo(() => {
@@ -144,4 +144,4 @@ const DashboardRecurringPaymentsGrid = ({
   );
 };
 
-export default DashboardRecurringPaymentsGrid;
+export default DashboardPaymentsGrid;
