@@ -7,7 +7,6 @@ import dayjs from "dayjs";
 import { useQueryClient } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
 //Components
 import Button from "@/shared/components/ui/Button";
 import Input from "@/shared/components/ui/Input";
@@ -23,6 +22,7 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
 import {
   categoryOptions,
+  RecurringPaymentFormValues,
   repeatOptions,
   typeOptions,
 } from "../types/recurringPaymentForm";
@@ -41,7 +41,7 @@ const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
 
   const queryClient = useQueryClient();
 
-  const form = useForm<z.infer<typeof recurringPaymentSchema>>({
+  const form = useForm<RecurringPaymentFormValues>({
     resolver: zodResolver(recurringPaymentSchema),
     defaultValues: {
       name: payment.name,
@@ -54,7 +54,7 @@ const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
     mode: "onChange",
   });
 
-  function onSubmit(data: z.infer<typeof recurringPaymentSchema>) {
+  function onSubmit(data: RecurringPaymentFormValues) {
     startTransition(async () => {
       const result = await editRecurringPayment(data, payment.id);
 

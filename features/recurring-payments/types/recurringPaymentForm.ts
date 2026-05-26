@@ -1,3 +1,6 @@
+import z from "zod";
+import { recurringPaymentSchema } from "../schemas/recurringPaymentSchema";
+
 export const repeatOptions = [
   { label: "Monthly", value: "Monthly" },
   { label: "Weekly", value: "Weekly" },
@@ -19,3 +22,4 @@ export const categoryOptions = [
 export type Repeat = (typeof repeatOptions)[number]["value"];
 export type PaymentType = (typeof typeOptions)[number]["value"];
 export type Category = (typeof categoryOptions)[number]["value"];
+export type RecurringPaymentFormValues = z.infer<typeof recurringPaymentSchema>;

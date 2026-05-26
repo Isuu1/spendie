@@ -10,6 +10,8 @@ import { useSorting } from "@/shared/hooks/useSorting";
 //Config
 import { sortingOptions } from "../config/sortingOptions";
 import AddPaymentDrawer from "./AddPaymentDrawer";
+import { CreditCard } from "lucide-react";
+import { paymentTemplates } from "../config/paymentTemplates";
 
 //Extraact only label and value for SelectInput
 const selectOptions = sortingOptions.map(({ label, value }) => ({
@@ -26,7 +28,7 @@ const PaymentsGrid = () => {
     "Date",
   );
 
-  //const hasPayments = data.length > 0
+  const hasPayments = data.length > 0;
 
   if (error)
     return (
@@ -56,12 +58,30 @@ const PaymentsGrid = () => {
           return <PaymentItem key={payment.id} payment={payment} />;
         })}
       </div>
+      {!hasPayments && (
+        <div className="self-center flex flex-col items-center gap-4 text-center">
+          <h3 className="flex items-center gap-2">
+            <CreditCard />
+            Track your recurring payments
+          </h3>
+          <p>
+            Add subscriptions, bills, salaries, and other repeating payments to
+            automatically monitor future income and expenses.
+          </p>
+          <AddPaymentDrawer />
+          <h3>Popular</h3>
+          <div className="flex gap-2">
+            {paymentTemplates.map((template) => (
+              <AddPaymentDrawer
+                key={template.name}
+                defaultValues={template}
+                triggerName={template.name}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
-
-    //   {!hasPayments && !error && (
-    //     <p className={styles.noPayments}>No recurring payments found.</p>
-    //   )}
-    // </div>
   );
 };
 

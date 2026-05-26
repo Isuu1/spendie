@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
 import dayjs from "dayjs";
 import { useQueryClient } from "@tanstack/react-query";
 //Components
@@ -20,6 +19,7 @@ import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/a
 //Types
 import {
   categoryOptions,
+  RecurringPaymentFormValues,
   repeatOptions,
   typeOptions,
 } from "@/features/recurring-payments/types/recurringPaymentForm";
@@ -32,27 +32,28 @@ import { FolderPen, Wallet } from "lucide-react";
 
 type AddPaymentFormProps = {
   onCancel: () => void;
+  defaultValues?: Partial<RecurringPaymentFormValues>;
 };
 
-const AddPaymentForm = ({ onCancel }: AddPaymentFormProps) => {
+const AddPaymentForm = ({ onCancel, defaultValues }: AddPaymentFormProps) => {
   const router = useRouter();
 
   const queryClient = useQueryClient();
 
-  const form = useForm<z.infer<typeof recurringPaymentSchema>>({
+  const form = useForm<RecurringPaymentFormValues>({
     resolver: zodResolver(recurringPaymentSchema),
     defaultValues: {
-      name: "",
+      name: defaultValues?.name || "",
       repeat: repeatOptions[0].value,
-      type: typeOptions[0].value,
-      category: categoryOptions[0].value,
+      type: defaultValues?.type || typeOptions[0].value,
+      category: defaultValues?.category || categoryOptions[0].value,
       amount: undefined,
       next_payment_date: undefined,
     },
     mode: "onChange",
   });
 
-  function onSubmit(data: z.infer<typeof recurringPaymentSchema>) {
+  function onSubmit(data: RecurringPaymentFormValues) {
     startTransition(async () => {
       const result = await addRecurringPayment(data);
 

@@ -12,8 +12,18 @@ import Button from "@/shared/components/ui/Button";
 import AddPaymentForm from "./AddPaymentForm";
 //Icons
 import { IdCard } from "lucide-react";
+//Types
+import { RecurringPaymentFormValues } from "../types/recurringPaymentForm";
 
-const AddPaymentDrawer = () => {
+type AddPaymentDrawerProps = {
+  defaultValues?: Partial<RecurringPaymentFormValues>;
+  triggerName?: string;
+};
+
+const AddPaymentDrawer = ({
+  defaultValues,
+  triggerName,
+}: AddPaymentDrawerProps) => {
   const [open, setOpen] = React.useState(false);
 
   const onCancel = () => {
@@ -24,7 +34,7 @@ const AddPaymentDrawer = () => {
     <Drawer direction="right" open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button icon={<IdCard />} iconPosition="left" variant="secondary">
-          Add payment
+          {triggerName || "Add payment"}
         </Button>
       </DrawerTrigger>
       <DrawerContent className="w-fit">
@@ -34,7 +44,7 @@ const AddPaymentDrawer = () => {
             Create a new recurring payment definition.
           </DrawerDescription>
         </DrawerHeader>
-        <AddPaymentForm onCancel={onCancel} />
+        <AddPaymentForm onCancel={onCancel} defaultValues={defaultValues} />
       </DrawerContent>
     </Drawer>
   );
