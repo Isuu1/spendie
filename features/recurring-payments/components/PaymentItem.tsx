@@ -13,6 +13,7 @@ import EditPaymentDrawer from "./EditPaymentDrawer";
 import { useDeletePayment } from "../hooks/useDeletePayment";
 //Animations
 import { AnimatePresence } from "motion/react";
+import { useChangePaymentStatus } from "../hooks/useChangePaymentStatus";
 
 type PaymentItemProps = {
   payment: RecurringPayment;
@@ -23,11 +24,16 @@ const PaymentItem = ({ payment }: PaymentItemProps) => {
     string | null
   >(null);
 
-  const { mutate } = useDeletePayment();
+  const { mutate: deletePayment } = useDeletePayment();
+  const { mutate: changeStatus } = useChangePaymentStatus();
 
   const handleDeletePayment = async (paymentId: string) => {
-    mutate(paymentId);
+    deletePayment(paymentId);
     setConfirmDeletePayment(null);
+  };
+
+  const handlePaymentStatusToggle = () => {
+    changeStatus({ paymentId: payment.id, isPaused: !payment.is_paused });
   };
 
   return (
@@ -44,8 +50,13 @@ const PaymentItem = ({ payment }: PaymentItemProps) => {
         >
           Delete
         </Button>
-        <Button variant="secondary" className="bg-card-foreground" size="sm">
-          Pause
+        <Button
+          variant="secondary"
+          className="bg-card-foreground"
+          size="sm"
+          onClick={handlePaymentStatusToggle}
+        >
+          {payment.is_paused ? "Resume" : "Pause"}
         </Button>
         <Link href={`/recurring-payments/history/${payment.id}`}>
           <Button variant="secondary" className="bg-card-foreground" size="sm">
