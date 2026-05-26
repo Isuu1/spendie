@@ -17,13 +17,11 @@ import { useMarkAsPaid } from "../hooks/useMarkAsPaid";
 //Icons
 import { EllipsisVertical } from "lucide-react";
 
-type RecurringPaymentItemProps = {
+type DashboardPaymentItem = {
   payment: RecurringPayment;
 };
 
-const DashboardRecurringPaymentItem = ({
-  payment,
-}: RecurringPaymentItemProps) => {
+const DashboardPaymentItem = ({ payment }: DashboardPaymentItem) => {
   const { mutate, isPending, variables } = useMarkAsPaid();
 
   const handleMarkAsPaid = async (payment: RecurringPayment) => {
@@ -71,4 +69,4 @@ const DashboardRecurringPaymentItem = ({
   );
 };
 
-export default DashboardRecurringPaymentItem;
+export default DashboardPaymentItem;
