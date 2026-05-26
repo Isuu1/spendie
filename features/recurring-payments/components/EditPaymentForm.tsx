@@ -31,11 +31,12 @@ import { recurringPaymentSchema } from "../schemas/recurringPaymentSchema";
 //Icons
 import { FolderPen, Wallet } from "lucide-react";
 
-interface EditPaymentFormProps {
+type EditPaymentFormProps = {
   payment: RecurringPayment;
-}
+  onCancel: () => void;
+};
 
-const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
+const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
   const router = useRouter();
 
   const queryClient = useQueryClient();
@@ -62,7 +63,8 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
         await queryClient.invalidateQueries({
           queryKey: ["recurringPayments"],
         });
-        router.push("/recurring-payments");
+        onCancel();
+        router.refresh();
       } else {
         toast.error(result.error || "Something went wrong", toastStyle);
       }
@@ -182,7 +184,7 @@ const EditPaymentForm: React.FC<EditPaymentFormProps> = ({ payment }) => {
             variant="secondary"
             size="sm"
             type="button"
-            onClick={() => router.push("/recurring-payments")}
+            onClick={onCancel}
           >
             Cancel
           </Button>
