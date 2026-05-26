@@ -36,9 +36,11 @@ const PaymentCard = ({ payment }: PaymentCardProps) => {
 
       <div className="flex justify-between mt-2 mb-4">
         <span>Status</span>
-        <span className="text-green-500 font-medium">
-          {payment.is_paused ? "Paused" : "Active"}
-        </span>
+        {payment.is_paused ? (
+          <span className="text-red-500">Paused</span>
+        ) : (
+          <span className="text-green-500">Active</span>
+        )}
       </div>
     </div>
   );
