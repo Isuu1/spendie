@@ -3,6 +3,8 @@ export type RecurringPaymentBase = {
   user_id: string;
   name: string;
   amount: number;
+  category: string;
+  is_paused: boolean;
 };
 
 //Recurring payment type stored in the database - servers as a skeleton
@@ -17,6 +19,7 @@ export type RecurringPayment = RecurringPaymentBase & {
 //History of payments made - stored in a separate table
 export type RecurringPaymentHistory = RecurringPaymentBase & {
   id: string;
+  payment_id: string;
   payment_date: string;
   paid_date: string;
   type: string;

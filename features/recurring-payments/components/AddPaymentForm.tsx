@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
 import dayjs from "dayjs";
 import { useQueryClient } from "@tanstack/react-query";
 //Components
@@ -19,6 +18,8 @@ import InputError from "@/shared/components/ui/InputError";
 import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/addRecurringPayment";
 //Types
 import {
+  categoryOptions,
+  RecurringPaymentFormValues,
   repeatOptions,
   typeOptions,
 } from "@/features/recurring-payments/types/recurringPaymentForm";
@@ -29,24 +30,30 @@ import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/re
 //Icons
 import { FolderPen, Wallet } from "lucide-react";
 
-const AddPaymentForm: React.FC = () => {
+type AddPaymentFormProps = {
+  onCancel: () => void;
+  defaultValues?: Partial<RecurringPaymentFormValues>;
+};
+
+const AddPaymentForm = ({ onCancel, defaultValues }: AddPaymentFormProps) => {
   const router = useRouter();
 
   const queryClient = useQueryClient();
 
-  const form = useForm<z.infer<typeof recurringPaymentSchema>>({
+  const form = useForm<RecurringPaymentFormValues>({
     resolver: zodResolver(recurringPaymentSchema),
     defaultValues: {
-      name: "",
+      name: defaultValues?.name || "",
       repeat: repeatOptions[0].value,
-      type: typeOptions[0].value,
+      type: defaultValues?.type || typeOptions[0].value,
+      category: defaultValues?.category || categoryOptions[0].value,
       amount: undefined,
       next_payment_date: undefined,
     },
     mode: "onChange",
   });
 
-  function onSubmit(data: z.infer<typeof recurringPaymentSchema>) {
+  function onSubmit(data: RecurringPaymentFormValues) {
     startTransition(async () => {
       const result = await addRecurringPayment(data);
 
@@ -55,7 +62,8 @@ const AddPaymentForm: React.FC = () => {
         await queryClient.invalidateQueries({
           queryKey: ["recurringPayments"],
         });
-        router.push("/recurring-payments");
+        onCancel();
+        router.refresh();
       } else {
         toast.error(result.error || "Something went wrong", toastStyle);
       }
@@ -63,21 +71,42 @@ const AddPaymentForm: React.FC = () => {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="w-md">
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="w-md bg-card p-6 rounded-2xl"
+    >
       <FieldGroup>
-        <div className="flex flex-col gap-3">
-          <Input
-            {...form.register("name")}
-            id="name"
-            type="text"
-            label="Payment Name"
-            icon={<FolderPen />}
-            placeholder="Payment"
-            error={form.formState.errors.name}
-          />
-          <InputError error={form.formState.errors.name} />
-        </div>
+        <Field orientation="horizontal">
+          <div className="flex flex-col gap-3 flex-1">
+            <Input
+              {...form.register("name")}
+              id="name"
+              type="text"
+              label="Payment Name"
+              icon={<FolderPen />}
+              placeholder="Payment"
+              error={form.formState.errors.name}
+            />
+            <InputError error={form.formState.errors.name} />
+          </div>
 
+          <Controller
+            control={form.control}
+            name="category"
+            render={({ field, fieldState }) => (
+              <div className="flex flex-col gap-3 flex-1">
+                <SelectInput
+                  {...field}
+                  id="category"
+                  label="Category"
+                  selectOptions={categoryOptions}
+                  error={fieldState.error}
+                />
+                <InputError error={form.formState.errors.category} />
+              </div>
+            )}
+          />
+        </Field>
         <Field
           orientation="horizontal"
           className="flex justify-between gap-4 items-start"
@@ -154,7 +183,7 @@ const AddPaymentForm: React.FC = () => {
             variant="secondary"
             size="sm"
             type="button"
-            onClick={() => router.push("/recurring-payments")}
+            onClick={onCancel}
           >
             Cancel
           </Button>

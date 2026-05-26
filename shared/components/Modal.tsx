@@ -34,23 +34,15 @@ const Modal: React.FC<Modal> = ({ children, onClose }) => {
     modalRootRef.current = portalNode;
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalInnerRef.current &&
-        !modalInnerRef.current.contains(event.target as Node)
-      ) {
-        onClose?.();
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [onClose]);
-
   const modalContent = (
-    <div className={styles.confirmActionContainer}>
+    <div
+      className={styles.confirmActionContainer}
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose?.();
+        }
+      }}
+    >
       <motion.div
         className={styles.innerContainer}
         ref={modalInnerRef}

@@ -9,6 +9,9 @@ export function populateRecurringPayments(
 
   //Create occurrences for each payment up to the target date from the first payment date
   payments.forEach((payment) => {
+    // Skip paused payments
+    if (payment.is_paused) return;
+
     let occurrence = dayjs(payment.next_payment_date);
 
     while (

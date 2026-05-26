@@ -1,6 +1,6 @@
 "use client";
 
-import RecurringPaymentsHistory from "@/features/recurring-payments/components/RecurringPaymentsHistory";
+import PaymentsHistory from "@/features/recurring-payments/components/PaymentsHistory";
 import { useRecurringPayments } from "@/features/recurring-payments/hooks/useRecurringPayments";
 import BackButton from "@/shared/components/BackButton";
 import { use } from "react";
@@ -22,7 +22,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
       <h3>
         <strong>{payment.name}</strong> payment history
       </h3>
-      <RecurringPaymentsHistory payment={payment} />
+      <PaymentsHistory payment={payment} />
     </>
   );
 }

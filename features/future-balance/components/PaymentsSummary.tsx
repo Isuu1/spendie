@@ -7,7 +7,7 @@ import { useFutureBalanceContext } from "../context/FutureBalanceContext";
 import { AnimatePresence } from "motion/react";
 //Components
 import Modal from "@/shared/components/Modal";
-import DashboardRecurringPaymentsGrid from "@/features/recurring-payments/components/DashboardRecurringPaymentsGrid";
+import DashboardPaymentsGrid from "@/features/recurring-payments/components/DashboardPaymentsGrid";
 import PaymentSummaryItem from "./PaymentSummaryItem";
 
 const PaymentsSummary = () => {
@@ -18,6 +18,7 @@ const PaymentsSummary = () => {
     expenseTotal,
     detailsType,
     setDetailsType,
+    selectedDate,
   } = useFutureBalanceContext();
 
   if (incomePayments.length === 0 && expensePayments.length === 0) {
@@ -39,12 +40,13 @@ const PaymentsSummary = () => {
       <AnimatePresence>
         {detailsType && (
           <Modal onClose={() => handleToggleDetails(null)}>
-            <DashboardRecurringPaymentsGrid
+            <DashboardPaymentsGrid
               type={detailsType}
               toggleDetails={handleToggleDetails}
               payments={
                 detailsType === "income" ? incomePayments : expensePayments
               }
+              selectedDate={selectedDate}
             />
           </Modal>
         )}

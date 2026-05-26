@@ -1,12 +1,16 @@
 "use client";
 
+import dayjs from "dayjs";
 //Types
 import { RecurringPayment } from "../types/recurringPayment";
-//Styles
-import styles from "@/features/recurring-payments/components/PaymentStatus.module.scss";
-import dayjs from "dayjs";
+import { cn } from "@/shared/lib/cn";
 
-const PaymentStatus = ({ payment }: { payment: RecurringPayment }) => {
+type PaymentStatusProps = {
+  payment: RecurringPayment;
+  className?: string;
+};
+
+const PaymentStatus = ({ payment, className }: PaymentStatusProps) => {
   const today = dayjs();
   const paymentDate = dayjs(payment.next_payment_date);
   const daysDiff = paymentDate.diff(today, "days");
@@ -24,8 +28,8 @@ const PaymentStatus = ({ payment }: { payment: RecurringPayment }) => {
   };
 
   return (
-    <div className={styles.statusWrapper}>
-      <span className={styles.status}>{daysDifference()}</span>
+    <div className={cn("flex items-center gap-2 text-sm", className)}>
+      <span className="text-accent font-bold">{daysDifference()}</span>
     </div>
   );
 };

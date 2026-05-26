@@ -35,7 +35,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <FieldLabel htmlFor={id}>{label}</FieldLabel>
         <InputGroup
           className={cn(
-            "bg-bg-surface-dark rounded-md border transition-all duration-200 ease-in-out outline-none",
+            "bg-input rounded-md border transition-all duration-200 ease-in-out outline-none",
             "border-transparent!",
             "focus-within:ring-2 focus-within:ring-bg-bg-surface-dark-hover focus-within:border-bg-surface-dark-hover",
             className,
