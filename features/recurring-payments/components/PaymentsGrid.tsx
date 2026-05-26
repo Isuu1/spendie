@@ -17,7 +17,7 @@ const selectOptions = sortingOptions.map(({ label, value }) => ({
   value,
 }));
 
-const RecurringPaymentsGrid: React.FC = () => {
+const PaymentsGrid = () => {
   const { data = [], error } = useRecurringPayments();
 
   const { sortedItems, sortOption, handleSortingChange } = useSorting(
@@ -65,4 +65,4 @@ const RecurringPaymentsGrid: React.FC = () => {
   );
 };
 
-export default RecurringPaymentsGrid;
+export default PaymentsGrid;
