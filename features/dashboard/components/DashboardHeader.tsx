@@ -23,7 +23,7 @@ const DashboardHeader = () => {
       <div className="[grid-area:header] flex items-center justify-end gap-4 py-4 px-2">
         <h2
           className={cn(
-            "text-accent absolute top-5 left-22 z-99",
+            "text-accent absolute top-5 left-22 z-48",
             "max-sm:hidden",
           )}
         >
