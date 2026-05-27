@@ -8,6 +8,7 @@ import ChangeAvatarForm from "./ChangeAvatarForm";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 //Hooks
 import { useUser } from "../hooks/useUser";
+import { Separator } from "@/components/ui/separator";
 
 const AccountDetails: React.FC = () => {
   const { data: user, error } = useUser();
@@ -25,7 +26,7 @@ const AccountDetails: React.FC = () => {
   }
 
   return (
-    <div className="grid grid-cols-[1fr_2fr] gap-12">
+    <div className="grid grid-cols-[1fr_1.5fr] gap-12 bg-card p-6 rounded-2xl">
       <div className="flex flex-col gap-3">
         <p className="text-lg font-bold">Profile</p>
         <p>Set up your profile details.</p>
@@ -35,7 +36,7 @@ const AccountDetails: React.FC = () => {
         <ChangeDetailsForm user={user} />
         <ChangeAvatarForm user={user} />
       </div>
-
+      <Separator className="col-span-2 bg-card-foreground" />
       <div className="flex flex-col gap-3">
         <p className="text-lg font-bold">Password</p>
         <p>Change your password.</p>

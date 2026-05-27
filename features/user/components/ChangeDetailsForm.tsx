@@ -56,7 +56,7 @@ const ChangeDetailsForm = ({ user }: ChangeDetailsFormProps) => {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="w-lg">
+    <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
       <FieldGroup>
         <Field orientation="horizontal" className="flex items-start">
           <div className="flex flex-col gap-3 flex-1">
