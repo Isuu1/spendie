@@ -3,46 +3,43 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import clsx from "clsx";
-//Styles
-import styles from "./UserLayout.module.scss";
 //Icons
 import { FaUser } from "react-icons/fa";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
+import { cn } from "@/shared/lib/cn";
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
   return (
-    <div className={styles.userLayout}>
-      <ul className={styles.menu}>
-        <li>
-          <Link
-            href="/settings/user/account-details"
-            className={clsx(styles.item, {
-              [styles.active]: pathname.includes("account-details"),
-            })}
-          >
-            <i className={styles.icon}>
-              <FaUser />
-            </i>
-            <span>Account details</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/settings/dashboard-settings"
-            className={clsx(styles.item, {
-              [styles.active]: pathname.includes("dashboard-settings"),
-            })}
-          >
-            <i className={styles.icon}>
-              <TbLayoutDashboardFilled />
-            </i>
-            <span>Dashboard settings</span>
-          </Link>
-        </li>
-      </ul>
+    <div className="flex flex-col gap-8 mt-2">
+      <nav className="relative flex gap-4 pr-8 h-full max-lg:flex-row">
+        <Link
+          href="/settings/user/account-details"
+          className={cn(
+            "flex gap-2 items-center bg-card whitespace-nowrap px-3 py-2 rounded-lg",
+            pathname.includes("account-details") && "bg-accent",
+          )}
+        >
+          <span>
+            <FaUser />
+          </span>
+          <span>Account details</span>
+        </Link>
+        <Link
+          href="/settings/dashboard-settings"
+          className={cn(
+            "flex gap-2 items-center bg-card whitespace-nowrap px-3 py-2 rounded-lg",
+            pathname.includes("dashboard-settings") && "bg-accent",
+          )}
+        >
+          <span>
+            <TbLayoutDashboardFilled />
+          </span>
+          <span>Dashboard settings</span>
+        </Link>
+      </nav>
+
       <>{children}</>
     </div>
   );
