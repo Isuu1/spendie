@@ -3,9 +3,6 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-//Icons
-import { FaUser } from "react-icons/fa";
-import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { cn } from "@/shared/lib/cn";
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
@@ -17,25 +14,19 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
         <Link
           href="/settings/user/account-details"
           className={cn(
-            "flex gap-2 items-center bg-card whitespace-nowrap px-3 py-2 rounded-lg",
+            "flex gap-2 items-center bg-card whitespace-nowrap px-4 py-2 rounded-full",
             pathname.includes("account-details") && "bg-accent",
           )}
         >
-          <span>
-            <FaUser />
-          </span>
           <span>Account details</span>
         </Link>
         <Link
           href="/settings/dashboard-settings"
           className={cn(
-            "flex gap-2 items-center bg-card whitespace-nowrap px-3 py-2 rounded-lg",
+            "flex gap-2 items-center bg-card whitespace-nowrap px-4 py-2 rounded-full",
             pathname.includes("dashboard-settings") && "bg-accent",
           )}
         >
-          <span>
-            <TbLayoutDashboardFilled />
-          </span>
           <span>Dashboard settings</span>
         </Link>
       </nav>
