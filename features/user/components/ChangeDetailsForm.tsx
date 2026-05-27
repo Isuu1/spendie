@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 import Input from "@/shared/components/ui/Input";
 import Button from "@/shared/components/ui/Button";
 import DateInput from "@/shared/components/ui/DateInput";
-import { FieldGroup } from "@/components/ui/field";
+import { Field, FieldGroup } from "@/components/ui/field";
 import InputError from "@/shared/components/ui/InputError";
 //Types
 import { UserProfile } from "@/features/user/types/user";
@@ -56,51 +56,61 @@ const ChangeDetailsForm = ({ user }: ChangeDetailsFormProps) => {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="w-md">
+    <form onSubmit={form.handleSubmit(onSubmit)} className="w-lg">
       <FieldGroup>
-        <Input
-          {...form.register("name")}
-          id="name"
-          type="text"
-          label="Name"
-          icon={<User />}
-          error={form.formState.errors.name}
-        />
-        <InputError error={form.formState.errors.name} />
-        <Input
-          {...form.register("surname")}
-          id="surname"
-          type="text"
-          label="Surname"
-          icon={<User />}
-          error={form.formState.errors.surname}
-        />
-        <InputError error={form.formState.errors.surname} />
-        <Controller
-          control={form.control}
-          name="dob"
-          render={({ field, fieldState }) => (
-            <div>
-              <DateInput
-                {...field}
-                id="dob"
-                label="Date of Birth"
-                disabled={{ after: new Date() }}
-                error={fieldState.error}
-              />
-              <InputError error={fieldState.error} />
-            </div>
-          )}
-        />
-        <Input
-          {...form.register("email")}
-          id="email"
-          type="email"
-          label="Email"
-          icon={<Mail />}
-          error={form.formState.errors.email}
-        />
-        <InputError error={form.formState.errors.email} />
+        <Field orientation="horizontal" className="flex items-start">
+          <div className="flex flex-col gap-3 flex-1">
+            <Input
+              {...form.register("name")}
+              id="name"
+              type="text"
+              label="Name"
+              icon={<User />}
+              error={form.formState.errors.name}
+            />
+            <InputError error={form.formState.errors.name} />
+          </div>
+          <div className="flex flex-col gap-3 flex-1">
+            <Input
+              {...form.register("surname")}
+              id="surname"
+              type="text"
+              label="Surname"
+              icon={<User />}
+              error={form.formState.errors.surname}
+            />
+            <InputError error={form.formState.errors.surname} />
+          </div>
+        </Field>
+        <Field orientation="horizontal" className="flex items-start">
+          <Controller
+            control={form.control}
+            name="dob"
+            render={({ field, fieldState }) => (
+              <div className="flex flex-col gap-3">
+                <DateInput
+                  {...field}
+                  id="dob"
+                  label="Date of Birth"
+                  disabled={{ after: new Date() }}
+                  error={fieldState.error}
+                />
+                <InputError error={fieldState.error} />
+              </div>
+            )}
+          />
+          <div className="flex flex-col gap-3 flex-1">
+            <Input
+              {...form.register("email")}
+              id="email"
+              type="email"
+              label="Email"
+              icon={<Mail />}
+              error={form.formState.errors.email}
+            />
+            <InputError error={form.formState.errors.email} />
+          </div>
+        </Field>
         <div className="flex justify-end gap-2 mt-4">
           {form.formState.isDirty && (
             <Button
