@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
 
-const UserLayout = ({ children }: { children: React.ReactNode }) => {
+const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
   return (
@@ -36,4 +36,4 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default UserLayout;
+export default SettingsLayout;
