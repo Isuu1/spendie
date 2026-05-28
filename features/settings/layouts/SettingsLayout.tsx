@@ -12,7 +12,7 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex flex-col gap-8 mt-2">
       <nav className="relative flex gap-4 pr-8 h-full max-lg:flex-row">
         <Link
-          href="/settings/user/account-details"
+          href="/settings/account-details"
           className={cn(
             "flex gap-2 items-center bg-card whitespace-nowrap px-4 py-2 rounded-full",
             pathname.includes("account-details") && "bg-accent",
