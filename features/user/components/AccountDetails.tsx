@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-//Styles
-import styles from "./AccountDetails.module.scss";
 //Components
 import ChangeDetailsForm from "./ChangeDetailsForm";
 import ChangePasswordForm from "./ChangePasswordForm";
@@ -10,6 +8,7 @@ import ChangeAvatarForm from "./ChangeAvatarForm";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 //Hooks
 import { useUser } from "../hooks/useUser";
+import { Separator } from "@/components/ui/separator";
 
 const AccountDetails: React.FC = () => {
   const { data: user, error } = useUser();
@@ -27,19 +26,25 @@ const AccountDetails: React.FC = () => {
   }
 
   return (
-    <div className={styles.accountDetails}>
-      <section className={styles.section}>
-        <h3>Profile picture</h3>
-        <ChangeAvatarForm user={user} />
-      </section>
-      <section className={styles.section}>
-        <h3>Account details</h3>
+    <div className="grid grid-cols-[1fr_1.5fr] gap-12 bg-card p-6 rounded-2xl">
+      <div className="flex flex-col gap-3">
+        <p className="text-lg font-bold">Profile</p>
+        <p>Set up your profile details.</p>
+      </div>
+
+      <div className="flex gap-12">
         <ChangeDetailsForm user={user} />
-      </section>
-      <section className={styles.section}>
-        <h3>Password</h3>
+        <ChangeAvatarForm user={user} />
+      </div>
+      <Separator className="col-span-2 bg-card-foreground" />
+      <div className="flex flex-col gap-3">
+        <p className="text-lg font-bold">Password</p>
+        <p>Change your password.</p>
+      </div>
+
+      <div>
         <ChangePasswordForm user={user} />
-      </section>
+      </div>
     </div>
   );
 };

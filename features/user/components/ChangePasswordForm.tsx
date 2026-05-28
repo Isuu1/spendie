@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 //Components
 import Input from "@/shared/components/ui/Input";
 import Button from "@/shared/components/ui/Button";
-import { FieldGroup } from "@/components/ui/field";
+import { Field, FieldGroup } from "@/components/ui/field";
 //Types
 import { UserProfile } from "@/features/user/types/user";
 
@@ -39,20 +39,22 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = () => {
   });
 
   return (
-    <form>
+    <form className="w-full">
       <FieldGroup>
-        <Input
-          {...form.register("newPassword")}
-          id="newPassword"
-          type="text"
-          label="New password"
-        />
-        <Input
-          {...form.register("confirmPassword")}
-          id="confirmPassword"
-          type="email"
-          label="Confirm password"
-        />
+        <Field orientation="horizontal">
+          <Input
+            {...form.register("newPassword")}
+            id="newPassword"
+            type="text"
+            label="New password"
+          />
+          <Input
+            {...form.register("confirmPassword")}
+            id="confirmPassword"
+            type="email"
+            label="Confirm password"
+          />
+        </Field>
         <div className="flex justify-end gap-2 mt-4">
           <Button
             variant="default"
