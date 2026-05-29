@@ -44,7 +44,7 @@ const DashboardSidebarContent = ({
     <>
       <ul
         className={cn(
-          "box-border z-4 relative flex flex-col gap-6 list-none grow mt-13",
+          "box-border z-4 relative flex flex-col gap-4 list-none grow",
           menuClassName,
         )}
       >
@@ -53,8 +53,9 @@ const DashboardSidebarContent = ({
             <Link
               href={item.href}
               className={cn(
-                "relative cursor-pointer flex gap-4 items-center whitespace-nowrap transition-colors duration-150 ease-in-out",
-                pathname.startsWith(item.match) && "text-accent!",
+                "relative cursor-pointer flex gap-3 items-center whitespace-nowrap transition-colors duration-150 ease-in-out",
+                "px-3 py-2 rounded-lg",
+                pathname.startsWith(item.match) && "bg-accent!",
                 "hover:text-accent!",
               )}
             >
@@ -76,7 +77,7 @@ const DashboardSidebarContent = ({
           className={cn(
             "relative cursor-pointer flex gap-4 items-center whitespace-nowrap transition-colors duration-150 ease-in-out",
             "hover:text-accent!",
-            "mt-auto",
+            "px-3 py-2",
           )}
           onClick={() => setSignoutClicked(true)}
         >

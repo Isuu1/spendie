@@ -16,8 +16,8 @@ const DashboardLayoutWrapper: React.FC<DashboardLayoutWrapperProps> = ({
     <div
       className={cn(
         "relative overflow-hidden h-full grid",
-        "grid-rows-[auto_1fr] grid-cols-[minmax(65px,auto)_1fr]",
-        '[grid-template-areas:"header_header""sidebar_main"]',
+        "grid-rows-[auto_1fr] grid-cols-[minmax(100px,auto)_1fr]",
+        '[grid-template-areas:"sidebar_header""sidebar_main"]',
         "max-sm:grid-cols-1",
       )}
     >
@@ -25,7 +25,7 @@ const DashboardLayoutWrapper: React.FC<DashboardLayoutWrapperProps> = ({
       {sidebar}
       <div
         className={cn(
-          "bg-background relative grid-area-main p-5 h-full w-full flex flex-col gap-5 rounded-lg",
+          "bg-background relative grid-area-main h-full w-full flex flex-col gap-2 rounded-lg",
           "overflow-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]",
           "box-border z-1 relative [grid-area:main] h-full",
         )}
