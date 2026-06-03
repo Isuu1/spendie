@@ -16,22 +16,23 @@ const DashboardLayoutWrapper: React.FC<DashboardLayoutWrapperProps> = ({
     <div
       className={cn(
         "relative overflow-hidden h-full grid",
-        "grid-rows-[auto_1fr] grid-cols-[minmax(100px,auto)_1fr]",
-        '[grid-template-areas:"sidebar_header""sidebar_main"]',
-        "max-sm:grid-cols-1",
+        "grid-cols-[minmax(100px,auto)_1fr] grid-rows-[auto_1fr]",
       )}
     >
+      <aside className="relative row-start-2 col-start-1 h-full">
+        {sidebar}
+      </aside>
       {header}
-      {sidebar}
-      <div
+      <main
         className={cn(
-          "bg-background relative grid-area-main h-full w-full flex flex-col gap-2 rounded-lg",
+          "bg-background relative h-full w-full flex flex-col gap-2 rounded-lg",
           "overflow-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]",
-          "box-border z-1 relative [grid-area:main] h-full",
+          "box-border z-1 relative h-full",
         )}
       >
         {children}
-      </div>
+      </main>
+      {/* <div className="bg-card">Recent activities</div> */}
     </div>
   );
 };

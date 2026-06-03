@@ -19,7 +19,7 @@ const PaymentSummaryItem = ({
   return (
     <div
       className={cn(
-        "flex items-center gap-2 cursor-pointer w-full rounded-lg p-2 bg-card",
+        "flex items-center gap-2 cursor-pointer w-full rounded-lg p-2 bg-[linear-gradient(120deg,rgba(61,64,71,1)_0%,rgba(46,49,58,1)_100%)]",
       )}
       onClick={() => handleToggleDetails(type)}
     >

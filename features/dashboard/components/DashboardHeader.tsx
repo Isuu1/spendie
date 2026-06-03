@@ -20,15 +20,15 @@ const DashboardHeader = () => {
           <DashboardMobileSidebar onClose={() => setMobileSidebarOpen(false)} />
         )}
       </AnimatePresence>
-      <div className="[grid-area:header] flex items-center justify-end gap-4 py-4 px-2 bg-card">
-        {/* <h2
+      <header className="row-start-1 col-span-3 flex items-center justify-end gap-4 py-4 px-2">
+        <h2
           className={cn(
             "text-accent absolute top-5 left-5 z-48",
             "max-sm:hidden",
           )}
         >
           Spendie.
-        </h2> */}
+        </h2>
         <span
           className={cn(
             "relative cursor-pointer p-2 rounded-md bg-bg-surface transition-colors",
@@ -41,7 +41,7 @@ const DashboardHeader = () => {
         </span>
         <span
           className={cn(
-            "relative cursor-pointer p-2 rounded-md bg-background transition-colors",
+            "relative cursor-pointer p-2 rounded-md bg-card transition-colors",
             "hover:bg-card-foreground",
           )}
         >
@@ -49,7 +49,7 @@ const DashboardHeader = () => {
           <span className="absolute -bottom-1 -right-1.5 text-xs bg-accent rounded-full w-3 h-3"></span>
         </span>
         <UserProfileCard />
-      </div>
+      </header>
     </>
   );
 };
