@@ -1,26 +1,18 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React from "react";
-import { IoMdArrowRoundBack } from "react-icons/io";
+import { MoveLeft } from "lucide-react";
 
-//Styles
-import styles from "./BackButton.module.scss";
-
-interface BackButtonProps {
-  text?: string;
-}
-
-const BackButton: React.FC<BackButtonProps> = ({ text }) => {
+const BackButton = () => {
   const router = useRouter();
 
   return (
-    <div className={styles.backButton} onClick={() => router.back()}>
-      <i className={styles.icon}>
-        <IoMdArrowRoundBack />
-      </i>
-      <p>{text}</p>
-    </div>
+    <span
+      className="w-fit cursor-pointer hover:text-accent transition-colors duration-200"
+      onClick={() => router.back()}
+    >
+      <MoveLeft size={30} />
+    </span>
   );
 };
 
