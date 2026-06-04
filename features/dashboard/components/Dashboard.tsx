@@ -29,10 +29,7 @@ const Dashboard = () => {
 
   if (error)
     return (
-      <ErrorMessage
-        variant="dashboard"
-        message="Failed to load your account settings from the server."
-      />
+      <ErrorMessage message="Failed to load your account settings from the server." />
     );
 
   const layout: DashboardLayoutItem[] = Array.isArray(

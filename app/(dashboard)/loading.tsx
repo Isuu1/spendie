@@ -4,16 +4,7 @@ import LoadingSpinner from "@/shared/components/LoadingSpinner";
 
 export default function Page() {
   return (
-    <div
-      style={{
-        position: "absolute",
-        top: "200px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
+    <div className="absolute top-50 left-1/2 transform -translate-x-1/2 flex justify-center">
       <LoadingSpinner />
     </div>
   );

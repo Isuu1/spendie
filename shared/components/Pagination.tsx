@@ -1,31 +1,29 @@
 import React from "react";
-//Styles
-import styles from "./Pagination.module.scss";
+import { cn } from "../lib/cn";
 
-interface PaginationProps {
+type PaginationProps = {
   page: number;
   onPageChange: React.Dispatch<React.SetStateAction<number>>;
   totalPages: number;
-}
+};
 
-const Pagination: React.FC<PaginationProps> = ({
-  page,
-  onPageChange,
-  totalPages,
-}) => {
+const Pagination = ({ page, onPageChange, totalPages }: PaginationProps) => {
   return (
-    <div className={styles.pagination}>
+    <div className="flex items-center justify-center gap-4 mt-6">
       <button
-        className={styles.pageButton}
+        className="bg-card cursor-pointer px-3 py-1 rounded-md disabled:cursor-not-allowed disabled:opacity-50"
         onClick={() => onPageChange((prev) => Math.max(prev - 1, 1))}
         disabled={page === 1}
       >
         Previous
       </button>
-      <div className={styles.pageNumbers}>
+      <div className="flex items-center gap-2">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
           <button
-            className={`${styles.pageButton} ${page === pageNum ? styles.active : ""}`}
+            className={cn(
+              "bg-card cursor-pointer px-3 py-1 rounded-md disabled:cursor-not-allowed disabled:opacity-50",
+              page === pageNum && "bg-accent text-white",
+            )}
             key={pageNum}
             onClick={() => onPageChange(pageNum)}
           >
@@ -34,7 +32,7 @@ const Pagination: React.FC<PaginationProps> = ({
         ))}
       </div>
       <button
-        className={styles.pageButton}
+        className="bg-card cursor-pointer px-3 py-1 rounded-md disabled:cursor-not-allowed disabled:opacity-50"
         onClick={() => onPageChange((prev) => Math.min(prev + 1, totalPages))}
         disabled={page === totalPages}
       >

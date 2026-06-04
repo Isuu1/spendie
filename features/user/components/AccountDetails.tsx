@@ -17,10 +17,7 @@ const AccountDetails: React.FC = () => {
     return (
       <>
         <h3>Account</h3>
-        <ErrorMessage
-          variant="panel"
-          message="Failed to load your account from the server."
-        />
+        <ErrorMessage message="Failed to load your account from the server." />
       </>
     );
   }

@@ -32,12 +32,7 @@ const PaymentsGrid = () => {
   const hasPayments = data.length > 0;
 
   if (error)
-    return (
-      <ErrorMessage
-        variant="panel"
-        message="Failed to load recurring payments."
-      />
-    );
+    return <ErrorMessage message="Failed to load recurring payments." />;
 
   return (
     <div className="grow flex flex-col gap-6">

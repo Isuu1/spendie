@@ -65,7 +65,7 @@ const ConfirmAction: React.FC<ConfirmActionProps> = ({
     >
       <motion.div
         ref={innerModalRef}
-        className="bg-card text-white rounded-2xl p-6 w-full max-w-sm mx-4 flex flex-col gap-4 items-center text-center leading-8"
+        className="bg-background text-white rounded-2xl p-6 w-full max-w-sm mx-4 flex flex-col gap-4 items-center text-center leading-8"
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0.8 }}

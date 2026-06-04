@@ -2,8 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-//Styles
-import styles from "./Modal.module.scss";
 //Animations
 import { motion } from "motion/react";
 
@@ -36,7 +34,7 @@ const Modal: React.FC<Modal> = ({ children, onClose }) => {
 
   const modalContent = (
     <div
-      className={styles.confirmActionContainer}
+      className="z-99 fixed top-0 h-full left-0 w-full bg-[#2e2e2ea2] flex items-center justify-center"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) {
           onClose?.();
@@ -44,7 +42,7 @@ const Modal: React.FC<Modal> = ({ children, onClose }) => {
       }}
     >
       <motion.div
-        className={styles.innerContainer}
+        className="bg-background rounded-2xl flex flex-col items-center gap-4 p-6 leading-6"
         ref={modalInnerRef}
         variants={modalVariants}
         initial="hidden"
