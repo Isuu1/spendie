@@ -41,12 +41,12 @@ const DashboardHeader = () => {
         </span>
         <span
           className={cn(
-            "relative cursor-pointer p-2 rounded-md bg-card transition-colors",
+            "relative cursor-pointer p-2.5 rounded-full bg-card transition-colors",
             "hover:bg-card-foreground",
           )}
         >
-          <Bell size={14} />
-          <span className="absolute -bottom-1 -right-1.5 text-xs bg-accent rounded-full w-3 h-3"></span>
+          <Bell size={16} />
+          <span className="absolute bottom-0 -right-1.5 text-xs bg-accent rounded-full w-3 h-3"></span>
         </span>
         <UserProfileCard />
       </header>
