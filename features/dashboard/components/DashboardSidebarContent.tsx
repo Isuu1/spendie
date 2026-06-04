@@ -44,7 +44,7 @@ const DashboardSidebarContent = ({
     <>
       <ul
         className={cn(
-          "box-border z-4 relative flex flex-col gap-4 list-none grow",
+          "box-border z-4 relative flex flex-col gap-4 list-none h-full",
           menuClassName,
         )}
       >
@@ -77,7 +77,7 @@ const DashboardSidebarContent = ({
           className={cn(
             "relative cursor-pointer flex gap-4 items-center whitespace-nowrap transition-colors duration-150 ease-in-out",
             "hover:text-accent!",
-            "px-3 py-2",
+            "px-3 py-2 mt-auto",
           )}
           onClick={() => setSignoutClicked(true)}
         >
