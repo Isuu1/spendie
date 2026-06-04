@@ -52,7 +52,7 @@ const Dashboard = () => {
       <DashboardOptions />
       <motion.div
         className={cn(
-          "grid grid-cols-12 gap-6 items-start",
+          "grid grid-cols-12 gap-2 items-start",
           layout.length === 0 && "flex columns-1 items-center justify-center",
         )}
       >
