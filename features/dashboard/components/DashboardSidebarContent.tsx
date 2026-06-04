@@ -56,7 +56,7 @@ const DashboardSidebarContent = ({
                 "relative cursor-pointer flex gap-3 items-center whitespace-nowrap transition-colors duration-150 ease-in-out",
                 "px-3 py-2 rounded-lg",
                 pathname.startsWith(item.match) && "bg-accent!",
-                "hover:text-accent!",
+                !pathname.startsWith(item.match) && "hover:text-accent!",
               )}
             >
               <span className="shrink-0 block text-lg!">{item.icon}</span>
