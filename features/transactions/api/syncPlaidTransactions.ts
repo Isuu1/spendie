@@ -15,8 +15,8 @@ export async function syncPlaidTransactions(userId: string) {
 
   const accessToken = items[0].access_token;
 
-  const startDate = dayjs().subtract(30, "days").format("YYYY-MM-DD"); // Example: last 30 days
-  const endDate = dayjs().format("YYYY-MM-DD");
+  const startDate = dayjs().subtract(90, "days").format("YYYY-MM-DD"); //Last 90 days
+  const endDate = dayjs().format("YYYY-MM-DD"); // Today
 
   const plaidRequest: TransactionsGetRequest = {
     access_token: accessToken,
