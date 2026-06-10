@@ -1,8 +1,13 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
+import dayjs from "dayjs";
+//Hooks
 import { useTransactions } from "../hooks/useTransactions";
+//Types
 import { Transaction } from "../types/transaction";
+//Components
 import {
   ColumnDef,
   flexRender,
@@ -19,8 +24,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Button from "@/shared/components/ui/Button";
-import { displayTransactionCategory } from "../lib/utils";
-import Image from "next/image";
 
 const columns: ColumnDef<Transaction>[] = [
   {
@@ -29,6 +32,7 @@ const columns: ColumnDef<Transaction>[] = [
     cell: ({ getValue, row }) => {
       const name = getValue() as string;
       const category = row.original.category as string;
+      const newCategory = category.replace(/_/g, " ");
       const imageUrl = row.original.image_url as string;
       return (
         <div className="flex items-center gap-3">
@@ -40,8 +44,10 @@ const columns: ColumnDef<Transaction>[] = [
             className="rounded-full"
           />
           <div className="flex flex-col items-start gap-1">
-            <p>{displayTransactionCategory(category)}</p>
             <p>{name}</p>
+            <p className="text-sm text-secondary">
+              {newCategory ?? "Uncategorized"}
+            </p>
           </div>
         </div>
       );
@@ -50,9 +56,14 @@ const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "amount",
     header: "Amount",
-    cell: ({ getValue }) => {
-      const amount = getValue() as number;
-      return <span>£{amount.toFixed(2)}</span>;
+    cell: ({ row }) => {
+      const amount = row.original.amount;
+      const currency = row.original.iso_currency_code;
+      return (
+        <p className={amount > 0 ? "text-red-500" : "text-green-500"}>
+          {Math.abs(amount)} {currency}
+        </p>
+      );
     },
   },
   {
@@ -61,7 +72,7 @@ const columns: ColumnDef<Transaction>[] = [
     cell: ({ getValue }) => {
       const dateStr = getValue() as string;
       const date = new Date(dateStr);
-      return <div>{date.toLocaleDateString()}</div>;
+      return <div>{dayjs(date).format("D MMMM YYYY")}</div>;
     },
   },
 ];
@@ -82,9 +93,12 @@ const TransactionsGrid = () => {
       <Table className="mt-4 bg-card rounded-2xl">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow
+              key={headerGroup.id}
+              className="bg-card-foreground rounded-2xl"
+            >
               {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
+                <TableHead key={header.id} className="py-3 px-3">
                   {header.isPlaceholder
                     ? null
                     : flexRender(

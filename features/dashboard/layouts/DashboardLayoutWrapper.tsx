@@ -27,7 +27,7 @@ const DashboardLayoutWrapper: React.FC<DashboardLayoutWrapperProps> = ({
         className={cn(
           "bg-background relative h-full w-full flex flex-col gap-2 rounded-lg",
           "overflow-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]",
-          "box-border z-1 relative h-full",
+          "box-border z-1 relative h-full pr-2",
         )}
       >
         {children}
