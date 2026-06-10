@@ -5,7 +5,8 @@ export type Transaction = {
   iso_currency_code: string;
   date: Date;
   name: string;
+  original_name?: string;
+  merchant_name?: string;
   category: string | null;
   pending: boolean;
-  image_url?: string;
 };
