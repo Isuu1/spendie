@@ -1,7 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Transaction } from "../types/transaction";
-import Image from "next/image";
 import dayjs from "dayjs";
+import { getCategoryIcon } from "../lib/utils/getCategoryIcon";
+import BaselineQuestionMarkIcon from "@iconify-react/ic/baseline-question-mark";
 
 export const transactionsColumns: ColumnDef<Transaction>[] = [
   {
@@ -11,16 +12,14 @@ export const transactionsColumns: ColumnDef<Transaction>[] = [
       const name = getValue() as string;
       const category = row.original.category as string;
       const newCategory = category.replace(/_/g, " ");
-      const imageUrl = row.original.image_url as string;
+      const Icon = getCategoryIcon(category);
       return (
         <div className="flex items-center gap-3">
-          <Image
-            src={imageUrl}
-            alt="Transaction"
-            width={40}
-            height={40}
-            className="rounded-full"
-          />
+          {Icon ? (
+            <Icon className="size-8" />
+          ) : (
+            <BaselineQuestionMarkIcon className="size-8" />
+          )}
           <div className="flex flex-col items-start gap-1">
             <p>{name}</p>
             <p className="text-sm text-secondary">
