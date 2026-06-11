@@ -84,7 +84,7 @@ const TransactionsGrid = () => {
             </Button>
           </PopoverTrigger>
           <PopoverContent>
-            <Button>Food and drink</Button>
+            <Input id="food-and-drink" type="checkbox" label="Food and drink" />
           </PopoverContent>
         </Popover>
       </div>
@@ -133,7 +133,8 @@ const TransactionsGrid = () => {
       </Table>
       <div className="flex items-center justify-start space-x-2 py-4">
         <Button
-          variant="outline"
+          className="bg-background"
+          variant="secondary"
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
@@ -141,7 +142,8 @@ const TransactionsGrid = () => {
           Previous
         </Button>
         <Button
-          variant="outline"
+          className="bg-background"
+          variant="secondary"
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
