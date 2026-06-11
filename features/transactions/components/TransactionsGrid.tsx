@@ -9,7 +9,11 @@ import {
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
+  ColumnFiltersState,
+  getFilteredRowModel,
+  SortingState,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -22,26 +26,74 @@ import {
 import Button from "@/shared/components/ui/Button";
 //Config
 import { transactionsColumns } from "../config/transactionsColumns";
+import Input from "@/shared/components/ui/Input";
+import { ListFilter, Search } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { useState } from "react";
 
 const TransactionsGrid = () => {
-  const { data: transactions, isLoading } = useTransactions();
-  console.log(transactions, isLoading);
+  const { data: transactions } = useTransactions();
+
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable<Transaction>({
     data: transactions,
     columns: transactionsColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+      columnFilters,
+    },
+    onSortingChange: setSorting,
   });
 
   return (
-    <div>
-      <Table className="bg-card">
+    <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-2">
+        <Input
+          id="search"
+          label="Search transactions"
+          labelHidden
+          icon={<Search />}
+          placeholder="Search transactions..."
+          className="bg-background rounded-full"
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("name")?.setFilterValue(event.target.value)
+          }
+        />
+        <Popover>
+          <PopoverTrigger className="w-fit justify-self-end">
+            <Button
+              icon={<ListFilter />}
+              iconPosition="left"
+              variant="secondary"
+              size="sm"
+              className="rounded-full bg-background"
+            >
+              Filter
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <Button>Food and drink</Button>
+          </PopoverContent>
+        </Popover>
+      </div>
+      <Table className="bg-background table-fixed">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow
               key={headerGroup.id}
-              className="bg-card-foreground rounded-2xl"
+              className="bg-background rounded-2xl"
             >
               {headerGroup.headers.map((header) => (
                 <TableHead key={header.id} className="py-3 px-3">

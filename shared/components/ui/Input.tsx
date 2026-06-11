@@ -15,6 +15,7 @@ import { FieldError } from "react-hook-form";
 type InputProps = React.ComponentProps<typeof ShadcnInput> & {
   id: string;
   label: string;
+  labelHidden?: boolean;
   icon?: React.ReactNode;
   passwordIcon?: React.ReactNode;
   value?: string | number | Date;
@@ -23,7 +24,17 @@ type InputProps = React.ComponentProps<typeof ShadcnInput> & {
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    { icon, id, label, className, value, passwordIcon, error, ...props },
+    {
+      icon,
+      id,
+      label,
+      labelHidden = false,
+      className,
+      value,
+      passwordIcon,
+      error,
+      ...props
+    },
     ref,
   ) => {
     const errorClasses = error
@@ -32,7 +43,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <Field>
-        <FieldLabel htmlFor={id}>{label}</FieldLabel>
+        {!labelHidden && <FieldLabel htmlFor={id}>{label}</FieldLabel>}
         <InputGroup
           className={cn(
             "bg-input rounded-md border transition-all duration-200 ease-in-out outline-none",
