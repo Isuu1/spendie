@@ -48,6 +48,12 @@ export const transactionsColumns: ColumnDef<Transaction>[] = [
     },
   },
   {
+    accessorKey: "category",
+    header: "",
+    //This allow filtering categories with multiple values (e.g. Food and drink + Shopping) without needing to create a custom filter function
+    filterFn: "arrIncludesSome",
+  },
+  {
     accessorKey: "amount",
     id: "amount",
     accessorFn: (row) => row.amount * -1,

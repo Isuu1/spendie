@@ -34,6 +34,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useState } from "react";
+import Checkbox from "@/shared/components/ui/Checkbox";
+
+const CATEGORIES = [
+  { value: "FOOD_AND_DRINK", label: "Food and drink" },
+  { value: "SHOPPING", label: "Shopping" },
+  { value: "BILLS", label: "Bills" },
+  { value: "TRAVEL", label: "Travel" },
+  { value: "TRANSPORTATION", label: "Transportation" },
+  { value: "LOANS", label: "Loans" },
+];
 
 const TransactionsGrid = () => {
   const { data: transactions } = useTransactions();
@@ -52,9 +62,17 @@ const TransactionsGrid = () => {
     state: {
       sorting,
       columnFilters,
+      columnVisibility: {
+        category: false, // This completely removes it from rendering while keeping filters alive!
+      },
     },
     onSortingChange: setSorting,
   });
+
+  // 1. Grab the column API directly
+  const categoryColumn = table.getColumn("category");
+  // 2. Safely read its current filter array (fallback to empty array)
+  const activeFilters = (categoryColumn?.getFilterValue() as string[]) ?? [];
 
   return (
     <div className="flex flex-col gap-4">
@@ -80,11 +98,41 @@ const TransactionsGrid = () => {
               size="sm"
               className="rounded-full bg-background"
             >
-              Filter
+              Filters
             </Button>
           </PopoverTrigger>
-          <PopoverContent>
-            <Input id="food-and-drink" type="checkbox" label="Food and drink" />
+          <PopoverContent align="end" sideOffset={20}>
+            {CATEGORIES.map((cat) => (
+              <Checkbox
+                key={cat.value}
+                id={cat.value}
+                label={cat.label}
+                checked={activeFilters.includes(cat.value)}
+                onCheckedChange={(checked) => {
+                  if (checked) {
+                    categoryColumn?.setFilterValue([
+                      ...activeFilters,
+                      cat.value,
+                    ]);
+                  } else {
+                    categoryColumn?.setFilterValue(
+                      activeFilters.filter((v) => v !== cat.value),
+                    );
+                  }
+                }}
+              />
+            ))}
+            {activeFilters.length > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="mt-1 text-xs h-8 text-destructive hover:text-destructive"
+                // 4. Resetting filters becomes a one-liner standard function call
+                onClick={() => categoryColumn?.setFilterValue(undefined)}
+              >
+                Clear Filters
+              </Button>
+            )}
           </PopoverContent>
         </Popover>
       </div>
