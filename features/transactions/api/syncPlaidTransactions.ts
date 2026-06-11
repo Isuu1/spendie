@@ -7,7 +7,7 @@ export async function syncPlaidTransactions(userId: string) {
 
   const { data: items } = await supabase
     .from("plaid_items")
-    .select("access_token, plaid_cursor")
+    .select("plaid_item_id, access_token, plaid_cursor")
     .eq("user_id", userId);
 
   if (!items || items.length === 0) return;
@@ -37,6 +37,7 @@ export async function syncPlaidTransactions(userId: string) {
 
         const { error } = await supabase.from("transactions").upsert({
           plaid_transaction_id: tx.transaction_id,
+          plaid_item_id: item.plaid_item_id,
           account_id: tx.account_id,
           amount: tx.amount,
           name: displayName,
@@ -75,6 +76,6 @@ export async function syncPlaidTransactions(userId: string) {
     await supabase
       .from("plaid_items")
       .update({ plaid_cursor: currentCursor })
-      .eq("user_id", userId);
+      .eq("plaid_item_id", item.plaid_item_id);
   }
 }

@@ -36,7 +36,7 @@ const TransactionsGrid = () => {
 
   return (
     <div>
-      <Table className="mt-4 bg-card rounded-2xl">
+      <Table className="bg-card">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow
