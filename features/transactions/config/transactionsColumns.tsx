@@ -5,6 +5,7 @@ import { getCategoryIcon } from "../lib/utils/getCategoryIcon";
 import BaselineQuestionMarkIcon from "@iconify-react/ic/baseline-question-mark";
 import { ArrowUpDown } from "lucide-react";
 import Button from "@/shared/components/ui/Button";
+import { formatTransactionAmount } from "../lib/utils/formatTransactionAmount";
 
 export const transactionsColumns: ColumnDef<Transaction>[] = [
   {
@@ -13,6 +14,7 @@ export const transactionsColumns: ColumnDef<Transaction>[] = [
       return (
         <Button
           variant="ghost"
+          className="gap-0 px-1 hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
@@ -53,6 +55,7 @@ export const transactionsColumns: ColumnDef<Transaction>[] = [
       return (
         <Button
           variant="ghost"
+          className="gap-0 px-0 hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Amount
@@ -63,11 +66,11 @@ export const transactionsColumns: ColumnDef<Transaction>[] = [
     cell: ({ row }) => {
       const amount = row.original.amount;
       const currency = row.original.iso_currency_code;
-      return (
-        <p className={amount > 0 ? "text-red-500" : "text-green-500"}>
-          {Math.abs(amount)} {currency}
-        </p>
+      const { displayAmount, textColorClass } = formatTransactionAmount(
+        amount,
+        currency,
       );
+      return <p className={textColorClass}>{displayAmount}</p>;
     },
   },
   {
@@ -76,6 +79,7 @@ export const transactionsColumns: ColumnDef<Transaction>[] = [
       return (
         <Button
           variant="ghost"
+          className="gap-0 px-0 hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Date
