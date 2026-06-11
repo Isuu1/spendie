@@ -101,7 +101,11 @@ const TransactionsGrid = () => {
               Filters
             </Button>
           </PopoverTrigger>
-          <PopoverContent align="end" sideOffset={20}>
+          <PopoverContent
+            align="end"
+            sideOffset={16}
+            className="border border-card-foreground"
+          >
             {CATEGORIES.map((cat) => (
               <Checkbox
                 key={cat.value}
@@ -124,10 +128,8 @@ const TransactionsGrid = () => {
             ))}
             {activeFilters.length > 0 && (
               <Button
-                variant="ghost"
+                variant="default"
                 size="sm"
-                className="mt-1 text-xs h-8 text-destructive hover:text-destructive"
-                // 4. Resetting filters becomes a one-liner standard function call
                 onClick={() => categoryColumn?.setFilterValue(undefined)}
               >
                 Clear Filters
