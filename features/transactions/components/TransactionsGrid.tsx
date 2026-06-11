@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 //Hooks
 import { useTransactions } from "../hooks/useTransactions";
 //Types
@@ -24,26 +25,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Button from "@/shared/components/ui/Button";
+import Input from "@/shared/components/ui/Input";
+import TransactionsTableFilters from "./TransactionsTableFilters";
 //Config
 import { transactionsColumns } from "../config/transactionsColumns";
-import Input from "@/shared/components/ui/Input";
-import { ListFilter, Search } from "lucide-react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { useState } from "react";
-import Checkbox from "@/shared/components/ui/Checkbox";
-
-const CATEGORIES = [
-  { value: "FOOD_AND_DRINK", label: "Food and drink" },
-  { value: "SHOPPING", label: "Shopping" },
-  { value: "BILLS", label: "Bills" },
-  { value: "TRAVEL", label: "Travel" },
-  { value: "TRANSPORTATION", label: "Transportation" },
-  { value: "LOANS", label: "Loans" },
-];
+//Icons
+import { Search } from "lucide-react";
 
 const TransactionsGrid = () => {
   const { data: transactions } = useTransactions();
@@ -69,11 +56,6 @@ const TransactionsGrid = () => {
     onSortingChange: setSorting,
   });
 
-  // 1. Grab the column API directly
-  const categoryColumn = table.getColumn("category");
-  // 2. Safely read its current filter array (fallback to empty array)
-  const activeFilters = (categoryColumn?.getFilterValue() as string[]) ?? [];
-
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-2">
@@ -89,54 +71,7 @@ const TransactionsGrid = () => {
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
         />
-        <Popover>
-          <PopoverTrigger className="w-fit justify-self-end">
-            <Button
-              icon={<ListFilter />}
-              iconPosition="left"
-              variant="secondary"
-              size="sm"
-              className="rounded-full bg-background"
-            >
-              Filters
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent
-            align="end"
-            sideOffset={16}
-            className="border border-card-foreground"
-          >
-            {CATEGORIES.map((cat) => (
-              <Checkbox
-                key={cat.value}
-                id={cat.value}
-                label={cat.label}
-                checked={activeFilters.includes(cat.value)}
-                onCheckedChange={(checked) => {
-                  if (checked) {
-                    categoryColumn?.setFilterValue([
-                      ...activeFilters,
-                      cat.value,
-                    ]);
-                  } else {
-                    categoryColumn?.setFilterValue(
-                      activeFilters.filter((v) => v !== cat.value),
-                    );
-                  }
-                }}
-              />
-            ))}
-            {activeFilters.length > 0 && (
-              <Button
-                variant="default"
-                size="sm"
-                onClick={() => categoryColumn?.setFilterValue(undefined)}
-              >
-                Clear Filters
-              </Button>
-            )}
-          </PopoverContent>
-        </Popover>
+        <TransactionsTableFilters table={table} />
       </div>
       <Table className="bg-background table-fixed">
         <TableHeader>
