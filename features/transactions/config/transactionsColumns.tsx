@@ -102,17 +102,21 @@ export const transactionsColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "pending",
     header: "Status",
+    meta: {
+      //Hidden on mobile, visible on small screens and up
+      className: "hidden sm:table-cell",
+    },
     cell: ({ getValue }) => {
       const pending = getValue() as boolean;
       return (
         <div>
           {pending ? (
-            <div className="flex items-center">
+            <div className="flex items-center justify-center">
               <span className="block size-2 rounded-full bg-yellow-500" />
               <span className="ml-2 text-sm text-secondary">Pending</span>
             </div>
           ) : (
-            <div className="flex items-center">
+            <div className="flex items-center justify-center">
               <span className="block size-2 rounded-full bg-green-500" />
               <span className="ml-2 text-sm text-secondary">Completed</span>
             </div>

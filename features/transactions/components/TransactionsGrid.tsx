@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { cn } from "@/shared/lib/cn";
 //Hooks
 import { useTransactions } from "../hooks/useTransactions";
 //Types
@@ -80,16 +81,29 @@ const TransactionsGrid = () => {
               key={headerGroup.id}
               className="bg-background rounded-2xl"
             >
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id} className="py-3 px-3">
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                </TableHead>
-              ))}
+              {headerGroup.headers.map((header) => {
+                //Extract the meta class from columns config string if it exists
+                const columnMeta = header.column.columnDef.meta as {
+                  className?: string;
+                };
+                const responsiveClass = columnMeta?.className || "";
+                return (
+                  <TableHead
+                    key={header.id}
+                    className={cn(
+                      "py-3 px-3 text-center first:text-left",
+                      responsiveClass,
+                    )}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                  </TableHead>
+                );
+              })}
             </TableRow>
           ))}
         </TableHeader>
@@ -97,11 +111,27 @@ const TransactionsGrid = () => {
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+                {row.getVisibleCells().map((cell) => {
+                  //Extract the exact same meta class string for the body cell
+                  const columnMeta = cell.column.columnDef.meta as {
+                    className?: string;
+                  };
+                  const responsiveClass = columnMeta?.className || "";
+                  return (
+                    <TableCell
+                      key={cell.id}
+                      className={cn(
+                        "text-center first:text-left",
+                        responsiveClass,
+                      )}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             ))
           ) : (
