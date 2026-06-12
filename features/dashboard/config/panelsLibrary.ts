@@ -32,6 +32,6 @@ export const panelsLibrary: PanelDefinition[] = [
     id: "transactions",
     name: "Transactions",
     component: TransactionsPanel,
-    className: "col-span-12 lg:col-span-10",
+    className: "col-span-12 lg:col-span-7",
   },
 ];

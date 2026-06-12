@@ -19,7 +19,7 @@ const DashboardLayoutWrapper: React.FC<DashboardLayoutWrapperProps> = ({
         "grid-cols-[minmax(100px,auto)_1fr] grid-rows-[auto_1fr]",
       )}
     >
-      <aside className="relative row-start-2 col-start-1 h-full">
+      <aside className="relative row-start-2 col-start-1 h-full max-sm:hidden">
         {sidebar}
       </aside>
       {header}
