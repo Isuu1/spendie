@@ -17,6 +17,7 @@ const DashboardLayoutWrapper: React.FC<DashboardLayoutWrapperProps> = ({
       className={cn(
         "relative overflow-hidden h-full grid",
         "grid-cols-[minmax(100px,auto)_1fr] grid-rows-[auto_1fr]",
+        "max-sm:grid-cols-1",
       )}
     >
       <aside className="relative row-start-2 col-start-1 h-full max-sm:hidden">

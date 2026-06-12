@@ -39,7 +39,7 @@ const TransactionsTableFilters = ({ table }: TransactionsTableFiltersProps) => {
           iconPosition="left"
           variant="secondary"
           size="sm"
-          className="rounded-full bg-background"
+          className="rounded-full bg-background px-3"
         >
           Filters
         </Button>
@@ -47,7 +47,7 @@ const TransactionsTableFilters = ({ table }: TransactionsTableFiltersProps) => {
       <PopoverContent
         align="end"
         sideOffset={16}
-        className="border border-card-foreground"
+        className="shadow-[0_0_30px_rgba(0,0,0,0.2)]"
       >
         {CATEGORIES.map((cat) => (
           <Checkbox
