@@ -1,4 +1,5 @@
 import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
+import { Amount } from "@/shared/components/Amount";
 import { cn } from "@/shared/lib/cn";
 
 type PaymentItemProps = {
@@ -49,7 +50,7 @@ const PaymentSummaryItem = ({
             type === "expense" && "text-red-600",
           )}
         >
-          ${amount.toFixed(2)}
+          <Amount amount={amount} />
         </span>
         <span className="text-sm text-secondary">
           {payments.length}

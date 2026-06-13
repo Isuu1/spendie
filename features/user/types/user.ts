@@ -15,4 +15,5 @@ export type UserSettings = {
   id: string;
   user_id: string;
   dashboard_layout: DashboardLayoutItem[];
+  currency: string;
 };

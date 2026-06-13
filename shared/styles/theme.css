@@ -146,6 +146,11 @@
   html {
     @apply font-sans;
   }
+  p,
+  span,
+  label {
+    font-size: 0.875rem;
+  }
 }
 
 @theme {

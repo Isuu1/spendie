@@ -5,6 +5,7 @@ import FutureBalanceDateSelector from "@/features/future-balance/components/Futu
 import PaymentsSummary from "@/features/future-balance/components/PaymentsSummary";
 //Context
 import { useFutureBalanceContext } from "../context/FutureBalanceContext";
+import { Amount } from "@/shared/components/Amount";
 
 type FutureBalanceProps = {
   selectedMode: "detailed" | "overview";
@@ -34,7 +35,7 @@ const FutureBalance = ({ selectedMode }: FutureBalanceProps) => {
         ) : (
           <h4 className="text-secondary">After bills this month</h4>
         )}
-        <h2>£{futureBalance.toFixed(2)}</h2>
+        <Amount amount={futureBalance ?? 0} className="text-xl font-semibold" />
       </div>
     </div>
   );
