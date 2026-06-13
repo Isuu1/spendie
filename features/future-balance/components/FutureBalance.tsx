@@ -35,7 +35,11 @@ const FutureBalance = ({ selectedMode }: FutureBalanceProps) => {
         ) : (
           <h4 className="text-secondary">After bills this month</h4>
         )}
-        <Amount amount={futureBalance ?? 0} className="text-xl font-semibold" />
+        <Amount
+          amount={futureBalance ?? 0}
+          showSign
+          className="text-xl font-semibold"
+        />
       </div>
     </div>
   );

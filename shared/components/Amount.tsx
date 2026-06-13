@@ -6,18 +6,23 @@ type AmountProps = {
   amount: number;
   showTransactionColors?: boolean;
   className?: string;
+  showSign?: boolean;
 };
 
 export function Amount({
   amount,
   showTransactionColors,
   className,
+  showSign,
 }: AmountProps) {
   const { data: settings } = useUserSettings();
 
   const { displayAmount, textColorClass } = formatAmount(
     amount,
     settings?.currency ?? "GBP",
+    {
+      absolute: showSign,
+    },
   );
 
   return (
@@ -27,6 +32,7 @@ export function Amount({
         className,
       )}
     >
+      {showSign && amount !== 0 ? (amount > 0 ? "+ " : "- ") : undefined}
       {displayAmount}
     </span>
   );
