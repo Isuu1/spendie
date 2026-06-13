@@ -1,6 +1,5 @@
 //Icons
-import { TbArrowBigDownFilled } from "react-icons/tb";
-import { TbArrowBigUpFilled } from "react-icons/tb";
+import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 //Context
 import { useFutureBalanceContext } from "../context/FutureBalanceContext";
 //Animations
@@ -58,7 +57,7 @@ const PaymentsSummary = () => {
             handleToggleDetails={handleToggleDetails}
             payments={incomePayments}
             amount={incomeTotal}
-            icon={<TbArrowBigUpFilled />}
+            icon={<ArrowBigUp size={20} />}
           />
         )}
         {expensePayments.length > 0 && (
@@ -67,7 +66,7 @@ const PaymentsSummary = () => {
             handleToggleDetails={handleToggleDetails}
             payments={expensePayments}
             amount={expenseTotal}
-            icon={<TbArrowBigDownFilled />}
+            icon={<ArrowBigDown size={20} />}
           />
         )}
       </div>

@@ -19,28 +19,30 @@ const PaymentSummaryItem = ({
   return (
     <div
       className={cn(
-        "flex items-center gap-2 cursor-pointer w-full rounded-lg p-2 bg-[linear-gradient(120deg,rgba(61,64,71,1)_0%,rgba(46,49,58,1)_100%)]",
+        "flex items-center gap-2 cursor-pointer w-full rounded-2xl px-3 py-2",
+        //"bg-[linear-gradient(120deg,rgba(34,37,46,1)_0%,rgba(46,49,58,1)_100%)]",
+        "bg-background",
       )}
       onClick={() => handleToggleDetails(type)}
     >
       <div
         className={cn(
-          "w-fit rounded-sm p-1.5",
-          type === "income" && "bg-green-600/20",
-          type === "expense" && "bg-red-600/20",
+          "w-fit rounded-lg p-1",
+          type === "income" && "bg-green-600/60",
+          type === "expense" && "bg-red-600/60",
         )}
       >
         <span
           className={cn(
-            type === "income" && "text-green-600",
-            type === "expense" && "text-red-600",
+            type === "income" && "text-green-400",
+            type === "expense" && "text-red-400",
           )}
         >
           {icon}
         </span>
       </div>
       <div className="flex items-start justify-between grow gap-1">
-        <span className="text-sm text-secondary">
+        <span className="text-sm">
           {payments.length}
           {payments.length === 1 ? " payment" : " payments"}
         </span>

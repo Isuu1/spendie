@@ -99,10 +99,10 @@ const TotalBalancePanel = () => {
       <div className="flex flex-row gap-6 justify-between items-center">
         <p className="text-secondary">This month</p>
         <div className="flex flex-row gap-3">
-          <p className="text-green-500 px-2 py-1 bg-green-600/20 rounded-md">
+          <p className="text-primary px-2.5 py-1 bg-green-600/60 rounded-full">
             +£{income}
           </p>
-          <p className="text-red-500 px-2 py-1 bg-red-600/20 rounded-md">
+          <p className="text-primary px-2.5 py-1 bg-red-600/60 rounded-full">
             -£{expenses}
           </p>
         </div>
