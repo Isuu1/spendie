@@ -1,5 +1,5 @@
 //Icons
-import { ArrowBigDown, ArrowBigUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 //Context
 import { useFutureBalanceContext } from "../context/FutureBalanceContext";
 //Animations
@@ -57,7 +57,7 @@ const PaymentsSummary = () => {
             handleToggleDetails={handleToggleDetails}
             payments={incomePayments}
             amount={incomeTotal}
-            icon={<ArrowBigUp size={20} />}
+            icon={<ChevronUp />}
           />
         )}
         {expensePayments.length > 0 && (
@@ -66,7 +66,7 @@ const PaymentsSummary = () => {
             handleToggleDetails={handleToggleDetails}
             payments={expensePayments}
             amount={expenseTotal}
-            icon={<ArrowBigDown size={20} />}
+            icon={<ChevronDown />}
           />
         )}
       </div>

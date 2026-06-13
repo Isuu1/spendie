@@ -19,6 +19,7 @@ import { calculateFinancialSummary } from "@/features/transactions/lib/utils/cal
 import { getTransactionsInPeriod } from "@/features/transactions/lib/utils/getTransactionsInPeriod";
 //Context
 import { FutureBalanceProvider } from "@/features/future-balance/context/FutureBalanceContext";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const TotalBalancePanel = () => {
   const [selectedMode, setSelectedMode] = useState<"detailed" | "overview">(
@@ -99,12 +100,14 @@ const TotalBalancePanel = () => {
       <div className="flex flex-row gap-6 justify-between items-center">
         <p className="text-secondary">This month</p>
         <div className="flex flex-row gap-3">
-          <p className="text-primary px-2.5 py-1 bg-green-600/60 rounded-full">
-            +£{income}
+          <p className="flex items-center gap-1 text-green-600">
+            <ChevronUp size={17} />
+            <span>${income}</span>
           </p>
-          <p className="text-primary px-2.5 py-1 bg-red-600/60 rounded-full">
-            -£{expenses}
-          </p>
+          <div className="flex items-center gap-1 text-red-600">
+            <ChevronDown size={17} />
+            <span>${expenses}</span>
+          </div>
         </div>
       </div>
 
