@@ -70,21 +70,21 @@ const TotalBalancePanel = () => {
             <Button
               size="default"
               variant="secondary"
-              className="bg-input font-normal"
+              className="bg-background font-normal aria-expanded:bg-background"
             >
               {selectedMode === "detailed" ? "Detailed" : "Overview"}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="bg-input w-auto p-1 gap-1">
+          <PopoverContent className="bg-background w-auto p-1 gap-1">
             <Button
-              className="bg-transparent hover:bg-input-hover text-primary font-normal"
+              className="bg-transparent hover:bg-card text-primary font-normal"
               size="default"
               onClick={() => handleModeChange("Detailed")}
             >
               Detailed
             </Button>
             <Button
-              className="bg-transparent hover:bg-input-hover text-primary font-normal"
+              className="bg-transparent hover:bg-card text-primary font-normal"
               size="default"
               onClick={() => handleModeChange("Overview")}
             >
