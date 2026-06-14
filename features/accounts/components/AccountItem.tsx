@@ -72,7 +72,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
 
   return (
     <div
-      className="z-1 relative grid grid-rows-2 overflow-hidden flex-[0_0_70%] rounded-md p-4"
+      className="z-1 relative grid grid-rows-2 overflow-hidden flex-[0_0_70%] rounded-2xl p-4"
       style={{
         background: generateAccountBackground(account.subtype ?? ""),
       }}
@@ -107,7 +107,10 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
         >
           <MdEditDocument
             size={16}
-            className="hidden! absolute -right-5 top-1 group-hover:block!"
+            className={cn(
+              "hidden! absolute -right-5 top-1",
+              canEdit && "group-hover:inline-block!",
+            )}
           />
           {displayName}
         </h4>

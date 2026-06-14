@@ -4,6 +4,7 @@ import { EmblaCarouselType } from "embla-carousel";
 //Icons
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
+import Button from "@/shared/components/ui/Button";
 
 type DashboardAccountsListButtonsProps = {
   emblaApi: EmblaCarouselType | null;
@@ -37,24 +38,32 @@ const DashboardAccountsListButtons = ({
 
   return (
     <div className="flex items-center gap-3 justify-between">
-      <button
+      <Button
+        variant="secondary"
+        size="sm"
         className={cn(
-          "cursor-pointer relative border-0",
-          prevBtnDisabled ? "opacity-50 cursor-not-allowed" : "",
+          "bg-background rounded-2xl",
+          prevBtnDisabled
+            ? "opacity-50 cursor-not-allowed hover:bg-background"
+            : "",
         )}
         onClick={scrollPrev}
       >
         <ChevronLeft />
-      </button>
-      <button
+      </Button>
+      <Button
+        variant="secondary"
+        size="sm"
         className={cn(
-          "cursor-pointer relative border-0",
-          nextBtnDisabled ? "opacity-50 cursor-not-allowed" : "",
+          "bg-background rounded-2xl",
+          nextBtnDisabled
+            ? "opacity-50 cursor-not-allowed hover:bg-background"
+            : "",
         )}
         onClick={scrollNext}
       >
         <ChevronRight />
-      </button>
+      </Button>
     </div>
   );
 };

@@ -22,7 +22,7 @@ const AccountsPanel = () => {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
-        <h3>Accounts</h3>
+        <h4 className="text-secondary">Accounts</h4>
         {accounts.length > 0 && (
           <AccountsListButtons emblaApi={emblaApi || null} />
         )}
