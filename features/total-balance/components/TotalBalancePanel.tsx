@@ -19,6 +19,8 @@ import { calculateFinancialSummary } from "@/features/transactions/lib/utils/cal
 import { getTransactionsInPeriod } from "@/features/transactions/lib/utils/getTransactionsInPeriod";
 //Context
 import { FutureBalanceProvider } from "@/features/future-balance/context/FutureBalanceContext";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { Amount } from "@/shared/components/Amount";
 
 const TotalBalancePanel = () => {
   const [selectedMode, setSelectedMode] = useState<"detailed" | "overview">(
@@ -70,21 +72,21 @@ const TotalBalancePanel = () => {
             <Button
               size="default"
               variant="secondary"
-              className="bg-input font-normal"
+              className="bg-background font-normal aria-expanded:bg-background"
             >
               {selectedMode === "detailed" ? "Detailed" : "Overview"}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="bg-input w-auto p-1 gap-1">
+          <PopoverContent className="bg-background w-auto p-1 gap-1">
             <Button
-              className="bg-transparent hover:bg-input-hover text-primary font-normal"
+              className="bg-transparent hover:bg-card text-primary font-normal"
               size="default"
               onClick={() => handleModeChange("Detailed")}
             >
               Detailed
             </Button>
             <Button
-              className="bg-transparent hover:bg-input-hover text-primary font-normal"
+              className="bg-transparent hover:bg-card text-primary font-normal"
               size="default"
               onClick={() => handleModeChange("Overview")}
             >
@@ -94,17 +96,19 @@ const TotalBalancePanel = () => {
         </Popover>
       </div>
 
-      <h2>£{totalBalance ?? 0}</h2>
+      <Amount amount={totalBalance ?? 0} className="text-2xl font-semibold" />
 
       <div className="flex flex-row gap-6 justify-between items-center">
         <p className="text-secondary">This month</p>
         <div className="flex flex-row gap-3">
-          <p className="text-green-500 px-2 py-1 bg-green-600/20 rounded-md">
-            +£{income}
+          <p className="flex items-center gap-1 text-green-600">
+            <ChevronUp size={17} />
+            <Amount amount={income} />
           </p>
-          <p className="text-red-500 px-2 py-1 bg-red-600/20 rounded-md">
-            -£{expenses}
-          </p>
+          <div className="flex items-center gap-1 text-red-600">
+            <ChevronDown size={17} />
+            <Amount amount={expenses} />
+          </div>
         </div>
       </div>
 

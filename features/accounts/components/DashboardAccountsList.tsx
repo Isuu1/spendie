@@ -39,7 +39,7 @@ const DashboardAccountsList: React.FC<DashboardAccountsListProps> = ({
     >
       <div className="flex gap-2 select-none">
         {accounts.map((account) => (
-          <AccountItem key={account.id} account={account} />
+          <AccountItem key={account.id} account={account} canEdit={false} />
         ))}
       </div>
     </div>

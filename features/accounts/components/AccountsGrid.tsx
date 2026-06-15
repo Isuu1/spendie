@@ -47,7 +47,7 @@ const AccountsGrid = () => {
   }, [activeSegment, grouped]);
 
   return (
-    <div className="bg-bg-surface rounded-lg p-8 flex flex-col gap-8">
+    <div className="flex flex-col gap-8 mt-4">
       <SegmentedControl
         options={[
           { label: `All in use (${counts.all})`, value: "all" },

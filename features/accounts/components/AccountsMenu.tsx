@@ -16,10 +16,11 @@ const AccountsMenu = () => {
   }
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 mt-4">
       <Button
         variant="secondary"
         size="default"
+        className="bg-background"
         icon={<RefreshCw />}
         iconPosition="left"
       >

@@ -12,7 +12,6 @@ export function useDisconnectAccount() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
-      toast.success("Account disconnected successfully!", toastStyle);
     },
     onError: (error) => {
       console.error("Error disconnecting account:", error);

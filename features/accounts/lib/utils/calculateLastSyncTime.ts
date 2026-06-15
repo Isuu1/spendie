@@ -12,7 +12,8 @@ export const lastUpdated = (syncedDate: string | null) => {
   const minutes = now.diff(lastSyncedAt, "minute");
 
   let message: string;
-  if (minutes < 60)
+  if (minutes < 1) message = "Just now";
+  else if (minutes < 60)
     message = `${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`;
   else if (hours < 24)
     message = `${hours} ${hours === 1 ? "hour" : "hours"} ago`;

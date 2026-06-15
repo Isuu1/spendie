@@ -13,6 +13,7 @@ import { useDisconnectAccount } from "../hooks/useDisconnectAccount";
 import { useHideAccount } from "../hooks/useHideAccount";
 //Components
 import AccountItemMenu from "./AccountItemMenu";
+import { formatAmount } from "@/shared/lib/utils/formatAmount";
 
 type AccountItemProps = {
   account: Account;
@@ -70,9 +71,14 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
     return null;
   }
 
+  const accountBalance = formatAmount(
+    account.current_balance ?? 0,
+    account.currency,
+  ).displayAmount;
+
   return (
     <div
-      className="z-1 relative grid grid-rows-2 overflow-hidden flex-[0_0_70%] rounded-md p-4"
+      className="z-1 relative grid grid-rows-3 gap-8 overflow-hidden flex-[0_0_70%] rounded-2xl p-4"
       style={{
         background: generateAccountBackground(account.subtype ?? ""),
       }}
@@ -83,7 +89,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
         </div>
       )}
 
-      <BsCreditCard2FrontFill size={30} className="absolute bottom-2 right-3" />
+      <BsCreditCard2FrontFill size={30} className="absolute bottom-4 right-5" />
 
       {isEditing ? (
         <input
@@ -107,22 +113,20 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
         >
           <MdEditDocument
             size={16}
-            className="hidden! absolute -right-5 top-1 group-hover:block!"
+            className={cn(
+              "hidden! absolute -right-5 top-1",
+              canEdit && "group-hover:inline-block!",
+            )}
           />
           {displayName}
         </h4>
       )}
-
-      <div className="flex flex-col gap-3">
-        <div className="z-1 relative flex flex-col gap-1 capitalize">
-          <p>{account.subtype}</p>
-          <p>**** **** **** {account.mask}</p>
-        </div>
-
-        <h3>
-          {account.currency} {(account.current_balance ?? 0).toFixed(2)}
-        </h3>
+      <div className="z-1 relative flex flex-col gap-1 capitalize">
+        <p>{account.subtype}</p>
+        <p>**** **** **** {account.mask}</p>
       </div>
+
+      <h3 className="self-end">{accountBalance}</h3>
 
       <div
         className={cn(

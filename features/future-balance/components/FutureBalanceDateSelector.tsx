@@ -37,14 +37,14 @@ const FutureBalanceDateSelector = () => {
           <Button
             size="default"
             variant="secondary"
-            className="bg-input font-normal"
+            className="bg-background font-normal aria-expanded:bg-background"
           >
             {label}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="bg-input w-auto p-1 gap-1">
+        <PopoverContent className="bg-background w-auto p-1 gap-1">
           <Button
-            className="bg-transparent hover:bg-input-hover text-primary font-normal"
+            className="bg-transparent hover:bg-card text-primary font-normal"
             size="default"
             onClick={() => {
               setSelectedDate(null);
@@ -57,7 +57,7 @@ const FutureBalanceDateSelector = () => {
             id="date"
             value={selectedDate?.toDate()}
             onChange={handleDateSelect}
-            className="text-primary! hover:bg-input-hover"
+            className="text-primary! hover:bg-card bg-transparent"
           />
         </PopoverContent>
       </Popover>

@@ -22,7 +22,7 @@ const AccountsPanel = () => {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
-        <h3>Accounts</h3>
+        <h4 className="text-secondary">Accounts</h4>
         {accounts.length > 0 && (
           <AccountsListButtons emblaApi={emblaApi || null} />
         )}
@@ -30,7 +30,10 @@ const AccountsPanel = () => {
 
       <DashboardAccountsList accounts={accounts || []} emblaRef={emblaRef} />
       {accounts.length > 0 && (
-        <Link className="transition-all hover:text-primary!" href="/accounts">
+        <Link
+          className="bg-background rounded-full py-2 px-4 w-fit hover:bg-card-foreground transition-colors"
+          href="/accounts"
+        >
           Manage accounts
         </Link>
       )}

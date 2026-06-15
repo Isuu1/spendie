@@ -44,11 +44,7 @@ const TransactionsTableFilters = ({ table }: TransactionsTableFiltersProps) => {
           Filters
         </Button>
       </PopoverTrigger>
-      <PopoverContent
-        align="end"
-        sideOffset={16}
-        className="shadow-[0_0_30px_rgba(0,0,0,0.2)]"
-      >
+      <PopoverContent align="end" sideOffset={16}>
         {CATEGORIES.map((cat) => (
           <Checkbox
             key={cat.value}
