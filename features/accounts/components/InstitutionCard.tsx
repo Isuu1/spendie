@@ -1,5 +1,6 @@
 //Types
 import { Account } from "../types/account";
+import { Institution } from "../types/institution";
 //Components
 import AccountItem from "./AccountItem";
 import Button from "@/shared/components/ui/Button";
@@ -7,20 +8,6 @@ import SyncIcon from "@/shared/components/SyncIcon";
 //Utils
 import { lastUpdated } from "../lib/utils/calculateLastSyncTime";
 import { formatAmount } from "@/shared/lib/utils/formatAmount";
-
-type Institution = {
-  plaid_item_id: string;
-  institution_name: string;
-  institution_logo?: string;
-  accounts: Account[];
-  last_synced_at: string;
-  totals: {
-    active: number;
-    hidden: number;
-    disconnected: number;
-    total: number;
-  };
-};
 
 type InstitutionCardProps = {
   institution: Institution;
