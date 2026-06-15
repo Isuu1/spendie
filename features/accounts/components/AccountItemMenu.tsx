@@ -46,11 +46,11 @@ const AccountItemMenu = ({
       <DropdownMenu>
         <DropdownMenuTrigger
           asChild
-          className="absolute top-2 right-2 cursor-pointer! z-99 hover:bg-[#ffffff1f] rounded-sm p-1"
+          className="absolute top-2 right-2 cursor-pointer! z-99 hover:bg-[#ffffff1f] rounded-sm p-1 transition-colors"
         >
-          <EllipsisVertical size={28} />
+          <EllipsisVertical size={30} />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-bg-surface text-white text-xs! p-2">
+        <DropdownMenuContent className="bg-card text-white text-xs! p-2">
           <DropdownMenuItem
             className="cursor-pointer! hover:bg-bg-surface-dark-hover! text-white!"
             onSelect={handleRename}
@@ -76,21 +76,18 @@ const AccountItemMenu = ({
       </DropdownMenu>
 
       <AnimatePresence>
-        {disconnectModalOpen && !isDisconnected && (
+        {disconnectModalOpen && (
           <ConfirmAction
-            title="Disconnect this account?"
-            subtitle="You will no longer receive updates from this bank. Your existing data will remain."
-            onConfirm={() => {
-              onDisconnect();
-              setDisconnectModalOpen(false);
-            }}
-            onCancel={() => setDisconnectModalOpen(false)}
-          />
-        )}
-        {disconnectModalOpen && isDisconnected && (
-          <ConfirmAction
-            title="Reconnect this account?"
-            subtitle="This will attempt to reconnect the account and fetch the latest data."
+            title={
+              !isDisconnected
+                ? "Disconnect this account?"
+                : "Reconnect this account?"
+            }
+            subtitle={
+              !isDisconnected
+                ? "You will no longer receive updates from this bank. Your existing data will remain."
+                : "This will attempt to reconnect the account and fetch the latest data."
+            }
             onConfirm={() => {
               onDisconnect();
               setDisconnectModalOpen(false);
