@@ -13,6 +13,7 @@ import { useDisconnectAccount } from "../hooks/useDisconnectAccount";
 import { useHideAccount } from "../hooks/useHideAccount";
 //Components
 import AccountItemMenu from "./AccountItemMenu";
+import { formatAmount } from "@/shared/lib/utils/formatAmount";
 
 type AccountItemProps = {
   account: Account;
@@ -70,6 +71,11 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
     return null;
   }
 
+  const accountBalance = formatAmount(
+    account.current_balance ?? 0,
+    account.currency,
+  ).displayAmount;
+
   return (
     <div
       className="z-1 relative grid grid-rows-3 gap-8 overflow-hidden flex-[0_0_70%] rounded-2xl p-4"
@@ -120,9 +126,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
         <p>**** **** **** {account.mask}</p>
       </div>
 
-      <h3>
-        {account.currency} {(account.current_balance ?? 0).toFixed(2)}
-      </h3>
+      <h3>{accountBalance}</h3>
 
       <div
         className={cn(

@@ -9,12 +9,12 @@ type SegmentedControlProps = {
 const SegmentedControl = ({ options, onChange }: SegmentedControlProps) => {
   const [activeOption, setActiveOption] = useState(options[0].value);
   return (
-    <nav className="flex items-center gap-4 bg-card rounded-lg w-fit">
+    <nav className="flex items-center gap-4 p-1 bg-background rounded-full w-fit">
       {options.map((option) => (
         <span
           key={option.value}
           className={cn(
-            "cursor-pointer rounded-md px-4 py-2 transition-colors",
+            "cursor-pointer rounded-full px-4 py-2 transition-colors",
             activeOption === option.value && "bg-accent",
           )}
           onClick={() => {

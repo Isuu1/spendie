@@ -6,6 +6,7 @@ import Button from "@/shared/components/ui/Button";
 import SyncIcon from "@/shared/components/SyncIcon";
 //Utils
 import { lastUpdated } from "../lib/utils/calculateLastSyncTime";
+import { formatAmount } from "@/shared/lib/utils/formatAmount";
 
 type Institution = {
   plaid_item_id: string;
@@ -40,29 +41,37 @@ const InstitutionCard = ({
 
   const { totals } = institution;
 
+  const totalBalance = formatAmount(
+    totals.total,
+    institution.accounts[0]?.currency,
+  ).displayAmount;
+
+  const hiddenBalance = formatAmount(
+    totals.hidden,
+    institution.accounts[0]?.currency,
+  ).displayAmount;
+
+  const disconnectedBalance = formatAmount(
+    totals.disconnected,
+    institution.accounts[0]?.currency,
+  ).displayAmount;
+
   if (institution.accounts.length === 0) return null;
 
   return (
     <div
       key={institution.plaid_item_id}
-      className="relative flex flex-col gap-4"
+      className="relative bg-background p-4 rounded-2xl flex flex-col gap-4"
     >
       <h4>{institution.institution_name}</h4>
       {activeSegment === "disconnected" ? (
         <p className="text-text-secondary!">
-          Disconnected balance: {institution.accounts[0]?.currency}{" "}
-          {totals.disconnected.toFixed(2)}
+          Disconnected balance: {disconnectedBalance}
         </p>
       ) : (
         <>
-          <p className="font-bold">
-            Total balance: {institution.accounts[0]?.currency}{" "}
-            {totals.total.toFixed(2)}
-          </p>
-          <p className="text-text-secondary!">
-            Hidden: {institution.accounts[0]?.currency}{" "}
-            {totals.hidden.toFixed(2)}
-          </p>
+          <p className="font-bold">Total balance: {totalBalance}</p>
+          <p className="text-text-secondary!">Hidden: {hiddenBalance}</p>
         </>
       )}
       {activeSegment !== "disconnected" && (

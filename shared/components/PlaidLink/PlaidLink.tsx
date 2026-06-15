@@ -80,6 +80,7 @@ const PlaidLink = ({ userId, variant }: PlaidLinkProps) => {
     <Button
       variant={variant}
       size="default"
+      className="bg-background"
       onClick={() => open()}
       disabled={!ready || !linkToken}
       icon={<Landmark />}

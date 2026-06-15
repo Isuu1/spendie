@@ -5,7 +5,7 @@ export type Account = {
   user_account_name: string | null;
   current_balance: number | null;
   available_balance: number | null;
-  currency: string | null;
+  currency: string;
   subtype: string | null;
   type: string;
   mask: string | null;
