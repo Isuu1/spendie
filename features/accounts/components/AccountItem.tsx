@@ -89,7 +89,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
         </div>
       )}
 
-      <BsCreditCard2FrontFill size={30} className="absolute bottom-2 right-3" />
+      <BsCreditCard2FrontFill size={30} className="absolute bottom-4 right-5" />
 
       {isEditing ? (
         <input
@@ -126,7 +126,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
         <p>**** **** **** {account.mask}</p>
       </div>
 
-      <h3>{accountBalance}</h3>
+      <h3 className="self-end">{accountBalance}</h3>
 
       <div
         className={cn(
