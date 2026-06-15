@@ -30,7 +30,10 @@ const AccountsPanel = () => {
 
       <DashboardAccountsList accounts={accounts || []} emblaRef={emblaRef} />
       {accounts.length > 0 && (
-        <Link className="transition-all hover:text-primary!" href="/accounts">
+        <Link
+          className="bg-background rounded-full py-2 px-4 w-fit hover:bg-card-foreground transition-colors"
+          href="/accounts"
+        >
           Manage accounts
         </Link>
       )}

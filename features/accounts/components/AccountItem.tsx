@@ -72,7 +72,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
 
   return (
     <div
-      className="z-1 relative grid grid-rows-2 overflow-hidden flex-[0_0_70%] rounded-2xl p-4"
+      className="z-1 relative grid grid-rows-3 gap-8 overflow-hidden flex-[0_0_70%] rounded-2xl p-4"
       style={{
         background: generateAccountBackground(account.subtype ?? ""),
       }}
@@ -115,17 +115,14 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
           {displayName}
         </h4>
       )}
-
-      <div className="flex flex-col gap-3">
-        <div className="z-1 relative flex flex-col gap-1 capitalize">
-          <p>{account.subtype}</p>
-          <p>**** **** **** {account.mask}</p>
-        </div>
-
-        <h3>
-          {account.currency} {(account.current_balance ?? 0).toFixed(2)}
-        </h3>
+      <div className="z-1 relative flex flex-col gap-1 capitalize">
+        <p>{account.subtype}</p>
+        <p>**** **** **** {account.mask}</p>
       </div>
+
+      <h3>
+        {account.currency} {(account.current_balance ?? 0).toFixed(2)}
+      </h3>
 
       <div
         className={cn(
