@@ -50,32 +50,51 @@ const InstitutionCard = ({
       key={institution.plaid_item_id}
       className="relative bg-background p-4 rounded-2xl flex flex-col gap-4"
     >
-      <h4>{institution.institution_name}</h4>
+      <div className="flex justify-between items-center">
+        <h3>{institution.institution_name}</h3>
+        {activeSegment !== "disconnected" && (
+          <div className="flex gap-2 items-center">
+            <SyncIcon isSyncing={isSyncing} />
+            <p>{lastUpdated(institution.last_synced_at)}</p>
+            <Button
+              variant="secondary"
+              size="sm"
+              iconPosition="left"
+              onClick={handleSync}
+              disabled={isSyncing}
+              className="disabled:cursor-not-allowed"
+            >
+              {isSyncing ? "Syncing..." : "Sync now"}
+            </Button>
+          </div>
+        )}
+      </div>
       {activeSegment === "disconnected" ? (
         <p className="text-text-secondary!">
           Disconnected balance: {disconnectedBalance}
         </p>
       ) : (
         <>
-          <p className="font-bold">Total balance: {totalBalance}</p>
+          <h3>Total balance: {totalBalance}</h3>
           <p className="text-text-secondary!">Hidden: {hiddenBalance}</p>
         </>
       )}
-      {activeSegment !== "disconnected" && (
+      {/* {activeSegment !== "disconnected" && (
         <div className="flex gap-2 items-center">
           <SyncIcon isSyncing={isSyncing} />
           <p>{lastUpdated(institution.last_synced_at)}</p>
           <Button
             variant="secondary"
-            size="xs"
+            size="sm"
             iconPosition="left"
             onClick={handleSync}
             disabled={isSyncing}
+            className="disabled:opacity-50! disabled:cursor-not-allowed!"
           >
             {isSyncing ? "Syncing..." : "Sync now"}
           </Button>
         </div>
-      )}
+      )} */}
       <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,350px))] gap-4">
         {institution.accounts.map((acc: Account) => (
           <AccountItem key={acc.id} account={acc} canEdit />
