@@ -33,7 +33,12 @@ const AddPaymentDrawer = ({
   return (
     <Drawer direction="right" open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button icon={<IdCard />} iconPosition="left" variant="secondary">
+        <Button
+          icon={<IdCard />}
+          iconPosition="left"
+          variant="secondary"
+          className="bg-background"
+        >
           {triggerName || "Add payment"}
         </Button>
       </DrawerTrigger>

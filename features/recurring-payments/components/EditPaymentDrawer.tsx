@@ -26,7 +26,7 @@ const EditPaymentDrawer = ({ payment }: EditPaymentDrawerProps) => {
   return (
     <Drawer direction="right" open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="secondary" className="bg-card-foreground" size="sm">
+        <Button variant="secondary" className="bg-card" size="sm">
           Edit payment
         </Button>
       </DrawerTrigger>
