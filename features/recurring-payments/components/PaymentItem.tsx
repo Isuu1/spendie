@@ -37,7 +37,7 @@ const PaymentItem = ({ payment }: PaymentItemProps) => {
   };
 
   return (
-    <div key={payment.id} className="bg-card rounded-2xl p-4">
+    <div key={payment.id} className="bg-background rounded-2xl p-4">
       <PaymentCard payment={payment} />
 
       <div className="flex gap-2">
