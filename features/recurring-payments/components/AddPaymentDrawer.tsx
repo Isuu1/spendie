@@ -42,7 +42,7 @@ const AddPaymentDrawer = ({
           {triggerName || "Add payment"}
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="w-fit">
+      <DrawerContent className="max-sm:w-full! max-sm:rounded-none!">
         <DrawerHeader>
           <DrawerTitle>Add recurring payment</DrawerTitle>
           <DrawerDescription>

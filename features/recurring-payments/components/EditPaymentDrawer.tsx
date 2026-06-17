@@ -30,7 +30,7 @@ const EditPaymentDrawer = ({ payment }: EditPaymentDrawerProps) => {
           Edit payment
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="w-fit">
+      <DrawerContent className="max-sm:w-full! max-sm:rounded-none!">
         <DrawerHeader>
           <DrawerTitle>Edit recurring payment</DrawerTitle>
           <DrawerDescription>
