@@ -24,7 +24,7 @@ type SelectInputProps = {
   value: string;
   onChange: (value: string) => void;
   error?: FieldError;
-  className?: string;
+  triggerClassName?: string;
 };
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -34,20 +34,21 @@ const SelectInput: React.FC<SelectInputProps> = ({
   value,
   onChange,
   error,
-  className,
+  triggerClassName,
 }) => {
   const errorClasses = error
     ? "ring-2 ring-red-600 border-red-600"
     : "border-transparent";
 
   return (
-    <Field className={cn(className)}>
+    <Field>
       {label && <FieldLabel htmlFor={id}>{label}</FieldLabel>}
       <Select onValueChange={onChange} defaultValue={value}>
         <SelectTrigger
           className={cn(
             "bg-input border-0 w-full cursor-pointer",
             errorClasses,
+            triggerClassName,
           )}
         >
           <SelectValue placeholder={label} />
