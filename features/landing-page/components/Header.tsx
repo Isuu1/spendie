@@ -1,66 +1,63 @@
 "use client";
 
-import React, { useRef, useState } from "react";
 import Link from "next/link";
-//Styles
-import styles from "./Header.module.scss";
 //Icons
-import { TiThMenu } from "react-icons/ti";
-//Hooks
-import { useClickOutside } from "@/shared/hooks/useClickOutside";
-//Animations
-import { motion, AnimatePresence } from "motion/react";
-
-const mobileMenuVariants = {
-  hidden: { x: 100 },
-  visible: { x: 0 },
-  exit: { x: 120 },
-};
+import { Menu } from "lucide-react";
+//Components
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import Button from "@/shared/components/ui/Button";
 
 const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const mobileMenuRef = useRef<HTMLUListElement>(null);
-
-  useClickOutside(mobileMenuRef, () => setMenuOpen(false));
-
   return (
-    <div className={styles.header}>
-      <h2 className={styles.logo}>Spendie.</h2>
-      <ul className={styles.nav}>
-        <li className={styles.navItem}>Home</li>
-        <li className={styles.navItem}>About</li>
-        <li className={styles.navItem}>Contact</li>
-      </ul>
+    <div className="z-10 fixed top-0 left-0 right-0 p-4 bg-background flex justify-between items-center">
+      <h2 className="text-accent">
+        <Link href="/">Spendie.</Link>
+      </h2>
+      <nav className="max-sm:hidden flex gap-4">
+        <span className="cursor-pointer text-lg hover:text-accent transition-colors">
+          Home
+        </span>
+        <span className="cursor-pointer text-lg hover:text-accent transition-colors">
+          About
+        </span>
+        <span className="cursor-pointer text-lg hover:text-accent transition-colors">
+          Contact
+        </span>
+      </nav>
 
-      <Link className={styles.loginButton} href="/login">
+      <Link className="max-sm:hidden" href="/login">
         Login
       </Link>
-      <div className={styles.mobileNav} onClick={() => setMenuOpen(!menuOpen)}>
-        <i className={styles.icon}>
-          <TiThMenu />
-        </i>
-      </div>
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.ul
-            className={styles.mobileMenu}
-            ref={mobileMenuRef}
-            variants={mobileMenuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={{ duration: 0.15, type: "tween" }}
-          >
-            <li className={styles.mobileMenuItem}>Home</li>
-            <li className={styles.mobileMenuItem}>About</li>
-            <li className={styles.mobileMenuItem}>Contact</li>
-            <Link href="/login">
-              <li className={styles.mobileMenuItem}>Login</li>
-            </Link>
-          </motion.ul>
-        )}
-      </AnimatePresence>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          asChild
+          className="max-sm:block hidden cursor-pointer z-10"
+        >
+          <Button variant="secondary">
+            <Menu />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-fit" align="end">
+          <DropdownMenuItem className="text-lg">
+            <Link href="/">Home</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="text-lg">
+            <Link href="/about">About</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="text-lg">
+            <Link href="/contact">Contact</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="text-lg">
+            <Link href="/login">Login</Link>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 };
