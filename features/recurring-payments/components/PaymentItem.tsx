@@ -40,7 +40,7 @@ const PaymentItem = ({ payment }: PaymentItemProps) => {
     <div key={payment.id} className="bg-background rounded-2xl p-4">
       <PaymentCard payment={payment} />
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap">
         <EditPaymentDrawer payment={payment} />
         <Button
           variant="secondary"

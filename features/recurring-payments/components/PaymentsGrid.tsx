@@ -15,6 +15,7 @@ import { paymentTemplates } from "../config/paymentTemplates";
 import { CreditCard, IdCard } from "lucide-react";
 import Button from "@/shared/components/ui/Button";
 import { AnimatePresence, motion } from "motion/react";
+import { cn } from "@/shared/lib/cn";
 
 //Extraact only label and value for SelectInput
 const selectOptions = sortingOptions.map(({ label, value }) => ({
@@ -40,7 +41,12 @@ const PaymentsGrid = () => {
 
   return (
     <div className="grow flex flex-col gap-6">
-      <div className="flex items-center justify-between">
+      <div
+        className={cn(
+          "flex items-center justify-between",
+          "max-sm:flex-col max-sm:items-start max-sm:gap-4",
+        )}
+      >
         <div className="flex items-center gap-2 mt-4">
           <AddPaymentDrawer />
           <Button
