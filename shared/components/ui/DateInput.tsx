@@ -50,10 +50,11 @@ const DateInput: React.FC<DateInputProps> = ({
             className={cn(
               "justify-start text-left font-normal data-[empty=true]:text-muted-foreground",
               "bg-input border border-transparent!",
-              "hover:bg-bg-surface-dark",
+              "hover:bg-transparent",
               errorClasses,
               className,
             )}
+            shape="xl"
           >
             <CalendarIcon />
             {value ? formatValue(value) : <span>Pick a date</span>}

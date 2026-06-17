@@ -9,6 +9,7 @@ import ErrorMessage from "@/shared/components/ErrorMessage";
 //Hooks
 import { useUser } from "../hooks/useUser";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/shared/lib/cn";
 
 const AccountDetails: React.FC = () => {
   const { data: user, error } = useUser();
@@ -23,13 +24,18 @@ const AccountDetails: React.FC = () => {
   }
 
   return (
-    <div className="grid grid-cols-[1fr_1.5fr] gap-12 py-6">
+    <div
+      className={cn(
+        "grid grid-cols-[1fr_1.5fr] gap-12 py-6",
+        "max-sm:flex max-sm:flex-col max-sm:gap-6",
+      )}
+    >
       <div className="flex flex-col gap-3">
         <p className="text-lg font-bold">Profile</p>
         <p>Set up your profile details.</p>
       </div>
 
-      <div className="flex gap-12">
+      <div className="flex gap-12 max-sm:flex-col-reverse">
         <ChangeDetailsForm user={user} />
         <ChangeAvatarForm user={user} />
       </div>
