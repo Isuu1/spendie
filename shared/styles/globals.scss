@@ -95,13 +95,13 @@ input {
   padding: 1rem 1rem 0 1rem;
   width: 100%;
   margin: auto;
-  .bg {
-    position: fixed;
-    z-index: -1;
-    object-fit: cover;
-    opacity: 0.3;
-    height: 100vh !important;
-  }
+  // .bg {
+  //   position: fixed;
+  //   z-index: -1;
+  //   object-fit: cover;
+  //   opacity: 0.3;
+  //   height: 100vh !important;
+  // }
 }
 
 @media (min-width: 1200px) {
