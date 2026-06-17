@@ -10,11 +10,17 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="flex flex-col gap-8 mt-2">
-      <nav className="relative flex gap-4 pr-8 h-full max-lg:flex-row">
+      <nav
+        className={cn(
+          "relative bg-background w-fit flex gap-4 p-1 h-full",
+          "rounded-full",
+          "max-lg:flex-row",
+        )}
+      >
         <Link
           href="/settings/account-details"
           className={cn(
-            "flex gap-2 items-center bg-card whitespace-nowrap px-4 py-2 rounded-full",
+            "flex gap-2 items-center whitespace-nowrap px-4 py-2 rounded-full",
             pathname.includes("account-details") && "bg-accent",
           )}
         >
@@ -23,7 +29,7 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
         <Link
           href="/settings/dashboard-settings"
           className={cn(
-            "flex gap-2 items-center bg-card whitespace-nowrap px-4 py-2 rounded-full",
+            "flex gap-2 items-center whitespace-nowrap px-4 py-2 rounded-full",
             pathname.includes("dashboard-settings") && "bg-accent",
           )}
         >

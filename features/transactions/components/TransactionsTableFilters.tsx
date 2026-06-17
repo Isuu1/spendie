@@ -33,7 +33,7 @@ const TransactionsTableFilters = ({ table }: TransactionsTableFiltersProps) => {
 
   return (
     <Popover>
-      <PopoverTrigger className="w-fit justify-self-end">
+      <PopoverTrigger asChild className="w-fit justify-self-end">
         <Button
           icon={<ListFilter />}
           iconPosition="left"

@@ -4,26 +4,37 @@ import PaymentStatus from "./PaymentStatus";
 import PaymentCategory from "./PaymentCategory";
 import dayjs from "dayjs";
 import { Repeat } from "lucide-react";
+import { formatAmount } from "@/shared/lib/utils/formatAmount";
+import { useUserSettings } from "@/features/user/hooks/useUserSettings";
 
 type PaymentCardProps = {
   payment: RecurringPayment;
 };
 
 const PaymentCard = ({ payment }: PaymentCardProps) => {
+  const { data: settings } = useUserSettings();
+
+  const formattedAmount = formatAmount(
+    payment.amount,
+    settings?.currency ?? "",
+  ).displayAmount;
+
   return (
     <div className="flex flex-col gap-5 relative">
-      <div className="flex items-center justify-between">
-        <h3>{payment.name}</h3>
-      </div>
+      <h3>{payment.name}</h3>
+
       <div className="flex justify-between mt-2">
-        <span>
-          {payment.type === "Expense" ? "-" : "+"} £{payment.amount.toFixed(2)}
+        <span
+          className={`font-semibold px-3 py-1 rounded-md ${payment.type === "Expense" ? "bg-red-800" : "bg-green-700"}`}
+        >
+          {payment.type === "Expense" ? "-" : "+"} {formattedAmount}
         </span>
         <span className="flex items-center gap-2">
           <Repeat size={16} />
           {payment.repeat}
         </span>
       </div>
+
       <div className="flex items-center justify-between">
         <span>Next</span>
         <span className="whitespace-nowrap">

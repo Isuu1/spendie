@@ -37,14 +37,14 @@ const PaymentItem = ({ payment }: PaymentItemProps) => {
   };
 
   return (
-    <div key={payment.id} className="bg-card rounded-2xl p-4">
+    <div key={payment.id} className="bg-background rounded-2xl p-4">
       <PaymentCard payment={payment} />
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap">
         <EditPaymentDrawer payment={payment} />
         <Button
           variant="secondary"
-          className="bg-card-foreground"
+          className="bg-card"
           size="sm"
           onClick={() => setConfirmDeletePayment(payment.id)}
         >
@@ -52,14 +52,14 @@ const PaymentItem = ({ payment }: PaymentItemProps) => {
         </Button>
         <Button
           variant="secondary"
-          className="bg-card-foreground"
+          className="bg-card"
           size="sm"
           onClick={handlePaymentStatusToggle}
         >
           {payment.is_paused ? "Resume" : "Pause"}
         </Button>
         <Link href={`/recurring-payments/history/${payment.id}`}>
-          <Button variant="secondary" className="bg-card-foreground" size="sm">
+          <Button variant="secondary" className="bg-card" size="sm">
             View history
           </Button>
         </Link>

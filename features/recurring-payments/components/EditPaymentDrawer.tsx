@@ -26,11 +26,11 @@ const EditPaymentDrawer = ({ payment }: EditPaymentDrawerProps) => {
   return (
     <Drawer direction="right" open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="secondary" className="bg-card-foreground" size="sm">
+        <Button variant="secondary" className="bg-card" size="sm">
           Edit payment
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="w-fit">
+      <DrawerContent className="max-sm:w-full! max-sm:rounded-none!">
         <DrawerHeader>
           <DrawerTitle>Edit recurring payment</DrawerTitle>
           <DrawerDescription>

@@ -11,7 +11,7 @@ const ChangeAvatarForm = ({ user }: ChangeAvatarFormProps) => {
   const avatarUrl = user?.avatar;
 
   return (
-    <div className="relative mt-7 flex flex-col justify-between gap-4">
+    <div className="relative mt-7 flex flex-col justify-between gap-4 items-center">
       <Image
         className="rounded-full"
         src={avatarUrl || "https://i.pravatar.cc/150?img=3"}
@@ -19,11 +19,16 @@ const ChangeAvatarForm = ({ user }: ChangeAvatarFormProps) => {
         width={150}
         height={150}
       />
-      <div className="flex items-center justify-between">
-        <Button variant="secondary" size="sm">
+      <div className="flex items-center justify-between max-sm:justify-start max-sm:gap-2">
+        <Button variant="secondary" size="sm" className="bg-background">
           Edit photo
         </Button>
-        <Button variant="secondary" size="sm" icon={<Trash2 />} />
+        <Button
+          className="bg-background"
+          variant="secondary"
+          size="sm"
+          icon={<Trash2 />}
+        />
       </div>
     </div>
   );

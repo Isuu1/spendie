@@ -33,11 +33,16 @@ const AddPaymentDrawer = ({
   return (
     <Drawer direction="right" open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button icon={<IdCard />} iconPosition="left" variant="secondary">
+        <Button
+          icon={<IdCard />}
+          iconPosition="left"
+          variant="secondary"
+          className="bg-background"
+        >
           {triggerName || "Add payment"}
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="w-fit">
+      <DrawerContent className="max-sm:w-full! max-sm:rounded-none!">
         <DrawerHeader>
           <DrawerTitle>Add recurring payment</DrawerTitle>
           <DrawerDescription>

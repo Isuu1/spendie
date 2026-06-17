@@ -74,7 +74,7 @@ const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
-      className="w-md bg-card p-6 rounded-2xl"
+      className="w-md bg-card p-6 rounded-2xl max-sm:w-full"
     >
       <FieldGroup>
         <h3>Edit recurring payment</h3>
