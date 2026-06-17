@@ -115,6 +115,7 @@ const ChangeDetailsForm = ({ user }: ChangeDetailsFormProps) => {
           {form.formState.isDirty && (
             <Button
               variant="secondary"
+              className="bg-background"
               type="button"
               size="sm"
               onClick={() => form.reset()}

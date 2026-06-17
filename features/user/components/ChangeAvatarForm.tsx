@@ -20,10 +20,15 @@ const ChangeAvatarForm = ({ user }: ChangeAvatarFormProps) => {
         height={150}
       />
       <div className="flex items-center justify-between">
-        <Button variant="secondary" size="sm">
+        <Button variant="secondary" size="sm" className="bg-background">
           Edit photo
         </Button>
-        <Button variant="secondary" size="sm" icon={<Trash2 />} />
+        <Button
+          className="bg-background"
+          variant="secondary"
+          size="sm"
+          icon={<Trash2 />}
+        />
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ const AccountDetails: React.FC = () => {
   }
 
   return (
-    <div className="grid grid-cols-[1fr_1.5fr] gap-12 bg-card p-6 rounded-2xl">
+    <div className="grid grid-cols-[1fr_1.5fr] gap-12 py-6">
       <div className="flex flex-col gap-3">
         <p className="text-lg font-bold">Profile</p>
         <p>Set up your profile details.</p>
