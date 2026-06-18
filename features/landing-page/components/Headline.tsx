@@ -5,7 +5,7 @@ type HeadlineProps = {
 
 const Headline = ({ title, subtitle }: HeadlineProps) => {
   return (
-    <div className="text-center flex flex-col gap-2 leading-7">
+    <div className="relative z-2 text-center flex flex-col gap-2 leading-7">
       <h2>{title}</h2>
       <p>{subtitle}</p>
     </div>
