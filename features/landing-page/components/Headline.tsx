@@ -1,15 +1,11 @@
-import React from "react";
-//Styles
-import styles from "./Headline.module.scss";
-
-interface HeadlineProps {
+type HeadlineProps = {
   title: string;
   subtitle: string;
-}
+};
 
 const Headline = ({ title, subtitle }: HeadlineProps) => {
   return (
-    <div className={styles.headline}>
+    <div className="relative z-2 text-center flex flex-col gap-2 leading-7">
       <h2>{title}</h2>
       <p>{subtitle}</p>
     </div>
