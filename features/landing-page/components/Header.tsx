@@ -14,23 +14,26 @@ import Button from "@/shared/components/ui/Button";
 
 const Header = () => {
   return (
-    <div className="z-10 fixed top-0 left-0 right-0 p-4 bg-background flex justify-between items-center">
+    <div className="z-10 fixed top-0 left-0 right-0 p-4 bg-[hsla(341,6%,4%,0.7)] flex justify-between items-center">
       <h2 className="text-accent">
         <Link href="/">Spendie.</Link>
       </h2>
       <nav className="max-sm:hidden flex gap-4">
-        <span className="cursor-pointer text-lg hover:text-accent transition-colors">
+        <span className="cursor-pointer text-base hover:text-accent transition-colors">
           Home
         </span>
-        <span className="cursor-pointer text-lg hover:text-accent transition-colors">
+        <span className="cursor-pointer text-base hover:text-accent transition-colors">
           About
         </span>
-        <span className="cursor-pointer text-lg hover:text-accent transition-colors">
+        <span className="cursor-pointer text-base hover:text-accent transition-colors">
           Contact
         </span>
       </nav>
 
-      <Link className="max-sm:hidden" href="/login">
+      <Link
+        className="max-sm:hidden text-base hover:text-accent transition-colors"
+        href="/login"
+      >
         Login
       </Link>
 

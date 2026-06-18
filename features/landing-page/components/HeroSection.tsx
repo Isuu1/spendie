@@ -16,7 +16,7 @@ const HeroSection = () => {
     <section className="mt-37.5 flex flex-col items-center gap-8">
       <div className="flex flex-col items-center text-center gap-4 max-w-225">
         <h1>Take control of your money — effortlessly.</h1>
-        <p className="leading-8">
+        <p className="leading-8 text-base">
           Spendie brings your accounts, bills, and recurring payments together
           into one clear dashboard — so you can plan smarter and stress less.
         </p>
