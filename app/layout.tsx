@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "@/shared/styles/globals.scss";
+import "@/shared/styles/globals.css";
 import { Toaster } from "react-hot-toast";
 import { toastStyle } from "@/shared/styles/toastStyle";
 
