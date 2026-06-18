@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 //Images
-import dashboard from "@/public/images/dashboard1.png";
+import dashboard from "@/public/images/dashboard5.png";
 import mobileDashboard from "@/public/images/dashboard-mobile.png";
 //Components
 import Button from "@/shared/components/ui/Button";
