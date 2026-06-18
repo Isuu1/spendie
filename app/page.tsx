@@ -18,7 +18,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="landing-page">
+    <div className="xl:w-[90%] w-full m-auto px-4">
       <Header />
       <HeroSection />
       <Features />
