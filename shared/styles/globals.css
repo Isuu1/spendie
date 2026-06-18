@@ -1,15 +1,4 @@
-@use "./datepicker-globals.scss";
 @import "./theme.css";
-
-:root {
-  /* Typography Scale */
-  --font-size-xs: 0.75rem; /* 12px - Hints, tooltips, captions */
-  --font-size-s: 0.8125rem; /* 13px - Secondary data, dense tables */
-  --font-size-m: 0.875rem; /* 14px - Default UI (Your Body) */
-  --font-size-l: 1rem; /* 16px - Large UI / Panel Titles */
-  --font-size-xl: 1.25rem; /* 20px - Sub-headers */
-  --font-size-xxl: 1.5rem; /* 24px - Page Titles */
-}
 
 *,
 *::before,
@@ -44,7 +33,6 @@ p {
 }
 
 a {
-  //color: inherit;
   text-decoration: none;
 }
 
@@ -95,13 +83,6 @@ input {
   padding: 1rem 1rem 0 1rem;
   width: 100%;
   margin: auto;
-  // .bg {
-  //   position: fixed;
-  //   z-index: -1;
-  //   object-fit: cover;
-  //   opacity: 0.3;
-  //   height: 100vh !important;
-  // }
 }
 
 @media (min-width: 1200px) {
@@ -110,7 +91,7 @@ input {
   }
 }
 
-//Inputs
+/* Inputs */
 input[type="number"] {
   appearance: none;
   -moz-appearance: textfield;
