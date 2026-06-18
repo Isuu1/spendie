@@ -18,14 +18,16 @@ export default async function Home() {
   }
 
   return (
-    <div className="xl:w-[90%] w-full m-auto px-4">
-      <Header />
-      <HeroSection />
-      <Features />
-      <PaymentsFeature />
-      <DashboardFeature />
-      <AccountsFeature />
+    <>
+      <div className="xl:w-[90%] w-full m-auto px-4">
+        <Header />
+        <HeroSection />
+        <Features />
+        <PaymentsFeature />
+        <DashboardFeature />
+        <AccountsFeature />
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }

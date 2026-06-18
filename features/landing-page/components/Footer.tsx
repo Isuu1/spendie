@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <div className="mt-16 mb-8">
+    <div className="mt-16 bg-[hsla(341,6%,4%,1)] p-8">
       <div className="flex justify-between items-center">
         <h2>Spendie.</h2>
         <ul className="list-none flex gap-4 flex-wrap text-base">
