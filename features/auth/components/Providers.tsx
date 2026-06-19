@@ -21,8 +21,8 @@ const ProviderItem = ({ provider, onClick, className }: ProviderItemProps) => {
   return (
     <div
       className={cn(
-        "cursor-pointer bg-bg-surface flex items-center justify-center rounded-lg p-2",
-        "hover:bg-bg-surface-dark-hover transition-colors",
+        "cursor-pointer bg-background flex items-center justify-center rounded-lg p-2",
+        "hover:bg-card-foreground transition-colors",
         className,
       )}
       onClick={onClick}
@@ -64,7 +64,7 @@ const Providers = () => {
         <ProviderItem
           provider="apple"
           onClick={() => {}}
-          className="cursor-not-allowed"
+          className="cursor-not-allowed hover:bg-background"
         />
       </div>
     </div>
