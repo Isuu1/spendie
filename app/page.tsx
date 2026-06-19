@@ -7,6 +7,7 @@ import Footer from "@/features/landing-page/components/Footer";
 import PaymentsFeature from "@/features/landing-page/components/PaymentsFeature";
 import DashboardFeature from "@/features/landing-page/components/DashboardFeature";
 import { createClient } from "@/supabase/server";
+import AccountsFeature from "@/features/landing-page/components/AccountsFeature";
 
 export default async function Home() {
   const supabase = await createClient();
@@ -17,13 +18,16 @@ export default async function Home() {
   }
 
   return (
-    <div className="landing-page">
-      <Header />
-      <HeroSection />
-      <Features />
-      <PaymentsFeature />
-      <DashboardFeature />
+    <>
+      <div className="xl:w-[90%] w-full m-auto px-4">
+        <Header />
+        <HeroSection />
+        <Features />
+        <PaymentsFeature />
+        <DashboardFeature />
+        <AccountsFeature />
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }

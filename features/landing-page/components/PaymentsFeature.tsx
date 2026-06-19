@@ -11,12 +11,12 @@ const PaymentsFeature = () => {
         title="Never miss a bill again."
         subtitle="Keep your subscriptions and payments on track — automatically."
       />
-      <div className="grid grid-rows-2 lg:gap-12 lg:grid-cols-2 lg:grid-rows-1">
+      <div className="grid grid-rows-2 lg:gap-6 lg:grid-cols-[1.5fr_1fr] lg:grid-rows-1">
         <div className="relative flex justify-center">
           <Image
             src={payments}
             alt="Advanced Payments Illustration"
-            className="rounded-2xl z-4 object-cover relative! max-h-120"
+            className="rounded-2xl z-4 object-cover relative! max-h-240"
             fill
             unoptimized
             priority
@@ -33,23 +33,23 @@ const PaymentsFeature = () => {
           </p>
           <ul className="list-none flex flex-col gap-4">
             <li className="flex items-center gap-4">
-              <span className="w-3 h-3 bg-primary rounded-full"></span>
+              <span className="w-3 h-3 bg-primary rounded-full shrink-0"></span>
               <p className="text-base">
                 Automatically track your regular payments
               </p>
             </li>
             <li className="flex items-center gap-4">
-              <span className="w-3 h-3 bg-primary rounded-full"></span>
+              <span className="w-3 h-3 bg-primary rounded-full shrink-0"></span>
               <p className="text-base">Get reminders for upcoming due dates</p>
             </li>
             <li className="flex items-center gap-4">
-              <span className="w-3 h-3 bg-primary rounded-full"></span>
+              <span className="w-3 h-3 bg-primary rounded-full shrink-0"></span>
               <p className="text-base">
                 Visualize your payment history and trends
               </p>
             </li>
             <li className="flex items-center gap-4">
-              <span className="w-3 h-3 bg-primary rounded-full"></span>
+              <span className="w-3 h-3 bg-primary rounded-full shrink-0"></span>
               <p className="text-base">
                 Visual timeline view — see upcoming and overdue payments in
                 seconds.

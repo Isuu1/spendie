@@ -1,4 +1,4 @@
-import dashboard from "@/public/images/dashboard-feature3.png";
+import dashboard from "@/public/images/dashboard-feature4.png";
 import Image from "next/image";
 import Headline from "./Headline";
 
@@ -10,7 +10,7 @@ const DashboardFeature = () => {
         subtitle="Customize your experience with our advanced dashboard features."
       />
       <div className="absolute top-0 left-1/2 right-[50%] w-screen ml-[-50vw] mr-[-50vw] h-full bg-[linear-gradient(135deg,#22252e_10%,#d34702_50%,#22252e_90%)] opacity-20 z-1"></div>
-      <div className="grid grid-rows-2 lg:gap-12 lg:grid-cols-2 lg:grid-rows-1">
+      <div className="grid grid-rows-2 lg:gap-12 lg:grid-cols-[1fr_1.5fr] lg:grid-rows-1">
         <div className="flex flex-col gap-4 justify-center">
           <h2>Your dashboard, built your way</h2>
           <p className="leading-8 text-base">
@@ -47,15 +47,16 @@ const DashboardFeature = () => {
             </li>
           </ul>
         </div>
-        <div className="relative flex justify-center">
-          <div className="z-5 absolute bottom-0 top-0 right-0 w-1/2 bg-[linear-gradient(90deg,#22222200,#222222)] rounded-2xl"></div>
+        <div className="relative rounded-2xl overflow-hidden">
+          {/* <div className="z-5 absolute bottom-0 top-0 right-0 w-1/2 bg-[linear-gradient(90deg,#22222200,#222222)] rounded-2xl"></div> */}
           <Image
             src={dashboard}
             alt="Advanced Payments Illustration"
-            className="rounded-2xl z-4 object-cover relative! max-h-100"
+            className="rounded-2xl z-4 object-cover relative! max-w-240"
             fill
             unoptimized
             priority
+            sizes="(max-width: 1200px) 100vw, 1440px"
           />
         </div>
       </div>

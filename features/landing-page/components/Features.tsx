@@ -27,7 +27,11 @@ const Features = () => {
             Connect bank accounts with Plaid and see your total balance in one
             view.
           </p>
-          <Button variant="default" className="mt-auto">
+          <Button
+            variant="default"
+            onClick={() => scrollToSection("accounts")}
+            className="mt-auto"
+          >
             Read more
           </Button>
         </div>

@@ -79,18 +79,6 @@ input {
   min-height: 100vh;
 }
 
-.landing-page {
-  padding: 1rem 1rem 0 1rem;
-  width: 100%;
-  margin: auto;
-}
-
-@media (min-width: 1200px) {
-  .landing-page {
-    width: 90%;
-  }
-}
-
 /* Inputs */
 input[type="number"] {
   appearance: none;
