@@ -1,7 +1,7 @@
 import React from "react";
 import Headline from "./Headline";
 import Image from "next/image";
-import accounts from "@/public/images/accounts-feature2.png";
+import accounts from "@/public/images/accounts-feature3.png";
 
 const AccountsFeature = () => {
   return (
@@ -68,7 +68,7 @@ const AccountsFeature = () => {
           <Image
             src={accounts}
             alt="Accounts Accounts Illustration"
-            className="rounded-2xl z-4 object-cover relative! max-w-240"
+            className="rounded-2xl z-4 object-contain relative! max-w-210"
             fill
             unoptimized
             priority

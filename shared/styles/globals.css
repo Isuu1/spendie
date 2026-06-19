@@ -79,12 +79,6 @@ input {
   min-height: 100vh;
 }
 
-@media (min-width: 1200px) {
-  .landing-page {
-    width: 90%;
-  }
-}
-
 /* Inputs */
 input[type="number"] {
   appearance: none;
