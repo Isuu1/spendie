@@ -1,10 +1,23 @@
 # Spendie 💸
 
-Spendie is a modern personal finance dashboard that helps users track balances, recurring payments, and future cash flow in a clear and intuitive way. It’s designed to feel fast, minimal, and data-driven, with a strong focus on user experience and performance.
+Spendie is a modern personal finance management platform that helps users take control of their finances through account aggregation, transaction tracking, budgeting, and spending analytics.
 
-This project was built as a **portfolio-grade full‑stack application**, showcasing real-world patterns such as authentication, database persistence, API integrations, and scalable UI architecture.
+By integrating with Plaid, users can securely connect their bank accounts and automatically synchronize financial data in real time. Spendie provides a centralized dashboard where users can monitor account balances, track income and expenses, analyze spending habits, and manage their financial goals with ease.
+
+The project was built to explore modern fintech development practices, focusing on secure third-party integrations, scalable architecture, and a seamless user experience.
 
 ---
+
+## 🚀 Key Highlights
+
+- Secure bank account connectivity with Plaid
+- Automatic transaction synchronization
+- Budget creation and expense tracking
+- Interactive spending analytics and reports
+- Multi-account financial overview
+- Secure authentication and user management
+- Responsive and accessible design
+- Built with modern full-stack technologies
 
 ## ✨ Features
 
@@ -42,12 +55,11 @@ This project was built as a **portfolio-grade full‑stack application**, showca
 
 ### Frontend
 
-- **Next.js 15** (App Router)
-- **React 18**
+- **Next.js 16** (App Router)
+- **React 19**
 - **TypeScript**
-- **SCSS Modules**
+- **Tailwind**
 - **Framer Motion** (animations)
-- **clsx** (conditional styling)
 
 ### Backend & Infrastructure
 
@@ -68,117 +80,25 @@ This project was built as a **portfolio-grade full‑stack application**, showca
 
 ---
 
-## 🗂️ Project Structure
-
-```txt
-app/
-├─ (auth)/
-│  ├─ login/
-│  └─ signup/
-├─ (dashboard)/
-│  ├─ dashboard/
-│  ├─ user/
-│  └─ layout.tsx
-├─ actions/
-├─ api/
-components/
-features/
-lib/
-styles/
-```
-
-- **app/** – Next.js App Router structure
-- **components/** – Shared UI components
-- **features/** – Domain-based feature modules (balances, payments, etc.)
-- **lib/** – Utilities, helpers, and shared logic
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- npm / pnpm / yarn
-- Supabase project
-- Plaid developer account (optional)
-
-### Installation
-
-```bash
-git clone https://github.com/your-username/spendie.git
-cd spendie
-npm install
-```
-
-### Environment Variables
-
-Create a `.env.local` file in the root directory:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-PLAID_CLIENT_ID=your_plaid_client_id
-PLAID_SECRET=your_plaid_secret
-```
-
-### Run the App
-
-```bash
-npm run dev
-```
-
-The app will be available at `http://localhost:3000`.
-
----
-
-## 🧠 Key Implementation Details
-
-- **Future Balance Calculation**
-
-  - Recurring payments are expanded into future dates and aggregated to produce balance projections.
-
-- **Server Actions First**
-
-  - Data mutations (create/update/delete) are handled via Next.js Server Actions instead of traditional REST endpoints.
-
-- **Reusable Feature Logic**
-
-  - Business logic is extracted into feature-level utilities to keep components lean and reusable.
-
----
-
 ## 📸 Screenshots
 
 > _Coming soon_
 
 ---
 
-## 🛣️ Roadmap
+## 🎯 Why I Built This Project
 
-- [ ] Budget categories & limits
-- [ ] Advanced analytics & charts
-- [ ] Export data (CSV)
-- [ ] Multi-currency support
-- [ ] Mobile-first improvements
+Spendie was developed as a portfolio project to deepen my understanding of fintech applications, financial data aggregation, authentication flows, and scalable full-stack architecture. The project demonstrates experience with modern web technologies, third-party API integrations, database design, and building production-ready user experiences.
 
----
-
-## 🤝 Contributing
-
-This is primarily a portfolio project, but suggestions and feedback are welcome.
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Open a pull request
+That kind of section is something recruiters and hiring managers often appreciate because it explains the purpose behind the project, not just the technology used.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License**.
+This project is proprietary software.
+
+All rights reserved. You may view the source code for educational and evaluation purposes only. No permission is granted to use, copy, modify, or distribute any part of this project without explicit written permission from the author.
 
 ---
 
