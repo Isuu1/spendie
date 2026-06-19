@@ -19,9 +19,12 @@ const Header = () => {
         <Link href="/">Spendie.</Link>
       </h2>
       <nav className="max-sm:hidden flex gap-4">
-        <span className="cursor-pointer text-base hover:text-accent transition-colors">
+        <Link
+          href="/"
+          className="cursor-pointer text-base hover:text-accent transition-colors"
+        >
           Home
-        </span>
+        </Link>
         <span className="cursor-pointer text-base hover:text-accent transition-colors">
           About
         </span>
