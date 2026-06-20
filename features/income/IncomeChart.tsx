@@ -5,9 +5,17 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { formatAmount } from "@/shared/lib/utils/formatAmount";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  XAxis,
+  //YAxis,
+} from "recharts";
 import { Transaction } from "../transactions/types/transaction";
 import dayjs from "dayjs";
+import { useMemo } from "react";
 
 const chartConfig = {
   amount: {
@@ -22,30 +30,59 @@ type IncomeChartProps = {
 };
 
 const IncomeChart = ({ transactions, selectedPeriod }: IncomeChartProps) => {
-  const monthsToShow = selectedPeriod === "last3Months" ? 3 : 6;
+  const periodMap = {
+    last3Months: 3,
+    last6Months: 6,
+  } as const;
 
-  const chartData = Array.from({ length: monthsToShow }, (_, index) => {
-    const month = dayjs().subtract(monthsToShow - 1 - index, "month");
+  const monthsToShow = periodMap[selectedPeriod];
 
-    const income = transactions
-      .filter((t) => t.amount < 0 && dayjs(t.date).isSame(month, "month"))
-      .reduce((acc, t) => acc + Math.abs(t.amount), 0);
+  const chartData = useMemo(() => {
+    const incomeByMonth = new Map<string, number>();
 
-    return {
-      month: month.format("MMM"),
-      income,
-    };
-  });
+    transactions.forEach((transaction) => {
+      if (transaction.amount >= 0) return;
+
+      const monthKey = dayjs(transaction.date).format("YYYY-MM");
+
+      incomeByMonth.set(
+        monthKey,
+        (incomeByMonth.get(monthKey) ?? 0) + Math.abs(transaction.amount),
+      );
+    });
+
+    return Array.from({ length: monthsToShow }, (_, index) => {
+      const month = dayjs().subtract(monthsToShow - 1 - index, "month");
+      const monthKey = month.format("YYYY-MM");
+
+      return {
+        month: month.format("MMM"),
+        income: incomeByMonth.get(monthKey) ?? 0,
+      };
+    });
+  }, [transactions, monthsToShow]);
   return (
     <ChartContainer config={chartConfig} className="mt-8">
       <BarChart
         accessibilityLayer
         data={chartData}
         barSize={60}
-        margin={{ top: 12, left: 12, right: 12 }}
+        margin={{ top: 12, left: 4, right: 4 }}
       >
         <CartesianGrid vertical={false} stroke="#434445" />
-        <Bar dataKey="income" fill="#d34702" radius={10} />
+        <Bar
+          dataKey="income"
+          fill="#d34702"
+          radius={10}
+          //isAnimationActive={false}
+        >
+          <LabelList
+            position="top"
+            offset={12}
+            className="fill-foreground"
+            fontSize={12}
+          />
+        </Bar>
         <ChartTooltip
           content={
             <ChartTooltipContent
@@ -79,13 +116,13 @@ const IncomeChart = ({ transactions, selectedPeriod }: IncomeChartProps) => {
           tickMargin={8}
           tickFormatter={(value) => value.slice(0, 3)}
         />
-        <YAxis
+        {/* <YAxis
           stroke="white"
           dataKey="income"
           tickLine={false}
           axisLine={false}
           tickMargin={20}
-        />
+        /> */}
       </BarChart>
     </ChartContainer>
   );
