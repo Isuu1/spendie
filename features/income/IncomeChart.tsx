@@ -1,8 +1,8 @@
 import {
   ChartConfig,
   ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
+  //ChartTooltip,
+  // ChartTooltipContent,
 } from "@/components/ui/chart";
 import { formatAmount } from "@/shared/lib/utils/formatAmount";
 import {
@@ -11,7 +11,7 @@ import {
   CartesianGrid,
   LabelList,
   XAxis,
-  //YAxis,
+  YAxis,
 } from "recharts";
 import { Transaction } from "../transactions/types/transaction";
 import dayjs from "dayjs";
@@ -81,9 +81,20 @@ const IncomeChart = ({ transactions, selectedPeriod }: IncomeChartProps) => {
             offset={12}
             className="fill-foreground"
             fontSize={12}
+            content={(props) => {
+              const { x, y, value } = props;
+              const numericValue = Number(value ?? 0);
+              const amount = formatAmount(numericValue, "USD").displayAmount;
+
+              return (
+                <text x={x} y={y} dy={-10} className="fill-primary text-xs">
+                  {amount}
+                </text>
+              );
+            }}
           />
         </Bar>
-        <ChartTooltip
+        {/* <ChartTooltip
           content={
             <ChartTooltipContent
               indicator="line"
@@ -106,7 +117,7 @@ const IncomeChart = ({ transactions, selectedPeriod }: IncomeChartProps) => {
             />
           }
           cursor={false}
-        />
+        /> */}
         <XAxis
           stroke="white"
           dataKey="month"
@@ -116,13 +127,13 @@ const IncomeChart = ({ transactions, selectedPeriod }: IncomeChartProps) => {
           tickMargin={8}
           tickFormatter={(value) => value.slice(0, 3)}
         />
-        {/* <YAxis
+        <YAxis
           stroke="white"
           dataKey="income"
           tickLine={false}
           axisLine={false}
           tickMargin={20}
-        /> */}
+        />
       </BarChart>
     </ChartContainer>
   );

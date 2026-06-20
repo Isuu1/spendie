@@ -17,14 +17,23 @@ const IncomePanel = () => {
   const [selectedPeriod, setSelectedPeriod] =
     useState<periodOptions>("last3Months");
 
+  const [open, setOpen] = useState(false);
+
   //   const selectOptions = [
   //     { value: "last3Months", label: "Last 3 Months" },
   //     { value: "last6Months", label: "Last 6 Months" },
   //   ];
 
+  const handleSelectChange = (value: string) => {
+    if (value === "last3Months" || value === "last6Months") {
+      setSelectedPeriod(value);
+    }
+    setOpen(false);
+  };
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-2 items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-4">
         <h4 className="text-secondary">Income</h4>
         {/* <SelectInput
           id="income-period-select"
@@ -32,12 +41,12 @@ const IncomePanel = () => {
           value={selectedPeriod}
           onChange={(value) => setSelectedPeriod(value as periodOptions)}
         /> */}
-        <Popover>
+        <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
               size="default"
               variant="secondary"
-              className="bg-background font-normal aria-expanded:bg-background"
+              className="bg-background font-normal aria-expanded:bg-background w-fit"
             >
               {selectedPeriod === "last3Months"
                 ? "Last 3 Months"
@@ -48,14 +57,14 @@ const IncomePanel = () => {
             <Button
               className="bg-transparent hover:bg-card text-primary font-normal"
               size="default"
-              onClick={() => setSelectedPeriod("last3Months")}
+              onClick={() => handleSelectChange("last3Months")}
             >
               Last 3 Months
             </Button>
             <Button
               className="bg-transparent hover:bg-card text-primary font-normal"
               size="default"
-              onClick={() => setSelectedPeriod("last6Months")}
+              onClick={() => handleSelectChange("last6Months")}
             >
               Last 6 Months
             </Button>
