@@ -1,94 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTransactions } from "../transactions/hooks/useTransactions";
-import dayjs from "dayjs";
-import { getTransactionsInPeriod } from "../transactions/lib/utils/getTransactionsInPeriod";
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from "@/components/ui/popover";
+//import Button from "@/shared/components/ui/Button";
+import IncomeChart from "./IncomeChart";
+import SelectInput from "@/shared/components/ui/SelectInput";
 
-import { Area, AreaChart, XAxis } from "recharts";
-import {
-  ChartContainer,
-  type ChartConfig,
-  ChartTooltip,
-  ChartTooltipContent,
-  ChartLegendContent,
-  ChartLegend,
-} from "@/components/ui/chart";
+type periodOptions = "last3Months" | "last6Months";
 
 const IncomePanel = () => {
   const { data: transactions } = useTransactions();
-  console.log(transactions);
 
-  const chartConfig = {
-    amount: {
-      label: "Amount",
-      color: "#2563eb",
-    },
-  } satisfies ChartConfig;
+  const [selectedPeriod, setSelectedPeriod] =
+    useState<periodOptions>("last3Months");
 
-  const startOfMonth = dayjs().startOf("month");
-  const endOfMonth = dayjs().endOf("month");
-
-  const thisMonthTransactions = getTransactionsInPeriod(
-    transactions,
-    startOfMonth,
-    endOfMonth,
-  );
-
-  const previousMonthTransactions = getTransactionsInPeriod(
-    transactions,
-    startOfMonth.subtract(1, "month"),
-    endOfMonth.subtract(1, "month"),
-  );
-
-  const twoMonthsAgoTransactions = getTransactionsInPeriod(
-    transactions,
-    startOfMonth.subtract(2, "month"),
-    endOfMonth.subtract(2, "month"),
-  );
-
-  console.log("This Month Transactions:", thisMonthTransactions);
-  console.log("Previous Month Transactions:", previousMonthTransactions);
-  console.log("Two Months Ago Transactions:", twoMonthsAgoTransactions);
-
-  const thisMonthIncome = thisMonthTransactions
-    .filter((t) => t.amount < 0)
-    .reduce((acc, t) => acc + Math.abs(t.amount), 0);
-
-  const previousMonthIncome = previousMonthTransactions
-    .filter((t) => t.amount < 0)
-    .reduce((acc, t) => acc + Math.abs(t.amount), 0);
-
-  const twoMonthsAgoIncome = twoMonthsAgoTransactions
-    .filter((t) => t.amount < 0)
-    .reduce((acc, t) => acc + Math.abs(t.amount), 0);
-
-  console.log("This Month Income:", thisMonthIncome);
-  console.log("Previous Month Income:", previousMonthIncome);
-
-  const chartData = [
-    {
-      month: startOfMonth.subtract(2, "month").format("MMM"),
-      income: twoMonthsAgoIncome,
-    },
-    {
-      month: startOfMonth.subtract(1, "month").format("MMM"),
-      income: previousMonthIncome,
-    },
-    {
-      month: startOfMonth.format("MMM"),
-      income: thisMonthIncome,
-    },
+  const selectOptions = [
+    { value: "last3Months", label: "Last 3 Months" },
+    { value: "last6Months", label: "Last 6 Months" },
   ];
+
   return (
-    <div>
+    <div className="grid grid-cols-[3fr_1fr] items-center gap-4">
       <h4 className="text-secondary">Income</h4>
-      <ChartContainer config={chartConfig}>
-        <AreaChart width={500} height={300} data={chartData}>
-          <Area dataKey="income" fill="#8884d8" />
-          <ChartTooltip content={<ChartTooltipContent />} />
-          <ChartLegend content={<ChartLegendContent />} />
-          <XAxis dataKey="month" />
-        </AreaChart>
-      </ChartContainer>
+      <SelectInput
+        id="income-period-select"
+        selectOptions={selectOptions}
+        value={selectedPeriod}
+        onChange={(value) => setSelectedPeriod(value as periodOptions)}
+      />
+      {/* <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            size="default"
+            variant="secondary"
+            className="bg-background font-normal aria-expanded:bg-background"
+          >
+            {selectedPeriod === "last3Months"
+              ? "Last 3 Months"
+              : "Last 6 Months"}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="bg-background w-auto p-1 gap-1">
+          <Button
+            className="bg-transparent hover:bg-card text-primary font-normal"
+            size="default"
+            onClick={() => setSelectedPeriod("last3Months")}
+          >
+            Last 3 Months
+          </Button>
+          <Button
+            className="bg-transparent hover:bg-card text-primary font-normal"
+            size="default"
+            onClick={() => setSelectedPeriod("last6Months")}
+          >
+            Last 6 Months
+          </Button>
+        </PopoverContent>
+      </Popover> */}
+      <IncomeChart
+        transactions={transactions}
+        selectedPeriod={selectedPeriod}
+      />
     </div>
   );
 };
