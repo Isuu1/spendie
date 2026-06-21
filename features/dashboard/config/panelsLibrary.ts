@@ -25,24 +25,24 @@ export const panelsLibrary: PanelDefinition[] = [
     id: "total-balance",
     name: "Total Balance",
     component: TotalBalancePanel,
-    className: "col-span-12 lg:col-span-4",
+    className: "col-span-12 lg:col-span-5 xl:col-span-4 2xl:col-span-3",
   },
   {
     id: "income",
     name: "Income",
     component: IncomePanel,
-    className: "col-span-12 lg:col-span-4",
+    className: "col-span-12 lg:col-span-5 xl:col-span-4 2xl:col-span-3",
   },
   {
     id: "accounts",
     name: "Accounts",
     component: AccountsPanel,
-    className: "col-span-12 lg:col-span-4",
+    className: "col-span-12 lg:col-span-5 xl:col-span-4 2xl:col-span-3",
   },
   {
     id: "transactions",
     name: "Transactions",
     component: TransactionsPanel,
-    className: "col-span-12 lg:col-span-7",
+    className: "col-span-12 lg:col-span-6 xl:col-span-6 2xl:col-span-6",
   },
 ];
