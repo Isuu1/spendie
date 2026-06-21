@@ -1,14 +1,14 @@
 import {
   ChartConfig,
   ChartContainer,
-  //ChartTooltip,
-  // ChartTooltipContent,
+  ChartTooltip,
+  ChartTooltipContent,
 } from "@/components/ui/chart";
 import { formatAmount } from "@/shared/lib/utils/formatAmount";
 import {
   Bar,
   BarChart,
-  CartesianGrid,
+  //CartesianGrid,
   LabelList,
   XAxis,
   YAxis,
@@ -16,6 +16,7 @@ import {
 import { Transaction } from "../transactions/types/transaction";
 import dayjs from "dayjs";
 import { useMemo } from "react";
+import { useUserSettings } from "../user/hooks/useUserSettings";
 
 const chartConfig = {
   amount: {
@@ -30,6 +31,8 @@ type IncomeChartProps = {
 };
 
 const IncomeChart = ({ transactions, selectedPeriod }: IncomeChartProps) => {
+  const { data: settings } = useUserSettings();
+
   const periodMap = {
     last3Months: 3,
     last6Months: 6,
@@ -62,19 +65,19 @@ const IncomeChart = ({ transactions, selectedPeriod }: IncomeChartProps) => {
     });
   }, [transactions, monthsToShow]);
   return (
-    <ChartContainer config={chartConfig} className="mt-8">
+    <ChartContainer config={chartConfig} className="mt-4 h-[250px]">
       <BarChart
         accessibilityLayer
         data={chartData}
         barSize={60}
         margin={{ top: 12, left: 4, right: 4 }}
       >
-        <CartesianGrid vertical={false} stroke="#434445" />
+        {/* <CartesianGrid vertical={false} stroke="#424654" /> */}
         <Bar
           dataKey="income"
           fill="#d34702"
           radius={10}
-          //isAnimationActive={false}
+          className="hover:fill-accent-foreground"
         >
           <LabelList
             position="top"
@@ -84,7 +87,10 @@ const IncomeChart = ({ transactions, selectedPeriod }: IncomeChartProps) => {
             content={(props) => {
               const { x, y, value } = props;
               const numericValue = Number(value ?? 0);
-              const amount = formatAmount(numericValue, "USD").displayAmount;
+              const amount = formatAmount(
+                numericValue,
+                settings?.currency || "USD",
+              ).displayAmount;
 
               return (
                 <text x={x} y={y} dy={-10} className="fill-primary text-xs">
@@ -94,7 +100,7 @@ const IncomeChart = ({ transactions, selectedPeriod }: IncomeChartProps) => {
             }}
           />
         </Bar>
-        {/* <ChartTooltip
+        <ChartTooltip
           content={
             <ChartTooltipContent
               indicator="line"
@@ -103,7 +109,10 @@ const IncomeChart = ({ transactions, selectedPeriod }: IncomeChartProps) => {
               formatter={(value, name) => {
                 // ensure value is a number (formatter may receive undefined)
                 const numericValue = Number(value ?? 0);
-                const amount = formatAmount(numericValue, "USD").displayAmount;
+                const amount = formatAmount(
+                  numericValue,
+                  settings?.currency || "USD",
+                ).displayAmount;
                 const label = name === "income" ? "Income" : name;
                 return (
                   <span className="flex items-center gap-2">
@@ -117,7 +126,7 @@ const IncomeChart = ({ transactions, selectedPeriod }: IncomeChartProps) => {
             />
           }
           cursor={false}
-        /> */}
+        />
         <XAxis
           stroke="white"
           dataKey="month"
