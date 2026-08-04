@@ -1,14 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import dayjs from "dayjs";
 //Components
 import FutureBalance from "../../future-balance/components/FutureBalance";
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import Button from "@/shared/components/ui/Button";
 //Hooks
 import { useAccounts } from "@/features/accounts/hooks/useAccounts";
 import { useTransactions } from "@/features/transactions/hooks/useTransactions";
@@ -23,12 +17,6 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { Amount } from "@/shared/components/Amount";
 
 const TotalBalancePanel = () => {
-  const [selectedMode, setSelectedMode] = useState<"detailed" | "overview">(
-    "detailed",
-  );
-
-  const [open, setOpen] = useState(false);
-
   const { data = [], isLoading } = useAccounts();
 
   const { data: transactions = [] } = useTransactions();
@@ -58,42 +46,10 @@ const TotalBalancePanel = () => {
     currentMonthTransactions,
   );
 
-  const handleModeChange = (option: string) => {
-    setSelectedMode(option === "Detailed" ? "detailed" : "overview");
-    setOpen(false);
-  };
-
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-row justify-between items-center gap-5">
         <h4 className="text-secondary">Total Balance</h4>
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              size="default"
-              variant="secondary"
-              className="bg-background font-normal aria-expanded:bg-background"
-            >
-              {selectedMode === "detailed" ? "Detailed" : "Overview"}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="bg-background w-auto p-1 gap-1">
-            <Button
-              className="bg-transparent hover:bg-card text-primary font-normal"
-              size="default"
-              onClick={() => handleModeChange("Detailed")}
-            >
-              Detailed
-            </Button>
-            <Button
-              className="bg-transparent hover:bg-card text-primary font-normal"
-              size="default"
-              onClick={() => handleModeChange("Overview")}
-            >
-              Overview
-            </Button>
-          </PopoverContent>
-        </Popover>
       </div>
 
       <Amount amount={totalBalance ?? 0} className="text-2xl font-semibold" />
@@ -113,7 +69,7 @@ const TotalBalancePanel = () => {
       </div>
 
       <FutureBalanceProvider totalBalance={totalBalance ?? 0}>
-        <FutureBalance selectedMode={selectedMode} />
+        <FutureBalance />
       </FutureBalanceProvider>
     </div>
   );

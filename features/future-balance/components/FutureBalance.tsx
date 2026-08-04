@@ -7,34 +7,22 @@ import PaymentsSummary from "@/features/future-balance/components/PaymentsSummar
 import { useFutureBalanceContext } from "../context/FutureBalanceContext";
 import { Amount } from "@/shared/components/Amount";
 
-type FutureBalanceProps = {
-  selectedMode: "detailed" | "overview";
-};
-
-const FutureBalance = ({ selectedMode }: FutureBalanceProps) => {
+const FutureBalance = () => {
   const { futureBalance, selectedDate } = useFutureBalanceContext();
 
   return (
     <div className="flex flex-col items-center justify-center gap-6 w-full mt-2">
-      {selectedMode === "detailed" && (
-        <>
-          <FutureBalanceDateSelector />
+      <FutureBalanceDateSelector />
 
-          <PaymentsSummary />
-        </>
-      )}
+      <PaymentsSummary />
 
       <div className="flex justify-between items-center w-full">
-        {selectedMode === "detailed" ? (
-          <h4 className="text-secondary">
-            Balance{" "}
-            {selectedDate
-              ? `by ${selectedDate.format("DD MMM YYYY")}`
-              : "at end of month"}
-          </h4>
-        ) : (
-          <h4 className="text-secondary">After bills this month</h4>
-        )}
+        <h4 className="text-secondary">
+          Balance{" "}
+          {selectedDate
+            ? `by ${selectedDate.format("DD MMM YYYY")}`
+            : "at end of month"}
+        </h4>
         <Amount
           amount={futureBalance ?? 0}
           showSign
