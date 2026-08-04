@@ -8,6 +8,8 @@ type periodOptions = "last3Months" | "last6Months";
 const IncomePanel = () => {
   const { data: transactions } = useTransactions();
 
+  console.log("transactions", transactions);
+
   const [selectedPeriod, setSelectedPeriod] =
     useState<periodOptions>("last3Months");
 
@@ -45,10 +47,16 @@ const IncomePanel = () => {
         </div>
       </div>
 
-      <IncomeChart
-        transactions={transactions}
-        selectedPeriod={selectedPeriod}
-      />
+      {transactions && transactions.length === 0 ? (
+        <p className="text-sm text-muted-foreground">
+          No income data available for the selected period.
+        </p>
+      ) : (
+        <IncomeChart
+          transactions={transactions}
+          selectedPeriod={selectedPeriod}
+        />
+      )}
     </div>
   );
 };

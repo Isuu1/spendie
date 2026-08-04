@@ -16,7 +16,10 @@ const DashboardPanelWrapper = ({
 }: DashboardPanelWrapperProps) => {
   return (
     <motion.div
-      className={cn("flex flex-col p-4 rounded-2xl bg-card", className)}
+      className={cn(
+        "flex flex-col p-4 rounded-2xl bg-card min-h-[350px]",
+        className,
+      )}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
