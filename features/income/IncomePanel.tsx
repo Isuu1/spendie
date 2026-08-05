@@ -8,6 +8,8 @@ type periodOptions = "last3Months" | "last6Months";
 const IncomePanel = () => {
   const { data: transactions } = useTransactions();
 
+  console.log("transactions", transactions);
+
   const [selectedPeriod, setSelectedPeriod] =
     useState<periodOptions>("last3Months");
 
@@ -18,7 +20,7 @@ const IncomePanel = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 grow">
       <div className="flex items-center justify-between gap-4">
         <h4 className="text-secondary">Income</h4>
         <div className="flex gap-2">
@@ -44,11 +46,18 @@ const IncomePanel = () => {
           </Button>
         </div>
       </div>
-
-      <IncomeChart
-        transactions={transactions}
-        selectedPeriod={selectedPeriod}
-      />
+      <div className="grow flex flex-col justify-center">
+        {transactions && transactions.length === 0 ? (
+          <p className="text-sm text-muted-foreground self-center">
+            No income data available for the selected period.
+          </p>
+        ) : (
+          <IncomeChart
+            transactions={transactions}
+            selectedPeriod={selectedPeriod}
+          />
+        )}
+      </div>
     </div>
   );
 };
