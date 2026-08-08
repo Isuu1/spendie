@@ -26,8 +26,10 @@ const DashboardAccountsList: React.FC<DashboardAccountsListProps> = ({
 
   if (accounts.length === 0)
     return (
-      <div className="flex flex-col gap-2">
-        <p>You don`t have any linked accounts yet.</p>
+      <div className="flex flex-col gap-8 grow items-center justify-center">
+        <p className="text-secondary">
+          You don`t have any linked accounts yet.
+        </p>
         <PlaidLink userId={user?.id ?? ""} />
       </div>
     );
