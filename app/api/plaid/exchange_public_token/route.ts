@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/supabase/server"; // Assuming you have a Supabase server client utility
+import { createClient } from "@/supabase/server";
 import { CountryCode, ItemPublicTokenExchangeRequest } from "plaid";
 import plaidClient from "@/shared/lib/plaid";
 import { syncPlaidTransactions } from "@/features/transactions/api/syncPlaidTransactions";
@@ -7,20 +7,36 @@ import { syncPlaidAccountsForItem } from "@/features/accounts/api/syncPlaidAccou
 
 export async function POST(request: Request) {
   try {
-    const { public_token, userId } = await request.json();
+    const supabase = await createClient();
 
-    if (!public_token || !userId) {
+    //Get the public token from the request body
+    const { public_token } = await request.json();
+
+    if (!public_token) {
       return NextResponse.json(
-        { error: "Missing public token or user ID" },
+        { error: "Missing public token" },
         { status: 400 },
       );
     }
 
+    //Get the user ID from the Supabase auth session
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (!user || userError) {
+      return NextResponse.json(
+        { error: "User not authenticated" },
+        { status: 401 },
+      );
+    }
+
+    //Exchange the public token for an access token and item ID
     const plaidRequest: ItemPublicTokenExchangeRequest = {
       public_token: public_token,
     };
 
-    //Exchange the public token for an access token and item ID
     const plaidResponse =
       await plaidClient.itemPublicTokenExchange(plaidRequest);
 
@@ -49,11 +65,10 @@ export async function POST(request: Request) {
     }
 
     //Store the access_token and item_id in your Supabase database
-    const supabase = await createClient();
 
     const { error } = await supabase.from("plaid_items").insert([
       {
-        user_id: userId,
+        user_id: user.id,
         plaid_item_id: item_id,
         access_token: access_token,
         last_synced_at: new Date(),
@@ -75,10 +90,10 @@ export async function POST(request: Request) {
     //Sync accounts immediately after storing the access token
     //Sync only accounts for the newly connected item to avoid unnecessary API calls and potential rate limits
     await syncPlaidAccountsForItem({
-      userId,
+      userId: user.id,
       itemId: item_id,
     });
-    await syncPlaidTransactions(userId);
+    await syncPlaidTransactions(user.id);
 
     return NextResponse.json({ success: true });
   } catch (error) {
