@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Footer = () => {
   return (
     <div className="mt-16 bg-[hsla(341,6%,4%,1)] p-8">
@@ -22,8 +24,8 @@ const Footer = () => {
       <div className="flex justify-between gap-2 mt-8">
         <p>© 2025 Spendie</p>
         <div className="flex gap-2">
-          <p>Terms of Service</p>
-          <p>Privacy Policy</p>
+          <Link href="/terms">Terms of Service</Link>
+          <Link href="/privacy">Privacy Policy</Link>
         </div>
       </div>
     </div>

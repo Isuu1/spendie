@@ -1,9 +1,7 @@
 import { redirect } from "next/navigation";
 //Components
-import Header from "@/features/landing-page/components/Header";
 import HeroSection from "@/features/landing-page/components/HeroSection";
 import Features from "@/features/landing-page/components/Features";
-import Footer from "@/features/landing-page/components/Footer";
 import PaymentsFeature from "@/features/landing-page/components/PaymentsFeature";
 import DashboardFeature from "@/features/landing-page/components/DashboardFeature";
 import { createClient } from "@/supabase/server";
@@ -18,16 +16,12 @@ export default async function Home() {
   }
 
   return (
-    <>
-      <div className="xl:w-[90%] w-full m-auto px-4">
-        <Header />
-        <HeroSection />
-        <Features />
-        <PaymentsFeature />
-        <DashboardFeature />
-        <AccountsFeature />
-      </div>
-      <Footer />
-    </>
+    <div className="xl:w-[90%] w-full m-auto px-4">
+      <HeroSection />
+      <Features />
+      <PaymentsFeature />
+      <DashboardFeature />
+      <AccountsFeature />
+    </div>
   );
 }
