@@ -48,10 +48,12 @@ export default function Page() {
 
         <h3>2.3 Connection credentials and tokens</h3>
         <p>
-          Spendie stores Plaid access tokens associated with connected financial
-          accounts. These tokens are used to maintain authorised connections and
-          synchronise financial information and are treated as sensitive
-          credentials.
+          Spendie stores Plaid access tokens in its backend infrastructure.
+          These tokens are used solely to maintain authorised connections to the
+          financial accounts you have connected and to retrieve the financial
+          information necessary to provide Spendie`s features. Plaid access
+          tokens are treated as sensitive credentials and are not intended to be
+          accessible through Spendie`s client-side application.
         </p>
 
         <h3>2.4 Technical and usage information</h3>
