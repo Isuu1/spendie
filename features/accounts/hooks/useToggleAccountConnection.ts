@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { disconnectAccount } from "../lib/actions/disconnectAccount";
+import { toggleAccountConnection } from "../lib/actions/toggleAccountConnection";
 import { toastStyle } from "@/shared/styles/toastStyle";
 import toast from "react-hot-toast";
 
-export function useDisconnectAccount() {
+export function useToggleAccountConnection() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (accountId: string) => {
-      await disconnectAccount(accountId);
+      await toggleAccountConnection(accountId);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
