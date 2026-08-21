@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { cn } from "@/shared/lib/cn";
 //Utils
 import { generateAccountBackground } from "../lib/utils/generateAccountBackground";
+import { formatAmount } from "@/shared/lib/utils/formatAmount";
 //Types
 import { Account } from "@/features/accounts/types/account";
 //Icons
@@ -9,11 +10,10 @@ import { BsCreditCard2FrontFill } from "react-icons/bs";
 import { MdEditDocument } from "react-icons/md";
 //Hooks
 import { useRenameAccount } from "../hooks/useRenameAccount";
-import { useDisconnectAccount } from "../hooks/useDisconnectAccount";
+import { useToggleAccountConnection } from "../hooks/useToggleAccountConnection";
 import { useHideAccount } from "../hooks/useHideAccount";
 //Components
 import AccountItemMenu from "./AccountItemMenu";
-import { formatAmount } from "@/shared/lib/utils/formatAmount";
 
 type AccountItemProps = {
   account: Account;
@@ -28,7 +28,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
 
   const { mutateAsync: renameAccount, isPending } = useRenameAccount();
 
-  const { mutateAsync: disconnectAccount } = useDisconnectAccount();
+  const { mutateAsync: toggleAccountConnection } = useToggleAccountConnection();
 
   const { mutateAsync: hideAccount } = useHideAccount();
 
@@ -143,7 +143,7 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
       {canEdit && (
         <AccountItemMenu
           onRename={startEditing}
-          onDisconnect={() => disconnectAccount(account.id)}
+          onDisconnect={() => toggleAccountConnection(account.id)}
           onHide={() => hideAccount(account.id)}
           isHidden={account.is_hidden}
           isDisconnected={account.is_disconnected}

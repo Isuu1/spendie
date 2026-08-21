@@ -2,7 +2,7 @@
 
 import { createClient } from "@/supabase/server";
 
-export async function disconnectAccount(accountId: string) {
+export async function toggleAccountConnection(accountId: string) {
   const supabase = await createClient();
 
   //Find the account to get its current disconnected status
