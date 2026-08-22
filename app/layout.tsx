@@ -3,8 +3,6 @@ import { Inter } from "next/font/google";
 import "@/shared/styles/globals.css";
 import { Toaster } from "react-hot-toast";
 import { toastStyle } from "@/shared/styles/toastStyle";
-import Header from "@/features/landing-page/components/Header";
-import Footer from "@/features/landing-page/components/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -25,11 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Toaster toastOptions={toastStyle} containerStyle={{ top: 100 }} />
-        <div className="xl:w-[90%] w-full m-auto px-4">
-          <Header />
-          {children}
-        </div>
-        <Footer />
+        {children}
       </body>
     </html>
   );
