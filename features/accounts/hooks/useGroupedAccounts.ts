@@ -10,13 +10,8 @@ export function useGroupedAccounts() {
   function calculateInstitutionTotals(accounts: Account[]) {
     let active = 0;
     let hidden = 0;
-    let disconnected = 0;
 
     for (const acc of accounts) {
-      if (acc.is_disconnected) {
-        disconnected += acc.current_balance || 0;
-        continue;
-      }
       if (acc.is_hidden) {
         hidden += acc.current_balance || 0;
       } else {
@@ -26,7 +21,6 @@ export function useGroupedAccounts() {
     return {
       active,
       hidden,
-      disconnected,
       total: active + hidden,
     };
   }
