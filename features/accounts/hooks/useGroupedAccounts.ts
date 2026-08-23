@@ -14,6 +14,7 @@ export function useGroupedAccounts() {
     for (const acc of accounts) {
       if (acc.is_hidden) {
         hidden += acc.current_balance || 0;
+        continue;
       } else {
         active += acc.current_balance || 0;
       }
@@ -21,7 +22,7 @@ export function useGroupedAccounts() {
     return {
       active,
       hidden,
-      total: active + hidden,
+      total: active,
     };
   }
 
