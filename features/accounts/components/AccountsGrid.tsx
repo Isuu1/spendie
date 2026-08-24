@@ -27,10 +27,9 @@ const AccountsGrid = () => {
 
   const filteredAccounts = useMemo(() => {
     const filters: Record<string, (acc: Account) => boolean> = {
-      all: (acc: Account) => !acc.is_disconnected,
-      hidden: (acc: Account) => acc.is_hidden && !acc.is_disconnected,
-      active: (acc: Account) => !acc.is_hidden && !acc.is_disconnected,
-      disconnected: (acc: Account) => acc.is_disconnected,
+      all: (acc: Account) => acc.is_hidden || !acc.is_hidden,
+      hidden: (acc: Account) => acc.is_hidden,
+      active: (acc: Account) => !acc.is_hidden,
     };
 
     const filterFn = filters[activeSegment] || filters.active;
@@ -53,10 +52,6 @@ const AccountsGrid = () => {
           { label: `All in use (${counts.all})`, value: "all" },
           { label: `Active (${counts.active})`, value: "active" },
           { label: `Hidden (${counts.hidden})`, value: "hidden" },
-          {
-            label: `Disconnected (${counts.disconnected})`,
-            value: "disconnected",
-          },
         ]}
         onChange={(value) => handleSegmentChange(value)}
       />

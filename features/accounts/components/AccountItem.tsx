@@ -10,7 +10,6 @@ import { BsCreditCard2FrontFill } from "react-icons/bs";
 import { MdEditDocument } from "react-icons/md";
 //Hooks
 import { useRenameAccount } from "../hooks/useRenameAccount";
-import { useToggleAccountConnection } from "../hooks/useToggleAccountConnection";
 import { useHideAccount } from "../hooks/useHideAccount";
 //Components
 import AccountItemMenu from "./AccountItemMenu";
@@ -27,8 +26,6 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
   );
 
   const { mutateAsync: renameAccount, isPending } = useRenameAccount();
-
-  const { mutateAsync: toggleAccountConnection } = useToggleAccountConnection();
 
   const { mutateAsync: hideAccount } = useHideAccount();
 
@@ -143,10 +140,8 @@ const AccountItem = ({ account, canEdit }: AccountItemProps) => {
       {canEdit && (
         <AccountItemMenu
           onRename={startEditing}
-          onDisconnect={() => toggleAccountConnection(account.id)}
           onHide={() => hideAccount(account.id)}
           isHidden={account.is_hidden}
-          isDisconnected={account.is_disconnected}
         />
       )}
     </div>
