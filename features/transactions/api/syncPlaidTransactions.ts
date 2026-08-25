@@ -37,7 +37,6 @@ export async function syncPlaidTransactions(userId: string) {
 
         const { error } = await supabase.from("transactions").upsert({
           plaid_transaction_id: tx.transaction_id,
-          plaid_item_id: item.plaid_item_id,
           account_id: tx.account_id,
           amount: tx.amount,
           name: displayName,
