@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useAccounts } from "./useAccounts";
-import { usePlaidItems } from "./usePlaidItems";
+import { usePlaidItems } from "../../../shared/plaid/hooks/usePlaidItems";
 import { Account } from "../types/account";
 
 export function useGroupedAccounts() {
