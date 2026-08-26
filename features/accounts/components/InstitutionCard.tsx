@@ -8,6 +8,9 @@ import SyncIcon from "@/shared/components/SyncIcon";
 //Utils
 import { lastUpdated } from "../lib/utils/calculateLastSyncTime";
 import { formatAmount } from "@/shared/lib/utils/formatAmount";
+import { useState } from "react";
+import ConfirmAction from "@/shared/components/ConfirmAction";
+import { useRemovePlaidItem } from "@/shared/plaid/hooks/useRemovePlaidItem";
 
 type InstitutionCardProps = {
   institution: Institution;
@@ -22,6 +25,16 @@ const InstitutionCard = ({
   isSyncing,
   activeSegment,
 }: InstitutionCardProps) => {
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const { mutate, isError } = useRemovePlaidItem();
+
+  const handleDelete = async () => {
+    mutate(institution.plaid_item_db_id);
+    if (isError) return;
+    setConfirmDelete(false);
+  };
+
   const handleSync = async () => {
     onSync(institution.plaid_item_id);
   };
@@ -38,18 +51,17 @@ const InstitutionCard = ({
     institution.accounts[0]?.currency,
   ).displayAmount;
 
-  const disconnectedBalance = formatAmount(
-    totals.disconnected,
-    institution.accounts[0]?.currency,
-  ).displayAmount;
-
   if (institution.accounts.length === 0) return null;
 
   return (
-    <div
-      key={institution.plaid_item_id}
-      className="relative bg-background p-4 rounded-2xl flex flex-col gap-4"
-    >
+    <div className="relative bg-background p-4 rounded-2xl flex flex-col gap-4">
+      <Button
+        variant="destructive"
+        className="self-end"
+        onClick={() => setConfirmDelete(true)}
+      >
+        Remove bank
+      </Button>
       <div className="flex justify-between items-center">
         <h3>{institution.institution_name}</h3>
         {activeSegment !== "disconnected" && (
@@ -69,16 +81,10 @@ const InstitutionCard = ({
           </div>
         )}
       </div>
-      {activeSegment === "disconnected" ? (
-        <p className="text-text-secondary!">
-          Disconnected balance: {disconnectedBalance}
-        </p>
-      ) : (
-        <>
-          <h3>Total balance: {totalBalance}</h3>
-          <p className="text-text-secondary!">Hidden: {hiddenBalance}</p>
-        </>
-      )}
+      <>
+        <h3>Total balance: {totalBalance}</h3>
+        <p className="text-text-secondary!">Hidden: {hiddenBalance}</p>
+      </>
       {/* {activeSegment !== "disconnected" && (
         <div className="flex gap-2 items-center">
           <SyncIcon isSyncing={isSyncing} />
@@ -100,6 +106,14 @@ const InstitutionCard = ({
           <AccountItem key={acc.id} account={acc} canEdit />
         ))}
       </div>
+      {confirmDelete && (
+        <ConfirmAction
+          title="Are you sure you want to remove this bank?"
+          subtitle="This action will remove all associated accounts and transactions. This action cannot be undone."
+          onConfirm={handleDelete}
+          onCancel={() => setConfirmDelete(false)}
+        />
+      )}
     </div>
   );
 };

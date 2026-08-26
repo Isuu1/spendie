@@ -1,6 +1,7 @@
 import { Account } from "./account";
 
 export type Institution = {
+  plaid_item_db_id: string;
   plaid_item_id: string;
   institution_name: string;
   institution_logo?: string;
@@ -9,7 +10,6 @@ export type Institution = {
   totals: {
     active: number;
     hidden: number;
-    disconnected: number;
     total: number;
   };
 };
