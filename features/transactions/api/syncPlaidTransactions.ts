@@ -7,18 +7,34 @@ export async function syncPlaidTransactions(userId: string) {
 
   const { data: items } = await supabase
     .from("plaid_items")
-    .select("plaid_item_id, access_token, plaid_cursor")
+    .select("id, plaid_item_id, access_token, plaid_cursor")
     .eq("user_id", userId);
 
   if (!items || items.length === 0) return;
 
-  //Loop through each item and sync transactions
+  //1. Loop through each item and sync transactions
   for (const item of items) {
     const accessToken = item.access_token;
     let currentCursor = item.plaid_cursor || null;
     let hasMore = true;
 
-    //Loop through paginated results until all transactions are synced
+    //2. Get accounts for the item to map Plaid account IDs to Spendie account IDs in db
+    const { data: accounts, error: accountsError } = await supabase
+      .from("accounts")
+      .select("id, plaid_account_id")
+      .eq("plaid_item_db_id", item.id);
+
+    if (accountsError) {
+      console.error("Error fetching accounts:", accountsError);
+      throw new Error("Failed to fetch accounts");
+    }
+
+    //3. Create a map of Plaid account IDs to Spendie account IDs for quick lookup
+    const accountMap = new Map(
+      (accounts ?? []).map((account) => [account.plaid_account_id, account.id]),
+    );
+
+    //4. Loop through paginated results until all transactions are synced
     while (hasMore) {
       const plaidRequest: TransactionsSyncRequest = {
         access_token: accessToken,
@@ -31,14 +47,23 @@ export async function syncPlaidTransactions(userId: string) {
 
       const updates = [...added, ...modified];
 
-      //Upsert new and modified transactions into the database
+      //5. Upsert new and modified transactions into the database
       for (const tx of updates) {
         const displayName = tx.merchant_name ?? tx.name;
 
+        //6. Find the corresponding Spendie account ID for the Plaid account ID
+        const accountId = accountMap.get(tx.account_id);
+
+        if (!accountId) {
+          console.error(
+            `Could not find Spendie account for Plaid account ${tx.account_id}`,
+          );
+
+          continue;
+        }
+
         const { error } = await supabase.from("transactions").upsert({
           plaid_transaction_id: tx.transaction_id,
-          plaid_item_id: item.plaid_item_id,
-          account_id: tx.account_id,
           amount: tx.amount,
           name: displayName,
           original_name: tx.name,
@@ -48,6 +73,8 @@ export async function syncPlaidTransactions(userId: string) {
           category: tx.personal_finance_category?.primary,
           iso_currency_code: tx.iso_currency_code,
           user_id: userId,
+
+          account_id: accountId, //account_id is the foreign key -> plaid_items.id
         });
 
         if (error) {
@@ -55,7 +82,7 @@ export async function syncPlaidTransactions(userId: string) {
         }
       }
 
-      // Remove transactions that have been deleted in Plaid
+      //7. Remove transactions that have been deleted in Plaid
       if (removed && removed.length > 0) {
         const removedIds = removed.map((tx) => tx.transaction_id);
 
@@ -67,12 +94,12 @@ export async function syncPlaidTransactions(userId: string) {
         if (error)
           console.error("Error removing cancelled transactions:", error);
       }
-      // Update cursor and hasMore for next iteration
+      //8. Update cursor and hasMore for next iteration
       currentCursor = next_cursor;
       hasMore = has_more;
     }
 
-    // Update the cursor in the database for this item
+    //9. Update the cursor in the database for this item
     await supabase
       .from("plaid_items")
       .update({ plaid_cursor: currentCursor })

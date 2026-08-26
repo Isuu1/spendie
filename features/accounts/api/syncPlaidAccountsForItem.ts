@@ -14,10 +14,10 @@ export async function syncPlaidAccountsForItem({
 }: SyncPlaidAccountsForItemParams) {
   const supabase = await createClient();
 
-  //1. Fetch access token securely from DB
+  //1. Fetch access token and item ID securely from DB
   const { data: item } = await supabase
     .from("plaid_items")
-    .select("access_token")
+    .select("access_token, id")
     .eq("plaid_item_id", itemId)
     .single();
 
@@ -42,14 +42,13 @@ export async function syncPlaidAccountsForItem({
     subtype: acc.subtype,
     mask: acc.mask,
 
+    plaid_item_db_id: item.id, //Associate with the plaid_items.id for foreign key relationship
+
     current_balance: acc.balances.current,
     available_balance: acc.balances.available,
     currency: acc.balances.iso_currency_code,
 
     last_synced_at: new Date(),
-
-    // is_disconnected: false,
-    // is_hidden: false,
   }));
 
   //4. Upsert accounts into Supabase
