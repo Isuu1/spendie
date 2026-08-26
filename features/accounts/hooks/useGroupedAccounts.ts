@@ -30,9 +30,7 @@ export function useGroupedAccounts() {
     return plaidItems
       .map((institution) => {
         const institutionAccounts = accounts
-          .filter(
-            (acc: Account) => acc.plaid_item_id === institution.plaid_item_id,
-          )
+          .filter((acc: Account) => acc.plaid_item_db_id === institution.id)
           .sort(
             (a: Account, b: Account) =>
               (a.current_balance || 0) - (b.current_balance || 0),
