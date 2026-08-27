@@ -1,9 +1,9 @@
 "use server";
 
-import { syncPlaidAccountsForItem } from "../../api/syncPlaidAccountsForItem";
+import { syncPlaidInstitution } from "../api/syncPlaidInstitution";
 import { createClient } from "@/supabase/server";
 
-export async function syncAccountAction(plaidItemDbId: string) {
+export async function syncPlaidInstitutionAction(plaidItemDbId: string) {
   const supabase = await createClient();
 
   const {
@@ -20,7 +20,7 @@ export async function syncAccountAction(plaidItemDbId: string) {
   }
 
   //Use sync function to sync accounts for the specific item
-  return await syncPlaidAccountsForItem({
+  return await syncPlaidInstitution({
     userId: user.id,
     plaidItemDbId: plaidItemDbId,
   });

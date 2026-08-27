@@ -3,15 +3,15 @@
 import { createClient } from "@/supabase/server";
 import plaidClient from "@/shared/lib/plaid";
 
-type SyncPlaidAccountsForItemParams = {
+type SyncPlaidInstitutionParams = {
   userId: string;
   plaidItemDbId: string;
 };
 
-export async function syncPlaidAccountsForItem({
+export async function syncPlaidInstitution({
   userId,
   plaidItemDbId,
-}: SyncPlaidAccountsForItemParams) {
+}: SyncPlaidInstitutionParams) {
   const supabase = await createClient();
 
   //1. Fetch access token and item ID securely from DB

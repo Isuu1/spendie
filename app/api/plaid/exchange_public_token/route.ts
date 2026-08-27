@@ -3,7 +3,7 @@ import { createClient } from "@/supabase/server";
 import { CountryCode, ItemPublicTokenExchangeRequest } from "plaid";
 import plaidClient from "@/shared/lib/plaid";
 import { syncPlaidTransactions } from "@/features/transactions/api/syncPlaidTransactions";
-import { syncPlaidAccountsForItem } from "@/features/accounts/api/syncPlaidAccountsForItem";
+import { syncPlaidInstitution } from "@/shared/plaid/api/syncPlaidInstitution";
 
 export async function POST(request: Request) {
   try {
@@ -93,7 +93,7 @@ export async function POST(request: Request) {
     //Accounts will be synced after user connects their bank
     //Sync accounts immediately after storing the access token
     //Sync only accounts for the newly connected item to avoid unnecessary API calls and potential rate limits
-    await syncPlaidAccountsForItem({
+    await syncPlaidInstitution({
       userId: user.id,
       plaidItemDbId: plaidItem.id,
     });
