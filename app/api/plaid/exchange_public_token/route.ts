@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/supabase/server";
 import { CountryCode, ItemPublicTokenExchangeRequest } from "plaid";
 import plaidClient from "@/shared/lib/plaid";
-import { syncPlaidTransactions } from "@/features/transactions/api/syncPlaidTransactions";
+import { syncPlaidTransactions } from "@/shared/plaid/api/syncPlaidTransactions";
 import { syncPlaidInstitution } from "@/shared/plaid/api/syncPlaidInstitution";
 
 export async function POST(request: Request) {
