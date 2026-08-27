@@ -3,7 +3,7 @@ import { syncPlaidInstitutionAction } from "@/shared/plaid/actions/syncPlaidInst
 import toast from "react-hot-toast";
 import { toastStyle } from "@/shared/styles/toastStyle";
 
-export function useSyncAccount() {
+export function useSyncPlaidInstitution() {
   const queryClient = useQueryClient();
 
   return useMutation({

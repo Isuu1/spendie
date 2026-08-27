@@ -12,7 +12,7 @@ import { lastUpdated } from "../lib/utils/calculateLastSyncTime";
 import { formatAmount } from "@/shared/lib/utils/formatAmount";
 //Hooks
 import { useRemovePlaidItem } from "@/shared/plaid/hooks/useRemovePlaidItem";
-import { useSyncAccount } from "../hooks/useSyncAccount";
+import { useSyncPlaidInstitution } from "@/shared/plaid/hooks/useSyncPlaidInstitution";
 
 type InstitutionCardProps = {
   institution: Institution;
@@ -27,7 +27,11 @@ const InstitutionCard = ({
 
   const { mutate: removePlaidItem, isError } = useRemovePlaidItem();
 
-  const { mutate: syncAccount, isPending, variables } = useSyncAccount();
+  const {
+    mutate: syncAccount,
+    isPending,
+    variables,
+  } = useSyncPlaidInstitution();
 
   const handleDelete = async () => {
     removePlaidItem(institution.plaid_item_db_id);
