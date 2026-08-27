@@ -1,10 +1,19 @@
 "use server";
 
-import { getUserServer } from "@/features/user/api/getUserServer";
 import { syncPlaidAccountsForItem } from "../../api/syncPlaidAccountsForItem";
+import { createClient } from "@/supabase/server";
 
-export async function syncAccountAction(itemId: string) {
-  const user = await getUserServer();
+export async function syncAccountAction(plaidItemDbId: string) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error || !user) {
+    throw new Error("User not authenticated");
+  }
 
   if (!user) {
     throw new Error("User not authenticated");
@@ -13,6 +22,6 @@ export async function syncAccountAction(itemId: string) {
   //Use sync function to sync accounts for the specific item
   return await syncPlaidAccountsForItem({
     userId: user.id,
-    itemId: itemId,
+    plaidItemDbId: plaidItemDbId,
   });
 }

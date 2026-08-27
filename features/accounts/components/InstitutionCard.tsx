@@ -1,3 +1,4 @@
+import { useState } from "react";
 //Types
 import { Account } from "../types/account";
 import { Institution } from "../types/institution";
@@ -5,38 +6,37 @@ import { Institution } from "../types/institution";
 import AccountItem from "./AccountItem";
 import Button from "@/shared/components/ui/Button";
 import SyncIcon from "@/shared/components/SyncIcon";
+import ConfirmAction from "@/shared/components/ConfirmAction";
 //Utils
 import { lastUpdated } from "../lib/utils/calculateLastSyncTime";
 import { formatAmount } from "@/shared/lib/utils/formatAmount";
-import { useState } from "react";
-import ConfirmAction from "@/shared/components/ConfirmAction";
+//Hooks
 import { useRemovePlaidItem } from "@/shared/plaid/hooks/useRemovePlaidItem";
+import { useSyncAccount } from "../hooks/useSyncAccount";
 
 type InstitutionCardProps = {
   institution: Institution;
-  onSync: (itemId: string) => void;
-  isSyncing: boolean;
   activeSegment: string;
 };
 
 const InstitutionCard = ({
   institution,
-  onSync,
-  isSyncing,
   activeSegment,
 }: InstitutionCardProps) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const { mutate, isError } = useRemovePlaidItem();
+  const { mutate: removePlaidItem, isError } = useRemovePlaidItem();
+
+  const { mutate: syncAccount, isPending, variables } = useSyncAccount();
 
   const handleDelete = async () => {
-    mutate(institution.plaid_item_db_id);
+    removePlaidItem(institution.plaid_item_db_id);
     if (isError) return;
     setConfirmDelete(false);
   };
 
   const handleSync = async () => {
-    onSync(institution.plaid_item_id);
+    syncAccount(institution.plaid_item_db_id);
   };
 
   const { totals } = institution;
@@ -66,17 +66,19 @@ const InstitutionCard = ({
         <h3>{institution.institution_name}</h3>
         {activeSegment !== "disconnected" && (
           <div className="flex gap-2 items-center">
-            <SyncIcon isSyncing={isSyncing} />
+            <SyncIcon isSyncing={isPending} />
             <p>{lastUpdated(institution.last_synced_at)}</p>
             <Button
               variant="secondary"
               size="sm"
               iconPosition="left"
               onClick={handleSync}
-              disabled={isSyncing}
+              disabled={isPending && variables === institution.plaid_item_db_id}
               className="disabled:cursor-not-allowed"
             >
-              {isSyncing ? "Syncing..." : "Sync now"}
+              {isPending && variables === institution.plaid_item_db_id
+                ? "Syncing..."
+                : "Sync now"}
             </Button>
           </div>
         )}
@@ -85,22 +87,6 @@ const InstitutionCard = ({
         <h3>Total balance: {totalBalance}</h3>
         <p className="text-text-secondary!">Hidden: {hiddenBalance}</p>
       </>
-      {/* {activeSegment !== "disconnected" && (
-        <div className="flex gap-2 items-center">
-          <SyncIcon isSyncing={isSyncing} />
-          <p>{lastUpdated(institution.last_synced_at)}</p>
-          <Button
-            variant="secondary"
-            size="sm"
-            iconPosition="left"
-            onClick={handleSync}
-            disabled={isSyncing}
-            className="disabled:opacity-50! disabled:cursor-not-allowed!"
-          >
-            {isSyncing ? "Syncing..." : "Sync now"}
-          </Button>
-        </div>
-      )} */}
       <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,350px))] gap-4">
         {institution.accounts.map((acc: Account) => (
           <AccountItem key={acc.id} account={acc} canEdit />

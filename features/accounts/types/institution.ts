@@ -2,7 +2,6 @@ import { Account } from "./account";
 
 export type Institution = {
   plaid_item_db_id: string;
-  plaid_item_id: string;
   institution_name: string;
   institution_logo?: string;
   accounts: Account[];

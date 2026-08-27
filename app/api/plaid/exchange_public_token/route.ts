@@ -66,17 +66,21 @@ export async function POST(request: Request) {
 
     //Store the access_token and item_id in your Supabase database
 
-    const { error } = await supabase.from("plaid_items").insert([
-      {
-        user_id: user.id,
-        plaid_item_id: item_id,
-        access_token: access_token,
-        last_synced_at: new Date(),
-        institution_name: institutionName,
-        institution_logo: institutionLogo,
-        status: "connected",
-      },
-    ]);
+    const { data: plaidItem, error } = await supabase
+      .from("plaid_items")
+      .insert([
+        {
+          user_id: user.id,
+          plaid_item_id: item_id,
+          access_token: access_token,
+          last_synced_at: new Date(),
+          institution_name: institutionName,
+          institution_logo: institutionLogo,
+          status: "connected",
+        },
+      ])
+      .select("id")
+      .single();
 
     if (error) {
       console.error("Error saving Plaid item to Supabase:", error);
@@ -91,7 +95,7 @@ export async function POST(request: Request) {
     //Sync only accounts for the newly connected item to avoid unnecessary API calls and potential rate limits
     await syncPlaidAccountsForItem({
       userId: user.id,
-      itemId: item_id,
+      plaidItemDbId: plaidItem.id,
     });
     await syncPlaidTransactions(user.id);
 

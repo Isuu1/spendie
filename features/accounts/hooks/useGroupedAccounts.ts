@@ -40,7 +40,6 @@ export function useGroupedAccounts() {
 
         return {
           plaid_item_db_id: institution.id,
-          plaid_item_id: institution.plaid_item_id,
           institution_name: institution.institution_name,
           last_synced_at: institution.last_synced_at,
           accounts: institutionAccounts,
