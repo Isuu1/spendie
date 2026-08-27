@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 //Hooks
-import { useSyncAccount } from "../hooks/useSyncAccount";
 import { useGroupedAccounts } from "../hooks/useGroupedAccounts";
 //Components
 import InstitutionCard from "./InstitutionCard";
@@ -16,8 +15,6 @@ const AccountsGrid = () => {
   const [activeSegment, setActiveSegment] = useState("all");
 
   const { data: grouped = [] } = useGroupedAccounts();
-
-  const { mutate: syncAccount, isPending, variables } = useSyncAccount();
 
   const handleSegmentChange = (value: string) => {
     setActiveSegment(value);
@@ -58,10 +55,8 @@ const AccountsGrid = () => {
       {filteredAccounts.length > 0 ? (
         filteredAccounts?.map((item) => (
           <InstitutionCard
-            key={item.plaid_item_id}
+            key={item.plaid_item_db_id}
             institution={item}
-            onSync={() => syncAccount(item.plaid_item_id)}
-            isSyncing={isPending && variables === item.plaid_item_id}
             activeSegment={activeSegment}
           />
         ))

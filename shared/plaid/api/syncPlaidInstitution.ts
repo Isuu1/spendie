@@ -3,22 +3,22 @@
 import { createClient } from "@/supabase/server";
 import plaidClient from "@/shared/lib/plaid";
 
-type SyncPlaidAccountsForItemParams = {
+type SyncPlaidInstitutionParams = {
   userId: string;
-  itemId: string;
+  plaidItemDbId: string;
 };
 
-export async function syncPlaidAccountsForItem({
+export async function syncPlaidInstitution({
   userId,
-  itemId,
-}: SyncPlaidAccountsForItemParams) {
+  plaidItemDbId,
+}: SyncPlaidInstitutionParams) {
   const supabase = await createClient();
 
   //1. Fetch access token and item ID securely from DB
   const { data: item } = await supabase
     .from("plaid_items")
-    .select("access_token, id")
-    .eq("plaid_item_id", itemId)
+    .select("access_token, plaid_item_id")
+    .eq("id", plaidItemDbId)
     .single();
 
   if (!item) throw new Error("Item not found");
@@ -35,14 +35,14 @@ export async function syncPlaidAccountsForItem({
   //3. Format accounts for upsert into Supabase
   const formattedAccounts = accounts.map((acc) => ({
     user_id: userId,
-    plaid_item_id: itemId, //Associate account with the correct item in plaid_items table
+    plaid_item_id: item.plaid_item_id, //Associate account with the correct item in plaid_items table
     plaid_account_id: acc.account_id,
     name: acc.name,
     type: acc.type,
     subtype: acc.subtype,
     mask: acc.mask,
 
-    plaid_item_db_id: item.id, //Associate with the plaid_items.id for foreign key relationship
+    plaid_item_db_id: plaidItemDbId, //Associate with the plaid_items.id for foreign key relationship
 
     current_balance: acc.balances.current,
     available_balance: acc.balances.available,
@@ -67,7 +67,7 @@ export async function syncPlaidAccountsForItem({
   const { error: updateError } = await supabase
     .from("plaid_items")
     .update({ last_synced_at: new Date() })
-    .eq("plaid_item_id", itemId);
+    .eq("id", plaidItemDbId);
 
   if (updateError) {
     console.error("Error updating plaid item:", updateError);

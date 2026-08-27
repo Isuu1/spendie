@@ -1,13 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { syncAccountAction } from "../lib/actions/syncAccountAction";
+import { syncPlaidInstitutionAction } from "@/shared/plaid/actions/syncPlaidInstitutionAction";
 import toast from "react-hot-toast";
 import { toastStyle } from "@/shared/styles/toastStyle";
 
-export function useSyncAccount() {
+export function useSyncPlaidInstitution() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (itemId: string) => syncAccountAction(itemId),
+    mutationFn: (plaidItemDbId: string) =>
+      syncPlaidInstitutionAction(plaidItemDbId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
       queryClient.invalidateQueries({ queryKey: ["plaid_items"] });
