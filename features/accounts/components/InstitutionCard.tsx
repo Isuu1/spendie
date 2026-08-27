@@ -13,6 +13,7 @@ import { formatAmount } from "@/shared/lib/utils/formatAmount";
 //Hooks
 import { useRemovePlaidItem } from "@/shared/plaid/hooks/useRemovePlaidItem";
 import { useSyncPlaidInstitution } from "@/shared/plaid/hooks/useSyncPlaidInstitution";
+import { AnimatePresence } from "motion/react";
 
 type InstitutionCardProps = {
   institution: Institution;
@@ -43,15 +44,18 @@ const InstitutionCard = ({
     syncAccount(institution.plaid_item_db_id);
   };
 
-  const { totals } = institution;
+  //Destructure total balances from useGroupedAccounts hook
+  const {
+    totalBalances: { active, hidden },
+  } = institution;
 
   const totalBalance = formatAmount(
-    totals.total,
+    active,
     institution.accounts[0]?.currency,
   ).displayAmount;
 
   const hiddenBalance = formatAmount(
-    totals.hidden,
+    hidden,
     institution.accounts[0]?.currency,
   ).displayAmount;
 
@@ -96,14 +100,16 @@ const InstitutionCard = ({
           <AccountItem key={acc.id} account={acc} canEdit />
         ))}
       </div>
-      {confirmDelete && (
-        <ConfirmAction
-          title="Are you sure you want to remove this bank?"
-          subtitle="This action will remove all associated accounts and transactions. This action cannot be undone."
-          onConfirm={handleDelete}
-          onCancel={() => setConfirmDelete(false)}
-        />
-      )}
+      <AnimatePresence>
+        {confirmDelete && (
+          <ConfirmAction
+            title="Are you sure you want to remove this bank?"
+            subtitle="This action will remove all associated accounts and transactions. This action cannot be undone."
+            onConfirm={handleDelete}
+            onCancel={() => setConfirmDelete(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

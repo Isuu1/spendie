@@ -6,9 +6,8 @@ export type Institution = {
   institution_logo?: string;
   accounts: Account[];
   last_synced_at: string;
-  totals: {
+  totalBalances: {
     active: number;
     hidden: number;
-    total: number;
   };
 };
