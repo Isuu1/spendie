@@ -12,9 +12,16 @@ export async function getPlaidItemsClient() {
 
   const { data, error } = await supabase
     .from("plaid_items")
-    .select("*")
-    .eq("user_id", user.id)
-    .neq("status", "disconnected"); //Exclude items with status "disconnected"
+    .select(
+      `
+      id,
+      plaid_item_id,
+      institution_name,
+      last_synced_at,
+      status
+    `,
+    )
+    .eq("user_id", user.id);
 
   if (error) {
     console.error("Error fetching plaid items:", error);
