@@ -63,13 +63,6 @@ const InstitutionCard = ({
 
   return (
     <div className="relative bg-background p-4 rounded-2xl flex flex-col gap-4">
-      <Button
-        variant="destructive"
-        className="self-end"
-        onClick={() => setConfirmDelete(true)}
-      >
-        Remove bank
-      </Button>
       <div className="flex justify-between items-center">
         <h3>{institution.institution_name}</h3>
         {activeSegment !== "disconnected" && (
@@ -100,6 +93,13 @@ const InstitutionCard = ({
           <AccountItem key={acc.id} account={acc} canEdit />
         ))}
       </div>
+      <Button
+        variant="destructive"
+        className="self-end"
+        onClick={() => setConfirmDelete(true)}
+      >
+        Remove bank
+      </Button>
       <AnimatePresence>
         {confirmDelete && (
           <ConfirmAction
