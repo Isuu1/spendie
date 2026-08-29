@@ -16,7 +16,7 @@ const AccountsMenu = () => {
   }
 
   return (
-    <div className="flex gap-3 mt-4">
+    <div className="flex gap-3 mt-4 max-sm:flex-col">
       <Button
         variant="secondary"
         size="default"

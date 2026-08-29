@@ -46,7 +46,7 @@ const AccountsGrid = () => {
     <div className="flex flex-col gap-8 mt-4">
       <SegmentedControl
         options={[
-          { label: `All in use (${counts.all})`, value: "all" },
+          { label: `All connected (${counts.all})`, value: "all" },
           { label: `Active (${counts.active})`, value: "active" },
           { label: `Hidden (${counts.hidden})`, value: "hidden" },
         ]}
@@ -54,11 +54,7 @@ const AccountsGrid = () => {
       />
       {filteredAccounts.length > 0 ? (
         filteredAccounts?.map((item) => (
-          <InstitutionCard
-            key={item.plaid_item_db_id}
-            institution={item}
-            activeSegment={activeSegment}
-          />
+          <InstitutionCard key={item.plaid_item_db_id} institution={item} />
         ))
       ) : (
         <p>No accounts to display.</p>
