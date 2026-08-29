@@ -17,13 +17,9 @@ import { AnimatePresence } from "motion/react";
 
 type InstitutionCardProps = {
   institution: Institution;
-  activeSegment: string;
 };
 
-const InstitutionCard = ({
-  institution,
-  activeSegment,
-}: InstitutionCardProps) => {
+const InstitutionCard = ({ institution }: InstitutionCardProps) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const { mutate: removePlaidItem, isError } = useRemovePlaidItem();
@@ -63,33 +59,25 @@ const InstitutionCard = ({
 
   return (
     <div className="relative bg-background p-4 rounded-2xl flex flex-col gap-4">
-      <Button
-        variant="destructive"
-        className="self-end"
-        onClick={() => setConfirmDelete(true)}
-      >
-        Remove bank
-      </Button>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center max-sm:flex-col-reverse max-sm:items-start max-sm:gap-4">
         <h3>{institution.institution_name}</h3>
-        {activeSegment !== "disconnected" && (
-          <div className="flex gap-2 items-center">
-            <SyncIcon isSyncing={isPending} />
-            <p>{lastUpdated(institution.last_synced_at)}</p>
-            <Button
-              variant="secondary"
-              size="sm"
-              iconPosition="left"
-              onClick={handleSync}
-              disabled={isPending && variables === institution.plaid_item_db_id}
-              className="disabled:cursor-not-allowed"
-            >
-              {isPending && variables === institution.plaid_item_db_id
-                ? "Syncing..."
-                : "Sync now"}
-            </Button>
-          </div>
-        )}
+
+        <div className="flex gap-2 items-center">
+          <SyncIcon isSyncing={isPending} />
+          <p>{lastUpdated(institution.last_synced_at)}</p>
+          <Button
+            variant="secondary"
+            size="sm"
+            iconPosition="left"
+            onClick={handleSync}
+            disabled={isPending && variables === institution.plaid_item_db_id}
+            className="disabled:cursor-not-allowed"
+          >
+            {isPending && variables === institution.plaid_item_db_id
+              ? "Syncing..."
+              : "Sync now"}
+          </Button>
+        </div>
       </div>
       <>
         <h3>Total balance: {totalBalance}</h3>
@@ -100,6 +88,13 @@ const InstitutionCard = ({
           <AccountItem key={acc.id} account={acc} canEdit />
         ))}
       </div>
+      <Button
+        variant="destructive"
+        className="self-end"
+        onClick={() => setConfirmDelete(true)}
+      >
+        Remove bank
+      </Button>
       <AnimatePresence>
         {confirmDelete && (
           <ConfirmAction
