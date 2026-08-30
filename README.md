@@ -104,7 +104,7 @@ All rights reserved. You may view the source code for educational and evaluation
 
 ## 👤 Author
 
-**Jakub**
+**Jakub Babelek**
 
 - Aspiring Full‑Stack Software Engineer
 - React / Next.js / TypeScript focused
