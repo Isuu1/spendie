@@ -11,7 +11,7 @@ export async function POST() {
     if (authError || !user) {
       return NextResponse.json(
         { error: "User not authenticated" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -27,6 +27,7 @@ export async function POST() {
       language: "en",
       // redirect_uri: process.env.PLAID_REDIRECT_URI, // Required for OAuth institutions
       // webhook: process.env.PLAID_WEBHOOK_URI, // Recommended for receiving updates
+      webhook: "https://spendie-theta.vercel.app/api/webhooks/plaid",
     };
 
     const createTokenResponse = await plaidClient.linkTokenCreate(plaidRequest);
@@ -36,7 +37,7 @@ export async function POST() {
     console.error("Error creating link token:", error);
     return NextResponse.json(
       { error: "Failed to create link token" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
