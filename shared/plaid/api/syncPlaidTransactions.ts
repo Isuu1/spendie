@@ -74,7 +74,7 @@ export async function syncPlaidTransactions(userId: string) {
           iso_currency_code: tx.iso_currency_code,
           user_id: userId,
 
-          account_id: accountId, //account_id is the foreign key -> plaid_items.id
+          account_id: accountId, //FK -> accounts.id
         });
 
         if (error) {
@@ -103,6 +103,6 @@ export async function syncPlaidTransactions(userId: string) {
     await supabase
       .from("plaid_items")
       .update({ plaid_cursor: currentCursor })
-      .eq("plaid_item_id", item.plaid_item_id);
+      .eq("id", item.id);
   }
 }
