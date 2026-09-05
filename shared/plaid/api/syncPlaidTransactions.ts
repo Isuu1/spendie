@@ -12,13 +12,13 @@ export async function syncPlaidTransactions(userId: string) {
 
   if (!items || items.length === 0) return;
 
-  //1. Loop through each item and sync transactions
+  // Loop through each item and sync transactions
   for (const item of items) {
     const accessToken = item.access_token;
     let currentCursor = item.plaid_cursor || null;
     let hasMore = true;
 
-    //2. Get accounts for the item to map Plaid account IDs to Spendie account IDs in db
+    //1. Get accounts for the item to map Plaid account IDs to Spendie account IDs in db
     const { data: accounts, error: accountsError } = await supabase
       .from("accounts")
       .select("id, plaid_account_id")
@@ -29,12 +29,12 @@ export async function syncPlaidTransactions(userId: string) {
       throw new Error("Failed to fetch accounts");
     }
 
-    //3. Create a map of Plaid account IDs to Spendie account IDs for quick lookup
+    //2. Create a map of Plaid account IDs to Spendie account IDs for quick lookup
     const accountMap = new Map(
       (accounts ?? []).map((account) => [account.plaid_account_id, account.id]),
     );
 
-    //4. Loop through paginated results until all transactions are synced
+    //3. Loop through paginated results until all transactions are synced
     while (hasMore) {
       const plaidRequest: TransactionsSyncRequest = {
         access_token: accessToken,
@@ -47,11 +47,11 @@ export async function syncPlaidTransactions(userId: string) {
 
       const updates = [...added, ...modified];
 
-      //5. Upsert new and modified transactions into the database
+      //4. Upsert new and modified transactions into the database
       for (const tx of updates) {
         const displayName = tx.merchant_name ?? tx.name;
 
-        //6. Find the corresponding Spendie account ID for the Plaid account ID
+        //5. Find the corresponding Spendie account ID for the Plaid account ID
         const accountId = accountMap.get(tx.account_id);
 
         if (!accountId) {
@@ -82,7 +82,7 @@ export async function syncPlaidTransactions(userId: string) {
         }
       }
 
-      //7. Remove transactions that have been deleted in Plaid
+      //6. Remove transactions that have been deleted in Plaid
       if (removed && removed.length > 0) {
         const removedIds = removed.map((tx) => tx.transaction_id);
 
@@ -94,12 +94,12 @@ export async function syncPlaidTransactions(userId: string) {
         if (error)
           console.error("Error removing cancelled transactions:", error);
       }
-      //8. Update cursor and hasMore for next iteration
+      //7. Update cursor and hasMore for next iteration
       currentCursor = next_cursor;
       hasMore = has_more;
     }
 
-    //9. Update the cursor in the database for this item
+    //8. Update the cursor in the database for this item
     await supabase
       .from("plaid_items")
       .update({ plaid_cursor: currentCursor })
