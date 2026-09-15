@@ -26,7 +26,7 @@ export async function POST() {
       country_codes: [CountryCode.Us], // Specify the countries you support
       language: "en",
       // redirect_uri: process.env.PLAID_REDIRECT_URI, // Required for OAuth institutions
-      // webhook: process.env.PLAID_WEBHOOK_URI, // Recommended for receiving updates
+      // Plaid webhook route for receiving updates
       webhook: "https://spendie-theta.vercel.app/api/webhooks/plaid",
     };
 
