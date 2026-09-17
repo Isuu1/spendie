@@ -51,6 +51,19 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
 
     const response = await plaidClient.transactionsSync(plaidRequest);
 
+    console.log("Starting transaction sync:", {
+      plaidItemDbId: item.id,
+      cursor: currentCursor,
+    });
+
+    console.log("Plaid transaction sync:", {
+      added: response.data.added,
+      modified: response.data.modified,
+      removed: response.data.removed,
+      next_cursor: response.data.next_cursor,
+      has_more: response.data.has_more,
+    });
+
     const { added, modified, removed, next_cursor, has_more } = response.data;
 
     const updates = [...added, ...modified];
@@ -109,7 +122,7 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
   //6. Update the cursor in the database for this item
   const { error: cursorError } = await supabase
     .from("plaid_items")
-    .update({ plaid_cursor: currentCursor })
+    .update({ plaid_cursor: currentCursor, last_synced_at: new Date() })
     .eq("id", item.id);
 
   if (cursorError) {

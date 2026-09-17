@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 
 import { verifyPlaidWebhook } from "@/shared/plaid/api/verifyPlaidWebhook";
+import { createClient } from "@/supabase/server";
+import { syncPlaidTransactions } from "@/shared/plaid/api/syncPlaidTransactions";
 
 export async function POST(request: Request) {
   try {
@@ -26,7 +28,37 @@ export async function POST(request: Request) {
 
     const webhook = JSON.parse(body);
 
-    console.log("Verified Plaid webhook:", webhook);
+    if (
+      webhook.webhook_type !== "TRANSACTIONS" ||
+      webhook.webhook_code !== "SYNC_UPDATES_AVAILABLE"
+    ) {
+      return NextResponse.json({ received: true });
+    }
+
+    const supabase = await createClient();
+
+    const { data: plaidItem, error: plaidItemError } = await supabase
+      .from("plaid_items")
+      .select("id")
+      .eq("plaid_item_id", webhook.item_id)
+      .single();
+
+    if (plaidItemError || !plaidItem) {
+      console.error(
+        "Could not find Plaid Item for webhook:",
+        webhook.item_id,
+        plaidItemError,
+      );
+
+      return NextResponse.json(
+        { error: "Plaid Item not found" },
+        { status: 404 },
+      );
+    }
+
+    await syncPlaidTransactions(String(plaidItem.id));
+
+    console.log("🔥 NEW WEBHOOK CODE RUNNING");
 
     return NextResponse.json({ received: true });
   } catch (error) {
