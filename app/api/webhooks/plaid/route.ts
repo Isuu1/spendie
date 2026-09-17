@@ -38,18 +38,11 @@ export async function POST(request: Request) {
     //Use admin client to access the database without user context
     const supabase = createAdminClient();
 
-    console.log("Webhook item_id:", webhook.item_id);
-
     const { data: plaidItem, error: plaidItemError } = await supabase
       .from("plaid_items")
       .select("id")
       .eq("plaid_item_id", webhook.item_id)
       .maybeSingle();
-
-    console.log("Plaid item lookup:", {
-      plaidItem,
-      plaidItemError,
-    });
 
     if (plaidItemError || !plaidItem) {
       console.error(
@@ -65,8 +58,6 @@ export async function POST(request: Request) {
     }
 
     await syncPlaidTransactions(String(plaidItem.id));
-
-    console.log("🔥 NEW WEBHOOK CODE RUNNING");
 
     return NextResponse.json({ received: true });
   } catch (error) {
