@@ -54,28 +54,9 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
 
     const response = await plaidClient.transactionsSync(plaidRequest);
 
-    console.log("Starting transaction sync:", {
-      plaidItemDbId: item.id,
-      cursor: currentCursor,
-    });
-
     const { added, modified, removed, next_cursor, has_more } = response.data;
 
     const updates = [...added, ...modified];
-
-    console.log("Plaid transaction sync:", {
-      addedCount: added.length,
-      modifiedCount: modified.length,
-      removedCount: removed.length,
-      added: added.map((tx) => ({
-        transaction_id: tx.transaction_id,
-        account_id: tx.account_id,
-        name: tx.name,
-        amount: tx.amount,
-      })),
-      next_cursor,
-      has_more,
-    });
 
     //Upsert new and modified transactions into the database
     for (const tx of updates) {
@@ -91,12 +72,6 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
 
         continue;
       }
-
-      console.log("Processing transaction:", {
-        plaidTransactionId: tx.transaction_id,
-        plaidAccountId: tx.account_id,
-        spendieAccountId: accountId,
-      });
 
       const { error } = await supabase.from("transactions").upsert({
         plaid_transaction_id: tx.transaction_id,
