@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 
 import { verifyPlaidWebhook } from "@/shared/plaid/api/verifyPlaidWebhook";
-import { createClient } from "@/supabase/server";
 import { syncPlaidTransactions } from "@/shared/plaid/api/syncPlaidTransactions";
+import { createAdminClient } from "@/supabase/admin";
 
 export async function POST(request: Request) {
   try {
@@ -35,7 +35,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ received: true });
     }
 
-    const supabase = await createClient();
+    //Use admin client to access the database without user context
+    const supabase = createAdminClient();
 
     const { data: plaidItem, error: plaidItemError } = await supabase
       .from("plaid_items")
