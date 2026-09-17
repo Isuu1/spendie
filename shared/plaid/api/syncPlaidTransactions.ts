@@ -1,3 +1,5 @@
+"use server";
+
 // import { createClient } from "@/supabase/server";
 import plaidClient from "@/shared/lib/plaid";
 import { TransactionsSyncRequest } from "plaid";
@@ -57,17 +59,23 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
       cursor: currentCursor,
     });
 
-    console.log("Plaid transaction sync:", {
-      added: response.data.added,
-      modified: response.data.modified,
-      removed: response.data.removed,
-      next_cursor: response.data.next_cursor,
-      has_more: response.data.has_more,
-    });
-
     const { added, modified, removed, next_cursor, has_more } = response.data;
 
     const updates = [...added, ...modified];
+
+    console.log("Plaid transaction sync:", {
+      addedCount: added.length,
+      modifiedCount: modified.length,
+      removedCount: removed.length,
+      added: added.map((tx) => ({
+        transaction_id: tx.transaction_id,
+        account_id: tx.account_id,
+        name: tx.name,
+        amount: tx.amount,
+      })),
+      next_cursor,
+      has_more,
+    });
 
     //Upsert new and modified transactions into the database
     for (const tx of updates) {
@@ -83,6 +91,12 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
 
         continue;
       }
+
+      console.log("Processing transaction:", {
+        plaidTransactionId: tx.transaction_id,
+        plaidAccountId: tx.account_id,
+        spendieAccountId: accountId,
+      });
 
       const { error } = await supabase.from("transactions").upsert({
         plaid_transaction_id: tx.transaction_id,
@@ -100,7 +114,14 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
       });
 
       if (error) {
-        console.error("Error syncing Plaid transactions:", error);
+        console.error("Error syncing Plaid transaction:", {
+          error,
+          transactionId: tx.transaction_id,
+          plaidAccountId: tx.account_id,
+          spendieAccountId: accountId,
+        });
+
+        throw new Error("Failed to sync Plaid transaction");
       }
     }
 
