@@ -97,7 +97,7 @@ export async function POST(request: Request) {
       userId: user.id,
       plaidItemDbId: plaidItem.id,
     });
-    await syncPlaidTransactions(user.id);
+    await syncPlaidTransactions(plaidItem.id);
 
     return NextResponse.json({ success: true });
   } catch (error) {
