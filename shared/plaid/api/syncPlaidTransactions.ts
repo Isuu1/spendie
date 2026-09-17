@@ -1,9 +1,10 @@
-import { createClient } from "@/supabase/server";
+// import { createClient } from "@/supabase/server";
 import plaidClient from "@/shared/lib/plaid";
 import { TransactionsSyncRequest } from "plaid";
+import { createAdminClient } from "@/supabase/admin";
 
 export async function syncPlaidTransactions(plaidItemDbId: string) {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   //1. Get the Plaid item from the database using the provided plaidItemDbId
   const { data: item, error: itemError } = await supabase
