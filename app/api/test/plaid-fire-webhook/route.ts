@@ -36,7 +36,7 @@ export async function POST() {
       webhook_code:
         SandboxItemFireWebhookRequestWebhookCodeEnum.SyncUpdatesAvailable,
     });
-
+    // Log the response from Plaid for debugging purposes
     console.log("Plaid webhook fired:", {
       plaidItemDbId: plaidItem.id,
       plaidItemId: plaidItem.plaid_item_id,
