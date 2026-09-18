@@ -1,11 +1,12 @@
 "use server";
 
-// import { createClient } from "@/supabase/server";
 import plaidClient from "@/shared/lib/plaid";
 import { TransactionsSyncRequest } from "plaid";
 import { createAdminClient } from "@/supabase/admin";
 
 export async function syncPlaidTransactions(plaidItemDbId: string) {
+  //Use admin client to access the database without user context
+  //This is due this being called from a Plaid webhook, not a user request
   const supabase = createAdminClient();
 
   //1. Get the Plaid item from the database using the provided plaidItemDbId
@@ -26,7 +27,7 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
 
   //2. Initialize variables for syncing transactions
   const accessToken = item.access_token;
-  let currentCursor = item.plaid_cursor || null;
+  let currentCursor = item.plaid_cursor;
   let hasMore = true;
 
   //3. Get accounts for this Plaid item
@@ -49,13 +50,15 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
   while (hasMore) {
     const plaidRequest: TransactionsSyncRequest = {
       access_token: accessToken,
-      cursor: currentCursor,
+      //Make cursor conditional to handle the first sync where there is no cursor yet
+      ...(currentCursor ? { cursor: currentCursor } : {}),
     };
 
     const response = await plaidClient.transactionsSync(plaidRequest);
 
     const { added, modified, removed, next_cursor, has_more } = response.data;
 
+    //Combine added and modified transactions for upsert
     const updates = [...added, ...modified];
 
     //Upsert new and modified transactions into the database
@@ -65,11 +68,11 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
       //Find the corresponding Spendie account ID for the Plaid account ID
       const accountId = accountMap.get(tx.account_id);
 
+      //If no corresponding Spendie account is found, log an error and skip this transaction
       if (!accountId) {
         console.error(
           `Could not find Spendie account for Plaid account ${tx.account_id}`,
         );
-
         continue;
       }
 
@@ -109,7 +112,14 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
         .delete()
         .in("plaid_transaction_id", removedIds);
 
-      if (error) console.error("Error removing cancelled transactions:", error);
+      if (error) {
+        console.error("Error removing transactions:", {
+          error,
+          transactionIds: removedIds,
+        });
+
+        throw new Error("Failed to remove Plaid transactions");
+      }
     }
     //Update cursor and hasMore for next iteration
     currentCursor = next_cursor;
