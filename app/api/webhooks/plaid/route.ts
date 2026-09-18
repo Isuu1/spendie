@@ -3,6 +3,10 @@ import { NextResponse } from "next/server";
 import { verifyPlaidWebhook } from "@/shared/plaid/api/verifyPlaidWebhook";
 import { syncPlaidTransactions } from "@/shared/plaid/api/syncPlaidTransactions";
 import { createAdminClient } from "@/supabase/admin";
+import {
+  acquirePlaidItemSyncLock,
+  releasePlaidItemSyncLock,
+} from "@/shared/plaid/api/plaidItemSyncLock";
 
 export async function POST(request: Request) {
   try {
@@ -57,9 +61,34 @@ export async function POST(request: Request) {
       );
     }
 
-    await syncPlaidTransactions(String(plaidItem.id));
+    const plaidItemDbId = String(plaidItem.id);
+
+    //!LOCK LIFECYCLE!//
+    // Acquire a lock to ensure that only one sync operation is performed for this Plaid Item at a time
+    const lockAcquired = await acquirePlaidItemSyncLock(plaidItemDbId);
+
+    // If the lock is not acquired, it means another sync operation is already in progress for this Plaid Item
+    if (!lockAcquired) {
+      console.log(`Plaid Item ${plaidItemDbId} is already being synced.`);
+
+      return NextResponse.json({ received: true });
+    }
+
+    try {
+      await syncPlaidTransactions(plaidItemDbId);
+    } finally {
+      try {
+        await releasePlaidItemSyncLock(plaidItemDbId);
+      } catch (error) {
+        console.error("Failed to release Plaid Item sync lock:", {
+          error,
+          plaidItemDbId,
+        });
+      }
+    }
 
     return NextResponse.json({ received: true });
+    //!LOCK LIFECYCLE!//
   } catch (error) {
     console.error("Error handling Plaid webhook:", error);
 
