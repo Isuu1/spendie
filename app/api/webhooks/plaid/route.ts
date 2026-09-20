@@ -32,8 +32,6 @@ export async function POST(request: Request) {
 
     const webhook = JSON.parse(body);
 
-    console.log("Webhook verified and processed successfully:", webhook);
-
     if (
       webhook.webhook_type !== "TRANSACTIONS" ||
       webhook.webhook_code !== "SYNC_UPDATES_AVAILABLE"
@@ -71,8 +69,6 @@ export async function POST(request: Request) {
 
     // If the lock is not acquired, it means another sync operation is already in progress for this Plaid Item
     if (!lockAcquired) {
-      console.log(`Plaid Item ${plaidItemDbId} is already being synced.`);
-
       return NextResponse.json({ received: true });
     }
 
@@ -88,9 +84,6 @@ export async function POST(request: Request) {
         });
       }
     }
-
-    console.log(`Successfully synced Plaid Item ${plaidItemDbId}.`);
-
     return NextResponse.json({ received: true });
     //!LOCK LIFECYCLE!//
   } catch (error) {
