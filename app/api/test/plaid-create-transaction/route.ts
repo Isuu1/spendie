@@ -11,7 +11,7 @@ export async function POST() {
     const { data: plaidItem, error } = await supabase
       .from("plaid_items")
       .select("id, access_token, plaid_item_id")
-      .eq("id", 64)
+      .eq("id", 65)
       .single();
 
     if (error || !plaidItem) {
