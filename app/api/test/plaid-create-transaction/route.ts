@@ -1,7 +1,8 @@
+// Temporary Sandbox testing route.
+// Do not use in production.
+
 import { NextResponse } from "next/server";
-
 import plaidClient from "@/shared/lib/plaid";
-
 import { createAdminClient } from "@/supabase/admin";
 
 export async function POST() {
