@@ -15,9 +15,17 @@ export async function syncPlaidInstitutionAction(plaidItemDbId: string) {
     throw new Error("User not authenticated");
   }
 
+  const { data: item, error: itemError } = await supabase
+    .from("plaid_items")
+    .select("user_id")
+    .eq("id", plaidItemDbId)
+    .eq("user_id", user.id)
+    .single();
+
+  if (itemError || !item) {
+    throw new Error("Plaid item not found");
+  }
+
   //Use sync function to sync accounts for the specific item
-  return await syncPlaidInstitution({
-    userId: user.id,
-    plaidItemDbId: plaidItemDbId,
-  });
+  return await syncPlaidInstitution(plaidItemDbId);
 }

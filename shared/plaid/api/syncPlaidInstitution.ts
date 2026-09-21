@@ -1,27 +1,24 @@
 "use server";
 
-import { createClient } from "@/supabase/server";
 import plaidClient from "@/shared/lib/plaid";
+import { createAdminClient } from "@/supabase/admin";
 
-type SyncPlaidInstitutionParams = {
-  userId: string;
-  plaidItemDbId: string;
-};
-
-export async function syncPlaidInstitution({
-  userId,
-  plaidItemDbId,
-}: SyncPlaidInstitutionParams) {
-  const supabase = await createClient();
+export async function syncPlaidInstitution(plaidItemDbId: string) {
+  const supabase = createAdminClient();
 
   //1. Fetch access token and item ID securely from DB
-  const { data: item } = await supabase
+  const { data: item, error: itemError } = await supabase
     .from("plaid_items")
-    .select("access_token, plaid_item_id")
+    .select("user_id, access_token, plaid_item_id")
     .eq("id", plaidItemDbId)
     .single();
 
-  if (!item) throw new Error("Item not found");
+  if (itemError) {
+    console.error("Error fetching Plaid item:", itemError);
+    throw new Error("Error fetching Plaid item");
+  }
+
+  if (!item) throw new Error("Plaid item not found");
 
   const accessToken = item.access_token;
 
@@ -34,7 +31,7 @@ export async function syncPlaidInstitution({
 
   //3. Format accounts for upsert into Supabase
   const formattedAccounts = accounts.map((acc) => ({
-    user_id: userId,
+    user_id: item.user_id, //Associate account with the correct user in users table
     plaid_item_id: item.plaid_item_id, //Associate account with the correct item in plaid_items table
     plaid_account_id: acc.account_id,
     name: acc.name,
