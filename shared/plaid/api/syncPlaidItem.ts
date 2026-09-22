@@ -36,7 +36,7 @@ export async function syncPlaidItem(plaidItemDbId: string) {
 
   // Wait for 10 seconds to simulate a long-running sync operation
   // For testing purposes, to be deleted in production
-  await new Promise((resolve) => setTimeout(resolve, 10000));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   if (!lockAcquired) {
     throw new Error("Plaid Item is already being synced");
