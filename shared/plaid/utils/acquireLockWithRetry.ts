@@ -3,12 +3,10 @@ import { acquirePlaidItemSyncLock } from "../api/plaidItemSyncLock";
 export async function acquireLockWithRetry(
   plaidItemDbId: string,
   maxAttempts = 3,
-  delayMs = 500, //Restore 1000ms delay in production
+  delayMs = 1000,
 ): Promise<boolean> {
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     const acquired = await acquirePlaidItemSyncLock(plaidItemDbId);
-
-    console.log(`Lock attempt ${attempt + 1}/${maxAttempts}`);
 
     if (acquired) {
       return true;
