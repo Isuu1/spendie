@@ -8,6 +8,8 @@ export async function acquireLockWithRetry(
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     const acquired = await acquirePlaidItemSyncLock(plaidItemDbId);
 
+    console.log(`Lock attempt ${attempt + 1}/${maxAttempts}`);
+
     if (acquired) {
       return true;
     }
