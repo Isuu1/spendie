@@ -12,7 +12,8 @@ import { lastUpdated } from "../lib/utils/calculateLastSyncTime";
 import { formatAmount } from "@/shared/lib/utils/formatAmount";
 //Hooks
 import { useRemovePlaidItem } from "@/shared/plaid/hooks/useRemovePlaidItem";
-import { useSyncPlaidInstitution } from "@/shared/plaid/hooks/useSyncPlaidInstitution";
+import { useSyncPlaidItem } from "@/shared/plaid/hooks/useSyncPlaidItem";
+//Animations
 import { AnimatePresence } from "motion/react";
 
 type InstitutionCardProps = {
@@ -24,11 +25,7 @@ const InstitutionCard = ({ institution }: InstitutionCardProps) => {
 
   const { mutate: removePlaidItem, isError } = useRemovePlaidItem();
 
-  const {
-    mutate: syncAccount,
-    isPending,
-    variables,
-  } = useSyncPlaidInstitution();
+  const { mutate: syncPlaidItem, isPending, variables } = useSyncPlaidItem();
 
   const handleDelete = async () => {
     removePlaidItem(institution.plaid_item_db_id);
@@ -36,8 +33,8 @@ const InstitutionCard = ({ institution }: InstitutionCardProps) => {
     setConfirmDelete(false);
   };
 
-  const handleSync = async () => {
-    syncAccount(institution.plaid_item_db_id);
+  const handleSync = () => {
+    syncPlaidItem(institution.plaid_item_db_id);
   };
 
   //Destructure total balances from useGroupedAccounts hook
