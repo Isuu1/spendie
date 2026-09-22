@@ -3,10 +3,8 @@ import { NextResponse } from "next/server";
 import { verifyPlaidWebhook } from "@/shared/plaid/api/verifyPlaidWebhook";
 import { syncPlaidTransactions } from "@/shared/plaid/api/syncPlaidTransactions";
 import { createAdminClient } from "@/supabase/admin";
-import {
-  acquirePlaidItemSyncLock,
-  releasePlaidItemSyncLock,
-} from "@/shared/plaid/api/plaidItemSyncLock";
+import { releasePlaidItemSyncLock } from "@/shared/plaid/api/plaidItemSyncLock";
+import { acquireLockWithRetry } from "@/shared/plaid/utils/acquireLockWithRetry";
 
 export async function POST(request: Request) {
   try {
@@ -64,12 +62,15 @@ export async function POST(request: Request) {
     const plaidItemDbId = String(plaidItem.id);
 
     //!LOCK LIFECYCLE!//
-    // Acquire a lock to ensure that only one sync operation is performed for this Plaid Item at a time
-    const lockAcquired = await acquirePlaidItemSyncLock(plaidItemDbId);
+    //Acquire a lock to ensure that only one sync operation is performed for this Plaid Item at a time.
+    //Retry acquiring the lock before allowing Plaid to retry the webhook.
+    const lockAcquired = await acquireLockWithRetry(plaidItemDbId);
 
-    // If the lock is not acquired, it means another sync operation is already in progress for this Plaid Item
     if (!lockAcquired) {
-      return NextResponse.json({ received: true });
+      return NextResponse.json(
+        { error: "Plaid Item is currently being synced" },
+        { status: 503 },
+      );
     }
 
     try {
