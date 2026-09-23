@@ -29,6 +29,18 @@ export async function syncPlaidInstitution(plaidItemDbId: string) {
 
   const accounts = response.data.accounts;
 
+  //3. Check if accounts already exist in the database
+  const { data: existingAccounts, error: existingAccountsError } =
+    await supabase
+      .from("accounts")
+      .select("id, plaid_account_id")
+      .eq("plaid_item_db_id", plaidItemDbId);
+
+  if (existingAccountsError) {
+    console.error("Error fetching existing accounts:", existingAccountsError);
+    throw new Error("Failed to fetch existing accounts");
+  }
+
   //3. Format accounts for upsert into Supabase
   const formattedAccounts = accounts.map((acc) => ({
     user_id: item.user_id, //Associate account with the correct user in users table
@@ -46,6 +58,8 @@ export async function syncPlaidInstitution(plaidItemDbId: string) {
     currency: acc.balances.iso_currency_code,
 
     last_synced_at: new Date(),
+
+    status: "active",
   }));
 
   //4. Upsert accounts into Supabase
@@ -58,6 +72,28 @@ export async function syncPlaidInstitution(plaidItemDbId: string) {
   if (insertError) {
     console.error("Error syncing accounts:", insertError);
     throw new Error("Failed to sync accounts");
+  }
+
+  //Create a set of plaid account IDs for quick lookup
+  const plaidAccountIds = new Set(
+    accounts.map((account) => account.account_id),
+  );
+
+  //Find accounts that are not in the set of plaid account IDs (i.e., accounts that are no longer active)
+  const inactiveAccountIds = (existingAccounts ?? [])
+    .filter((account) => !plaidAccountIds.has(account.plaid_account_id))
+    .map((account) => account.id);
+
+  if (inactiveAccountIds.length > 0) {
+    const { error: inactiveError } = await supabase
+      .from("accounts")
+      .update({ status: "inactive" })
+      .in("id", inactiveAccountIds);
+
+    if (inactiveError) {
+      console.error("Error marking accounts inactive:", inactiveError);
+      throw new Error("Failed to update inactive accounts");
+    }
   }
 
   //5. Update last_synced_at for the plaid item
