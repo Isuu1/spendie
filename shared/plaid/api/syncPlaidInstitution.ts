@@ -41,7 +41,7 @@ export async function syncPlaidInstitution(plaidItemDbId: string) {
     throw new Error("Failed to fetch existing accounts");
   }
 
-  //3. Format accounts for upsert into Supabase
+  //4. Format accounts for upsert into Supabase
   const formattedAccounts = accounts.map((acc) => ({
     user_id: item.user_id, //Associate account with the correct user in users table
     plaid_item_id: item.plaid_item_id, //Associate account with the correct item in plaid_items table
@@ -62,7 +62,7 @@ export async function syncPlaidInstitution(plaidItemDbId: string) {
     status: "active",
   }));
 
-  //4. Upsert accounts into Supabase
+  //5. Upsert accounts into Supabase
   const { error: insertError } = await supabase
     .from("accounts")
     .upsert(formattedAccounts, {
@@ -74,12 +74,12 @@ export async function syncPlaidInstitution(plaidItemDbId: string) {
     throw new Error("Failed to sync accounts");
   }
 
-  //Create a set of plaid account IDs for quick lookup
+  //6. Create a set of plaid account IDs for quick lookup
   const plaidAccountIds = new Set(
     accounts.map((account) => account.account_id),
   );
 
-  //Find accounts that are not in the set of plaid account IDs (i.e., accounts that are no longer active)
+  //7. Find accounts that are not in the set of plaid account IDs (i.e., accounts that are no longer active)
   const inactiveAccountIds = (existingAccounts ?? [])
     .filter((account) => !plaidAccountIds.has(account.plaid_account_id))
     .map((account) => account.id);
@@ -96,7 +96,7 @@ export async function syncPlaidInstitution(plaidItemDbId: string) {
     }
   }
 
-  //5. Update last_synced_at for the plaid item
+  //8. Update last_synced_at for the plaid item
   const { error: updateError } = await supabase
     .from("plaid_items")
     .update({ last_synced_at: new Date() })
