@@ -29,7 +29,19 @@ export async function syncPlaidInstitution(plaidItemDbId: string) {
 
   const accounts = response.data.accounts;
 
-  //3. Format accounts for upsert into Supabase
+  //3. Check if accounts already exist in the database
+  const { data: existingAccounts, error: existingAccountsError } =
+    await supabase
+      .from("accounts")
+      .select("id, plaid_account_id")
+      .eq("plaid_item_db_id", plaidItemDbId);
+
+  if (existingAccountsError) {
+    console.error("Error fetching existing accounts:", existingAccountsError);
+    throw new Error("Failed to fetch existing accounts");
+  }
+
+  //4. Format accounts for upsert into Supabase
   const formattedAccounts = accounts.map((acc) => ({
     user_id: item.user_id, //Associate account with the correct user in users table
     plaid_item_id: item.plaid_item_id, //Associate account with the correct item in plaid_items table
@@ -46,9 +58,11 @@ export async function syncPlaidInstitution(plaidItemDbId: string) {
     currency: acc.balances.iso_currency_code,
 
     last_synced_at: new Date(),
+
+    status: "active",
   }));
 
-  //4. Upsert accounts into Supabase
+  //5. Upsert accounts into Supabase
   const { error: insertError } = await supabase
     .from("accounts")
     .upsert(formattedAccounts, {
@@ -60,7 +74,29 @@ export async function syncPlaidInstitution(plaidItemDbId: string) {
     throw new Error("Failed to sync accounts");
   }
 
-  //5. Update last_synced_at for the plaid item
+  //6. Create a set of plaid account IDs for quick lookup
+  const plaidAccountIds = new Set(
+    accounts.map((account) => account.account_id),
+  );
+
+  //7. Find accounts that are not in the set of plaid account IDs (i.e., accounts that are no longer active)
+  const inactiveAccountIds = (existingAccounts ?? [])
+    .filter((account) => !plaidAccountIds.has(account.plaid_account_id))
+    .map((account) => account.id);
+
+  if (inactiveAccountIds.length > 0) {
+    const { error: inactiveError } = await supabase
+      .from("accounts")
+      .update({ status: "inactive" })
+      .in("id", inactiveAccountIds);
+
+    if (inactiveError) {
+      console.error("Error marking accounts inactive:", inactiveError);
+      throw new Error("Failed to update inactive accounts");
+    }
+  }
+
+  //8. Update last_synced_at for the plaid item
   const { error: updateError } = await supabase
     .from("plaid_items")
     .update({ last_synced_at: new Date() })

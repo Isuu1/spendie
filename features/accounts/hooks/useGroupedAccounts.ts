@@ -12,6 +12,7 @@ export function useGroupedAccounts() {
       .map((institution) => {
         const institutionAccounts = accounts
           .filter((acc: Account) => acc.plaid_item_db_id === institution.id)
+          .filter((acc: Account) => acc.status === "active")
           .sort(
             (a: Account, b: Account) =>
               (a.current_balance || 0) - (b.current_balance || 0),

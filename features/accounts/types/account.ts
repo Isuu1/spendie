@@ -12,4 +12,5 @@ export type Account = {
   mask: string | null;
   last_synced_at: string | null;
   is_hidden: boolean;
+  status: "active" | "inactive";
 };

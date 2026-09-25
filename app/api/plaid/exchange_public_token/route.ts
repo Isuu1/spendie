@@ -90,9 +90,9 @@ export async function POST(request: Request) {
       );
     }
 
-    //Accounts will be synced after user connects their bank
-    //Sync accounts immediately after storing the access token
-    //Sync only accounts for the newly connected item to avoid unnecessary API calls and potential rate limits
+    //Accounts and transactions will be synced after user connects their bank
+    //Sync accounts and transactions immediately after storing the access token
+    //Sync only accounts and transactions for the newly connected item to avoid unnecessary API calls and potential rate limits
     await syncPlaidInstitution(plaidItem.id);
     await syncPlaidTransactions(plaidItem.id);
 
