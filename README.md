@@ -1,4 +1,4 @@
-# Spendie 💸
+# Spendie
 
 Spendie is a modern personal finance management platform that helps users take control of their finances through account aggregation, transaction tracking, budgeting, and spending analytics.
 
