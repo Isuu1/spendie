@@ -22,6 +22,8 @@ export async function POST() {
       );
     }
 
+    console.log("Plaid Item for reset found:", plaidItem);
+
     const response = await plaidClient.sandboxItemResetLogin({
       access_token: plaidItem.access_token,
     });

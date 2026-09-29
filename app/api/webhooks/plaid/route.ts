@@ -8,18 +8,28 @@ import { acquireLockWithRetry } from "@/shared/plaid/utils/acquireLockWithRetry"
 
 async function updatePlaidItemStatus(
   supabase: ReturnType<typeof createAdminClient>,
-  plaidItemDbId: string,
+  plaidItemId: string,
   status: "connected" | "needs_reauth",
 ) {
-  const { error } = await supabase
+  console.log("Updating Plaid Item status:", {
+    plaidItemId,
+    status,
+  });
+  const { data: plaidItem, error } = await supabase
     .from("plaid_items")
     .update({ status })
-    .eq("id", plaidItemDbId)
+    .eq("plaid_item_id", plaidItemId)
     .neq("status", "disconnected");
+
+  console.log("Plaid Item status updated:", {
+    plaidItemId,
+    status,
+    plaidItem,
+  });
 
   if (error) {
     console.error("Failed to update Plaid Item status:", {
-      plaidItemDbId,
+      plaidItemId,
       status,
       error,
     });
@@ -109,7 +119,10 @@ export async function POST(request: Request) {
             webhookCode: webhook.webhook_code,
           });
       }
-
+      console.log("Plaid Item webhook processed:", {
+        itemId: webhook.item_id,
+        webhookCode: webhook.webhook_code,
+      });
       return NextResponse.json({ received: true });
     }
 
