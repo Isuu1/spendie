@@ -6,6 +6,28 @@ import { createAdminClient } from "@/supabase/admin";
 import { releasePlaidItemSyncLock } from "@/shared/plaid/api/plaidItemSyncLock";
 import { acquireLockWithRetry } from "@/shared/plaid/utils/acquireLockWithRetry";
 
+async function updatePlaidItemStatus(
+  supabase: ReturnType<typeof createAdminClient>,
+  plaidItemDbId: string,
+  status: "connected" | "needs_reauth",
+) {
+  const { error } = await supabase
+    .from("plaid_items")
+    .update({ status })
+    .eq("id", plaidItemDbId)
+    .neq("status", "disconnected");
+
+  if (error) {
+    console.error("Failed to update Plaid Item status:", {
+      plaidItemDbId,
+      status,
+      error,
+    });
+
+    throw new Error("Failed to update Plaid Item status");
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.text();
@@ -30,15 +52,73 @@ export async function POST(request: Request) {
 
     const webhook = JSON.parse(body);
 
+    console.log("Plaid webhook received:", webhook);
+
+    //Use admin client to access the database without user context
+    const supabase = createAdminClient();
+
+    if (webhook.webhook_type === "ITEM") {
+      switch (webhook.webhook_code) {
+        case "ERROR": {
+          if (webhook.error?.error_code === "ITEM_LOGIN_REQUIRED") {
+            await updatePlaidItemStatus(
+              supabase,
+              webhook.item_id,
+              "needs_reauth",
+            );
+          } else {
+            console.warn("Unhandled Plaid Item error:", {
+              itemId: webhook.item_id,
+              errorCode: webhook.error?.error_code,
+              errorType: webhook.error?.error_type,
+            });
+          }
+
+          break;
+        }
+
+        case "LOGIN_REPAIRED": {
+          await updatePlaidItemStatus(supabase, webhook.item_id, "connected");
+
+          break;
+        }
+
+        case "PENDING_EXPIRATION": {
+          await updatePlaidItemStatus(
+            supabase,
+            webhook.item_id,
+            "needs_reauth",
+          );
+
+          break;
+        }
+
+        case "USER_PERMISSION_REVOKED": {
+          await updatePlaidItemStatus(
+            supabase,
+            webhook.item_id,
+            "needs_reauth",
+          );
+
+          break;
+        }
+
+        default:
+          console.log("Unhandled Plaid Item webhook:", {
+            itemId: webhook.item_id,
+            webhookCode: webhook.webhook_code,
+          });
+      }
+
+      return NextResponse.json({ received: true });
+    }
+
     if (
       webhook.webhook_type !== "TRANSACTIONS" ||
       webhook.webhook_code !== "SYNC_UPDATES_AVAILABLE"
     ) {
       return NextResponse.json({ received: true });
     }
-
-    //Use admin client to access the database without user context
-    const supabase = createAdminClient();
 
     const { data: plaidItem, error: plaidItemError } = await supabase
       .from("plaid_items")
