@@ -64,6 +64,23 @@ const PlaidLink = ({
   const onSuccess = useCallback(
     async (public_token: string) => {
       if (mode === "update") {
+        const response = await fetch("/api/plaid/reconnect_item", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            plaidItemDbId,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          console.error("Failed to reconnect Plaid Item:", data.error);
+          return;
+        }
+
         console.log("Plaid Item update completed successfully.");
 
         router.refresh();
@@ -88,7 +105,7 @@ const PlaidLink = ({
         router.refresh();
       }
     },
-    [userId, router, mode], // Include userId and router in the dependency array
+    [userId, router, mode, plaidItemDbId], // Include userId and router in the dependency array
   );
 
   const onEvent = useCallback((eventName: string, metadata: unknown) => {
