@@ -104,7 +104,8 @@ export async function POST(request: Request) {
             .from("accounts")
             .update({ status: "inactive" })
             .eq("plaid_account_id", webhook.account_id)
-            .eq("plaid_item_id", webhook.item_id);
+            .eq("plaid_item_id", webhook.item_id)
+            .select("id, plaid_account_id, status");
 
           if (error) {
             console.error("Failed to deactivate revoked Plaid account:", {
@@ -115,6 +116,10 @@ export async function POST(request: Request) {
 
             throw new Error("Failed to deactivate Plaid account");
           }
+          console.warn("No Spendie account found for revoked Plaid account:", {
+            accountId: webhook.account_id,
+            itemId: webhook.item_id,
+          });
 
           break;
         }
