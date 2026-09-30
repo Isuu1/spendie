@@ -53,6 +53,13 @@ export async function POST(request: Request) {
 
     const webhook = JSON.parse(body);
 
+    console.log("Received Plaid webhook:", {
+      webhook_type: webhook.webhook_type,
+      webhook_code: webhook.webhook_code,
+      item_id: webhook.item_id,
+      account_id: webhook.account_id,
+    });
+
     //Use admin client to access the database without user context
     const supabase = createAdminClient();
 
@@ -92,8 +99,22 @@ export async function POST(request: Request) {
           break;
         }
 
-        case "USER_PERMISSION_REVOKED": {
-          await updatePlaidItemStatus(supabase, webhook.item_id, "revoked");
+        case "USER_ACCOUNT_REVOKED": {
+          const { error } = await supabase
+            .from("accounts")
+            .update({ status: "inactive" })
+            .eq("plaid_account_id", webhook.account_id)
+            .eq("plaid_item_id", webhook.item_id);
+
+          if (error) {
+            console.error("Failed to deactivate revoked Plaid account:", {
+              accountId: webhook.account_id,
+              itemId: webhook.item_id,
+              error,
+            });
+
+            throw new Error("Failed to deactivate Plaid account");
+          }
 
           break;
         }
