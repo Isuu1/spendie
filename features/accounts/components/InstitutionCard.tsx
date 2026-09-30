@@ -92,10 +92,12 @@ const InstitutionCard = ({ institution }: InstitutionCardProps) => {
           </p>
         )}
         {institution.status === "revoked" && (
-          <p className="flex gap-2 items-center text-red-500">
-            This bank has been revoked. Please re-link your account.
+          <div className="flex gap-2 items-center text-red-500">
+            <span>
+              This bank has been revoked. Please re-link your account.
+            </span>
             <PlaidLink userId={institution.user_id}>Connect again</PlaidLink>
-          </p>
+          </div>
         )}
       </div>
       <>
