@@ -99,12 +99,52 @@ export async function POST(request: Request) {
           break;
         }
 
+        case "USER_PERMISSION_REVOKED": {
+          const { data, error } = await supabase
+            .from("plaid_items")
+            .update({ status: "revoked" })
+            .eq("plaid_item_id", webhook.item_id)
+            .neq("status", "disconnected")
+            .select("id");
+
+          if (error) {
+            console.error("Failed to update Plaid Item status to revoked:", {
+              itemId: webhook.item_id,
+              error,
+            });
+          }
+
+          const plaidItemDbId = data?.[0]?.id;
+
+          if (plaidItemDbId) {
+            const { error: accountError } = await supabase
+              .from("accounts")
+              .update({ status: "inactive" })
+              .eq("plaid_item_db_id", plaidItemDbId);
+
+            if (accountError) {
+              console.error(
+                "Failed to deactivate accounts for revoked Plaid Item:",
+                {
+                  plaidItemDbId,
+                  itemId: webhook.item_id,
+                  error: accountError,
+                },
+              );
+              throw new Error("Failed to deactivate accounts for Plaid Item");
+            }
+          }
+
+          break;
+        }
+
         case "USER_ACCOUNT_REVOKED": {
           const { error } = await supabase
             .from("accounts")
             .update({ status: "inactive" })
             .eq("plaid_account_id", webhook.account_id)
-            .eq("plaid_item_id", webhook.item_id);
+            .eq("plaid_item_id", webhook.item_id)
+            .select("id, plaid_account_id, status");
 
           if (error) {
             console.error("Failed to deactivate revoked Plaid account:", {
@@ -115,6 +155,10 @@ export async function POST(request: Request) {
 
             throw new Error("Failed to deactivate Plaid account");
           }
+          console.warn("No Spendie account found for revoked Plaid account:", {
+            accountId: webhook.account_id,
+            itemId: webhook.item_id,
+          });
 
           break;
         }

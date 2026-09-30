@@ -33,10 +33,12 @@ export function useGroupedAccounts() {
 
         return {
           plaid_item_db_id: institution.id,
+          user_id: institution.user_id,
           institution_name: institution.institution_name,
           last_synced_at: institution.last_synced_at,
           accounts: institutionAccounts,
           totalBalances: { active, hidden },
+          status: institution.status,
         };
       })
       .filter((institution) => institution.accounts.length > 0);

@@ -15,6 +15,7 @@ import { useRemovePlaidItem } from "@/shared/plaid/hooks/useRemovePlaidItem";
 import { useSyncPlaidItem } from "@/shared/plaid/hooks/useSyncPlaidItem";
 //Animations
 import { AnimatePresence } from "motion/react";
+import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 
 type InstitutionCardProps = {
   institution: Institution;
@@ -54,27 +55,52 @@ const InstitutionCard = ({ institution }: InstitutionCardProps) => {
 
   if (institution.accounts.length === 0) return null;
 
+  console.log("Rendering Institution: ", institution);
+
   return (
     <div className="relative bg-background p-4 rounded-2xl flex flex-col gap-4">
       <div className="flex justify-between items-center max-sm:flex-col-reverse max-sm:items-start max-sm:gap-4">
         <h3>{institution.institution_name}</h3>
-
-        <div className="flex gap-2 items-center">
-          <SyncIcon isSyncing={isPending} />
-          <p>{lastUpdated(institution.last_synced_at)}</p>
-          <Button
-            variant="secondary"
-            size="sm"
-            iconPosition="left"
-            onClick={handleSync}
-            disabled={isPending && variables === institution.plaid_item_db_id}
-            className="disabled:cursor-not-allowed"
-          >
-            {isPending && variables === institution.plaid_item_db_id
-              ? "Syncing..."
-              : "Sync now"}
-          </Button>
-        </div>
+        {institution.status === "connected" && (
+          <div className="flex gap-2 items-center">
+            <SyncIcon isSyncing={isPending} />
+            <p>{lastUpdated(institution.last_synced_at)}</p>
+            <Button
+              variant="secondary"
+              size="sm"
+              iconPosition="left"
+              onClick={handleSync}
+              disabled={isPending && variables === institution.plaid_item_db_id}
+              className="disabled:cursor-not-allowed"
+            >
+              {isPending && variables === institution.plaid_item_db_id
+                ? "Syncing..."
+                : "Sync now"}
+            </Button>
+          </div>
+        )}
+        {institution.status === "needs_reauth" && (
+          <div className="flex gap-2 items-center text-red-500">
+            <span>
+              This bank requires re-authentication. Please re-link your account.
+            </span>
+            <PlaidLink
+              userId={institution.user_id}
+              mode="update"
+              plaidItemDbId={Number(institution.plaid_item_db_id)}
+            >
+              Reconnect bank
+            </PlaidLink>
+          </div>
+        )}
+        {institution.status === "revoked" && (
+          <div className="flex gap-2 items-center text-red-500">
+            <span>
+              This bank has been revoked. Please re-link your account.
+            </span>
+            <PlaidLink userId={institution.user_id}>Connect again</PlaidLink>
+          </div>
+        )}
       </div>
       <>
         <h3>Total balance: {totalBalance}</h3>
