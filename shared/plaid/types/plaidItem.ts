@@ -5,7 +5,7 @@ export type PlaidItem = {
   created_at: Date;
   access_token: string;
   last_synced_at: Date;
-  status: "connected" | "error";
+  status: "connected" | "neeeds_reauth" | "disconnected" | "revoked";
   institution_name: string;
   plaid_cursor: string;
 };

@@ -9,19 +9,14 @@ import { acquireLockWithRetry } from "@/shared/plaid/utils/acquireLockWithRetry"
 async function updatePlaidItemStatus(
   supabase: ReturnType<typeof createAdminClient>,
   plaidItemId: string,
-  status: "connected" | "needs_reauth",
+  status: "connected" | "needs_reauth" | "disconnected" | "revoked",
 ) {
-  const { data: plaidItem, error } = await supabase
+  const { error } = await supabase
     .from("plaid_items")
     .update({ status })
     .eq("plaid_item_id", plaidItemId)
-    .neq("status", "disconnected");
-
-  console.log("Plaid Item status updated:", {
-    plaidItemId,
-    status,
-    plaidItem,
-  });
+    .neq("status", "disconnected")
+    .select("id, plaid_item_id, status");
 
   if (error) {
     console.error("Failed to update Plaid Item status:", {
@@ -98,11 +93,7 @@ export async function POST(request: Request) {
         }
 
         case "USER_PERMISSION_REVOKED": {
-          await updatePlaidItemStatus(
-            supabase,
-            webhook.item_id,
-            "needs_reauth",
-          );
+          await updatePlaidItemStatus(supabase, webhook.item_id, "revoked");
 
           break;
         }

@@ -41,6 +41,7 @@ const DashboardOptions = () => {
         userId={user?.id ?? ""}
         variant="secondary"
         plaidItemDbId={72}
+        mode="update"
       />
     </div>
   );
