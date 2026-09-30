@@ -13,6 +13,7 @@ type PlaidLinkProps = {
   variant?: VariantProps<typeof buttonVariants>["variant"];
   mode?: "connect" | "update"; // Optional mode prop to differentiate between connect and reauth
   plaidItemDbId?: number;
+  children?: React.ReactNode;
 };
 
 const PlaidLink = ({
@@ -20,6 +21,7 @@ const PlaidLink = ({
   variant,
   mode = "connect",
   plaidItemDbId,
+  children,
 }: PlaidLinkProps) => {
   const [linkToken, setLinkToken] = useState<string | null>(null);
 
@@ -134,13 +136,13 @@ const PlaidLink = ({
     <Button
       variant={variant}
       size="default"
-      className="bg-background"
+      //className="bg-background"
       onClick={() => open()}
       disabled={!ready || !linkToken}
       icon={<Landmark />}
       iconPosition="left"
     >
-      {mode === "update" ? "Update bank account" : "Connect bank account"}
+      {children ? children : "Connect bank account"}
     </Button>
   );
 };

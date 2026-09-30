@@ -18,6 +18,7 @@ export async function getPlaidItemsClient() {
       plaid_item_id,
       institution_name,
       last_synced_at,
+      user_id,
       status
     `,
     )
