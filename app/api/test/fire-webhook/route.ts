@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+import { SandboxItemFireWebhookRequest } from "plaid";
+
 import plaidClient from "@/shared/lib/plaid";
 import { createAdminClient } from "@/supabase/admin";
 
@@ -7,10 +9,10 @@ export async function POST() {
   try {
     const supabase = createAdminClient();
 
-    // Get the first connected Plaid Item for testing
+    // Get a connected Plaid Item for testing
     const { data: plaidItem, error } = await supabase
       .from("plaid_items")
-      .select("plaid_item_id, access_token, status")
+      .select("id, plaid_item_id, access_token, status")
       .eq("status", "connected")
       .limit(1)
       .single();
@@ -22,22 +24,27 @@ export async function POST() {
       );
     }
 
-    const response = await plaidClient.sandboxItemResetLogin({
+    const webhookRequest: SandboxItemFireWebhookRequest = {
       access_token: plaidItem.access_token,
-    });
+      webhook_code:
+        "USER_PERMISSION_REVOKED" as SandboxItemFireWebhookRequest["webhook_code"],
+    };
+
+    const response = await plaidClient.sandboxItemFireWebhook(webhookRequest);
 
     return NextResponse.json({
       success: true,
+      plaidItemDbId: plaidItem.id,
       plaidItemId: plaidItem.plaid_item_id,
       previousStatus: plaidItem.status,
-      resetLogin: response.data.reset_login,
+      webhookCode: "USER_PERMISSION_REVOKED",
       requestId: response.data.request_id,
     });
   } catch (error) {
-    console.error("Failed to reset Plaid Item login:", error);
+    console.error("Failed to fire Plaid webhook:", error);
 
     return NextResponse.json(
-      { error: "Failed to reset Plaid Item login" },
+      { error: "Failed to fire Plaid webhook" },
       { status: 500 },
     );
   }
