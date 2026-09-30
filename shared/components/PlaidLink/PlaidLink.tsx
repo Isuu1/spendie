@@ -11,9 +11,16 @@ import { Landmark } from "lucide-react";
 type PlaidLinkProps = {
   userId: string; // Pass the authenticated user ID
   variant?: VariantProps<typeof buttonVariants>["variant"];
+  mode?: "connect" | "update"; // Optional mode prop to differentiate between connect and reauth
+  plaidItemDbId?: number;
 };
 
-const PlaidLink = ({ userId, variant }: PlaidLinkProps) => {
+const PlaidLink = ({
+  userId,
+  variant,
+  mode = "connect",
+  plaidItemDbId,
+}: PlaidLinkProps) => {
   const [linkToken, setLinkToken] = useState<string | null>(null);
 
   const router = useRouter();
@@ -21,18 +28,48 @@ const PlaidLink = ({ userId, variant }: PlaidLinkProps) => {
   // Fetch the link token from your API when the component mounts
   useEffect(() => {
     const createLinkToken = async () => {
-      const response = await fetch("/api/plaid/create_link_token", {
-        method: "POST",
-      });
-      const data = await response.json();
-      setLinkToken(data.link_token);
+      try {
+        const endpoint =
+          mode === "update"
+            ? "/api/plaid/create_update_link_token"
+            : "/api/plaid/create_link_token";
+
+        const body =
+          mode === "update" ? JSON.stringify({ plaidItemDbId }) : undefined;
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers:
+            mode === "update"
+              ? {
+                  "Content-Type": "application/json",
+                }
+              : undefined,
+          body,
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          console.error("Error creating Plaid Link token:", data.error);
+          return;
+        }
+        setLinkToken(data.link_token);
+      } catch (error) {
+        console.error("Error fetching link token:", error);
+        throw new Error("Failed to fetch link token");
+      }
     };
 
     createLinkToken();
-  }, [userId]); // Re-fetch if user ID changes
+  }, [userId, mode, plaidItemDbId]); // Re-fetch if user ID changes
 
   const onSuccess = useCallback(
     async (public_token: string) => {
+      if (mode === "update") {
+        console.log("Plaid Item update completed successfully.");
+
+        router.refresh();
+
+        return;
+      }
       // Exchange the public_token for an access_token on your server
       const response = await fetch("/api/plaid/exchange_public_token", {
         method: "POST",
@@ -51,7 +88,7 @@ const PlaidLink = ({ userId, variant }: PlaidLinkProps) => {
         router.refresh();
       }
     },
-    [userId, router], // Include userId and router in the dependency array
+    [userId, router, mode], // Include userId and router in the dependency array
   );
 
   const onEvent = useCallback((eventName: string, metadata: unknown) => {
@@ -86,7 +123,7 @@ const PlaidLink = ({ userId, variant }: PlaidLinkProps) => {
       icon={<Landmark />}
       iconPosition="left"
     >
-      Connect bank account
+      {mode === "update" ? "Update bank account" : "Connect bank account"}
     </Button>
   );
 };
