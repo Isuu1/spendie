@@ -23,11 +23,11 @@ export async function POST() {
       },
       client_name: "Spendie", // Replace with your app name
       products: [Products.Transactions], // Specify the Plaid products you need
-      country_codes: [CountryCode.Us], // Specify the countries you support
+      country_codes: [CountryCode.Gb], // Specify the countries you support
       language: "en",
       // redirect_uri: process.env.PLAID_REDIRECT_URI, // Required for OAuth institutions
       // Plaid webhook route for receiving updates
-      webhook: "https://spendie-theta.vercel.app/api/webhooks/plaid",
+      webhook: process.env.PLAID_WEBHOOK_URL,
     };
 
     const createTokenResponse = await plaidClient.linkTokenCreate(plaidRequest);

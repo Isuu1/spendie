@@ -63,10 +63,10 @@ export async function POST(request: Request) {
         client_user_id: user.id,
       },
       client_name: "Spendie",
-      country_codes: [CountryCode.Us],
+      country_codes: [CountryCode.Gb],
       language: "en",
       access_token: plaidItem.access_token,
-      webhook: "https://spendie-theta.vercel.app/api/webhooks/plaid",
+      webhook: process.env.PLAID_WEBHOOK_URL,
     };
 
     const response = await plaidClient.linkTokenCreate(plaidRequest);
