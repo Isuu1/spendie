@@ -23,10 +23,10 @@ export function useGroupedAccounts() {
         let hidden = 0;
 
         for (const acc of accounts) {
-          if (acc.is_hidden) {
+          if (acc.is_hidden && acc.status === "active") {
             hidden += acc.current_balance || 0;
             continue;
-          } else {
+          } else if (!acc.is_hidden && acc.status === "active") {
             active += acc.current_balance || 0;
           }
         }

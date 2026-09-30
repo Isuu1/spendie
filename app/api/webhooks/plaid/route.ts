@@ -99,6 +99,7 @@ export async function POST(request: Request) {
           break;
         }
 
+        //Handle Plaid Item (Institution) revoked
         case "USER_PERMISSION_REVOKED": {
           const { data, error } = await supabase
             .from("plaid_items")
@@ -138,6 +139,7 @@ export async function POST(request: Request) {
           break;
         }
 
+        //Handle single accounts removed from Plaid Item (Institution)
         case "USER_ACCOUNT_REVOKED": {
           const { error } = await supabase
             .from("accounts")
