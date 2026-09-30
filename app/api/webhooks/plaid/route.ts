@@ -11,10 +11,6 @@ async function updatePlaidItemStatus(
   plaidItemId: string,
   status: "connected" | "needs_reauth",
 ) {
-  console.log("Updating Plaid Item status:", {
-    plaidItemId,
-    status,
-  });
   const { data: plaidItem, error } = await supabase
     .from("plaid_items")
     .update({ status })
@@ -61,8 +57,6 @@ export async function POST(request: Request) {
     }
 
     const webhook = JSON.parse(body);
-
-    console.log("Plaid webhook received:", webhook);
 
     //Use admin client to access the database without user context
     const supabase = createAdminClient();
@@ -119,10 +113,6 @@ export async function POST(request: Request) {
             webhookCode: webhook.webhook_code,
           });
       }
-      console.log("Plaid Item webhook processed:", {
-        itemId: webhook.item_id,
-        webhookCode: webhook.webhook_code,
-      });
       return NextResponse.json({ received: true });
     }
 

@@ -10,7 +10,7 @@ export async function POST() {
     // Get the first connected Plaid Item for testing
     const { data: plaidItem, error } = await supabase
       .from("plaid_items")
-      .select("id, access_token, status")
+      .select("plaid_item_id, access_token, status")
       .eq("status", "connected")
       .limit(1)
       .single();
@@ -22,15 +22,13 @@ export async function POST() {
       );
     }
 
-    console.log("Plaid Item for reset found:", plaidItem);
-
     const response = await plaidClient.sandboxItemResetLogin({
       access_token: plaidItem.access_token,
     });
 
     return NextResponse.json({
       success: true,
-      plaidItemDbId: plaidItem.id,
+      plaidItemId: plaidItem.plaid_item_id,
       previousStatus: plaidItem.status,
       resetLogin: response.data.reset_login,
       requestId: response.data.request_id,
