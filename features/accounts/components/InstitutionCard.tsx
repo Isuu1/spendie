@@ -80,8 +80,10 @@ const InstitutionCard = ({ institution }: InstitutionCardProps) => {
           </div>
         )}
         {institution.status === "needs_reauth" && (
-          <p className="flex gap-2 items-center text-red-500">
-            This bank requires re-authentication. Please re-link your account.
+          <div className="flex gap-2 items-center text-red-500">
+            <span>
+              This bank requires re-authentication. Please re-link your account.
+            </span>
             <PlaidLink
               userId={institution.user_id}
               mode="update"
@@ -89,7 +91,7 @@ const InstitutionCard = ({ institution }: InstitutionCardProps) => {
             >
               Reconnect bank
             </PlaidLink>
-          </p>
+          </div>
         )}
         {institution.status === "revoked" && (
           <div className="flex gap-2 items-center text-red-500">

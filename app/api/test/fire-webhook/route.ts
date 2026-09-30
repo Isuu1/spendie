@@ -27,7 +27,7 @@ export async function POST() {
     const webhookRequest: SandboxItemFireWebhookRequest = {
       access_token: plaidItem.access_token,
       webhook_code:
-        "USER_ACCOUNT_REVOKED" as SandboxItemFireWebhookRequest["webhook_code"],
+        "USER_PERMISSION_REVOKED" as SandboxItemFireWebhookRequest["webhook_code"],
     };
 
     const response = await plaidClient.sandboxItemFireWebhook(webhookRequest);
