@@ -63,7 +63,7 @@ export async function markRecurringPaymentAsPaid(
       user_id: userId,
       payment_id: payment.id,
       name: payment.name,
-      payment_date: payment.next_payment_date,
+      payment_date: dayjs(payment.next_payment_date).format("YYYY-MM-DD"),
       paid_date: paidDate,
       amount: payment.amount,
       type: payment.type,

@@ -1,6 +1,8 @@
 export type Transaction = {
+  id: string;
   transaction_id: string;
   account_id: string;
+  user_id: string;
   amount: number;
   iso_currency_code: string;
   date: Date;
