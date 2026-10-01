@@ -1,7 +1,7 @@
 export default function Page() {
   return (
     <main className="xl:w-[90%] w-full m-auto mt-37.5 px-4">
-      <article className="leading-6">
+      <article className="flex flex-col gap-4 [&>p]:leading-8 [&>ul]:list-disc [&>ul]:list-inside [&>ul]:leading-8">
         <h1>Terms of Service</h1>
 
         <p>
@@ -379,7 +379,7 @@ export default function Page() {
             <strong>Spendie operator:</strong> Jakub Babelek
           </p>
           <p>
-            <strong>Email:</strong> jakub.babelek@gmail.com
+            <strong>Email:</strong> jakubb12@gmail.com
           </p>
           <p>
             <strong>Website:</strong> https://spendie-theta.vercel.app/
