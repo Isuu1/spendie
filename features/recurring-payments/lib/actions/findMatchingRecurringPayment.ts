@@ -1,9 +1,9 @@
 import { Transaction } from "@/features/transactions/types/transaction";
-import { createClient } from "@/supabase/server";
+import { createAdminClient } from "@/supabase/admin";
 import dayjs from "dayjs";
 
 export async function findMatchingRecurringPayment(transaction: Transaction) {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   const { data: payments, error } = await supabase
     .from("recurring_payments")
