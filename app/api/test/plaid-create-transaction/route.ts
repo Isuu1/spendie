@@ -12,7 +12,7 @@ export async function POST() {
     const { data: plaidItem, error } = await supabase
       .from("plaid_items")
       .select("id, access_token, plaid_item_id")
-      .eq("id", 65)
+      .eq("id", 75)
       .single();
 
     if (error || !plaidItem) {
@@ -28,10 +28,11 @@ export async function POST() {
       access_token: plaidItem.access_token,
       transactions: [
         {
-          amount: 50,
-          date_posted: "2026-10-02",
-          date_transacted: "2026-10-02",
-          description: "Phone bill",
+          amount: 115,
+          date_posted: "2026-10-01",
+          date_transacted: "2026-10-01",
+          description: "Rent",
+          iso_currency_code: "GBP",
         },
       ],
     });

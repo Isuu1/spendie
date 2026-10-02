@@ -63,12 +63,23 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
     //Combine added and modified transactions for upsert
     const updates = [...added, ...modified];
 
+    console.log("updates", updates);
+
     //Upsert new and modified transactions into the database
     for (const tx of updates) {
       const displayName = tx.merchant_name ?? tx.name;
 
       //Find the corresponding Spendie account ID for the Plaid account ID
       const accountId = accountMap.get(tx.account_id);
+
+      console.log("Syncing Plaid transaction:", {
+        plaidTransactionId: tx.transaction_id,
+        plaidAccountId: tx.account_id,
+        spendieAccountId: accountId,
+        amount: tx.amount,
+        name: displayName,
+        date: tx.date,
+      });
 
       //If no corresponding Spendie account is found, log an error and skip this transaction
       if (!accountId) {
@@ -141,6 +152,9 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
 
         throw new Error("Failed to sync Plaid transaction");
       }
+
+      console.log("Synced success");
+      console.log("savedTransaction", savedTransaction);
 
       // Only newly added transactions should trigger
       // automatic recurring payment matching.
