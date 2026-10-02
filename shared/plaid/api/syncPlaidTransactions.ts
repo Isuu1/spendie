@@ -153,7 +153,6 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
         throw new Error("Failed to sync Plaid transaction");
       }
 
-      console.log("Synced success");
       console.log("savedTransaction", savedTransaction);
 
       // Only newly added transactions should trigger
@@ -162,6 +161,8 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
         (addedTransaction) =>
           addedTransaction.transaction_id === tx.transaction_id,
       );
+
+      console.log("isNewTransaction", isNewTransaction);
 
       if (isNewTransaction) {
         const matchingPayment =
@@ -179,6 +180,7 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
         }
       }
     }
+    console.log("Successfully synced transactions for Plaid item");
 
     //Remove transactions that have been deleted in Plaid
     if (removed && removed.length > 0) {
