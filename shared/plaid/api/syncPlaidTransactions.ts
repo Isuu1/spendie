@@ -3,6 +3,8 @@
 import plaidClient from "@/shared/lib/plaid";
 import { TransactionsSyncRequest } from "plaid";
 import { createAdminClient } from "@/supabase/admin";
+import { markRecurringPaymentAutomatically } from "@/features/recurring-payments/lib/actions/markRecurringPaymentAutomatically";
+import { findMatchingRecurringPayment } from "@/features/recurring-payments/lib/actions/findMatchingRecurringPayment";
 
 export async function syncPlaidTransactions(plaidItemDbId: string) {
   //Use admin client to access the database without user context
@@ -76,26 +78,58 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
         continue;
       }
 
-      const { error } = await supabase.from("transactions").upsert(
-        {
-          plaid_transaction_id: tx.transaction_id,
-          amount: tx.amount,
-          name: displayName,
-          original_name: tx.name,
-          merchant_name: tx.merchant_name,
-          date: tx.date,
-          pending: tx.pending,
-          category: tx.personal_finance_category?.primary,
-          iso_currency_code: tx.iso_currency_code,
-          user_id: item.user_id,
+      // const { error } = await supabase.from("transactions").upsert(
+      //   {
+      //     plaid_transaction_id: tx.transaction_id,
+      //     amount: tx.amount,
+      //     name: displayName,
+      //     original_name: tx.name,
+      //     merchant_name: tx.merchant_name,
+      //     date: tx.date,
+      //     pending: tx.pending,
+      //     category: tx.personal_finance_category?.primary,
+      //     iso_currency_code: tx.iso_currency_code,
+      //     user_id: item.user_id,
 
-          account_id: accountId, //FK -> accounts.id
-        },
-        {
-          //If a transaction with the same plaid_transaction_id already exists, update it instead of inserting a new row
-          onConflict: "plaid_transaction_id",
-        },
-      );
+      //     account_id: accountId, //FK -> accounts.id
+      //   },
+      //   {
+      //     //If a transaction with the same plaid_transaction_id already exists, update it instead of inserting a new row
+      //     onConflict: "plaid_transaction_id",
+      //   },
+      // );
+
+      // if (error) {
+      //   console.error("Error syncing Plaid transaction:", {
+      //     error,
+      //     transactionId: tx.transaction_id,
+      //     plaidAccountId: tx.account_id,
+      //     spendieAccountId: accountId,
+      //   });
+
+      const { data: savedTransaction, error } = await supabase
+        .from("transactions")
+        .upsert(
+          {
+            plaid_transaction_id: tx.transaction_id,
+            amount: tx.amount,
+            name: displayName,
+            original_name: tx.name,
+            merchant_name: tx.merchant_name,
+            date: tx.date,
+            pending: tx.pending,
+            category: tx.personal_finance_category?.primary,
+            iso_currency_code: tx.iso_currency_code,
+            user_id: item.user_id,
+            account_id: accountId,
+          },
+          {
+            //If a transaction with the same plaid_transaction_id already exists, update it instead of inserting a new row
+            onConflict: "plaid_transaction_id",
+          },
+        )
+        .select()
+        .single();
 
       if (error) {
         console.error("Error syncing Plaid transaction:", {
@@ -106,6 +140,25 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
         });
 
         throw new Error("Failed to sync Plaid transaction");
+      }
+
+      // Only newly added transactions should trigger
+      // automatic recurring payment matching.
+      const isNewTransaction = added.some(
+        (addedTransaction) =>
+          addedTransaction.transaction_id === tx.transaction_id,
+      );
+
+      if (isNewTransaction) {
+        const matchingPayment =
+          await findMatchingRecurringPayment(savedTransaction);
+
+        if (matchingPayment) {
+          await markRecurringPaymentAutomatically(
+            matchingPayment,
+            savedTransaction,
+          );
+        }
       }
     }
 

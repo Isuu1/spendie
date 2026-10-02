@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { markAsPaid } from "../lib/actions/markAsPaid";
+import { markRecurringPaymentManually } from "../lib/actions/markRecurringPaymentManually";
 import { RecurringPayment } from "../types/recurringPayment";
 import { toastStyle } from "@/shared/styles/toastStyle";
 
@@ -9,7 +9,7 @@ export function useMarkAsPaid() {
 
   return useMutation({
     mutationFn: async (payment: RecurringPayment) => {
-      const result = await markAsPaid(payment);
+      const result = await markRecurringPaymentManually(payment);
 
       return result;
     },

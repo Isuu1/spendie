@@ -28,10 +28,10 @@ export async function POST() {
       access_token: plaidItem.access_token,
       transactions: [
         {
-          amount: 25.5,
-          date_posted: "2026-09-20",
-          date_transacted: "2026-09-20",
-          description: "Spendie Webhook Test",
+          amount: 50,
+          date_posted: "2026-10-02",
+          date_transacted: "2026-10-02",
+          description: "Phone bill",
         },
       ],
     });
