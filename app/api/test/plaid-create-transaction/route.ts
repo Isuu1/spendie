@@ -28,9 +28,9 @@ export async function POST() {
       access_token: plaidItem.access_token,
       transactions: [
         {
-          amount: 115,
-          date_posted: "2026-10-01",
-          date_transacted: "2026-10-01",
+          amount: 120,
+          date_posted: "2026-09-30",
+          date_transacted: "2026-09-30",
           description: "Rent",
           iso_currency_code: "GBP",
         },

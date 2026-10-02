@@ -168,6 +168,10 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
           await findMatchingRecurringPayment(savedTransaction);
 
         if (matchingPayment) {
+          console.log("Found matching recurring payment for transaction:", {
+            transactionId: savedTransaction.id,
+            recurringPaymentId: matchingPayment.id,
+          });
           await markRecurringPaymentAutomatically(
             matchingPayment,
             savedTransaction,
