@@ -1,16 +1,25 @@
-import { createClient } from "@/supabase/server";
+"use server";
+
 import dayjs from "dayjs";
 import { RecurringPayment } from "../../types/recurringPayment";
+import { createAdminClient } from "@/supabase/admin";
 
-type MarkAsPaidResult = {
+type ProcessRecurringPaymentPaidParams = {
+  payment: RecurringPayment;
+  userId: string;
+  transactionId?: string;
+};
+
+type ProcessRecurringPaymentPaidResult = {
   success: boolean;
 };
 
-export async function markRecurringPaymentAsPaid(
-  payment: RecurringPayment,
-  userId: string,
-): Promise<MarkAsPaidResult> {
-  const supabase = await createClient();
+export async function processRecurringPaymentPaid({
+  payment,
+  userId,
+  transactionId,
+}: ProcessRecurringPaymentPaidParams): Promise<ProcessRecurringPaymentPaidResult> {
+  const supabase = createAdminClient();
 
   const paidDate = dayjs();
   const paymentDate = dayjs(payment.next_payment_date);
@@ -62,6 +71,7 @@ export async function markRecurringPaymentAsPaid(
     .insert({
       user_id: userId,
       payment_id: payment.id,
+      transaction_id: transactionId ?? null,
       name: payment.name,
       payment_date: dayjs(payment.next_payment_date).format("YYYY-MM-DD"),
       paid_date: paidDate,

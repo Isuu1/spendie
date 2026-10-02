@@ -2,7 +2,7 @@
 
 import { createClient } from "@/supabase/server";
 import { RecurringPayment } from "../../types/recurringPayment";
-import { markRecurringPaymentAsPaid } from "./markRecurringPaymentAsPaid";
+import { processRecurringPaymentPaid } from "./processRecurringPaymentPaid";
 
 type MarkAsPaidResult = {
   success: boolean;
@@ -23,5 +23,8 @@ export async function markRecurringPaymentManually(
     throw new Error("User not authenticated");
   }
 
-  return markRecurringPaymentAsPaid(payment, user.id);
+  return processRecurringPaymentPaid({
+    payment,
+    userId: user.id,
+  });
 }
