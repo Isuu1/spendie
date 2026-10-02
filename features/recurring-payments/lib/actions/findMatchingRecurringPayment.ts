@@ -5,6 +5,8 @@ import dayjs from "dayjs";
 export async function findMatchingRecurringPayment(transaction: Transaction) {
   const supabase = createAdminClient();
 
+  console.log("transaction in findMatchingRecurringPayment", transaction);
+
   const { data: payments, error } = await supabase
     .from("recurring_payments")
     .select("*")
