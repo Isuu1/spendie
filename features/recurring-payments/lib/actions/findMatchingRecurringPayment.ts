@@ -51,6 +51,12 @@ export async function findMatchingRecurringPayment(transaction: Transaction) {
     }
 
     matchingPayments.push(payment);
+    console.log("Found matching recurring payment:", {
+      paymentId: payment.id,
+      transactionId: transaction.id,
+      transactionDate: transaction.date,
+      expectedPaymentDate: payment.next_payment_date,
+    });
   }
 
   if (matchingPayments.length !== 1) {
