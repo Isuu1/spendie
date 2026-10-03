@@ -19,6 +19,8 @@ export async function findMatchingRecurringPayment(transaction: Transaction) {
     throw new Error(`Error fetching recurring payments: ${error.message}`);
   }
 
+  console.log("payments in findMatchingRecurringPayment", payments);
+
   const matchingPayments = [];
 
   for (const payment of payments) {
@@ -51,6 +53,13 @@ export async function findMatchingRecurringPayment(transaction: Transaction) {
     if (existingHistory) {
       continue;
     }
+
+    console.log("Found a matching recurring payment:", {
+      paymentId: payment.id,
+      transactionId: transaction.id,
+      transactionDate: transaction.date,
+      expectedPaymentDate: payment.next_payment_date,
+    });
 
     matchingPayments.push(payment);
     console.log("Found matching recurring payment:", {
