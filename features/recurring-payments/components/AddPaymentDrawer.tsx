@@ -14,6 +14,7 @@ import AddPaymentForm from "./AddPaymentForm";
 import { IdCard } from "lucide-react";
 //Types
 import { RecurringPaymentFormValues } from "../types/recurringPaymentForm";
+import { useGroupedAccounts } from "@/features/accounts/hooks/useGroupedAccounts";
 
 type AddPaymentDrawerProps = {
   defaultValues?: Partial<RecurringPaymentFormValues>;
@@ -25,6 +26,8 @@ const AddPaymentDrawer = ({
   triggerName,
 }: AddPaymentDrawerProps) => {
   const [open, setOpen] = React.useState(false);
+
+  const { data: institutions = [] } = useGroupedAccounts();
 
   const onCancel = () => {
     setOpen(false);
@@ -49,7 +52,11 @@ const AddPaymentDrawer = ({
             Create a new recurring payment definition.
           </DrawerDescription>
         </DrawerHeader>
-        <AddPaymentForm onCancel={onCancel} defaultValues={defaultValues} />
+        <AddPaymentForm
+          onCancel={onCancel}
+          defaultValues={defaultValues}
+          institutions={institutions}
+        />
       </DrawerContent>
     </Drawer>
   );

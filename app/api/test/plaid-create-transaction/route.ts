@@ -28,10 +28,10 @@ export async function POST() {
       access_token: plaidItem.access_token,
       transactions: [
         {
-          amount: 125,
-          date_posted: "2026-09-30",
-          date_transacted: "2026-09-30",
-          description: "Czynsz",
+          amount: 250,
+          date_posted: "2026-10-04",
+          date_transacted: "2026-10-04",
+          description: "Testing rent",
           iso_currency_code: "GBP",
         },
       ],

@@ -23,6 +23,7 @@ import {
   repeatOptions,
   typeOptions,
 } from "@/features/recurring-payments/types/recurringPaymentForm";
+import { Institution } from "@/features/accounts/types/institution";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
 //Schemas
@@ -33,12 +34,24 @@ import { FolderPen, Wallet } from "lucide-react";
 type AddPaymentFormProps = {
   onCancel: () => void;
   defaultValues?: Partial<RecurringPaymentFormValues>;
+  institutions: Institution[];
 };
 
-const AddPaymentForm = ({ onCancel, defaultValues }: AddPaymentFormProps) => {
+const AddPaymentForm = ({
+  onCancel,
+  defaultValues,
+  institutions,
+}: AddPaymentFormProps) => {
   const router = useRouter();
 
   const queryClient = useQueryClient();
+
+  const accountOptions = institutions.flatMap((institution) =>
+    institution.accounts.map((account) => ({
+      label: `${institution.institution_name} | ${account.name}`,
+      value: account.id.toString(),
+    })),
+  );
 
   const form = useForm<RecurringPaymentFormValues>({
     resolver: zodResolver(recurringPaymentSchema),
@@ -49,6 +62,7 @@ const AddPaymentForm = ({ onCancel, defaultValues }: AddPaymentFormProps) => {
       category: defaultValues?.category || categoryOptions[0].value,
       amount: undefined,
       next_payment_date: undefined,
+      account_id: defaultValues?.account_id || accountOptions[0]?.value,
     },
     mode: "onChange",
   });
@@ -169,6 +183,26 @@ const AddPaymentForm = ({ onCancel, defaultValues }: AddPaymentFormProps) => {
                     id="type"
                     label="Type"
                     selectOptions={typeOptions}
+                    error={fieldState.error}
+                  />
+                  <InputError error={fieldState.error} />
+                </div>
+              )}
+            />
+          </div>
+        </Field>
+        <Field orientation="horizontal">
+          <div className="flex justify-between w-full gap-4 items-start">
+            <Controller
+              control={form.control}
+              name="account_id"
+              render={({ field, fieldState }) => (
+                <div className="flex flex-col gap-3 flex-1">
+                  <SelectInput
+                    {...field}
+                    id="account_id"
+                    label="Bank account"
+                    selectOptions={accountOptions}
                     error={fieldState.error}
                   />
                   <InputError error={fieldState.error} />
