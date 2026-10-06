@@ -12,5 +12,5 @@ export const recurringPaymentSchema = z.object({
   next_payment_date: z.date({
     invalid_type_error: "Please provide a valid date",
   }),
-  account_id: z.string().min(1, "Account is required"),
+  account_type: z.string().min(1, "Account is required"),
 });

@@ -19,6 +19,7 @@ import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/a
 //Types
 import {
   categoryOptions,
+  getAccountOptions,
   RecurringPaymentFormValues,
   repeatOptions,
   typeOptions,
@@ -46,13 +47,6 @@ const AddPaymentForm = ({
 
   const queryClient = useQueryClient();
 
-  const accountOptions = institutions.flatMap((institution) =>
-    institution.accounts.map((account) => ({
-      label: `${institution.institution_name} | ${account.name}`,
-      value: account.id.toString(),
-    })),
-  );
-
   const form = useForm<RecurringPaymentFormValues>({
     resolver: zodResolver(recurringPaymentSchema),
     defaultValues: {
@@ -62,7 +56,10 @@ const AddPaymentForm = ({
       category: defaultValues?.category || categoryOptions[0].value,
       amount: undefined,
       next_payment_date: undefined,
-      account_id: defaultValues?.account_id || accountOptions[0]?.value,
+      account_type:
+        defaultValues?.account_type ||
+        getAccountOptions(institutions)[0]?.value ||
+        "",
     },
     mode: "onChange",
   });
@@ -195,14 +192,14 @@ const AddPaymentForm = ({
           <div className="flex justify-between w-full gap-4 items-start">
             <Controller
               control={form.control}
-              name="account_id"
+              name="account_type"
               render={({ field, fieldState }) => (
                 <div className="flex flex-col gap-3 flex-1">
                   <SelectInput
                     {...field}
-                    id="account_id"
+                    id="account_type"
                     label="Bank account"
-                    selectOptions={accountOptions}
+                    selectOptions={getAccountOptions(institutions)}
                     error={fieldState.error}
                   />
                   <InputError error={fieldState.error} />
