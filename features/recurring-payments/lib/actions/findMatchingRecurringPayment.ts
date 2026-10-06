@@ -1,11 +1,11 @@
+"use server";
+
 import { Transaction } from "@/features/transactions/types/transaction";
 import { createAdminClient } from "@/supabase/admin";
 import dayjs from "dayjs";
 
 export async function findMatchingRecurringPayment(transaction: Transaction) {
   const supabase = createAdminClient();
-
-  console.log("transaction in findMatchingRecurringPayment", transaction);
 
   const { data: payments, error } = await supabase
     .from("recurring_payments")
@@ -18,8 +18,6 @@ export async function findMatchingRecurringPayment(transaction: Transaction) {
   if (error) {
     throw new Error(`Error fetching recurring payments: ${error.message}`);
   }
-
-  console.log("payments in findMatchingRecurringPayment", payments);
 
   const matchingPayments = [];
 
@@ -54,20 +52,7 @@ export async function findMatchingRecurringPayment(transaction: Transaction) {
       continue;
     }
 
-    console.log("Found a matching recurring payment:", {
-      paymentId: payment.id,
-      transactionId: transaction.id,
-      transactionDate: transaction.date,
-      expectedPaymentDate: payment.next_payment_date,
-    });
-
     matchingPayments.push(payment);
-    console.log("Found matching recurring payment:", {
-      paymentId: payment.id,
-      transactionId: transaction.id,
-      transactionDate: transaction.date,
-      expectedPaymentDate: payment.next_payment_date,
-    });
   }
 
   if (matchingPayments.length !== 1) {
