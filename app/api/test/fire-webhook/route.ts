@@ -13,7 +13,7 @@ export async function POST() {
     const { data: plaidItem, error } = await supabase
       .from("plaid_items")
       .select("id, plaid_item_id, access_token, status")
-      .eq("status", "connected")
+      .eq("id", 75)
       .limit(1)
       .single();
 
