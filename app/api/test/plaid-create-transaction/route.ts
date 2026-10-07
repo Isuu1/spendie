@@ -28,7 +28,7 @@ export async function POST() {
       access_token: plaidItem.access_token,
       transactions: [
         {
-          amount: 300,
+          amount: 400,
           date_posted: "2026-10-02",
           date_transacted: "2026-10-02",
           description: "Testing rent",

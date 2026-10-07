@@ -27,7 +27,7 @@ export async function POST() {
     const webhookRequest: SandboxItemFireWebhookRequest = {
       access_token: plaidItem.access_token,
       webhook_code:
-        "USER_PERMISSION_REVOKED" as SandboxItemFireWebhookRequest["webhook_code"],
+        "SYNC_UPDATES_AVAILABLE" as SandboxItemFireWebhookRequest["webhook_code"],
     };
 
     const response = await plaidClient.sandboxItemFireWebhook(webhookRequest);
@@ -37,7 +37,7 @@ export async function POST() {
       plaidItemDbId: plaidItem.id,
       plaidItemId: plaidItem.plaid_item_id,
       previousStatus: plaidItem.status,
-      webhookCode: "USER_PERMISSION_REVOKED",
+      webhookCode: "SYNC_UPDATES_AVAILABLE",
       requestId: response.data.request_id,
     });
   } catch (error) {
