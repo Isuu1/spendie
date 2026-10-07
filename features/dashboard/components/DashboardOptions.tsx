@@ -37,12 +37,7 @@ const DashboardOptions = () => {
           <DashboardPanelsMenu />
         </PopoverContent>
       </Popover>
-      <PlaidLink
-        userId={user?.id ?? ""}
-        variant="secondary"
-        plaidItemDbId={72}
-        mode="update"
-      />
+      <PlaidLink userId={user?.id ?? ""} variant="secondary" />
     </div>
   );
 };

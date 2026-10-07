@@ -19,10 +19,12 @@ import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/a
 //Types
 import {
   categoryOptions,
+  getAccountOptions,
   RecurringPaymentFormValues,
   repeatOptions,
   typeOptions,
 } from "@/features/recurring-payments/types/recurringPaymentForm";
+import { Institution } from "@/features/accounts/types/institution";
 //Styles
 import { toastStyle } from "@/shared/styles/toastStyle";
 //Schemas
@@ -33,9 +35,14 @@ import { FolderPen, Wallet } from "lucide-react";
 type AddPaymentFormProps = {
   onCancel: () => void;
   defaultValues?: Partial<RecurringPaymentFormValues>;
+  institutions: Institution[];
 };
 
-const AddPaymentForm = ({ onCancel, defaultValues }: AddPaymentFormProps) => {
+const AddPaymentForm = ({
+  onCancel,
+  defaultValues,
+  institutions,
+}: AddPaymentFormProps) => {
   const router = useRouter();
 
   const queryClient = useQueryClient();
@@ -49,6 +56,10 @@ const AddPaymentForm = ({ onCancel, defaultValues }: AddPaymentFormProps) => {
       category: defaultValues?.category || categoryOptions[0].value,
       amount: undefined,
       next_payment_date: undefined,
+      account_type:
+        defaultValues?.account_type ||
+        getAccountOptions(institutions)[0]?.value ||
+        "",
     },
     mode: "onChange",
   });
@@ -169,6 +180,26 @@ const AddPaymentForm = ({ onCancel, defaultValues }: AddPaymentFormProps) => {
                     id="type"
                     label="Type"
                     selectOptions={typeOptions}
+                    error={fieldState.error}
+                  />
+                  <InputError error={fieldState.error} />
+                </div>
+              )}
+            />
+          </div>
+        </Field>
+        <Field orientation="horizontal">
+          <div className="flex justify-between w-full gap-4 items-start">
+            <Controller
+              control={form.control}
+              name="account_type"
+              render={({ field, fieldState }) => (
+                <div className="flex flex-col gap-3 flex-1">
+                  <SelectInput
+                    {...field}
+                    id="account_type"
+                    label="Bank account"
+                    selectOptions={getAccountOptions(institutions)}
                     error={fieldState.error}
                   />
                   <InputError error={fieldState.error} />

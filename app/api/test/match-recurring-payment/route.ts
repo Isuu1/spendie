@@ -23,7 +23,7 @@ export async function GET() {
     .from("transactions")
     .select("*")
     .eq("user_id", user.id)
-    .eq("id", "2490")
+    .eq("id", "2887")
     .limit(1)
     .maybeSingle();
 
