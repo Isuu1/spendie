@@ -24,23 +24,16 @@ export async function POST() {
       );
     }
 
-    const response = await plaidClient.sandboxTransactionsCreate({
+    const response = await plaidClient.transactionsSync({
       access_token: plaidItem.access_token,
-      transactions: [
-        {
-          amount: 800,
-          date_posted: "2026-10-02",
-          date_transacted: "2026-10-02",
-          description: "Testing rent",
-          iso_currency_code: "GBP",
-        },
-      ],
     });
 
-    console.log("Sandbox transaction created:", {
-      plaidItemDbId: plaidItem.id,
-      plaidItemId: plaidItem.plaid_item_id,
-      requestId: response.data.request_id,
+    console.log({
+      added: response.data.added,
+      modified: response.data.modified,
+      removed: response.data.removed,
+      nextCursor: response.data.next_cursor,
+      hasMore: response.data.has_more,
     });
 
     return NextResponse.json({
