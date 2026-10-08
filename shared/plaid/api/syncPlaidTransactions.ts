@@ -48,6 +48,11 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
     (accounts ?? []).map((account) => [account.plaid_account_id, account.id]),
   );
 
+  console.log("Plaid sync starting:", {
+    plaidItemDbId,
+    storedCursor: currentCursor,
+  });
+
   //5. Loop through paginated results until all transactions are synced
   while (hasMore) {
     const plaidRequest: TransactionsSyncRequest = {
@@ -59,6 +64,14 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
     const response = await plaidClient.transactionsSync(plaidRequest);
 
     const { added, modified, removed, next_cursor, has_more } = response.data;
+
+    console.log("Plaid sync response:", {
+      addedCount: added.length,
+      modifiedCount: modified.length,
+      removedCount: removed.length,
+      nextCursor: next_cursor,
+      hasMore: has_more,
+    });
 
     //Combine added and modified transactions for upsert
     const updates = [...added, ...modified];
@@ -206,6 +219,11 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
     currentCursor = next_cursor;
     hasMore = has_more;
   }
+
+  console.log("Updating Plaid cursor:", {
+    previousCursor: item.plaid_cursor,
+    newCursor: currentCursor,
+  });
 
   //6. Update the cursor in the database for this item
   const { error: cursorError } = await supabase
