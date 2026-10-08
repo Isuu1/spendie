@@ -60,9 +60,5 @@ export async function processRecurringPaymentPaid({
     );
   }
 
-  console.log(
-    `Recurring payment ${payment.name} marked as paid for user ${userId}. Next payment date: ${nextPaymentDate.format("YYYY-MM-DD")}. Status: ${status}.`,
-  );
-
   return { success: true };
 }

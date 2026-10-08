@@ -28,14 +28,6 @@ export async function POST() {
       access_token: plaidItem.access_token,
     });
 
-    console.log({
-      added: response.data.added,
-      modified: response.data.modified,
-      removed: response.data.removed,
-      nextCursor: response.data.next_cursor,
-      hasMore: response.data.has_more,
-    });
-
     return NextResponse.json({
       success: true,
       plaidItemDbId: plaidItem.id,
