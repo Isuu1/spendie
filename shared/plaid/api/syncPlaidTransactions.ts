@@ -48,11 +48,6 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
     (accounts ?? []).map((account) => [account.plaid_account_id, account.id]),
   );
 
-  console.log("Plaid sync starting:", {
-    plaidItemDbId,
-    storedCursor: currentCursor,
-  });
-
   //5. Loop through paginated results until all transactions are synced
   while (hasMore) {
     const plaidRequest: TransactionsSyncRequest = {
@@ -65,18 +60,8 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
 
     const { added, modified, removed, next_cursor, has_more } = response.data;
 
-    console.log("Plaid sync response:", {
-      addedCount: added.length,
-      modifiedCount: modified.length,
-      removedCount: removed.length,
-      nextCursor: next_cursor,
-      hasMore: has_more,
-    });
-
     //Combine added and modified transactions for upsert
     const updates = [...added, ...modified];
-
-    console.log("updates", updates);
 
     //Upsert new and modified transactions into the database
     for (const tx of updates) {
@@ -85,15 +70,6 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
       //Find the corresponding Spendie account ID for the Plaid account ID
       const accountId = accountMap.get(tx.account_id);
 
-      console.log("Syncing Plaid transaction:", {
-        plaidTransactionId: tx.transaction_id,
-        plaidAccountId: tx.account_id,
-        spendieAccountId: accountId,
-        amount: tx.amount,
-        name: displayName,
-        date: tx.date,
-      });
-
       //If no corresponding Spendie account is found, log an error and skip this transaction
       if (!accountId) {
         console.error(
@@ -101,35 +77,6 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
         );
         continue;
       }
-
-      // const { error } = await supabase.from("transactions").upsert(
-      //   {
-      //     plaid_transaction_id: tx.transaction_id,
-      //     amount: tx.amount,
-      //     name: displayName,
-      //     original_name: tx.name,
-      //     merchant_name: tx.merchant_name,
-      //     date: tx.date,
-      //     pending: tx.pending,
-      //     category: tx.personal_finance_category?.primary,
-      //     iso_currency_code: tx.iso_currency_code,
-      //     user_id: item.user_id,
-
-      //     account_id: accountId, //FK -> accounts.id
-      //   },
-      //   {
-      //     //If a transaction with the same plaid_transaction_id already exists, update it instead of inserting a new row
-      //     onConflict: "plaid_transaction_id",
-      //   },
-      // );
-
-      // if (error) {
-      //   console.error("Error syncing Plaid transaction:", {
-      //     error,
-      //     transactionId: tx.transaction_id,
-      //     plaidAccountId: tx.account_id,
-      //     spendieAccountId: accountId,
-      //   });
 
       const { data: savedTransaction, error } = await supabase
         .from("transactions")
@@ -166,8 +113,6 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
         throw new Error("Failed to sync Plaid transaction");
       }
 
-      console.log("savedTransaction", savedTransaction);
-
       // Only newly added transactions should trigger
       // automatic recurring payment matching.
       const isNewTransaction = added.some(
@@ -175,19 +120,11 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
           addedTransaction.transaction_id === tx.transaction_id,
       );
 
-      console.log("isNewTransaction", isNewTransaction);
-
       if (isNewTransaction) {
         const matchingPayment =
           await findMatchingRecurringPayment(savedTransaction);
 
-        console.log("matchingPayment", matchingPayment);
-
         if (matchingPayment) {
-          console.log("Found matching recurring payment for transaction:", {
-            transactionId: savedTransaction.id,
-            recurringPaymentId: matchingPayment.id,
-          });
           await markRecurringPaymentAutomatically(
             matchingPayment,
             savedTransaction,
@@ -195,7 +132,6 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
         }
       }
     }
-    console.log("Successfully synced transactions for Plaid item");
 
     //Remove transactions that have been deleted in Plaid
     if (removed && removed.length > 0) {
@@ -219,11 +155,6 @@ export async function syncPlaidTransactions(plaidItemDbId: string) {
     currentCursor = next_cursor;
     hasMore = has_more;
   }
-
-  console.log("Updating Plaid cursor:", {
-    previousCursor: item.plaid_cursor,
-    newCursor: currentCursor,
-  });
 
   //6. Update the cursor in the database for this item
   const { error: cursorError } = await supabase
