@@ -1,6 +1,6 @@
 "use client";
 
-import React, { startTransition } from "react";
+import React, { startTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Controller, useForm } from "react-hook-form";
@@ -12,7 +12,13 @@ import Button from "@/shared/components/ui/Button";
 import Input from "@/shared/components/ui/Input";
 import SelectInput from "@/shared/components/ui/SelectInput";
 import DateInput from "@/shared/components/ui/DateInput";
-import { Field, FieldGroup } from "@/components/ui/field";
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
 import InputError from "@/shared/components/ui/InputError";
 //Actions
 import { addRecurringPayment } from "@/features/recurring-payments/lib/actions/addRecurringPayment";
@@ -31,6 +37,9 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/recurringPaymentSchema";
 //Icons
 import { FolderPen, Wallet } from "lucide-react";
+import { getUserClient } from "@/features/user/api/getUserClient";
+import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
+import { UserProfile } from "@/features/user/types/user";
 
 type AddPaymentFormProps = {
   onCancel: () => void;
@@ -43,9 +52,24 @@ const AddPaymentForm = ({
   defaultValues,
   institutions,
 }: AddPaymentFormProps) => {
+  const [user, setUser] = React.useState<UserProfile | null>(null);
+
   const router = useRouter();
 
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getUserClient();
+        setUser(userData);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const form = useForm<RecurringPaymentFormValues>({
     resolver: zodResolver(recurringPaymentSchema),
@@ -188,27 +212,46 @@ const AddPaymentForm = ({
             />
           </div>
         </Field>
-        <Field orientation="horizontal">
-          <div className="flex justify-between w-full gap-4 items-start">
-            <Controller
-              control={form.control}
-              name="account_type"
-              render={({ field, fieldState }) => (
-                <div className="flex flex-col gap-3 flex-1">
-                  <SelectInput
-                    {...field}
-                    id="account_type"
-                    label="Bank account"
-                    selectOptions={getAccountOptions(institutions)}
-                    error={fieldState.error}
-                  />
-                  <InputError error={fieldState.error} />
-                </div>
-              )}
-            />
+        <FieldSet>
+          <div className="flex items-center justify-between">
+            <FieldLegend>Bank account</FieldLegend>
+            <span className="text-xs text-primary bg-card-foreground py-1 px-2 rounded-lg">
+              Optional
+            </span>
           </div>
-        </Field>
 
+          <FieldDescription>
+            Choose the account this payment comes from to automatically detect
+            when it`s paid.
+          </FieldDescription>
+
+          <Controller
+            control={form.control}
+            name="account_type"
+            render={({ field, fieldState }) => (
+              <div className="flex flex-col gap-2">
+                <SelectInput
+                  {...field}
+                  id="account_type"
+                  selectOptions={getAccountOptions(institutions)}
+                  placeholder={
+                    institutions.length === 0
+                      ? "No accounts found"
+                      : "Select an account"
+                  }
+                  error={fieldState.error}
+                />
+
+                <InputError error={fieldState.error} />
+              </div>
+            )}
+          />
+          {institutions.length === 0 && user && <PlaidLink userId={user?.id} />}
+
+          <p className="text-sm text-muted-foreground">
+            Without an account, you can still track this payment manually.
+          </p>
+        </FieldSet>
         <div className="flex justify-end gap-2 mt-4">
           <Button
             variant="secondary"

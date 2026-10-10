@@ -20,6 +20,7 @@ type Option = {
 type SelectInputProps = {
   id: string;
   label?: string;
+  placeholder?: string;
   selectOptions: readonly Option[];
   value: string;
   onChange: (value: string) => void;
@@ -30,6 +31,7 @@ type SelectInputProps = {
 const SelectInput: React.FC<SelectInputProps> = ({
   id,
   label,
+  placeholder,
   selectOptions,
   value,
   onChange,
@@ -51,7 +53,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
             triggerClassName,
           )}
         >
-          <SelectValue placeholder={label} />
+          <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent className="bg-input text-primary">
           <SelectGroup className="bg-input">
