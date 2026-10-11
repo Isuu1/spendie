@@ -12,5 +12,10 @@ export const recurringPaymentSchema = z.object({
   next_payment_date: z.date({
     invalid_type_error: "Please provide a valid date",
   }),
-  account_id: z.string(),
+  account_id: z.coerce
+    .number({
+      required_error: "Please select an account",
+      invalid_type_error: "Account ID must be a number",
+    })
+    .optional(),
 });

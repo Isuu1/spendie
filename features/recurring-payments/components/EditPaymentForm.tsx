@@ -48,6 +48,8 @@ type EditPaymentFormProps = {
 const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
   const { data: institutions = [] } = useGroupedAccounts();
 
+  const accountOptions = getAccountOptions(institutions);
+
   const router = useRouter();
 
   const queryClient = useQueryClient();
@@ -61,8 +63,7 @@ const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
       type: payment.type,
       amount: payment.amount,
       next_payment_date: dayjs(payment.next_payment_date).toDate(),
-      //account_id: selectedAccount ? selectedAccount.value : "",
-      account_id: payment.account_id ? payment.account_id.toString() : "",
+      account_id: Number(payment.account_id) || undefined,
     },
     mode: "onChange",
   });
@@ -213,13 +214,15 @@ const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
                   {...field}
                   id="account_id"
                   label="Account"
-                  selectOptions={getAccountOptions(institutions)}
+                  selectOptions={accountOptions}
                   placeholder={
                     institutions.length === 0
                       ? "No accounts found"
                       : "Select an account"
                   }
                   error={fieldState.error}
+                  value={field.value?.toString() ?? ""}
+                  onChange={(value) => field.onChange(Number(value))}
                 />
 
                 <InputError error={fieldState.error} />
