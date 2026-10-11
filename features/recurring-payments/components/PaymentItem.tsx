@@ -37,7 +37,10 @@ const PaymentItem = ({ payment }: PaymentItemProps) => {
   };
 
   return (
-    <div key={payment.id} className="bg-background rounded-2xl p-4">
+    <div
+      key={payment.id}
+      className="bg-background rounded-2xl p-4 grow max-w-130 flex flex-col gap-4"
+    >
       <PaymentCard payment={payment} />
 
       <div className="flex gap-2 flex-wrap">

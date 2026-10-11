@@ -19,8 +19,32 @@ const PaymentCard = ({ payment }: PaymentCardProps) => {
     settings?.currency ?? "",
   ).displayAmount;
 
+  const isPaymentTracked =
+    payment.account_id !== null && payment.account_id !== undefined;
+
   return (
     <div className="flex flex-col gap-5 relative">
+      <div className="flex gap-2 w-full">
+        {isPaymentTracked && payment.is_paused === false ? (
+          <span className="text-xs text-green-500 font-semibold py-1 px-2 rounded-lg bg-green-800">
+            Tracked
+          </span>
+        ) : (
+          <span className="text-xs text-red-300 font-semibold py-1 px-2 rounded-lg bg-red-800">
+            Untracked
+          </span>
+        )}
+        {payment.is_paused ? (
+          <span className="text-xs text-red-300 font-semibold py-1 px-2 rounded-lg bg-red-800">
+            Paused
+          </span>
+        ) : (
+          <span className="text-xs text-green-500 font-semibold py-1 px-2 rounded-lg bg-green-800">
+            Active
+          </span>
+        )}
+      </div>
+
       <h3>{payment.name}</h3>
 
       <div className="flex justify-between mt-2">
@@ -45,14 +69,14 @@ const PaymentCard = ({ payment }: PaymentCardProps) => {
       <PaymentStatus payment={payment} className="ml-auto" />
       <PaymentCategory category={payment.category} />
 
-      <div className="flex justify-between mt-2 mb-4">
+      {/* <div className="flex justify-between mt-2 mb-4">
         <span>Status</span>
         {payment.is_paused ? (
           <span className="text-red-500">Paused</span>
         ) : (
           <span className="text-green-500">Active</span>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
