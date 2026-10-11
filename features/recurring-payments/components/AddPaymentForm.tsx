@@ -1,6 +1,6 @@
 "use client";
 
-import React, { startTransition, useEffect } from "react";
+import React, { startTransition } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Controller, useForm } from "react-hook-form";
@@ -37,9 +37,8 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 import { recurringPaymentSchema } from "@/features/recurring-payments/schemas/recurringPaymentSchema";
 //Icons
 import { FolderPen, Wallet } from "lucide-react";
-import { getUserClient } from "@/features/user/api/getUserClient";
 import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
-import { UserProfile } from "@/features/user/types/user";
+import { useUser } from "@/features/user/hooks/useUser";
 
 type AddPaymentFormProps = {
   onCancel: () => void;
@@ -52,24 +51,11 @@ const AddPaymentForm = ({
   defaultValues,
   institutions,
 }: AddPaymentFormProps) => {
-  const [user, setUser] = React.useState<UserProfile | null>(null);
+  const { data: user } = useUser();
 
   const router = useRouter();
 
   const queryClient = useQueryClient();
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const userData = await getUserClient();
-        setUser(userData);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      }
-    };
-
-    fetchUser();
-  }, []);
 
   const form = useForm<RecurringPaymentFormValues>({
     resolver: zodResolver(recurringPaymentSchema),
@@ -80,8 +66,8 @@ const AddPaymentForm = ({
       category: defaultValues?.category || categoryOptions[0].value,
       amount: undefined,
       next_payment_date: undefined,
-      account_type:
-        defaultValues?.account_type ||
+      account_id:
+        defaultValues?.account_id ||
         getAccountOptions(institutions)[0]?.value ||
         "",
     },
@@ -227,12 +213,12 @@ const AddPaymentForm = ({
 
           <Controller
             control={form.control}
-            name="account_type"
+            name="account_id"
             render={({ field, fieldState }) => (
               <div className="flex flex-col gap-2">
                 <SelectInput
                   {...field}
-                  id="account_type"
+                  id="account_id"
                   selectOptions={getAccountOptions(institutions)}
                   placeholder={
                     institutions.length === 0
