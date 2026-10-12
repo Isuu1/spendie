@@ -45,7 +45,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   return (
     <Field>
       {label && <FieldLabel htmlFor={id}>{label}</FieldLabel>}
-      <Select onValueChange={onChange} defaultValue={value}>
+      <Select onValueChange={onChange} value={value}>
         <SelectTrigger
           className={cn(
             "bg-input border-0 w-full cursor-pointer",

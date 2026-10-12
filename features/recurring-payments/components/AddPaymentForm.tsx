@@ -53,8 +53,6 @@ const AddPaymentForm = ({
 }: AddPaymentFormProps) => {
   const { data: user } = useUser();
 
-  const defaultAccountValue = undefined; // Set to undefined to indicate no default account selected
-
   const router = useRouter();
 
   const queryClient = useQueryClient();
@@ -68,7 +66,7 @@ const AddPaymentForm = ({
       category: defaultValues?.category || categoryOptions[0].value,
       amount: undefined,
       next_payment_date: undefined,
-      account_id: defaultValues?.account_id || defaultAccountValue,
+      account_id: defaultValues?.account_id || null,
     },
     mode: "onChange",
   });

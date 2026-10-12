@@ -17,5 +17,6 @@ export const recurringPaymentSchema = z.object({
       required_error: "Please select an account",
       invalid_type_error: "Account ID must be a number",
     })
-    .optional(),
+    .optional()
+    .nullable(),
 });

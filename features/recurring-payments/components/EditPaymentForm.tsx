@@ -63,7 +63,7 @@ const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
       type: payment.type,
       amount: payment.amount,
       next_payment_date: dayjs(payment.next_payment_date).toDate(),
-      account_id: Number(payment.account_id) || undefined,
+      account_id: Number(payment.account_id) || null,
     },
     mode: "onChange",
   });
@@ -221,8 +221,12 @@ const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
                       : "Select an account"
                   }
                   error={fieldState.error}
-                  value={field.value?.toString() ?? ""}
-                  onChange={(value) => field.onChange(Number(value))}
+                  value={field.value ? field.value.toString() : ""}
+                  onChange={(value) => {
+                    return field.onChange(
+                      value !== null ? Number(value) : null,
+                    );
+                  }}
                 />
 
                 <InputError error={fieldState.error} />
@@ -234,6 +238,22 @@ const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
           <p className="text-sm text-muted-foreground">
             Without an account, you can still track this payment manually.
           </p>
+          {form.watch("account_id") != null && (
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              //onClick={() => form.setValue("account_id", undefined)}
+              onClick={() =>
+                form.setValue("account_id", null, {
+                  shouldDirty: true,
+                  shouldValidate: true,
+                })
+              }
+            >
+              Remove account
+            </Button>
+          )}
         </FieldSet>
 
         <div className="flex justify-end gap-2 mt-4">
