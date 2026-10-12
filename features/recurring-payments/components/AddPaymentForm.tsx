@@ -236,6 +236,22 @@ const AddPaymentForm = ({
           <p className="text-sm text-muted-foreground">
             Without an account, you can still track this payment manually.
           </p>
+          {form.watch("account_id") != null && (
+            <Button
+              type="button"
+              variant="secondary"
+              className="bg-input"
+              size="sm"
+              onClick={() =>
+                form.setValue("account_id", null, {
+                  shouldDirty: true,
+                  shouldValidate: true,
+                })
+              }
+            >
+              Clear account selection
+            </Button>
+          )}
         </FieldSet>
         <div className="flex justify-end gap-2 mt-4">
           <Button

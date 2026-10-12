@@ -39,6 +39,8 @@ import { recurringPaymentSchema } from "../schemas/recurringPaymentSchema";
 import { FolderPen, Wallet } from "lucide-react";
 //Hooks
 import { useGroupedAccounts } from "@/features/accounts/hooks/useGroupedAccounts";
+import { useUser } from "@/features/user/hooks/useUser";
+import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 
 type EditPaymentFormProps = {
   payment: RecurringPayment;
@@ -47,6 +49,8 @@ type EditPaymentFormProps = {
 
 const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
   const { data: institutions = [] } = useGroupedAccounts();
+
+  const { data: user } = useUser();
 
   const accountOptions = getAccountOptions(institutions);
 
@@ -233,7 +237,7 @@ const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
               </div>
             )}
           />
-          {/* {institutions.length === 0 && user && <PlaidLink userId={user?.id} />} */}
+          {institutions.length === 0 && user && <PlaidLink userId={user?.id} />}
 
           <p className="text-sm text-muted-foreground">
             Without an account, you can still track this payment manually.
@@ -242,8 +246,8 @@ const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
             <Button
               type="button"
               variant="secondary"
+              className="bg-input"
               size="sm"
-              //onClick={() => form.setValue("account_id", undefined)}
               onClick={() =>
                 form.setValue("account_id", null, {
                   shouldDirty: true,
@@ -251,7 +255,7 @@ const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
                 })
               }
             >
-              Remove account
+              Clear account selection
             </Button>
           )}
         </FieldSet>

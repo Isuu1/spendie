@@ -68,15 +68,6 @@ const PaymentCard = ({ payment }: PaymentCardProps) => {
 
       <PaymentStatus payment={payment} className="ml-auto" />
       <PaymentCategory category={payment.category} />
-
-      {/* <div className="flex justify-between mt-2 mb-4">
-        <span>Status</span>
-        {payment.is_paused ? (
-          <span className="text-red-500">Paused</span>
-        ) : (
-          <span className="text-green-500">Active</span>
-        )}
-      </div> */}
     </div>
   );
 };

@@ -52,6 +52,20 @@ export async function removePlaidItem(plaidItemDbId: string) {
     console.error("Error deleting plaid item from database:", deleteError);
     throw new Error("Failed to delete plaid item from database");
   }
+
+  //Remove account_id from recurring_payments table for all recurring payments that are linked to the deleted plaid item
+  const { error: updateError } = await supabase
+    .from("recurring_payments")
+    .update({ account_id: null })
+    .eq("account_id", plaidItemDbId)
+    .eq("user_id", userId);
+  if (updateError) {
+    console.error(
+      "Error updating recurring payments after deleting plaid item:",
+      updateError,
+    );
+    throw new Error("Failed to update recurring payments");
+  }
   revalidatePath("/dashboard");
   return { success: true };
 }
