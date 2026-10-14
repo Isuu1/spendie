@@ -12,7 +12,13 @@ import Button from "@/shared/components/ui/Button";
 import Input from "@/shared/components/ui/Input";
 import SelectInput from "@/shared/components/ui/SelectInput";
 import DateInput from "@/shared/components/ui/DateInput";
-import { Field, FieldGroup } from "@/components/ui/field";
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
 import InputError from "@/shared/components/ui/InputError";
 //Actions
 import { editRecurringPayment } from "@/features/recurring-payments/lib/actions/editRecurringPayment";
@@ -22,6 +28,7 @@ import { toastStyle } from "@/shared/styles/toastStyle";
 import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
 import {
   categoryOptions,
+  getAccountOptions,
   RecurringPaymentFormValues,
   repeatOptions,
   typeOptions,
@@ -30,6 +37,10 @@ import {
 import { recurringPaymentSchema } from "../schemas/recurringPaymentSchema";
 //Icons
 import { FolderPen, Wallet } from "lucide-react";
+//Hooks
+import { useGroupedAccounts } from "@/features/accounts/hooks/useGroupedAccounts";
+import { useUser } from "@/features/user/hooks/useUser";
+import PlaidLink from "@/shared/components/PlaidLink/PlaidLink";
 
 type EditPaymentFormProps = {
   payment: RecurringPayment;
@@ -37,6 +48,12 @@ type EditPaymentFormProps = {
 };
 
 const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
+  const { data: institutions = [] } = useGroupedAccounts();
+
+  const { data: user } = useUser();
+
+  const accountOptions = getAccountOptions(institutions);
+
   const router = useRouter();
 
   const queryClient = useQueryClient();
@@ -50,6 +67,7 @@ const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
       type: payment.type,
       amount: payment.amount,
       next_payment_date: dayjs(payment.next_payment_date).toDate(),
+      account_id: Number(payment.account_id) || null,
     },
     mode: "onChange",
   });
@@ -178,6 +196,69 @@ const EditPaymentForm = ({ payment, onCancel }: EditPaymentFormProps) => {
             />
           </div>
         </Field>
+        <FieldSet>
+          <div className="flex items-center justify-between">
+            <FieldLegend>Bank account</FieldLegend>
+            <span className="text-xs text-primary bg-card-foreground py-1 px-2 rounded-lg">
+              Optional
+            </span>
+          </div>
+
+          <FieldDescription>
+            Choose the account this payment comes from to automatically detect
+            when it`s paid.
+          </FieldDescription>
+
+          <Controller
+            control={form.control}
+            name="account_id"
+            render={({ field, fieldState }) => (
+              <div className="flex flex-col gap-2">
+                <SelectInput
+                  {...field}
+                  id="account_id"
+                  label="Account"
+                  selectOptions={accountOptions}
+                  placeholder={
+                    institutions.length === 0
+                      ? "No accounts found"
+                      : "Select an account"
+                  }
+                  error={fieldState.error}
+                  value={field.value ? field.value.toString() : ""}
+                  onChange={(value) => {
+                    return field.onChange(
+                      value !== null ? Number(value) : null,
+                    );
+                  }}
+                />
+
+                <InputError error={fieldState.error} />
+              </div>
+            )}
+          />
+          {institutions.length === 0 && user && <PlaidLink userId={user?.id} />}
+
+          <p className="text-sm text-muted-foreground">
+            Without an account, you can still track this payment manually.
+          </p>
+          {form.watch("account_id") != null && (
+            <Button
+              type="button"
+              variant="secondary"
+              className="bg-input"
+              size="sm"
+              onClick={() =>
+                form.setValue("account_id", null, {
+                  shouldDirty: true,
+                  shouldValidate: true,
+                })
+              }
+            >
+              Clear account selection
+            </Button>
+          )}
+        </FieldSet>
 
         <div className="flex justify-end gap-2 mt-4">
           <Button
