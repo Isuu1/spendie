@@ -19,17 +19,20 @@ export function useGroupedAccounts() {
           );
 
         //Calculate total balances for the institution
-        let active = 0;
-        let hidden = 0;
+        const totalBalances = institutionAccounts.reduce(
+          (totals: { active: number; hidden: number }, acc: Account) => {
+            const balance = acc.current_balance || 0;
 
-        for (const acc of accounts) {
-          if (acc.is_hidden && acc.status === "active") {
-            hidden += acc.current_balance || 0;
-            continue;
-          } else if (!acc.is_hidden && acc.status === "active") {
-            active += acc.current_balance || 0;
-          }
-        }
+            if (acc.is_hidden) {
+              totals.hidden += balance;
+            } else {
+              totals.active += balance;
+            }
+
+            return totals;
+          },
+          { active: 0, hidden: 0 },
+        );
 
         return {
           plaid_item_db_id: institution.id,
@@ -37,7 +40,7 @@ export function useGroupedAccounts() {
           institution_name: institution.institution_name,
           last_synced_at: institution.last_synced_at,
           accounts: institutionAccounts,
-          totalBalances: { active, hidden },
+          totalBalances: totalBalances,
           status: institution.status,
         };
       })
