@@ -15,7 +15,19 @@ export async function getTransactionsServer(): Promise<Transaction[]> {
 
     const { data, error } = await supabase
       .from("transactions")
-      .select("*")
+      .select(
+        `
+    *,
+    accounts (
+      id,
+      name,
+      user_account_name,
+      plaid_items (
+        institution_name
+      )
+    )
+  `,
+      )
       .eq("user_id", userId)
       .order("date", { ascending: false });
 

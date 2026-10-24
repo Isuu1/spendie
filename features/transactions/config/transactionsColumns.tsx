@@ -25,27 +25,34 @@ export const transactionsColumns: ColumnDef<Transaction>[] = [
     cell: ({ getValue, row }) => {
       const name = getValue() as string;
       const category = row.original.category as string;
-      const newCategory = category.replace(/_/g, " ");
+
       const Icon = getCategoryIcon(category);
+
+      const accountName = row.original.accounts?.name;
+      const userAccountName = row.original.accounts?.user_account_name;
+      const institutionName =
+        row.original.accounts?.plaid_items?.institution_name;
+
       return (
-        <div
-          className="flex items-center gap-3 min-w-40 max-w-70 truncate"
-          title={name}
-        >
-          {Icon ? (
-            <Icon className="size-8 shrink-0" />
-          ) : (
-            <BaselineQuestionMarkIcon className="size-8" />
-          )}
-          <div className="flex flex-col items-start gap-1">
+        <div className="flex items-center gap-3" title={name}>
+          <div className="max-sm:hidden">
+            {Icon ? (
+              <Icon className="size-8 shrink-0" />
+            ) : (
+              <BaselineQuestionMarkIcon className="size-8 shrink-0" />
+            )}
+          </div>
+          <div className="flex flex-col items-start gap-1 whitespace-normal wrap-break-words">
             <p>{name}</p>
-            <p className="text-sm text-secondary">
-              {newCategory ?? "Uncategorized"}
+            <p className="text-sm text-secondary whitespace-normal wrap-break-words max-sm:hidden">
+              {userAccountName || accountName} · {institutionName}
             </p>
           </div>
         </div>
       );
     },
+    minSize: 150,
+    maxSize: 400,
   },
   {
     accessorKey: "category",
@@ -78,6 +85,7 @@ export const transactionsColumns: ColumnDef<Transaction>[] = [
       );
       return <p className={textColorClass}>{displayAmount}</p>;
     },
+    maxSize: 120,
   },
   {
     accessorKey: "date",
@@ -96,8 +104,9 @@ export const transactionsColumns: ColumnDef<Transaction>[] = [
     cell: ({ getValue }) => {
       const dateStr = getValue() as string;
       const date = new Date(dateStr);
-      return <div>{dayjs(date).format("D MMMM YYYY")}</div>;
+      return <p>{dayjs(date).format("D MMMM YYYY")}</p>;
     },
+    maxSize: 120,
   },
   {
     accessorKey: "pending",

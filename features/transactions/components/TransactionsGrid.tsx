@@ -36,6 +36,8 @@ import { Search } from "lucide-react";
 const TransactionsGrid = () => {
   const { data: transactions } = useTransactions();
 
+  console.log("TransactionsGrid transactions:", transactions);
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -91,9 +93,13 @@ const TransactionsGrid = () => {
                   <TableHead
                     key={header.id}
                     className={cn(
-                      "py-3 px-3 text-center first:text-left",
+                      "py-3 px-3 text-center first:text-left max-sm:px-1",
                       responsiveClass,
                     )}
+                    style={{
+                      width:
+                        header.id === "name" ? "auto" : `${header.getSize()}px`,
+                    }}
                   >
                     {header.isPlaceholder
                       ? null
@@ -121,9 +127,10 @@ const TransactionsGrid = () => {
                     <TableCell
                       key={cell.id}
                       className={cn(
-                        "text-center first:text-left",
+                        "text-center first:text-left px-0 py-3 pl-3 max-sm:pl-2",
                         responsiveClass,
                       )}
+                      style={{ width: cell.column.getSize() }}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
