@@ -25,10 +25,10 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import Button from "@/shared/components/ui/Button";
-
-import { columns } from "../config/paymentHistoryColumns";
 import SegmentedControl from "@/shared/components/SegmentedControl";
+import TablePagination from "@/shared/components/TablePagination";
+//Config
+import { columns } from "../config/paymentHistoryColumns";
 
 type PaymentsHistoryProps = {
   payment: RecurringPayment;
@@ -93,13 +93,19 @@ const PaymentsHistory = ({ payment }: PaymentsHistoryProps) => {
         </p>
       </div>
       <div>
-        <Table className="mt-4 bg-card rounded-2xl">
+        <Table className="rounded-2xl bg-background table-fixed">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow
+                key={headerGroup.id}
+                className="bg-background rounded-2xl"
+              >
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="p-4">
+                    <TableHead
+                      key={header.id}
+                      className="py-3 px-3 text-center first:text-left max-sm:px-1"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -120,7 +126,10 @@ const PaymentsHistory = ({ payment }: PaymentsHistoryProps) => {
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="py-5 px-4">
+                    <TableCell
+                      key={cell.id}
+                      className="text-center first:text-left px-3 py-3 pl-3 max-sm:pl-2"
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
@@ -141,24 +150,7 @@ const PaymentsHistory = ({ payment }: PaymentsHistoryProps) => {
             )}
           </TableBody>
         </Table>
-        <div className="flex items-center justify-start space-x-2 py-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
+        <TablePagination table={table} />
       </div>
       <AnimatePresence>
         {confirmClear && (

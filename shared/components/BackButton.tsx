@@ -1,18 +1,18 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { MoveLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 const BackButton = () => {
   const router = useRouter();
 
   return (
-    <span
-      className="w-fit cursor-pointer hover:text-accent transition-colors duration-200"
+    <div
+      className="flex gap-2 items-center w-fit cursor-pointer hover:text-accent transition-colors duration-200 mb-4"
       onClick={() => router.back()}
     >
-      <MoveLeft size={30} />
-    </span>
+      <ChevronLeft size={30} className="p-0 m-0" />
+    </div>
   );
 };
 

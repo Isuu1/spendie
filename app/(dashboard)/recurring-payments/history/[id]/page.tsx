@@ -17,12 +17,16 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   }
 
   return (
-    <>
+    <div className="bg-card rounded-2xl p-6 max-sm:px-2">
       <BackButton />
-      <h3>
-        <strong>{payment.name}</strong> payment history
-      </h3>
+      <div className="flex flex-col gap-2 mb-4">
+        <h3>
+          <strong>{payment.name}</strong> payment history
+        </h3>
+        <p>All your payments from the last 90 days.</p>
+      </div>
+
       <PaymentsHistory payment={payment} />
-    </>
+    </div>
   );
 }
