@@ -25,9 +25,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Button from "@/shared/components/ui/Button";
 import Input from "@/shared/components/ui/Input";
 import TransactionsTableFilters from "./TransactionsTableFilters";
+import TablePagination from "@/shared/components/TablePagination";
 //Config
 import { transactionsColumns } from "../config/transactionsColumns";
 //Icons
@@ -55,6 +55,11 @@ const TransactionsGrid = () => {
       },
     },
     onSortingChange: setSorting,
+    initialState: {
+      pagination: {
+        pageSize: 15, // Display 15 items per page
+      },
+    },
   });
 
   return (
@@ -91,9 +96,13 @@ const TransactionsGrid = () => {
                   <TableHead
                     key={header.id}
                     className={cn(
-                      "py-3 px-3 text-center first:text-left",
+                      "py-3 px-3 text-center first:text-left max-sm:px-1",
                       responsiveClass,
                     )}
+                    style={{
+                      width:
+                        header.id === "name" ? "auto" : `${header.getSize()}px`,
+                    }}
                   >
                     {header.isPlaceholder
                       ? null
@@ -121,9 +130,10 @@ const TransactionsGrid = () => {
                     <TableCell
                       key={cell.id}
                       className={cn(
-                        "text-center first:text-left",
+                        "text-center first:text-left px-0 py-3 pl-3 max-sm:pl-2",
                         responsiveClass,
                       )}
+                      style={{ width: cell.column.getSize() }}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -146,26 +156,8 @@ const TransactionsGrid = () => {
           )}
         </TableBody>
       </Table>
-      <div className="flex items-center justify-start space-x-2 py-4">
-        <Button
-          className="bg-background"
-          variant="secondary"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          className="bg-background"
-          variant="secondary"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
-      </div>
+
+      <TablePagination table={table} />
     </div>
   );
 };

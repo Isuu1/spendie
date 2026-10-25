@@ -11,4 +11,12 @@ export type Transaction = {
   merchant_name?: string;
   category: string | null;
   pending: boolean;
+  accounts?: {
+    id: string;
+    name: string;
+    user_account_name?: string;
+    plaid_items?: {
+      institution_name: string;
+    };
+  };
 };
