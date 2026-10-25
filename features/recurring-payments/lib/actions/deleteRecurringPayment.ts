@@ -21,18 +21,6 @@ export async function deleteRecurringPayment(recurringPaymentId: string) {
     throw new Error("Failed to delete recurring payment");
   }
 
-  //Delete associated payment history
-  const { error: historyError } = await supabase
-    .from("recurring_payments_history")
-    .delete()
-    .eq("user_id", user.id)
-    .eq("payment_id", recurringPaymentId);
-
-  if (historyError) {
-    console.error("Error deleting payment history:", historyError);
-    throw new Error("Failed to delete payment history");
-  }
-
   //Refresh cached data
   revalidatePath("/recurring-payments");
 
