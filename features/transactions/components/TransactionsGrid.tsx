@@ -25,9 +25,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Button from "@/shared/components/ui/Button";
 import Input from "@/shared/components/ui/Input";
 import TransactionsTableFilters from "./TransactionsTableFilters";
+import TablePagination from "@/shared/components/TablePagination";
 //Config
 import { transactionsColumns } from "../config/transactionsColumns";
 //Icons
@@ -35,8 +35,6 @@ import { Search } from "lucide-react";
 
 const TransactionsGrid = () => {
   const { data: transactions } = useTransactions();
-
-  console.log("TransactionsGrid transactions:", transactions);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -57,6 +55,11 @@ const TransactionsGrid = () => {
       },
     },
     onSortingChange: setSorting,
+    initialState: {
+      pagination: {
+        pageSize: 15, // Display 15 items per page
+      },
+    },
   });
 
   return (
@@ -153,26 +156,8 @@ const TransactionsGrid = () => {
           )}
         </TableBody>
       </Table>
-      <div className="flex items-center justify-start space-x-2 py-4">
-        <Button
-          className="bg-background"
-          variant="secondary"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          className="bg-background"
-          variant="secondary"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
-      </div>
+
+      <TablePagination table={table} />
     </div>
   );
 };
