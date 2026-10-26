@@ -29,6 +29,7 @@ import SegmentedControl from "@/shared/components/SegmentedControl";
 import TablePagination from "@/shared/components/TablePagination";
 //Config
 import { columns } from "../config/paymentHistoryColumns";
+import Button from "@/shared/components/ui/Button";
 
 type PaymentsHistoryProps = {
   payment: RecurringPayment;
@@ -85,12 +86,13 @@ const PaymentsHistory = ({ payment }: PaymentsHistoryProps) => {
           ]}
           onChange={setSortedBy}
         />
-        <p
+        <Button
           className="ml-auto cursor-pointer"
           onClick={() => setConfirmClear(true)}
+          variant="destructive"
         >
           Clear history
-        </p>
+        </Button>
       </div>
       <div>
         <Table className="rounded-2xl bg-background table-fixed">
