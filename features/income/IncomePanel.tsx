@@ -6,9 +6,7 @@ import IncomeChart from "./IncomeChart";
 type periodOptions = "last3Months" | "last6Months";
 
 const IncomePanel = () => {
-  const { data: transactions } = useTransactions();
-
-  console.log("transactions", transactions);
+  const { data: transactions = [] } = useTransactions();
 
   const [selectedPeriod, setSelectedPeriod] =
     useState<periodOptions>("last3Months");

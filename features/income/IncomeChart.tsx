@@ -5,14 +5,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { formatAmount } from "@/shared/lib/utils/formatAmount";
-import {
-  Bar,
-  BarChart,
-  //CartesianGrid,
-  LabelList,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Bar, BarChart, LabelList, XAxis, YAxis } from "recharts";
 import { Transaction } from "../transactions/types/transaction";
 import dayjs from "dayjs";
 import { useMemo } from "react";
@@ -65,14 +58,13 @@ const IncomeChart = ({ transactions, selectedPeriod }: IncomeChartProps) => {
     });
   }, [transactions, monthsToShow]);
   return (
-    <ChartContainer config={chartConfig} className="mt-4 h-[250px]">
+    <ChartContainer config={chartConfig} className="mt-4 h-62.5">
       <BarChart
         accessibilityLayer
         data={chartData}
         barSize={60}
         margin={{ top: 12, left: 4, right: 4 }}
       >
-        {/* <CartesianGrid vertical={false} stroke="#424654" /> */}
         <Bar
           dataKey="income"
           fill="#d34702"
