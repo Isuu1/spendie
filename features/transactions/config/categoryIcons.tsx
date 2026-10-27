@@ -16,5 +16,7 @@ export const categoryIcons = {
   TRAVEL: BaselineAirplanemodeActiveIcon,
   RENT_AND_UTILITIES: BaselineBedroomParentIcon,
   PERSONAL_CARE: BaselineLocalHospitalIcon,
+  MEDICAL: BaselineLocalHospitalIcon,
+  BANK_FEES: BaselineAttachMoneyIcon,
   //other categories can be added here
 };

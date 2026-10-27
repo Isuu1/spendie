@@ -12,6 +12,12 @@ export const transactionsPanelColumns: ColumnDef<Transaction>[] = [
     cell: ({ getValue, row }) => {
       const name = getValue() as string;
       const category = row.original.category as string;
+      const date = row.original.date as Date;
+      const accountName = row.original.accounts?.name;
+      const userAccountName = row.original.accounts?.user_account_name;
+      const institutionName =
+        row.original.accounts?.plaid_items?.institution_name;
+      console.log("row", row.original);
       const Icon = getCategoryIcon(category);
       return (
         <div
@@ -24,7 +30,13 @@ export const transactionsPanelColumns: ColumnDef<Transaction>[] = [
             <BaselineQuestionMarkIcon className="size-8" />
           )}
           <div className="flex flex-col items-start gap-1">
-            <p>{name}</p>
+            <strong>{name}</strong>
+            <p className="text-sm text-secondary flex gap-1">
+              {dayjs(date).format("D MMM YYYY")} · {institutionName}
+            </p>
+            <p className="text-xs text-secondary">
+              {userAccountName || accountName}
+            </p>
           </div>
         </div>
       );
@@ -36,15 +48,15 @@ export const transactionsPanelColumns: ColumnDef<Transaction>[] = [
     //This allow filtering categories with multiple values (e.g. Food and drink + Shopping) without needing to create a custom filter function
     filterFn: "arrIncludesSome",
   },
-  {
-    accessorKey: "date",
-    header: "Date",
-    cell: ({ getValue }) => {
-      const dateStr = getValue() as string;
-      const date = new Date(dateStr);
-      return <div>{dayjs(date).format("D MMMM YYYY")}</div>;
-    },
-  },
+  // {
+  //   accessorKey: "date",
+  //   header: "Date",
+  //   cell: ({ getValue }) => {
+  //     const dateStr = getValue() as string;
+  //     const date = new Date(dateStr);
+  //     return <div>{dayjs(date).format("D MMMM YYYY")}</div>;
+  //   },
+  // },
   {
     accessorKey: "amount",
     id: "amount",
@@ -60,30 +72,30 @@ export const transactionsPanelColumns: ColumnDef<Transaction>[] = [
       return <p className={textColorClass}>{displayAmount}</p>;
     },
   },
-  {
-    accessorKey: "pending",
-    header: "Status",
-    meta: {
-      //Hidden on mobile, visible on small screens and up
-      className: "hidden sm:table-cell",
-    },
-    cell: ({ getValue }) => {
-      const pending = getValue() as boolean;
-      return (
-        <div>
-          {pending ? (
-            <div className="flex items-center justify-center">
-              <span className="block size-2 rounded-full bg-yellow-500" />
-              <span className="ml-2 text-sm text-secondary">Pending</span>
-            </div>
-          ) : (
-            <div className="flex items-center justify-center">
-              <span className="block size-2 rounded-full bg-green-500" />
-              <span className="ml-2 text-sm text-secondary">Completed</span>
-            </div>
-          )}
-        </div>
-      );
-    },
-  },
+  // {
+  //   accessorKey: "pending",
+  //   header: "Status",
+  //   meta: {
+  //     //Hidden on mobile, visible on small screens and up
+  //     className: "hidden sm:table-cell",
+  //   },
+  //   cell: ({ getValue }) => {
+  //     const pending = getValue() as boolean;
+  //     return (
+  //       <div>
+  //         {pending ? (
+  //           <div className="flex items-center justify-center">
+  //             <span className="block size-2 rounded-full bg-yellow-500" />
+  //             <span className="ml-2 text-sm text-secondary">Pending</span>
+  //           </div>
+  //         ) : (
+  //           <div className="flex items-center justify-center">
+  //             <span className="block size-2 rounded-full bg-green-500" />
+  //             <span className="ml-2 text-sm text-secondary">Completed</span>
+  //           </div>
+  //         )}
+  //       </div>
+  //     );
+  //   },
+  // },
 ];

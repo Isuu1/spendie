@@ -12,14 +12,7 @@ import { useTransactions } from "../hooks/useTransactions";
 import { Transaction } from "../types/transaction";
 //Components
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import TransactionsTableFilters from "./TransactionsTableFilters";
 //Config
 import { transactionsPanelColumns } from "../config/transactionsPanelColumns";
@@ -64,38 +57,6 @@ const TransactionsPanel = () => {
       </div>
 
       <Table>
-        <TableHeader className="[&_tr]:border-b-0">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow
-              key={headerGroup.id}
-              className="border-b-0 hover:bg-transparent"
-            >
-              {headerGroup.headers.map((header) => {
-                //Extract the meta class from columns config string if it exists
-                const columnMeta = header.column.columnDef.meta as {
-                  className?: string;
-                };
-                const responsiveClass = columnMeta?.className || "";
-                return (
-                  <TableHead
-                    key={header.id}
-                    className={cn(
-                      "px-0 text-center first:text-left",
-                      responsiveClass,
-                    )}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table
@@ -104,7 +65,7 @@ const TransactionsPanel = () => {
               .map((row) => (
                 <TableRow
                   key={row.id}
-                  className="border-b-0 hover:bg-transparent"
+                  className="border-b hover:bg-transparent"
                 >
                   {row.getVisibleCells().map((cell) => {
                     //Extract the exact same meta class string for the body cell
