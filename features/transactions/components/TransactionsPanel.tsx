@@ -13,7 +13,6 @@ import { Transaction } from "../types/transaction";
 //Components
 import DashboardPanelLoader from "@/features/dashboard/components/DashboardPanelLoader";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import TransactionsTableFilters from "./TransactionsTableFilters";
 //Config
 import { transactionsPanelColumns } from "../config/transactionsPanelColumns";
 //Icons
@@ -43,11 +42,10 @@ const TransactionsPanel = () => {
       <div className="flex items-center justify-between mb-4">
         <h4>Recent transactions</h4>
         <div className="flex items-center gap-1">
-          <TransactionsTableFilters table={table} />
           <Link
             href="/transactions"
             className={cn(
-              "flex items-center gap-1 px-2.5 py-1.5 bg-background rounded-full",
+              "flex items-center gap-1 px-2.5 py-1.5 bg-background rounded-full hover:bg-card-foreground transition-all",
               "",
             )}
           >
