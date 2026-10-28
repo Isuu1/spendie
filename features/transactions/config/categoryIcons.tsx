@@ -12,9 +12,12 @@ export const categoryIcons = {
   GENERAL_MERCHANDISE: BaselineShoppingCartIcon,
   TRANSPORTATION: BaselineDirectionsTransitIcon,
   TRANSFER_IN: BaselinePaymentIcon,
+  TRANSFER_OUT: BaselinePaymentIcon,
   LOAN_PAYMENTS: BaselineAttachMoneyIcon,
   TRAVEL: BaselineAirplanemodeActiveIcon,
   RENT_AND_UTILITIES: BaselineBedroomParentIcon,
   PERSONAL_CARE: BaselineLocalHospitalIcon,
+  MEDICAL: BaselineLocalHospitalIcon,
+  BANK_FEES: BaselineAttachMoneyIcon,
   //other categories can be added here
 };
