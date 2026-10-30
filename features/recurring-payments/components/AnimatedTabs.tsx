@@ -16,18 +16,15 @@ const AnimatedTabs = ({ type, toggleDetails }: AnimatedTabsProps) => {
   });
 
   useLayoutEffect(() => {
-    const updateIndicator = () => {
-      const activeTab =
-        type === "income" ? incomeTabRef.current : expenseTabRef.current;
+    const activeTab =
+      type === "income" ? incomeTabRef.current : expenseTabRef.current;
 
-      if (!activeTab) return;
+    if (!activeTab) return;
 
-      setIndicatorStyle({
-        width: activeTab.offsetWidth,
-        x: activeTab.offsetLeft,
-      });
-    };
-    updateIndicator();
+    setIndicatorStyle({
+      width: activeTab.offsetWidth,
+      x: activeTab.offsetLeft,
+    });
   }, [type]);
 
   return (
@@ -38,7 +35,6 @@ const AnimatedTabs = ({ type, toggleDetails }: AnimatedTabsProps) => {
           width: indicatorStyle.width,
           x: indicatorStyle.x,
         }}
-        initial={false} //Prevent animation on initial render
         transition={{ type: "spring", stiffness: 700, damping: 30 }}
       ></motion.span>
       <span
@@ -46,7 +42,7 @@ const AnimatedTabs = ({ type, toggleDetails }: AnimatedTabsProps) => {
         className="z-2 relative cursor-pointer px-3 py-1 rounded-lg"
         onClick={() => toggleDetails?.("income")}
       >
-        Incomeeee
+        Income
       </span>
       <span
         ref={expenseTabRef}

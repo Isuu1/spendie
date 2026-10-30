@@ -17,7 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import AnimatedTabs from "@/shared/components/AnimatedTabs";
+import AnimatedTabs from "@/features/recurring-payments/components/AnimatedTabs";
 //Utils
 import { sortDashboardRecurringPayments } from "../lib/utils/sortDashboardRecurringPayments";
 //Hooks
