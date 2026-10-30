@@ -4,8 +4,6 @@ import React, { useMemo } from "react";
 import { useState } from "react";
 import { cn } from "@/shared/lib/cn";
 import dayjs from "dayjs";
-//Animations
-import { motion } from "motion/react";
 //Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
 //Components
@@ -19,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import AnimatedTabs from "@/shared/components/AnimatedTabs";
 //Utils
 import { sortDashboardRecurringPayments } from "../lib/utils/sortDashboardRecurringPayments";
 //Hooks
@@ -29,11 +28,6 @@ type DashboardPaymentsGridProps = {
   toggleDetails: (type: "income" | "expense" | null) => void;
   payments: RecurringPayment[];
   selectedDate: dayjs.Dayjs | null;
-};
-
-const activeIndicatorVariants = {
-  income: { x: 0 },
-  expense: { x: "100%" },
 };
 
 const DashboardPaymentsGrid = ({
@@ -60,27 +54,7 @@ const DashboardPaymentsGrid = ({
 
   return (
     <>
-      <div className="relative flex gap-2 bg-card rounded-b-lg">
-        <motion.span
-          className="z-1 absolute top-0 bottom-0 left-0 h-full w-[50%] bg-accent rounded-lg"
-          variants={activeIndicatorVariants}
-          animate={type}
-          initial={false} //Prevent animation on initial render
-          transition={{ type: "spring", stiffness: 700, damping: 30 }}
-        ></motion.span>
-        <span
-          className="z-2 relative cursor-pointer px-3 py-1 rounded-lg"
-          onClick={() => toggleDetails?.("income")}
-        >
-          Income
-        </span>
-        <span
-          className="z-2 relative cursor-pointer px-3 py-1 rounded-lg"
-          onClick={() => toggleDetails?.("expense")}
-        >
-          Expense
-        </span>
-      </div>
+      <AnimatedTabs type={type} toggleDetails={toggleDetails} />
 
       {sortedPayments.length === 0 ? (
         <p className="text-center p2 text-secondary">
