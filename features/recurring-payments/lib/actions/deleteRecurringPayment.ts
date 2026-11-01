@@ -4,7 +4,7 @@ import { getUserServer } from "@/features/user/api/getUserServer";
 import { createClient } from "@/supabase/server";
 import { revalidatePath } from "next/cache";
 
-export async function deleteRecurringPayment(recurringPaymentId: string) {
+export async function deleteRecurringPayment(recurringPaymentId: number) {
   const supabase = await createClient();
 
   const user = await getUserServer();

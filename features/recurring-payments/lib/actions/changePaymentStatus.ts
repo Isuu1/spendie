@@ -5,7 +5,7 @@ import { createClient } from "@/supabase/server";
 import { revalidatePath } from "next/cache";
 
 export async function changePaymentStatus(
-  paymentId: string,
+  paymentId: number,
   isPaused: boolean,
 ) {
   const supabase = await createClient();

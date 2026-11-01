@@ -16,7 +16,7 @@ export type RecurringPayment = RecurringPaymentBase & {
   next_payment_date: Date;
   account_id: number | null;
   accounts?: {
-    id: string;
+    id: number;
     name: string;
     user_account_name?: string;
     plaid_items?: {
