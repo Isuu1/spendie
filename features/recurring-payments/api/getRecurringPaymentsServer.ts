@@ -14,7 +14,19 @@ export async function getRecurringPaymentsServer(): Promise<
 
   const { data, error } = await supabase
     .from("recurring_payments")
-    .select("*")
+    .select(
+      `
+    *,
+    accounts ( 
+      id,
+      name,
+      user_account_name,
+      plaid_items (
+        institution_name
+      )
+    )
+  `,
+    )
     .eq("user_id", authUser.user.id)
     .order("next_payment_date", { ascending: true });
 

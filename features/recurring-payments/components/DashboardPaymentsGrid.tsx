@@ -1,27 +1,30 @@
 "use client";
 
-import React, { useMemo } from "react";
-import { useState } from "react";
-import { cn } from "@/shared/lib/cn";
 import dayjs from "dayjs";
+import {
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 //Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
 //Components
-import Pagination from "@/shared/components/Pagination";
-import DashboardPaymentItem from "./DashboardPaymentItem";
 import {
   Table,
   TableBody,
   TableCaption,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import AnimatedTabs from "@/features/recurring-payments/components/AnimatedTabs";
-//Utils
-import { sortDashboardRecurringPayments } from "../lib/utils/sortDashboardRecurringPayments";
+import TablePagination from "@/shared/components/TablePagination";
+//Config
+import { getColumns } from "../config/dashboardPaymentsColumns";
 //Hooks
-import { usePagination } from "@/shared/hooks/usePagination";
+import { useMarkAsPaid } from "../hooks/useMarkAsPaid";
 
 type DashboardPaymentsGridProps = {
   type: "income" | "expense";
@@ -36,27 +39,35 @@ const DashboardPaymentsGrid = ({
   payments,
   selectedDate,
 }: DashboardPaymentsGridProps) => {
-  const [sortingOption, setSortingOption] = useState<"name" | "date">("date");
+  const { mutate, isPending, variables } = useMarkAsPaid();
 
-  const sortedPayments = useMemo(() => {
-    return sortDashboardRecurringPayments(payments, sortingOption);
-  }, [payments, sortingOption]);
-
-  const { page, setPage, totalPages, currentItems } = usePagination(
-    sortedPayments,
-    4,
-  );
-
-  const handleSortingChange = (option: "name" | "date") => {
-    setSortingOption(option);
-    setPage(1); //Reset to first page on sorting change
+  const handleMarkAsPaid = async (payment: RecurringPayment) => {
+    mutate(payment);
   };
+
+  const columns = getColumns({
+    handleMarkAsPaid,
+    isPending,
+    variables,
+  });
+
+  const table = useReactTable<RecurringPayment>({
+    data: payments,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize: 6, // Display 6 items per page
+      },
+    },
+  });
 
   return (
     <>
       <AnimatedTabs type={type} toggleDetails={toggleDetails} />
 
-      {sortedPayments.length === 0 ? (
+      {payments.length === 0 ? (
         <p className="text-center p2 text-secondary">
           No upcoming payments by{" "}
           {selectedDate
@@ -73,47 +84,39 @@ const DashboardPaymentsGrid = ({
             .
           </TableCaption>
           <TableHeader>
-            <TableRow className="hover:bg-card">
-              <TableHead
-                className={cn(
-                  "w-25 cursor-pointer",
-                  sortingOption === "name" && "font-bold",
-                )}
-                onClick={() => handleSortingChange("name")}
-              >
-                Name
-              </TableHead>
-              <TableHead
-                className={cn(
-                  "w-25 cursor-pointer",
-                  sortingOption === "date" && "font-bold",
-                )}
-                onClick={() => handleSortingChange("date")}
-              >
-                Date
-              </TableHead>
-              <TableHead>Repeat</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
-            </TableRow>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
           </TableHeader>
           <TableBody>
-            {currentItems.map((payment) => (
-              <DashboardPaymentItem
-                key={`${payment.id}-${payment.next_payment_date}`}
-                payment={payment}
-              />
-            ))}
+            {table.getRowModel().rows?.length
+              ? table.getRowModel().rows.map((row) => (
+                  <TableRow key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              : null}
           </TableBody>
         </Table>
       )}
 
-      {totalPages > 1 && (
-        <Pagination
-          page={page}
-          onPageChange={setPage}
-          totalPages={totalPages}
-        />
-      )}
+      <TablePagination table={table} />
     </>
   );
 };

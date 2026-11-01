@@ -7,7 +7,7 @@ export function useDeletePayment() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (paymentId: string) => {
+    mutationFn: async (paymentId: number) => {
       const result = await deletePaymentHistory(paymentId);
 
       return result;

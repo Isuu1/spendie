@@ -1,5 +1,5 @@
 export type RecurringPaymentBase = {
-  id: string;
+  id: number;
   user_id: string;
   name: string;
   amount: number;
@@ -15,12 +15,20 @@ export type RecurringPayment = RecurringPaymentBase & {
   first_payment_date: string;
   next_payment_date: Date;
   account_id: number | null;
+  accounts?: {
+    id: string;
+    name: string;
+    user_account_name?: string;
+    plaid_items?: {
+      institution_name: string;
+    };
+  };
 };
 
 //History of payments made - stored in a separate table
 export type RecurringPaymentHistory = RecurringPaymentBase & {
-  id: string;
-  payment_id: string;
+  id: number;
+  payment_id: number;
   payment_date: string;
   paid_date: string;
   type: string;

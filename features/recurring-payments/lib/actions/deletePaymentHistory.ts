@@ -3,7 +3,7 @@
 import { getUserServer } from "@/features/user/api/getUserServer";
 import { createClient } from "@/supabase/server";
 
-export async function deletePaymentHistory(id: string) {
+export async function deletePaymentHistory(id: number) {
   const supabase = await createClient();
 
   const user = await getUserServer();
