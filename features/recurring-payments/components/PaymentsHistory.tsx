@@ -41,7 +41,7 @@ const PaymentsHistory = ({ payment }: PaymentsHistoryProps) => {
   const { data = [], error } = useRecurringPaymentsHistory();
   const { mutate } = useDeletePayment();
 
-  const handleDelete = (paymentId: string) => {
+  const handleDelete = (paymentId: number) => {
     mutate(paymentId);
     setConfirmClear(false);
   };
