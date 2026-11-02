@@ -27,48 +27,62 @@ export const getColumns = ({
     header: "Name",
     cell: ({ getValue, row }) => {
       const name = getValue() as string;
-      const accountName = row.original.accounts?.name;
-      const userAccountName = row.original.accounts?.user_account_name;
+      // const accountName = row.original.accounts?.name;
+      // const userAccountName = row.original.accounts?.user_account_name;
+      const institutionName =
+        row.original.accounts?.plaid_items?.institution_name;
 
       console.log("row.original", row.original);
       console.log("id type of", typeof row.original.id);
 
       return (
         <div
-          className="flex items-center gap-3 min-w-40 max-w-70 truncate"
+          className="flex items-center gap-3 min-w-30 max-w-70 whitespace-break-spaces"
           title={name}
         >
           <div className="flex flex-col items-start gap-1">
             <strong>{name}</strong>
-            <p className="text-xs text-secondary">
+            <p className="text-xs text-secondary">{institutionName}</p>
+            {/* <p className="text-xs text-secondary">
               {userAccountName || accountName}
-            </p>
+            </p> */}
           </div>
         </div>
       );
     },
+    minSize: 10,
+    maxSize: 50,
   },
   {
     accessorKey: "next_payment_date",
-    header: "Next payment date",
+    header: "Date",
     cell: ({ getValue }) => {
       const date = getValue() as Date;
 
-      return <div>{dayjs(date).format("D MMMM YYYY")}</div>;
+      return <div>{dayjs(date).format("D MMM YYYY")}</div>;
     },
   },
   {
     accessorKey: "amount",
     header: "Amount",
-    cell: ({ getValue }) => {
+    cell: ({ getValue, row }) => {
       const amount = getValue() as number;
 
-      return <Amount amount={amount} showTransactionColors />;
+      const convertAmountToMinus = (amount: number) => {
+        if (row.original.type === "Income") {
+          return -amount;
+        }
+        return amount;
+      };
+
+      return (
+        <Amount amount={convertAmountToMinus(amount)} showTransactionColors />
+      );
     },
   },
   {
     id: "actions",
-    header: "Actions",
+    header: "",
     cell: ({ row }) => {
       const payment = row.original;
       console.log("variables", variables);

@@ -25,6 +25,7 @@ import TablePagination from "@/shared/components/TablePagination";
 import { getColumns } from "../config/dashboardPaymentsColumns";
 //Hooks
 import { useMarkAsPaid } from "../hooks/useMarkAsPaid";
+import { useMemo } from "react";
 
 type DashboardPaymentsGridProps = {
   type: "income" | "expense";
@@ -41,6 +42,14 @@ const DashboardPaymentsGrid = ({
 }: DashboardPaymentsGridProps) => {
   const { mutate, isPending, variables } = useMarkAsPaid();
 
+  const sortedPayments = useMemo(() => {
+    return [...payments].sort((a, b) => {
+      const dateA = dayjs(a.next_payment_date);
+      const dateB = dayjs(b.next_payment_date);
+      return dateA.isBefore(dateB) ? -1 : 1;
+    });
+  }, [payments]);
+
   const handleMarkAsPaid = async (payment: RecurringPayment) => {
     mutate(payment);
   };
@@ -52,7 +61,7 @@ const DashboardPaymentsGrid = ({
   });
 
   const table = useReactTable<RecurringPayment>({
-    data: payments,
+    data: sortedPayments,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -64,10 +73,10 @@ const DashboardPaymentsGrid = ({
   });
 
   return (
-    <>
+    <div className="flex flex-col gap-4 items-center">
       <AnimatedTabs type={type} toggleDetails={toggleDetails} />
 
-      {payments.length === 0 ? (
+      {sortedPayments.length === 0 ? (
         <p className="text-center p2 text-secondary">
           No upcoming payments by{" "}
           {selectedDate
@@ -85,7 +94,7 @@ const DashboardPaymentsGrid = ({
           </TableCaption>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="hover:bg-transparent">
                 {headerGroup.headers.map((header) => (
                   <TableHead key={header.id}>
                     {flexRender(
@@ -100,9 +109,9 @@ const DashboardPaymentsGrid = ({
           <TableBody>
             {table.getRowModel().rows?.length
               ? table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id}>
+                  <TableRow key={row.id} className="hover:bg-transparent">
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell key={cell.id} className="px-2">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
@@ -117,7 +126,7 @@ const DashboardPaymentsGrid = ({
       )}
 
       <TablePagination table={table} />
-    </>
+    </div>
   );
 };
 
