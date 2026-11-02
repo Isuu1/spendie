@@ -27,14 +27,8 @@ export const getColumns = ({
     header: "Name",
     cell: ({ getValue, row }) => {
       const name = getValue() as string;
-      // const accountName = row.original.accounts?.name;
-      // const userAccountName = row.original.accounts?.user_account_name;
       const institutionName =
         row.original.accounts?.plaid_items?.institution_name;
-
-      console.log("row.original", row.original);
-      console.log("id type of", typeof row.original.id);
-
       return (
         <div
           className="flex items-center gap-3 min-w-30 max-w-70 whitespace-break-spaces"
@@ -43,9 +37,6 @@ export const getColumns = ({
           <div className="flex flex-col items-start gap-1">
             <strong>{name}</strong>
             <p className="text-xs text-secondary">{institutionName}</p>
-            {/* <p className="text-xs text-secondary">
-              {userAccountName || accountName}
-            </p> */}
           </div>
         </div>
       );
