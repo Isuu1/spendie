@@ -1,28 +1,31 @@
 "use client";
 
-import React, { useMemo } from "react";
-import { useState } from "react";
-import { cn } from "@/shared/lib/cn";
 import dayjs from "dayjs";
-//Animations
-import { motion } from "motion/react";
+import {
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 //Types
 import { RecurringPayment } from "@/features/recurring-payments/types/recurringPayment";
 //Components
-import Pagination from "@/shared/components/Pagination";
-import DashboardPaymentItem from "./DashboardPaymentItem";
 import {
   Table,
   TableBody,
   TableCaption,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-//Utils
-import { sortDashboardRecurringPayments } from "../lib/utils/sortDashboardRecurringPayments";
+import AnimatedTabs from "@/features/recurring-payments/components/AnimatedTabs";
+import TablePagination from "@/shared/components/TablePagination";
+//Config
+import { getColumns } from "../config/dashboardPaymentsColumns";
 //Hooks
-import { usePagination } from "@/shared/hooks/usePagination";
+import { useMarkAsPaid } from "../hooks/useMarkAsPaid";
+import { useMemo } from "react";
 
 type DashboardPaymentsGridProps = {
   type: "income" | "expense";
@@ -31,56 +34,47 @@ type DashboardPaymentsGridProps = {
   selectedDate: dayjs.Dayjs | null;
 };
 
-const activeIndicatorVariants = {
-  income: { x: 0 },
-  expense: { x: "100%" },
-};
-
 const DashboardPaymentsGrid = ({
   type,
   toggleDetails,
   payments,
   selectedDate,
 }: DashboardPaymentsGridProps) => {
-  const [sortingOption, setSortingOption] = useState<"name" | "date">("date");
+  const { mutate, isPending, variables } = useMarkAsPaid();
 
   const sortedPayments = useMemo(() => {
-    return sortDashboardRecurringPayments(payments, sortingOption);
-  }, [payments, sortingOption]);
+    return [...payments].sort((a, b) => {
+      const dateA = dayjs(a.next_payment_date);
+      const dateB = dayjs(b.next_payment_date);
+      return dateA.isBefore(dateB) ? -1 : 1;
+    });
+  }, [payments]);
 
-  const { page, setPage, totalPages, currentItems } = usePagination(
-    sortedPayments,
-    4,
-  );
-
-  const handleSortingChange = (option: "name" | "date") => {
-    setSortingOption(option);
-    setPage(1); //Reset to first page on sorting change
+  const handleMarkAsPaid = async (payment: RecurringPayment) => {
+    mutate(payment);
   };
 
+  const columns = getColumns({
+    handleMarkAsPaid,
+    isPending,
+    variables,
+  });
+
+  const table = useReactTable<RecurringPayment>({
+    data: sortedPayments,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize: 6, // Display 6 items per page
+      },
+    },
+  });
+
   return (
-    <>
-      <div className="relative flex gap-2 bg-card rounded-b-lg">
-        <motion.span
-          className="z-1 absolute top-0 bottom-0 left-0 h-full w-[50%] bg-accent rounded-lg"
-          variants={activeIndicatorVariants}
-          animate={type}
-          initial={false} //Prevent animation on initial render
-          transition={{ type: "spring", stiffness: 700, damping: 30 }}
-        ></motion.span>
-        <span
-          className="z-2 relative cursor-pointer px-3 py-1 rounded-lg"
-          onClick={() => toggleDetails?.("income")}
-        >
-          Income
-        </span>
-        <span
-          className="z-2 relative cursor-pointer px-3 py-1 rounded-lg"
-          onClick={() => toggleDetails?.("expense")}
-        >
-          Expense
-        </span>
-      </div>
+    <div className="flex flex-col gap-4 items-center">
+      <AnimatedTabs type={type} toggleDetails={toggleDetails} />
 
       {sortedPayments.length === 0 ? (
         <p className="text-center p2 text-secondary">
@@ -99,48 +93,40 @@ const DashboardPaymentsGrid = ({
             .
           </TableCaption>
           <TableHeader>
-            <TableRow className="hover:bg-card">
-              <TableHead
-                className={cn(
-                  "w-25 cursor-pointer",
-                  sortingOption === "name" && "font-bold",
-                )}
-                onClick={() => handleSortingChange("name")}
-              >
-                Name
-              </TableHead>
-              <TableHead
-                className={cn(
-                  "w-25 cursor-pointer",
-                  sortingOption === "date" && "font-bold",
-                )}
-                onClick={() => handleSortingChange("date")}
-              >
-                Date
-              </TableHead>
-              <TableHead>Repeat</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
-            </TableRow>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id} className="hover:bg-transparent">
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
           </TableHeader>
           <TableBody>
-            {currentItems.map((payment) => (
-              <DashboardPaymentItem
-                key={`${payment.id}-${payment.next_payment_date}`}
-                payment={payment}
-              />
-            ))}
+            {table.getRowModel().rows?.length
+              ? table.getRowModel().rows.map((row) => (
+                  <TableRow key={row.id} className="hover:bg-transparent">
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className="px-2">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              : null}
           </TableBody>
         </Table>
       )}
 
-      {totalPages > 1 && (
-        <Pagination
-          page={page}
-          onPageChange={setPage}
-          totalPages={totalPages}
-        />
-      )}
-    </>
+      <TablePagination table={table} />
+    </div>
   );
 };
 

@@ -42,7 +42,7 @@ const TotalBalancePanel = () => {
   );
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-4 grow">
       <div className="flex flex-row justify-between items-center gap-5">
         <h4 className="text-secondary">Total Balance</h4>
       </div>

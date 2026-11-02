@@ -11,7 +11,7 @@ export function useChangePaymentStatus() {
       paymentId,
       isPaused,
     }: {
-      paymentId: string;
+      paymentId: number;
       isPaused: boolean;
     }) => {
       const result = await changePaymentStatus(paymentId, isPaused);

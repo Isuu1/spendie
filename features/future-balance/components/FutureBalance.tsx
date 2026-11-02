@@ -11,12 +11,12 @@ const FutureBalance = () => {
   const { futureBalance, selectedDate } = useFutureBalanceContext();
 
   return (
-    <div className="flex flex-col items-center justify-center gap-6 w-full mt-2">
+    <div className="flex flex-col items-center justify-center gap-6 w-full mt-2 grow">
       <FutureBalanceDateSelector />
 
       <PaymentsSummary />
 
-      <div className="flex justify-between items-center w-full">
+      <div className="flex justify-between items-center w-full mt-auto">
         <h4 className="text-secondary">
           Balance{" "}
           {selectedDate

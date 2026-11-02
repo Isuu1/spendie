@@ -5,7 +5,7 @@ import { useRecurringPayments } from "@/features/recurring-payments/hooks/useRec
 import BackButton from "@/shared/components/BackButton";
 import { use } from "react";
 
-export default function Page({ params }: { params: Promise<{ id: string }> }) {
+export default function Page({ params }: { params: Promise<{ id: number }> }) {
   const { id } = use(params);
 
   const { data } = useRecurringPayments();

@@ -7,7 +7,7 @@ import { getUserServer } from "@/features/user/api/getUserServer";
 
 export async function editRecurringPayment(
   data: z.infer<typeof recurringPaymentSchema>,
-  paymentId: string,
+  paymentId: number,
 ) {
   const user = await getUserServer();
 

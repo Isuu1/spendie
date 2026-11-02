@@ -21,13 +21,13 @@ type PaymentItemProps = {
 
 const PaymentItem = ({ payment }: PaymentItemProps) => {
   const [confirmDeletePayment, setConfirmDeletePayment] = useState<
-    string | null
+    number | null
   >(null);
 
   const { mutate: deletePayment } = useDeletePayment();
   const { mutate: changeStatus } = useChangePaymentStatus();
 
-  const handleDeletePayment = async (paymentId: string) => {
+  const handleDeletePayment = async (paymentId: number) => {
     deletePayment(paymentId);
     setConfirmDeletePayment(null);
   };

@@ -17,7 +17,7 @@ const DashboardPanelWrapper = ({
   return (
     <motion.div
       className={cn(
-        "flex flex-col p-4 rounded-2xl bg-card min-h-[350px]",
+        "flex flex-col p-4 rounded-2xl bg-card min-h-[360px]",
         className,
       )}
       initial={{ opacity: 0, scale: 0.9 }}
