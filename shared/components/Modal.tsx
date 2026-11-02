@@ -34,7 +34,7 @@ const Modal: React.FC<Modal> = ({ children, onClose }) => {
 
   const modalContent = (
     <div
-      className="z-99 fixed top-0 h-full left-0 w-full bg-[#2e2e2ea2] flex items-center justify-center"
+      className="z-99 fixed top-0 h-full left-0 w-full bg-[#2e2e2ea2] flex items-center justify-center overflow-auto"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) {
           onClose?.();
