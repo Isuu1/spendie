@@ -4,14 +4,21 @@ import TotalBalancePanel from "@/features/total-balance/components/TotalBalanceP
 import AccountsPanel from "@/features/accounts/components/AccountsPanel";
 import TransactionsPanel from "@/features/transactions/components/TransactionsPanel";
 import IncomePanel from "@/features/income/IncomePanel";
+import ExpensePanel from "@/features/expense/components/ExpensePanel";
 
-export type PanelId = "total-balance" | "accounts" | "transactions" | "income";
+export type PanelId =
+  | "total-balance"
+  | "accounts"
+  | "transactions"
+  | "income"
+  | "expense";
 
 export type PanelName =
   | "Total Balance"
   | "Accounts"
   | "Transactions"
-  | "Income";
+  | "Income"
+  | "Expense";
 
 export type PanelDefinition = {
   id: PanelId;
@@ -31,6 +38,12 @@ export const panelsLibrary: PanelDefinition[] = [
     id: "income",
     name: "Income",
     component: IncomePanel,
+    className: "col-span-12 lg:col-span-5 xl:col-span-4 2xl:col-span-3",
+  },
+  {
+    id: "expense",
+    name: "Expense",
+    component: ExpensePanel,
     className: "col-span-12 lg:col-span-5 xl:col-span-4 2xl:col-span-3",
   },
   {
