@@ -1,14 +1,18 @@
+import { Bar, BarChart, LabelList, XAxis, YAxis } from "recharts";
+import dayjs from "dayjs";
+import { useMemo } from "react";
+//Components
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+//Utils
 import { formatAmount } from "@/shared/lib/utils/formatAmount";
-import { Bar, BarChart, LabelList, XAxis, YAxis } from "recharts";
+//Types
 import { Transaction } from "../transactions/types/transaction";
-import dayjs from "dayjs";
-import { useMemo } from "react";
+//Hooks
 import { useUserSettings } from "../user/hooks/useUserSettings";
 
 const chartConfig = {
